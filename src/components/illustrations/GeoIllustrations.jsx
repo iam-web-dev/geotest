@@ -189,6 +189,78 @@ export function StickerDTMImage({ size = 48, className = '', color = '#8B5CF6' }
   );
 }
 
+// ==================== CATEGORY STICKERS (Bold die-cut style) ====================
+
+export function StickerMilliyBadge({ size = 48, className = '', color = '#2F80ED' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 60 60" fill="none" className={className}>
+      <circle cx="30" cy="30" r="26" fill={color} stroke="white" strokeWidth="4" paintOrder="stroke" />
+      <circle cx="30" cy="30" r="20" fill="none" stroke="white" strokeWidth="2.5" strokeDasharray="2.5 4.2" strokeOpacity="0.65" />
+      <path
+        d="M30 16 L32.4 23.5 L40.4 23.5 L34 28 L36.4 35.5 L30 31 L23.6 35.5 L26 28 L19.6 23.5 L27.6 23.5 Z"
+        fill="white" fillOpacity="0.92"
+      />
+    </svg>
+  );
+}
+
+export function StickerDTMRocket({ size = 48, className = '', color = '#8B5CF6' }) {
+  return (
+    <div className={`relative inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
+      <svg width={size} height={size} viewBox="0 0 60 60" fill="none" className="absolute inset-0">
+        <circle cx="30" cy="30" r="26" fill={color} stroke="white" strokeWidth="4" paintOrder="stroke" />
+        <circle cx="30" cy="30" r="22" fill="none" stroke="white" strokeWidth="1.5" strokeOpacity="0.35" />
+      </svg>
+      <img
+        src="/src/components/images/dtm.png"
+        alt="DTM"
+        style={{ width: size * 0.54, height: size * 0.54, filter: 'grayscale(100%) brightness(10)' }}
+        className="object-contain relative z-10"
+      />
+    </div>
+  );
+}
+
+export function StickerOlympiadTrophy({ size = 48, className = '', color = '#F59E0B' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 60 60" fill="none" className={className}>
+      <path
+        d="M14 20 L14 36 C14 43 21 48 30 48 C39 48 46 43 46 36 L46 20 Z"
+        fill={color} stroke="white" strokeWidth="3.5" paintOrder="stroke"
+      />
+      <path d="M14 24 C8 24 6 27 6 30 C6 33 8 37 14 37" stroke="white" strokeWidth="9" strokeLinecap="round" fill="none" />
+      <path d="M14 24 C8 24 6 27 6 30 C6 33 8 37 14 37" stroke={color} strokeWidth="5.5" strokeLinecap="round" fill="none" />
+      <path d="M46 24 C52 24 54 27 54 30 C54 33 52 37 46 37" stroke="white" strokeWidth="9" strokeLinecap="round" fill="none" />
+      <path d="M46 24 C52 24 54 27 54 30 C54 33 52 37 46 37" stroke={color} strokeWidth="5.5" strokeLinecap="round" fill="none" />
+      <path
+        d="M30 5 L32 11 L38.5 11 L33.5 15 L35 21.5 L30 17.5 L25 21.5 L26.5 15 L21.5 11 L28 11 Z"
+        fill="#ffd92e" stroke="white" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke"
+      />
+      <rect x="26" y="48" width="8" height="6" rx="2" fill={color} stroke="white" strokeWidth="3.5" paintOrder="stroke" />
+      <rect x="18" y="54" width="24" height="4" rx="2" fill={color} stroke="white" strokeWidth="3.5" paintOrder="stroke" />
+      <path d="M21 36 L39 36" stroke="white" strokeWidth="2" strokeLinecap="round" strokeOpacity="0.5" />
+    </svg>
+  );
+}
+
+export function StickerAttestationShield({ size = 48, className = '', color = '#22C55E' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 60 60" fill="none" className={className}>
+      {/* Ribbon tails — drawn first so circle covers the join */}
+      <path
+        d="M20 43 L13 57 L30 50 L47 57 L40 43 Z"
+        fill={color} stroke="white" strokeWidth="3.5" strokeLinejoin="round" paintOrder="stroke"
+      />
+      {/* Medal circle */}
+      <circle cx="30" cy="24" r="20" fill={color} stroke="white" strokeWidth="4" paintOrder="stroke" />
+      {/* Inner decorative ring */}
+      <circle cx="30" cy="24" r="14" fill="none" stroke="white" strokeWidth="1.5" strokeOpacity="0.42" />
+      {/* Checkmark */}
+      <path d="M23 24 L28 30 L37 20" stroke="white" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 // ==================== BADGE STICKERS ====================
 
 export function BadgeSticker({ name, unlocked = true, size = 56, className = '' }) {

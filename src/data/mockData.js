@@ -77,10 +77,10 @@ export const continueLearning = [
 ];
 
 export const quickAccessCards = [
-  { id: 1, title: 'Kunlik Test', icon: 'Compass', color: '#2563EB', bg: '#EFF6FF', count: 10 },
-  { id: 2, title: 'Tezkor Viktirina', icon: 'Lightning', color: '#D97706', bg: '#FFFBEB', count: 5 },
-  { id: 3, title: "Bayroq O'yini", icon: 'Flag', color: '#16A34A', bg: '#F0FDF4', count: 20 },
-  { id: 4, title: 'Xarita Puzzle', icon: 'Map', color: '#7C3AED', bg: '#F5F3FF', count: 1 },
+  { id: 1, title: 'Kunlik Test', icon: 'Compass', color: '#2563EB', bg: 'var(--pal-milliy)', count: 10 },
+  { id: 2, title: 'Tezkor Viktirina', icon: 'Lightning', color: '#D97706', bg: 'var(--pal-orange)', count: 5 },
+  { id: 3, title: "Bayroq O'yini", icon: 'Flag', color: '#16A34A', bg: 'var(--pal-attestation)', count: 20 },
+  { id: 4, title: 'Xarita Puzzle', icon: 'Map', color: '#7C3AED', bg: 'var(--pal-dtm)', count: 1 },
 ];
 
 export const popularTests = [

@@ -6,7 +6,6 @@ import {
   CaretDown, CaretUp, Warning, FileText, Image, MapTrifold,
   TextAlignLeft, GridFour, Timer, ChartBar, Star, Users, Shield,
   GraduationCap, Medal, Target, Lightning, Check, X, Scroll,
-  Trophy, Certificate, ClipboardText
 } from '@phosphor-icons/react';
 import { cn, formatTime, getExamTypeColor, getExamTypeLabel } from '../lib/utils';
 import Button from '../components/ui/Button';
@@ -19,43 +18,74 @@ import {
 import {
   GlobeCertificate, UZMapTarget, MountainFlagMedal, ShieldCheckDocument,
   StickerTarget, StickerTrophy, StickerCertificate, StickerBook,
-  StickerDTMImage, StickerShieldCheck
+  StickerDTMImage, StickerShieldCheck,
+  StickerMilliyBadge, StickerDTMRocket, StickerOlympiadTrophy, StickerAttestationShield
 } from '../components/illustrations/GeoIllustrations';
 
 const categoryStickerMap = {
-  milliy: StickerCertificate,
-  dtm: StickerDTMImage,
-  olympiad: StickerTrophy,
-  attestation: StickerShieldCheck,
+  milliy: StickerMilliyBadge,
+  dtm: StickerDTMRocket,
+  olympiad: StickerOlympiadTrophy,
+  attestation: StickerAttestationShield,
 };
 
 function TestCategoryCard({ category }) {
   const Sticker = categoryStickerMap[category.id] || StickerCertificate;
-  const stickerColors = {
-    milliy: '#2F80ED',
-    dtm: '#8B5CF6',
-    olympiad: '#F59E0B',
-    attestation: '#22C55E',
+  const palette = {
+    milliy:      { color: '#2F80ED', bg: 'var(--pal-milliy)' },
+    dtm:         { color: '#8B5CF6', bg: 'var(--pal-dtm)' },
+    olympiad:    { color: '#F59E0B', bg: 'var(--pal-olympiad)' },
+    attestation: { color: '#22C55E', bg: 'var(--pal-attestation)' },
   };
+  const p = palette[category.id] || palette.milliy;
 
   return (
-    <motion.div whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }}>
+    <motion.div
+      whileHover={{ y: -6, scale: 1.02 }}
+      whileTap={{ scale: 0.96 }}
+      transition={{ type: 'spring', stiffness: 320, damping: 20 }}
+    >
       <Link to={`/tests/${category.id}`}>
-        <Card className="h-full cursor-pointer hover:shadow-md transition-all overflow-hidden">
-          <div className="h-1.5" style={{ background: category.color }} />
-          <CardContent className="p-5">
-            <div className="flex items-center gap-4">
-              <div className="shrink-0">
-                <Sticker size={48} color={stickerColors[category.id] || category.color} />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="font-bold text-[var(--text-primary)] text-base">{category.title}</p>
-                <p className="text-sm text-[var(--text-secondary)] mt-0.5">{category.count} ta test</p>
-              </div>
-              <CaretRight size={18} className="text-[var(--text-secondary)] shrink-0" />
+        <div
+          className="relative rounded-[var(--radius)] overflow-hidden cursor-pointer aspect-square sm:aspect-[4/3] flex flex-col"
+          style={{ background: p.bg }}
+        >
+          {/* Decorative orb — bottom-right */}
+          <div
+            className="absolute -bottom-10 -right-10 w-36 h-36 rounded-full pointer-events-none"
+            style={{ background: p.color, opacity: 0.14 }}
+          />
+          <div
+            className="absolute -bottom-4 -right-4 w-16 h-16 rounded-full pointer-events-none"
+            style={{ background: p.color, opacity: 0.1 }}
+          />
+
+          {/* Sticker — fills available space */}
+          <div className="relative z-10 flex-1 flex items-center justify-center">
+            <Sticker size={76} color={p.color} />
+          </div>
+
+          {/* Thin divider */}
+          <div className="mx-4 h-px shrink-0" style={{ background: p.color, opacity: 0.18 }} />
+
+          {/* Info footer */}
+          <div className="relative z-10 shrink-0 flex items-center justify-between px-4 py-3">
+            <div>
+              <p className="font-bold text-[var(--text-primary)] text-sm leading-tight">
+                {category.title}
+              </p>
+              <p className="text-xs font-semibold mt-0.5" style={{ color: p.color }}>
+                {category.count} ta test
+              </p>
             </div>
-          </CardContent>
-        </Card>
+            <div
+              className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm"
+              style={{ background: p.color }}
+            >
+              <CaretRight size={14} color="white" weight="bold" />
+            </div>
+          </div>
+        </div>
       </Link>
     </motion.div>
   );
@@ -63,20 +93,20 @@ function TestCategoryCard({ category }) {
 
 function TestExamCard({ test, index }) {
   const colors = {
-    milliy: { bg: '#DCEBFF', color: '#2F80ED', label: 'Milliy Sertifikat' },
-    dtm: { bg: '#EDE9FE', color: '#8B5CF6', label: 'DTM' },
-    olympiad: { bg: '#FEF3C7', color: '#F59E0B', label: 'Olimpiada' },
-    attestation: { bg: '#DCFCE7', color: '#22C55E', label: 'Attestatsiya' },
+    milliy: { bg: 'var(--pal-milliy)', color: '#2F80ED', label: 'Milliy Sertifikat' },
+    dtm: { bg: 'var(--pal-dtm)', color: '#8B5CF6', label: 'DTM' },
+    olympiad: { bg: 'var(--pal-olympiad)', color: '#F59E0B', label: 'Olimpiada' },
+    attestation: { bg: 'var(--pal-attestation)', color: '#22C55E', label: 'Attestatsiya' },
   };
   const c = colors[test.type] || colors.milliy;
 
-  const typeIconMap = {
-    milliy: Certificate,
-    dtm: Target,
-    olympiad: Trophy,
-    attestation: ClipboardText,
+  const typeStickerMap = {
+    milliy: StickerMilliyBadge,
+    dtm: StickerDTMRocket,
+    olympiad: StickerOlympiadTrophy,
+    attestation: StickerAttestationShield,
   };
-  const TypeIcon = typeIconMap[test.type] || FileText;
+  const TypeSticker = typeStickerMap[test.type] || StickerMilliyBadge;
 
   return (
     <motion.div
@@ -86,18 +116,18 @@ function TestExamCard({ test, index }) {
       whileHover={{ y: -3 }}
     >
       <Card className="overflow-hidden hover:shadow-md transition-all h-full">
-        <div className="h-1.5" style={{ background: c.color }} />
-        <CardContent className="p-5">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-[var(--radius-sm)] flex items-center justify-center" style={{ background: c.bg }}>
-              <TypeIcon size={18} style={{ color: c.color }} />
-            </div>
-            <div>
-              <p className="text-sm font-semibold text-[var(--text-primary)]">{test.title}</p>
-              <p className="text-xs text-[var(--text-secondary)]">{c.label}</p>
-            </div>
+        {/* Colored header */}
+        <div className="flex items-center gap-3 px-4 py-3" style={{ background: c.bg }}>
+          <div className="shrink-0">
+            <TypeSticker size={44} color={c.color} />
           </div>
+          <div className="min-w-0">
+            <p className="text-sm font-semibold text-[var(--text-primary)] leading-tight">{test.title}</p>
+            <p className="text-xs font-medium mt-0.5" style={{ color: c.color }}>{c.label}</p>
+          </div>
+        </div>
 
+        <CardContent className="p-4 pt-3">
           <div className="grid grid-cols-2 gap-2 mb-4">
             <div className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
               <FileText size={13} />
@@ -234,10 +264,10 @@ function MilliyTestView() {
                   </span>
                   <span className={cn(
                     'text-xs font-medium px-2 py-0.5 rounded-full',
-                    questions[currentQuestion].type === 'closed' ? 'bg-[#DCEBFF] text-[#2F80ED]' :
-                    questions[currentQuestion].type === 'open' ? 'bg-[#EDE9FE] text-[#8B5CF6]' :
-                    questions[currentQuestion].type === 'image' ? 'bg-[#FEF3C7] text-[#F59E0B]' :
-                    questions[currentQuestion].type === 'map' ? 'bg-[#DCFCE7] text-[#22C55E]' :
+                    questions[currentQuestion].type === 'closed' ? 'bg-[var(--pal-milliy)] text-[#2F80ED]' :
+                    questions[currentQuestion].type === 'open' ? 'bg-[var(--pal-dtm)] text-[#8B5CF6]' :
+                    questions[currentQuestion].type === 'image' ? 'bg-[var(--pal-olympiad)] text-[#F59E0B]' :
+                    questions[currentQuestion].type === 'map' ? 'bg-[var(--pal-attestation)] text-[#22C55E]' :
                     'bg-[#FCE7F3] text-[#EC4899]'
                   )}>
                     {questions[currentQuestion].type === 'closed' ? 'Yopiq' :
@@ -354,7 +384,7 @@ function DTMTestView() {
       <div className="sticky top-0 z-30 bg-[var(--background)] pt-2 pb-3 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[#EDE9FE] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[var(--pal-dtm)] flex items-center justify-center">
               <Target size={18} className="text-[#8B5CF6]" />
             </div>
             <div>
@@ -362,7 +392,7 @@ function DTMTestView() {
               <p className="text-xs text-[var(--text-secondary)]">{answeredCount}/{questions.length} ta javob</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#EDE9FE] text-[#8B5CF6] font-bold text-sm">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--pal-dtm)] text-[#8B5CF6] font-bold text-sm">
             <Clock size={16} />
             {formatTime(timeLeft)}
           </div>
@@ -440,8 +470,8 @@ function DTMTestView() {
                   <span className="text-xs font-medium text-[var(--text-secondary)]">
                     Savol {currentQuestion + 1} / {questions.length}
                   </span>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-[#EDE9FE] text-[#8B5CF6] font-medium"
-                    style={{ background: `${currentSection?.color}15`, color: currentSection?.color }}>
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--pal-dtm)] text-[#8B5CF6] font-medium"
+                    style={{ background: `${currentSection?.color}22`, color: currentSection?.color }}>
                     {currentSection?.subject}
                   </span>
                 </div>
@@ -459,7 +489,7 @@ function DTMTestView() {
                     className={cn(
                       'w-full text-left p-3.5 rounded-[var(--radius-sm)] border-2 transition-all text-sm',
                       questions[currentQuestion].userAnswer === option.charAt(0)
-                        ? 'border-[#8B5CF6] bg-[#EDE9FE] text-[#8B5CF6]'
+                        ? 'border-[#8B5CF6] bg-[var(--pal-dtm)] text-[#8B5CF6]'
                         : 'border-[var(--border)] hover:border-[#8B5CF6]/50 hover:bg-[var(--background)] text-[var(--text-primary)]'
                     )}
                   >
@@ -520,7 +550,7 @@ function OlympiadTestView() {
       <div className="sticky top-0 z-30 bg-[var(--background)] pt-2 pb-3 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[#FEF3C7] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[var(--pal-olympiad)] flex items-center justify-center">
               <Medal size={18} className="text-[#F59E0B]" />
             </div>
             <div>
@@ -528,7 +558,7 @@ function OlympiadTestView() {
               <p className="text-xs text-[var(--text-secondary)]">{answeredCount}/{questions.length}</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FEF3C7] text-[#F59E0B] font-bold text-sm">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--pal-olympiad)] text-[#F59E0B] font-bold text-sm">
             <Clock size={16} /> {formatTime(timeLeft)}
           </div>
         </div>
@@ -563,7 +593,7 @@ function OlympiadTestView() {
               </div>
               <div className="mt-3 flex items-center gap-2 text-[10px] text-[var(--text-secondary)]">
                 <span className="px-1.5 py-0.5 rounded bg-[var(--border)]">1 bal</span>
-                <span className="px-1.5 py-0.5 rounded bg-[#FEF3C7] text-[#F59E0B]">2 bal</span>
+                <span className="px-1.5 py-0.5 rounded bg-[var(--pal-olympiad)] text-[#F59E0B]">2 bal</span>
                 <span className="px-1.5 py-0.5 rounded bg-[#FEE2E2] text-[#EF4444]">3+ bal</span>
               </div>
             </CardContent>
@@ -578,12 +608,12 @@ function OlympiadTestView() {
                 <div className="flex items-center gap-2">
                   <span className={cn(
                     'text-xs px-2 py-0.5 rounded-full font-medium',
-                    currentQ.difficulty === 'easy' ? 'bg-[#DCFCE7] text-[#22C55E]' :
-                    currentQ.difficulty === 'medium' ? 'bg-[#FEF3C7] text-[#F59E0B]' :
+                    currentQ.difficulty === 'easy' ? 'bg-[var(--pal-attestation)] text-[#22C55E]' :
+                    currentQ.difficulty === 'medium' ? 'bg-[var(--pal-olympiad)] text-[#F59E0B]' :
                     currentQ.difficulty === 'hard' ? 'bg-[#FEE2E2] text-[#EF4444]' :
-                    'bg-[#EDE9FE] text-[#8B5CF6]'
+                    'bg-[var(--pal-dtm)] text-[#8B5CF6]'
                   )}>{currentQ.difficulty === 'easy' ? 'Oson' : currentQ.difficulty === 'medium' ? "O'rtacha" : currentQ.difficulty === 'hard' ? 'Qiyin' : 'Ekspert'}</span>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-[#FEF3C7] text-[#F59E0B] font-medium">{currentQ.points} bal</span>
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--pal-olympiad)] text-[#F59E0B] font-medium">{currentQ.points} bal</span>
                 </div>
               </div>
 
@@ -600,7 +630,7 @@ function OlympiadTestView() {
                       className={cn(
                         'w-full text-left p-3.5 rounded-[var(--radius-sm)] border-2 transition-all text-sm',
                         currentQ.userAnswer === option.charAt(0)
-                          ? 'border-[#F59E0B] bg-[#FEF3C7] text-[#F59E0B]'
+                          ? 'border-[#F59E0B] bg-[var(--pal-olympiad)] text-[#F59E0B]'
                           : 'border-[var(--border)] hover:border-[#F59E0B]/50 hover:bg-[var(--background)] text-[var(--text-primary)]'
                       )}
                     >
@@ -660,7 +690,7 @@ function AttestationTestView() {
       <div className="sticky top-0 z-30 bg-[var(--background)] pt-2 pb-3 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[#DCFCE7] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[var(--pal-attestation)] flex items-center justify-center">
               <Shield size={18} className="text-[#22C55E]" />
             </div>
             <div>
@@ -668,7 +698,7 @@ function AttestationTestView() {
               <p className="text-xs text-[var(--text-secondary)]">{answeredCount}/{questions.length}</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#DCFCE7] text-[#22C55E] font-bold text-sm">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--pal-attestation)] text-[#22C55E] font-bold text-sm">
             <Clock size={16} /> {formatTime(timeLeft)}
           </div>
         </div>
@@ -715,7 +745,7 @@ function AttestationTestView() {
                     className={cn(
                       'w-full text-left p-3.5 rounded-[var(--radius-sm)] border-2 transition-all text-sm',
                       questions[currentQuestion].userAnswer === option.charAt(0)
-                        ? 'border-[#22C55E] bg-[#DCFCE7] text-[#22C55E]'
+                        ? 'border-[#22C55E] bg-[var(--pal-attestation)] text-[#22C55E]'
                         : 'border-[var(--border)] hover:border-[#22C55E]/50 hover:bg-[var(--background)] text-[var(--text-primary)]'
                     )}
                   >
