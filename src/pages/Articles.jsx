@@ -18,12 +18,12 @@ export default function Articles() {
 
   return (
     <div className="space-y-8">
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
         <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">Maqolalar</h1>
         <p className="text-sm text-[var(--text-secondary)] mt-1">Geografiya bo'yicha foydali maqolalar</p>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}>
+      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.08 }}>
         <div className="relative">
           <MagnifyingGlass size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)]" />
           <input type="text" placeholder="Maqola qidirish..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
@@ -31,7 +31,7 @@ export default function Articles() {
         </div>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}
+      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.12 }}
         className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
         {allTags.map((tag) => (
           <button key={tag} onClick={() => setActiveTag(tag)}
@@ -43,7 +43,7 @@ export default function Articles() {
 
       <div className="space-y-3">
         {filteredArticles.map((article, i) => (
-          <motion.div key={article.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06 }} whileHover={{ y: -2 }}>
+          <motion.div key={article.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06 }} >
             <Card><CardContent className="p-5">
               <div className="flex gap-4">
                 <div className="w-16 h-16 rounded-[var(--radius-sm)] bg-[var(--primary-soft)] flex items-center justify-center shrink-0">

@@ -135,9 +135,9 @@ export const popularTests = [
 ];
 
 export const upcomingExams = [
-  { id: 1, title: 'Milliy Sertifikat', date: '2025-06-15', daysLeft: 14, type: 'milliy' },
-  { id: 2, title: 'DTM Test', date: '2025-07-01', daysLeft: 30, type: 'dtm' },
-  { id: 3, title: 'Olimpiada Saralash', date: '2025-05-20', daysLeft: 5, type: 'olympiad' },
+  { id: 1, title: 'Milliy Sertifikat', date: '2025-06-15', daysLeft: 14, type: 'milliy',    questions: 45, time: 150, difficulty: 'hard' },
+  { id: 2, title: 'DTM Imtihoni',      date: '2025-07-01', daysLeft: 30, type: 'dtm',         questions: 90, time: 180, difficulty: 'expert' },
+  { id: 3, title: 'Olimpiada Saralash',date: '2025-05-20', daysLeft: 5,  type: 'olympiad',    questions: 30, time: 60,  difficulty: 'medium' },
 ];
 
 export const recentActivities = [
@@ -422,26 +422,26 @@ export const articles = [
 
 export const rankings = {
   national: [
-    { id: 1, name: 'Aziz Karimov', xp: 28450, level: 42, tests: 320, avatar: null, medal: 'gold' },
-    { id: 2, name: 'Malika Rahimova', xp: 26120, level: 39, tests: 298, avatar: null, medal: 'silver' },
-    { id: 3, name: 'Dilmurod Akbarov', xp: 24580, level: 38, tests: 275, avatar: null, medal: 'bronze' },
-    { id: 4, name: 'Zulfiya Karimova', xp: 22100, level: 35, tests: 254, avatar: null, medal: null },
-    { id: 5, name: 'Jamshidbek Yodgorov', xp: 12580, level: 24, tests: 186, avatar: null, medal: null },
+    { id: 1, name: 'Aziz Karimov',          xp: 28450, level: 42, tests: 320, streak: 21 },
+    { id: 2, name: 'Malika Rahimova',        xp: 26120, level: 39, tests: 298, streak: 15 },
+    { id: 3, name: 'Dilmurod Akbarov',       xp: 24580, level: 38, tests: 275, streak: 10 },
+    { id: 4, name: 'Zulfiya Karimova',       xp: 22100, level: 35, tests: 254, streak: 8  },
+    { id: 5, name: 'Jamshidbek Yodgorov',   xp: 12580, level: 24, tests: 186, streak: 7, isCurrentUser: true },
   ],
   regional: [
-    { id: 1, name: 'Aziz Karimov', xp: 28450, level: 42, tests: 320, avatar: null, medal: 'gold', region: 'Toshkent' },
-    { id: 2, name: 'Malika Rahimova', xp: 26120, level: 39, tests: 298, avatar: null, medal: 'silver', region: 'Toshkent' },
-    { id: 3, name: 'Jamshidbek Yodgorov', xp: 12580, level: 24, tests: 186, avatar: null, medal: 'bronze', region: 'Toshkent' },
+    { id: 1, name: 'Aziz Karimov',          xp: 28450, level: 42, tests: 320, streak: 21 },
+    { id: 2, name: 'Malika Rahimova',        xp: 26120, level: 39, tests: 298, streak: 15 },
+    { id: 3, name: 'Jamshidbek Yodgorov',   xp: 12580, level: 24, tests: 186, streak: 7, isCurrentUser: true },
   ],
   friends: [
-    { id: 1, name: 'Jamshidbek Yodgorov', xp: 12580, level: 24, tests: 186, avatar: null, medal: 'gold', isCurrentUser: true },
-    { id: 2, name: 'Bekzod Tursunov', xp: 11900, level: 23, tests: 165, avatar: null, medal: 'silver' },
-    { id: 3, name: 'Nigora Ismoilova', xp: 11230, level: 22, tests: 154, avatar: null, medal: 'bronze' },
+    { id: 1, name: 'Jamshidbek Yodgorov',   xp: 12580, level: 24, tests: 186, streak: 7, isCurrentUser: true },
+    { id: 2, name: 'Bekzod Tursunov',        xp: 11900, level: 23, tests: 165, streak: 5  },
+    { id: 3, name: 'Nigora Ismoilova',       xp: 11230, level: 22, tests: 154, streak: 3  },
   ],
   school: [
-    { id: 1, name: 'Sardor Aliyev', xp: 15800, level: 28, tests: 210, avatar: null, medal: 'gold' },
-    { id: 2, name: 'Jamshidbek Yodgorov', xp: 12580, level: 24, tests: 186, avatar: null, medal: 'silver', isCurrentUser: true },
-    { id: 3, name: 'Madina Halilova', xp: 11200, level: 22, tests: 170, avatar: null, medal: 'bronze' },
+    { id: 1, name: 'Sardor Aliyev',          xp: 15800, level: 28, tests: 210, streak: 12 },
+    { id: 2, name: 'Jamshidbek Yodgorov',   xp: 12580, level: 24, tests: 186, streak: 7, isCurrentUser: true },
+    { id: 3, name: 'Madina Halilova',        xp: 11200, level: 22, tests: 170, streak: 4  },
   ],
 };
 

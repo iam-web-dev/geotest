@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   BookOpen, Clock, CaretLeft, CaretRight, Flag, CheckCircle,
@@ -7,7 +7,7 @@ import {
   TextAlignLeft, GridFour, Timer, ChartBar, Star, Users, Shield,
   GraduationCap, Medal, Target, Lightning, Check, X, Scroll,
 } from '@phosphor-icons/react';
-import { cn, formatTime, getExamTypeColor, getExamTypeLabel } from '../lib/utils';
+import { cn, formatTime, getExamTypeColor, getExamTypeLabel, canHover } from '../lib/utils';
 import Button from '../components/ui/Button';
 import { Card, CardContent } from '../components/ui/Card';
 import { ProgressBar, CircularProgress } from '../components/ui/Progress';
@@ -29,65 +29,150 @@ const categoryStickerMap = {
   attestation: StickerAttestationShield,
 };
 
+const categoryPalette = {
+  milliy:      { color: '#2F80ED', bg: 'var(--pal-milliy)' },
+  dtm:         { color: '#8B5CF6', bg: 'var(--pal-dtm)' },
+  olympiad:    { color: '#F59E0B', bg: 'var(--pal-olympiad)' },
+  attestation: { color: '#22C55E', bg: 'var(--pal-attestation)' },
+};
+
+const testStickers = {
+  milliy:      { Sticker: StickerMilliyBadge,      color: '#2F80ED', bg: 'var(--pal-milliy)',      label: 'Milliy Sertifikat' },
+  dtm:         { Sticker: StickerDTMRocket,         color: '#8B5CF6', bg: 'var(--pal-dtm)',         label: 'DTM' },
+  olympiad:    { Sticker: StickerOlympiadTrophy,    color: '#F59E0B', bg: 'var(--pal-olympiad)',    label: 'Olimpiada' },
+  attestation: { Sticker: StickerAttestationShield, color: '#22C55E', bg: 'var(--pal-attestation)', label: 'Attestatsiya' },
+};
+
 function TestCategoryCard({ category }) {
   const Sticker = categoryStickerMap[category.id] || StickerCertificate;
-  const palette = {
-    milliy:      { color: '#2F80ED', bg: 'var(--pal-milliy)' },
-    dtm:         { color: '#8B5CF6', bg: 'var(--pal-dtm)' },
-    olympiad:    { color: '#F59E0B', bg: 'var(--pal-olympiad)' },
-    attestation: { color: '#22C55E', bg: 'var(--pal-attestation)' },
-  };
-  const p = palette[category.id] || palette.milliy;
+  const p = categoryPalette[category.id] || categoryPalette.milliy;
 
   return (
     <motion.div
-      whileHover={{ y: -6, scale: 1.02 }}
-      whileTap={{ scale: 0.96 }}
+      whileTap={canHover ? { scale: 0.96 } : undefined}
       transition={{ type: 'spring', stiffness: 320, damping: 20 }}
     >
       <Link to={`/tests/${category.id}`}>
         <div
-          className="relative rounded-[var(--radius)] overflow-hidden cursor-pointer aspect-square sm:aspect-[4/3] flex flex-col"
+          className="relative rounded-[var(--radius)] overflow-hidden cursor-pointer aspect-square sm:aspect-auto flex flex-col"
           style={{ background: p.bg }}
         >
-          {/* Decorative orb — bottom-right */}
-          <div
-            className="absolute -bottom-10 -right-10 w-36 h-36 rounded-full pointer-events-none"
-            style={{ background: p.color, opacity: 0.14 }}
-          />
-          <div
-            className="absolute -bottom-4 -right-4 w-16 h-16 rounded-full pointer-events-none"
-            style={{ background: p.color, opacity: 0.1 }}
-          />
+          <div className="absolute -bottom-10 -right-10 w-36 h-36 rounded-full pointer-events-none"
+               style={{ background: p.color, opacity: 0.14 }} />
+          <div className="absolute -bottom-4 -right-4 w-16 h-16 rounded-full pointer-events-none"
+               style={{ background: p.color, opacity: 0.1 }} />
 
-          {/* Sticker — fills available space */}
-          <div className="relative z-10 flex-1 flex items-center justify-center">
-            <Sticker size={76} color={p.color} />
+          <div className="relative z-10 flex-1 sm:flex-none sm:h-[88px] flex items-center justify-center">
+            <Sticker size={68} color={p.color} />
           </div>
-
-          {/* Thin divider */}
           <div className="mx-4 h-px shrink-0" style={{ background: p.color, opacity: 0.18 }} />
-
-          {/* Info footer */}
           <div className="relative z-10 shrink-0 flex items-center justify-between px-4 py-3">
-            <div>
-              <p className="font-bold text-[var(--text-primary)] text-sm leading-tight">
-                {category.title}
-              </p>
-              <p className="text-xs font-semibold mt-0.5" style={{ color: p.color }}>
-                {category.count} ta test
-              </p>
+            <div className="min-w-0 flex-1 mr-2">
+              <p className="font-bold text-[var(--text-primary)] text-sm leading-tight truncate">{category.title}</p>
+              <p className="text-xs font-semibold mt-0.5" style={{ color: p.color }}>{category.count} ta test</p>
             </div>
-            <div
-              className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm"
-              style={{ background: p.color }}
-            >
+            <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm"
+                 style={{ background: p.color }}>
               <CaretRight size={14} color="white" weight="bold" />
             </div>
           </div>
         </div>
       </Link>
     </motion.div>
+  );
+}
+
+function CategoryTestsPage({ type }) {
+  const navigate = useNavigate();
+  const [examStarted, setExamStarted] = useState(false);
+
+  if (examStarted) {
+    if (type === 'milliy')      return <MilliyTestView />;
+    if (type === 'dtm')         return <DTMTestView />;
+    if (type === 'olympiad')    return <OlympiadTestView />;
+    if (type === 'attestation') return <AttestationTestView />;
+  }
+
+  const meta = testStickers[type] || testStickers.milliy;
+  const { Sticker } = meta;
+  const category = testCategories.find(c => c.id === type);
+  const tests = popularTests.filter(t => t.type === type);
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+        <button
+          onClick={() => navigate('/tests')}
+          className="flex items-center gap-1 text-[var(--primary)] text-sm font-semibold mb-3"
+        >
+          <CaretLeft size={14} weight="bold" /> Testlar
+        </button>
+        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">
+          {category?.title || meta.label}
+        </h1>
+        <p className="text-sm font-semibold mt-1" style={{ color: meta.color }}>
+          {category?.count || tests.length} ta test mavjud
+        </p>
+      </motion.div>
+
+      {/* Test cards */}
+      <div className="grid sm:grid-cols-2 gap-4">
+        {tests.map((test, i) => (
+          <motion.div
+            key={test.id}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.08 + i * 0.06 }}
+          >
+            <Card className="overflow-hidden h-full">
+              {/* Sticker header */}
+              <div className="flex items-center gap-3 px-4 py-4" style={{ background: meta.bg }}>
+                <Sticker size={48} color={meta.color} />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-bold text-[var(--text-primary)] leading-tight">{test.title}</p>
+                  <span
+                    className="inline-block text-[11px] font-bold mt-1 px-2 py-0.5 rounded-full"
+                    style={{ background: meta.color + '20', color: meta.color }}
+                  >
+                    {meta.label}
+                  </span>
+                </div>
+              </div>
+
+              <CardContent className="px-4 py-4">
+                {/* Stats */}
+                <div className="grid grid-cols-3 text-center rounded-[var(--radius-xs)] overflow-hidden border border-[var(--border)] mb-4">
+                  <div className="py-2.5 border-r border-[var(--border)]">
+                    <p className="text-sm font-bold text-[var(--text-primary)]">{test.questions}</p>
+                    <p className="text-[10px] text-[var(--text-tertiary)] mt-0.5">Savol</p>
+                  </div>
+                  <div className="py-2.5 border-r border-[var(--border)]">
+                    <p className="text-sm font-bold text-[var(--text-primary)]">{test.time}</p>
+                    <p className="text-[10px] text-[var(--text-tertiary)] mt-0.5">Daqiqa</p>
+                  </div>
+                  <div className="py-2.5">
+                    <p className="text-sm font-bold" style={{ color: meta.color }}>
+                      {test.participants.toLocaleString()}
+                    </p>
+                    <p className="text-[10px] text-[var(--text-tertiary)] mt-0.5">Ishtirok</p>
+                  </div>
+                </div>
+
+                {/* Start button */}
+                <button
+                  onClick={() => setExamStarted(true)}
+                  className="w-full py-2.5 rounded-[var(--radius-xs)] text-sm font-bold text-white transition-opacity active:opacity-80"
+                  style={{ background: meta.color }}
+                >
+                  Boshlash
+                </button>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -110,10 +195,9 @@ function TestExamCard({ test, index }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
-      whileHover={{ y: -3 }}
+      transition={{ delay: index * 0.06 }}
     >
       <Card className="overflow-hidden hover:shadow-md transition-all h-full">
         {/* Colored header */}
@@ -773,60 +857,67 @@ function AttestationTestView() {
 // Main Tests Page
 export default function Tests() {
   const { type } = useParams();
-  const [activeCategory, setActiveCategory] = useState('all');
+  const navigate = useNavigate();
 
-  if (type === 'milliy') return <MilliyTestView />;
-  if (type === 'dtm') return <DTMTestView />;
-  if (type === 'olympiad') return <OlympiadTestView />;
-  if (type === 'attestation') return <AttestationTestView />;
-
-  const filteredTests = activeCategory === 'all'
-    ? popularTests
-    : popularTests.filter(t => t.type === activeCategory);
+  if (type) return <CategoryTestsPage type={type} />;
 
   return (
     <div className="space-y-6">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
         <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">Testlar</h1>
-        <p className="text-sm text-[var(--text-secondary)] mt-1">Imtihon turlarini tanlang va tayyorgarlikni boshlang</p>
+        <p className="text-sm text-[var(--text-secondary)] mt-1">Imtihon turini tanlang va tayyorgarlikni boshlang</p>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}
+      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.08 }}
         className="grid grid-cols-2 gap-3 w-full">
         {testCategories.map((cat) => (
           <TestCategoryCard key={cat.id} category={cat} />
         ))}
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }}
-        className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-        {[
-          { id: 'all', label: 'Barchasi' },
-          { id: 'milliy', label: 'Milliy Sertifikat' },
-          { id: 'dtm', label: 'DTM' },
-          { id: 'olympiad', label: 'Olimpiada' },
-          { id: 'attestation', label: 'Attestatsiya' },
-        ].map((cat) => (
-          <button
-            key={cat.id}
-            onClick={() => setActiveCategory(cat.id)}
-            className={cn(
-              'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all',
-              activeCategory === cat.id
-                ? 'bg-[var(--primary)] text-white shadow-sm'
-                : 'bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--primary-soft)] hover:text-[var(--primary)] border border-[var(--border)]'
-            )}
-          >
-            {cat.label}
-          </button>
-        ))}
+      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.14 }}>
+        <h2 className="text-[17px] font-bold text-[var(--text-primary)] mb-3">Ommabop Testlar</h2>
+        <div className="grid sm:grid-cols-2 gap-4">
+          {popularTests.map((test, i) => {
+            const meta = testStickers[test.type] || testStickers.milliy;
+            const { Sticker } = meta;
+            return (
+              <motion.div
+                key={test.id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 + i * 0.05 }}
+              >
+                <Card className="cursor-pointer h-full overflow-hidden" onClick={() => navigate(`/tests/${test.type}`)}>
+                  <div className="flex items-center gap-3 px-4 py-3" style={{ background: meta.bg }}>
+                    <Sticker size={42} color={meta.color} />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-bold text-[var(--text-primary)] truncate leading-tight">{test.title}</p>
+                      <p className="text-xs font-semibold mt-0.5" style={{ color: meta.color }}>{meta.label}</p>
+                    </div>
+                  </div>
+                  <CardContent className="px-4 py-3">
+                    <div className="grid grid-cols-3 text-center rounded-[var(--radius-xs)] overflow-hidden border border-[var(--border)]">
+                      <div className="py-2 border-r border-[var(--border)]">
+                        <p className="text-sm font-bold text-[var(--text-primary)]">{test.questions}</p>
+                        <p className="text-[10px] text-[var(--text-tertiary)]">Savol</p>
+                      </div>
+                      <div className="py-2 border-r border-[var(--border)]">
+                        <p className="text-sm font-bold text-[var(--text-primary)]">{test.time}</p>
+                        <p className="text-[10px] text-[var(--text-tertiary)]">Daqiqa</p>
+                      </div>
+                      <div className="py-2">
+                        <p className="text-sm font-bold" style={{ color: meta.color }}>{test.participants.toLocaleString()}</p>
+                        <p className="text-[10px] text-[var(--text-tertiary)]">Ishtirok</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </div>
       </motion.div>
-
-      <div className="grid sm:grid-cols-2 gap-4">
-        {filteredTests.map((test, i) => (
-          <TestExamCard key={test.id} test={test} index={i} />
-        ))}
-      </div>
     </div>
   );
 }

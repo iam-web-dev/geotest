@@ -189,74 +189,94 @@ export function StickerDTMImage({ size = 48, className = '', color = '#8B5CF6' }
   );
 }
 
-// ==================== CATEGORY STICKERS (Bold die-cut style) ====================
+// ==================== HOME PAGE STICKERS ====================
 
 export function StickerMilliyBadge({ size = 48, className = '', color = '#2F80ED' }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 60 60" fill="none" className={className}>
-      <circle cx="30" cy="30" r="26" fill={color} stroke="white" strokeWidth="4" paintOrder="stroke" />
-      <circle cx="30" cy="30" r="20" fill="none" stroke="white" strokeWidth="2.5" strokeDasharray="2.5 4.2" strokeOpacity="0.65" />
-      <path
-        d="M30 16 L32.4 23.5 L40.4 23.5 L34 28 L36.4 35.5 L30 31 L23.6 35.5 L26 28 L19.6 23.5 L27.6 23.5 Z"
-        fill="white" fillOpacity="0.92"
-      />
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" className={className}>
+      <circle cx="24" cy="24" r="22" fill={hexToRgba(color, 0.12)} stroke={color} strokeWidth="2" />
+      <rect x="16" y="16" width="16" height="18" rx="2" stroke={color} strokeWidth="2" />
+      <path d="M20 24L23 27L28 21" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="24" cy="40" r="3" fill={color} />
     </svg>
   );
 }
 
 export function StickerDTMRocket({ size = 48, className = '', color = '#8B5CF6' }) {
   return (
-    <div className={`relative inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
-      <svg width={size} height={size} viewBox="0 0 60 60" fill="none" className="absolute inset-0">
-        <circle cx="30" cy="30" r="26" fill={color} stroke="white" strokeWidth="4" paintOrder="stroke" />
-        <circle cx="30" cy="30" r="22" fill="none" stroke="white" strokeWidth="1.5" strokeOpacity="0.35" />
-      </svg>
-      <img
-        src="/src/components/images/dtm.png"
-        alt="DTM"
-        style={{ width: size * 0.54, height: size * 0.54, filter: 'grayscale(100%) brightness(10)' }}
-        className="object-contain relative z-10"
-      />
-    </div>
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" className={className}>
+      <circle cx="24" cy="24" r="22" fill={hexToRgba(color, 0.12)} stroke={color} strokeWidth="2" />
+      <path d="M24 12C24 12 18 18 18 24C18 28 20 32 24 36C28 32 30 28 30 24C30 18 24 12 24 12Z" fill={hexToRgba(color, 0.2)} stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="24" cy="24" r="4" fill={color} />
+      <path d="M24 8V12M24 36V40" stroke={color} strokeWidth="2" strokeLinecap="round" />
+      <path d="M16 24H12M36 24H32" stroke={color} strokeWidth="2" strokeLinecap="round" />
+    </svg>
   );
 }
 
 export function StickerOlympiadTrophy({ size = 48, className = '', color = '#F59E0B' }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 60 60" fill="none" className={className}>
-      <path
-        d="M14 20 L14 36 C14 43 21 48 30 48 C39 48 46 43 46 36 L46 20 Z"
-        fill={color} stroke="white" strokeWidth="3.5" paintOrder="stroke"
-      />
-      <path d="M14 24 C8 24 6 27 6 30 C6 33 8 37 14 37" stroke="white" strokeWidth="9" strokeLinecap="round" fill="none" />
-      <path d="M14 24 C8 24 6 27 6 30 C6 33 8 37 14 37" stroke={color} strokeWidth="5.5" strokeLinecap="round" fill="none" />
-      <path d="M46 24 C52 24 54 27 54 30 C54 33 52 37 46 37" stroke="white" strokeWidth="9" strokeLinecap="round" fill="none" />
-      <path d="M46 24 C52 24 54 27 54 30 C54 33 52 37 46 37" stroke={color} strokeWidth="5.5" strokeLinecap="round" fill="none" />
-      <path
-        d="M30 5 L32 11 L38.5 11 L33.5 15 L35 21.5 L30 17.5 L25 21.5 L26.5 15 L21.5 11 L28 11 Z"
-        fill="#ffd92e" stroke="white" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke"
-      />
-      <rect x="26" y="48" width="8" height="6" rx="2" fill={color} stroke="white" strokeWidth="3.5" paintOrder="stroke" />
-      <rect x="18" y="54" width="24" height="4" rx="2" fill={color} stroke="white" strokeWidth="3.5" paintOrder="stroke" />
-      <path d="M21 36 L39 36" stroke="white" strokeWidth="2" strokeLinecap="round" strokeOpacity="0.5" />
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" className={className}>
+      <circle cx="24" cy="24" r="22" fill={hexToRgba(color, 0.12)} stroke={color} strokeWidth="2" />
+      <path d="M18 16H30V24C30 27.3 27.3 30 24 30C20.7 30 18 27.3 18 24V16Z" fill={hexToRgba(color, 0.2)} stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M16 16H18M30 16H32" stroke={color} strokeWidth="2" strokeLinecap="round" />
+      <path d="M20 34H28" stroke={color} strokeWidth="2" strokeLinecap="round" />
+      <path d="M24 30V34" stroke={color} strokeWidth="2" strokeLinecap="round" />
+      <circle cx="24" cy="38" r="2" fill={color} />
     </svg>
   );
 }
 
 export function StickerAttestationShield({ size = 48, className = '', color = '#22C55E' }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 60 60" fill="none" className={className}>
-      {/* Ribbon tails — drawn first so circle covers the join */}
-      <path
-        d="M20 43 L13 57 L30 50 L47 57 L40 43 Z"
-        fill={color} stroke="white" strokeWidth="3.5" strokeLinejoin="round" paintOrder="stroke"
-      />
-      {/* Medal circle */}
-      <circle cx="30" cy="24" r="20" fill={color} stroke="white" strokeWidth="4" paintOrder="stroke" />
-      {/* Inner decorative ring */}
-      <circle cx="30" cy="24" r="14" fill="none" stroke="white" strokeWidth="1.5" strokeOpacity="0.42" />
-      {/* Checkmark */}
-      <path d="M23 24 L28 30 L37 20" stroke="white" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" className={className}>
+      <circle cx="24" cy="24" r="22" fill={hexToRgba(color, 0.12)} stroke={color} strokeWidth="2" />
+      <path d="M24 12L14 17V26C14 33 18 39 24 42C30 39 34 33 34 26V17L24 12Z" fill={hexToRgba(color, 0.15)} stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M20 26L23 29L28 22" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function StatIconXP({ size = 48, className = '', color = '#F97316' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" className={className}>
+      <circle cx="24" cy="24" r="22" fill={hexToRgba(color, 0.12)} stroke={color} strokeWidth="2" />
+      <path d="M16 16L32 32M32 16L16 32" stroke={color} strokeWidth="2.5" strokeLinecap="round" />
+      <circle cx="24" cy="24" r="14" stroke={color} strokeWidth="2" />
+    </svg>
+  );
+}
+
+export function StatIconAccuracy({ size = 48, className = '', color = '#2F80ED' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" className={className}>
+      <circle cx="24" cy="24" r="22" fill={hexToRgba(color, 0.12)} stroke={color} strokeWidth="2" />
+      <circle cx="24" cy="24" r="16" stroke={color} strokeWidth="2" />
+      <circle cx="24" cy="24" r="10" stroke={color} strokeWidth="2" strokeDasharray="3 2" />
+      <circle cx="24" cy="24" r="4" fill={color} />
+    </svg>
+  );
+}
+
+export function StatIconTime({ size = 48, className = '', color = '#8B5CF6' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" className={className}>
+      <circle cx="24" cy="24" r="22" fill={hexToRgba(color, 0.12)} stroke={color} strokeWidth="2" />
+      <circle cx="24" cy="24" r="14" stroke={color} strokeWidth="2" />
+      <line x1="24" y1="24" x2="24" y2="16" stroke={color} strokeWidth="2" strokeLinecap="round" />
+      <line x1="24" y1="24" x2="31" y2="27" stroke={color} strokeWidth="2" strokeLinecap="round" />
+      <circle cx="24" cy="24" r="2" fill={color} />
+    </svg>
+  );
+}
+
+export function StatIconTests({ size = 48, className = '', color = '#22C55E' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" className={className}>
+      <circle cx="24" cy="24" r="22" fill={hexToRgba(color, 0.12)} stroke={color} strokeWidth="2" />
+      <rect x="16" y="14" width="16" height="20" rx="2" stroke={color} strokeWidth="2" />
+      <path d="M20 22L23 25L28 19" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <line x1="20" y1="30" x2="28" y2="30" stroke={color} strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }

@@ -23,12 +23,12 @@ export default function Games() {
 
   return (
     <div className="space-y-8">
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
         <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">O'yinlar</h1>
         <p className="text-sm text-[var(--text-secondary)] mt-1">Geografiyani o'ynab o'rganing</p>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}
+      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.08 }}
         className="relative overflow-hidden rounded-[var(--radius-lg)] bg-[var(--primary)] p-6 sm:p-8">
         <div className="absolute right-0 top-1/2 -translate-y-1/2 opacity-10 hidden sm:block">
           <PuzzleMap size={160} />
@@ -54,7 +54,7 @@ export default function Games() {
           const Icon = gameIcons[game.icon] || Compass;
           const DiffIcon = game.difficulty === 'easy' ? Star : game.difficulty === 'medium' ? Clock : Trophy;
           return (
-            <motion.div key={game.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 + i * 0.04 }} whileHover={{ y: -2 }}>
+            <motion.div key={game.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 + i * 0.04 }} >
               <Card className="h-full">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3 mb-3">

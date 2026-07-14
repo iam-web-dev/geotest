@@ -1,6 +1,8 @@
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+export const canHover = window.matchMedia('(hover: hover) and (any-pointer: fine)').matches;
+
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }

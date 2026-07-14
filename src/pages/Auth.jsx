@@ -57,9 +57,9 @@ export default function Auth() {
       <div className="relative w-full max-w-md mx-auto px-4 py-8">
         {/* Logo & Title */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.35 }}
           className="text-center mb-8"
         >
           <Link to="/" className="inline-flex items-center gap-2.5 mb-4">
@@ -80,9 +80,9 @@ export default function Auth() {
 
         {/* Mode Toggle */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ duration: 0.35, delay: 0.08 }}
           className="flex items-center bg-[var(--surface)] rounded-[var(--radius)] p-1 border border-[var(--border)] mb-6"
         >
           {['signin', 'signup'].map((m) => (
@@ -223,7 +223,7 @@ export default function Auth() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
+          transition={{ delay: 0.25 }}
           className="text-center mt-6 text-sm text-[var(--text-secondary)]"
         >
           {mode === 'signin' ? (

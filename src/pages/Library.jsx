@@ -39,12 +39,12 @@ export default function Library() {
 
   return (
     <div className="space-y-8">
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
         <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">Kutubxona</h1>
         <p className="text-sm text-[var(--text-secondary)] mt-1">Geografiya bo'yicha barcha materiallar</p>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}>
+      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.08 }}>
         <div className="relative">
           <MagnifyingGlass size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)]" />
           <input type="text" placeholder="Kitob yoki muallif qidirish..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
@@ -52,7 +52,7 @@ export default function Library() {
         </div>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}
+      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.12 }}
         className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
         <button onClick={() => setActiveCategory('all')}
           className={cn('px-4 py-2 rounded-[var(--radius-sm)] text-sm font-medium whitespace-nowrap transition-all border', activeCategory === 'all' ? 'bg-[var(--primary)] text-white border-[var(--primary)]' : 'bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--primary-soft)] hover:text-[var(--primary)] border-[var(--border)]')}>
@@ -69,12 +69,12 @@ export default function Library() {
         })}
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.16 }}
+      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.16 }}
         className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         {libraryCategories.map((cat) => {
           const Sticker = catStickers[cat.icon] || StickerBook;
           return (
-            <motion.div key={cat.id} whileHover={{ y: -2 }} transition={{ duration: 0.2 }} onClick={() => setActiveCategory(cat.name)} className="cursor-pointer">
+            <motion.div key={cat.id}  transition={{ duration: 0.2 }} onClick={() => setActiveCategory(cat.name)} className="cursor-pointer">
               <Card><CardContent className="p-4 flex flex-col items-center text-center gap-2">
                 <Sticker size={40} className="text-[var(--primary)]" />
                 <div>
@@ -94,7 +94,7 @@ export default function Library() {
         </div>
         <div className="grid sm:grid-cols-2 gap-3">
           {filteredBooks.map((book, i) => (
-            <motion.div key={book.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} whileHover={{ y: -2 }}>
+            <motion.div key={book.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} >
               <Card><CardContent className="p-4">
                 <div className="flex gap-4">
                   <div className="w-14 h-18 rounded-[var(--radius-sm)] bg-[var(--primary-soft)] flex items-center justify-center shrink-0">
