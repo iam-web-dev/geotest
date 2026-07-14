@@ -17,35 +17,42 @@ import {
   dtmSections, dtmQuestions, olympiadQuestions, attestationQuestions
 } from '../data/mockData';
 import {
-  GlobeCertificate, UZMapTarget, MountainFlagMedal, ShieldCheckDocument
+  GlobeCertificate, UZMapTarget, MountainFlagMedal, ShieldCheckDocument,
+  StickerTarget, StickerTrophy, StickerCertificate, StickerBook,
+  StickerDTMImage, StickerShieldCheck
 } from '../components/illustrations/GeoIllustrations';
 
+const categoryStickerMap = {
+  milliy: StickerCertificate,
+  dtm: StickerDTMImage,
+  olympiad: StickerTrophy,
+  attestation: StickerShieldCheck,
+};
+
 function TestCategoryCard({ category }) {
-  const iconMap = {
-    FileText: FileText,
-    Target: Target,
-    Trophy: Trophy,
-    Clipboard: ClipboardText,
+  const Sticker = categoryStickerMap[category.id] || StickerCertificate;
+  const stickerColors = {
+    milliy: '#2F80ED',
+    dtm: '#8B5CF6',
+    olympiad: '#F59E0B',
+    attestation: '#22C55E',
   };
-  const Icon = iconMap[category.icon] || FileText;
 
   return (
-    <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
+    <motion.div whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }}>
       <Link to={`/tests/${category.id}`}>
-        <Card className="h-full cursor-pointer hover:shadow-md transition-all">
+        <Card className="h-full cursor-pointer hover:shadow-md transition-all overflow-hidden">
+          <div className="h-1.5" style={{ background: category.color }} />
           <CardContent className="p-5">
-            <div className="flex items-center gap-4 mb-3">
-              <div
-                className="w-12 h-12 rounded-[var(--radius-sm)] flex items-center justify-center"
-                style={{ background: `${category.color}15` }}
-              >
-                <Icon size={22} style={{ color: category.color }} />
+            <div className="flex items-center gap-4">
+              <div className="shrink-0">
+                <Sticker size={48} color={stickerColors[category.id] || category.color} />
               </div>
-              <div className="flex-1">
-                <p className="font-bold text-[var(--text-primary)]">{category.title}</p>
-                <p className="text-xs text-[var(--text-secondary)]">{category.count} ta test</p>
+              <div className="flex-1 min-w-0">
+                <p className="font-bold text-[var(--text-primary)] text-base">{category.title}</p>
+                <p className="text-sm text-[var(--text-secondary)] mt-0.5">{category.count} ta test</p>
               </div>
-              <CaretRight size={18} className="text-[var(--text-secondary)]" />
+              <CaretRight size={18} className="text-[var(--text-secondary)] shrink-0" />
             </div>
           </CardContent>
         </Card>
@@ -755,7 +762,7 @@ export default function Tests() {
       </motion.div>
 
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}
-        className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        className="grid grid-cols-2 gap-3 w-full">
         {testCategories.map((cat) => (
           <TestCategoryCard key={cat.id} category={cat} />
         ))}

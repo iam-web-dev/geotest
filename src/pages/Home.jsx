@@ -6,6 +6,7 @@ import {
   MapPin, Star, Calendar, Globe, Target, GraduationCap,
   Sparkle, Compass, MapTrifold, Users, CheckCircle, FileText, Clipboard
 } from '@phosphor-icons/react';
+import { StickerIcons } from '../components/illustrations/GeoIllustrations';
 import Button from '../components/ui/Button';
 import { Card, CardContent } from '../components/ui/Card';
 import { ProgressBar } from '../components/ui/Progress';
@@ -23,7 +24,15 @@ const iconMap = {
   Map: MapTrifold,
 };
 
+const stickerStatMap = {
+  Flame: 'Flame',
+  Target: 'Target',
+  Clock: 'Clock',
+  TrendUp: 'TrendUp',
+};
+
 function StatCard({ icon: Icon, label, value, trend }) {
+  const StickerIcon = StickerIcons[stickerStatMap[Icon.name]] || null;
   return (
     <motion.div
       whileHover={{ y: -2 }}
@@ -31,8 +40,14 @@ function StatCard({ icon: Icon, label, value, trend }) {
       className="bg-[var(--surface)] rounded-[var(--radius)] border border-[var(--border)] p-4 shadow-sm"
     >
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-[var(--radius-xs)] bg-[var(--primary-soft)] flex items-center justify-center shrink-0">
-          <Icon size={18} className="text-[var(--primary)]" />
+        <div className="shrink-0">
+          {StickerIcon ? (
+            <StickerIcon size={36} className="text-[var(--primary)]" />
+          ) : (
+            <div className="w-9 h-9 rounded-[var(--radius-xs)] bg-[var(--primary-soft)] flex items-center justify-center">
+              <Icon size={18} className="text-[var(--primary)]" />
+            </div>
+          )}
         </div>
         <div className="min-w-0">
           <p className="text-xs text-[var(--text-secondary)] font-medium">{label}</p>
@@ -228,9 +243,8 @@ export default function Home() {
               key={test.id}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.24 + i * 0.06 }}
+              transition={{ delay: 0.24 + i * 0.06, duration: 0.3 }}
               whileHover={{ y: -2 }}
-              transition={{ duration: 0.2 }}
             >
               <Card className="cursor-pointer h-full" onClick={() => navigate(`/tests/${test.type}`)}>
                 <CardContent className="p-4">

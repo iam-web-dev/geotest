@@ -6,6 +6,7 @@ import Button from '../components/ui/Button';
 import { Card, CardContent } from '../components/ui/Card';
 import { ProgressBar } from '../components/ui/Progress';
 import { libraryCategories, books } from '../data/mockData';
+import { StickerBook, StickerGlobe, StickerStar, StickerMedal, StickerCompass } from '../components/illustrations/GeoIllustrations';
 
 const catIcons = {
   BookOpen: BookOpen,
@@ -14,6 +15,15 @@ const catIcons = {
   Trophy: Star,
   Map: FileText,
   Newspaper: FileText,
+};
+
+const catStickers = {
+  BookOpen: StickerBook,
+  GraduationCap: StickerBook,
+  Buildings: StickerGlobe,
+  Trophy: StickerMedal,
+  Map: StickerCompass,
+  Newspaper: StickerStar,
 };
 
 export default function Library() {
@@ -62,13 +72,11 @@ export default function Library() {
       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.16 }}
         className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         {libraryCategories.map((cat) => {
-          const Icon = catIcons[cat.icon] || BookOpen;
+          const Sticker = catStickers[cat.icon] || StickerBook;
           return (
             <motion.div key={cat.id} whileHover={{ y: -2 }} transition={{ duration: 0.2 }} onClick={() => setActiveCategory(cat.name)} className="cursor-pointer">
               <Card><CardContent className="p-4 flex flex-col items-center text-center gap-2">
-                <div className="w-10 h-10 rounded-[var(--radius-xs)] flex items-center justify-center" style={{ background: `${cat.color}15`, color: cat.color }}>
-                  <Icon size={20} />
-                </div>
+                <Sticker size={40} className="text-[var(--primary)]" />
                 <div>
                   <p className="text-xs font-semibold text-[var(--text-primary)]">{cat.name}</p>
                   <p className="text-[10px] text-[var(--text-tertiary)] mt-0.5">{cat.count} ta</p>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import {
   User, Gear, SignOut, Medal, BookOpen, Trophy, Target,
@@ -12,16 +12,17 @@ import { Card, CardContent } from '../components/ui/Card';
 import { ProgressBar, CircularProgress } from '../components/ui/Progress';
 import { useTheme } from '../context/ThemeContext';
 import { user, recentActivities } from '../data/mockData';
-import { UserLocationCompass, ChartGlobe } from '../components/illustrations/GeoIllustrations';
+import { UserLocationCompass, ChartGlobe, BadgeSticker, StickerIcons } from '../components/illustrations/GeoIllustrations';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Area, AreaChart } from 'recharts';
 
-const badgeIconMap = {
-  compass: Compass,
-  trendUp: TrendUp,
-  globe: Globe,
-  checkCircle: CheckCircle,
-  trophy: Trophy,
-  certificate: Certificate,
-  target: Target,
+const badgeStickerMap = {
+  'Birinchi Test': 'Target',
+  '7 kunlik Streak': 'Flame',
+  'Geografiya Fanatigi': 'Globe',
+  '100 ta Test': 'CheckCircle',
+  'Olimpiada Sovrindori': 'Medal',
+  'Milliy Sertifikat': 'Certificate',
+  'DTM 90/90': 'Target',
 };
 
 const menuItems = [
@@ -41,8 +42,37 @@ function ActivityIcon({ type }) {
   return <Icon size={18} className="text-[var(--primary)]" />;
 }
 
+// Generate mock performance chart data (like Monkeytype style)
+const chartData = Array.from({ length: 30 }, (_, i) => {
+  const date = new Date();
+  date.setDate(date.getDate() - (29 - i));
+  const base = 65 + Math.sin(i * 0.3) * 15 + Math.random() * 10;
+  return {
+    day: date.toLocaleDateString('uz-UZ', { day: 'numeric', month: 'short' }),
+    tests: Math.round(3 + Math.sin(i * 0.2) * 2 + Math.random() * 2),
+    quiz: Math.round(2 + Math.cos(i * 0.25) * 1.5 + Math.random() * 2),
+    time: Math.round(60 + Math.sin(i * 0.15) * 20 + Math.random() * 15),
+    accuracy: Math.round(base),
+  };
+});
+
 export default function Profile() {
   const { darkMode, toggleTheme } = useTheme();
+  const [chartMetric, setChartMetric] = useState('accuracy');
+
+  const chartColors = {
+    accuracy: { stroke: '#3B82F6', fill: 'rgba(59, 130, 246, 0.1)' },
+    tests: { stroke: '#8B5CF6', fill: 'rgba(139, 92, 246, 0.1)' },
+    quiz: { stroke: '#F59E0B', fill: 'rgba(245, 158, 11, 0.1)' },
+    time: { stroke: '#22C55E', fill: 'rgba(34, 197, 94, 0.1)' },
+  };
+
+  const metricConfig = {
+    accuracy: { label: "O'rtacha natija", unit: '%', key: 'accuracy' },
+    tests: { label: 'Testlar', unit: '', key: 'tests' },
+    quiz: { label: 'Viktorinalar', unit: '', key: 'quiz' },
+    time: { label: "O'quv vaqti", unit: 'h', key: 'time' },
+  };
 
   return (
     <div className="space-y-6">
@@ -88,29 +118,113 @@ export default function Profile() {
 
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
         className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <Card><CardContent className="p-4 text-center"><CircularProgress value={78} size={60} strokeWidth={4} color="#2F80ED" className="mb-2" /><p className="text-[10px] text-[var(--text-secondary)]">O'rtacha natija</p></CardContent></Card>
-        <Card><CardContent className="p-4 text-center"><p className="text-2xl font-bold text-[var(--text-primary)]">{user.totalTests}</p><p className="text-[10px] text-[var(--text-secondary)]">Testlar</p></CardContent></Card>
-        <Card><CardContent className="p-4 text-center"><p className="text-2xl font-bold text-[var(--primary)]">{user.totalQuizzes}</p><p className="text-[10px] text-[var(--text-secondary)]">Viktorinalar</p></CardContent></Card>
-        <Card><CardContent className="p-4 text-center"><p className="text-2xl font-bold text-[var(--warning)]">{user.achievements.hoursSpent}h</p><p className="text-[10px] text-[var(--text-secondary)]">O'quv vaqti</p></CardContent></Card>
+        <Card><CardContent className="p-4 text-center">
+          <CircularProgress value={78} size={60} strokeWidth={4} color="#2F80ED" className="mb-2" />
+          <p className="text-[10px] text-[var(--text-secondary)]">O'rtacha natija</p>
+        </CardContent></Card>
+        <Card><CardContent className="p-4 text-center">
+          <p className="text-2xl font-bold text-[var(--text-primary)]">{user.totalTests}</p>
+          <p className="text-[10px] text-[var(--text-secondary)]">Testlar</p>
+        </CardContent></Card>
+        <Card><CardContent className="p-4 text-center">
+          <p className="text-2xl font-bold text-[var(--primary)]">{user.totalQuizzes}</p>
+          <p className="text-[10px] text-[var(--text-secondary)]">Viktorinalar</p>
+        </CardContent></Card>
+        <Card><CardContent className="p-4 text-center">
+          <p className="text-2xl font-bold text-[var(--warning)]">{user.achievements.hoursSpent}h</p>
+          <p className="text-[10px] text-[var(--text-secondary)]">O'quv vaqti</p>
+        </CardContent></Card>
       </motion.div>
 
+      {/* Performance Chart - Monkeytype style */}
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}>
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-bold text-[var(--text-primary)]">Faoliyat Grafigi</h2>
+              <div className="flex items-center gap-1.5">
+                {Object.entries(metricConfig).map(([key, cfg]) => (
+                  <button
+                    key={key}
+                    onClick={() => setChartMetric(key)}
+                    className={cn(
+                      'px-2.5 py-1 rounded-full text-xs font-medium transition-all',
+                      chartMetric === key
+                        ? 'bg-[var(--primary)] text-white'
+                        : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--border)]/50'
+                    )}
+                  >
+                    {cfg.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="h-52 sm:h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={chartData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={chartColors[chartMetric].stroke} stopOpacity={0.3} />
+                      <stop offset="95%" stopColor={chartColors[chartMetric].stroke} stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+                  <XAxis
+                    dataKey="day"
+                    tick={{ fontSize: 10, fill: 'var(--text-tertiary)' }}
+                    axisLine={false}
+                    tickLine={false}
+                    interval="preserveStartEnd"
+                  />
+                  <YAxis
+                    tick={{ fontSize: 10, fill: 'var(--text-tertiary)' }}
+                    axisLine={false}
+                    tickLine={false}
+                    domain={chartMetric === 'accuracy' ? [40, 100] : chartMetric === 'time' ? [20, 100] : [0, 'auto']}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      background: 'var(--surface)',
+                      border: '1px solid var(--border)',
+                      borderRadius: '8px',
+                      fontSize: '12px',
+                    }}
+                    formatter={(value) => [`${value}${metricConfig[chartMetric].unit}`, metricConfig[chartMetric].label]}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey={metricConfig[chartMetric].key}
+                    stroke={chartColors[chartMetric].stroke}
+                    strokeWidth={2}
+                    fill="url(#chartGrad)"
+                    dot={false}
+                    activeDot={{ r: 4, fill: chartColors[chartMetric].stroke, strokeWidth: 0 }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Badges with Stickers */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)]">Nishonlar</h2>
           <span className="text-xs text-[var(--text-secondary)]">{user.badges.filter(b => b.unlocked).length}/{user.badges.length}</span>
         </div>
-        <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
-          {user.badges.map((badge) => {
-            const BadgeIcon = badgeIconMap[badge.icon] || Star;
-            return (
-              <div key={badge.id} className={cn('flex flex-col items-center gap-1 p-2 rounded-[var(--radius-sm)] transition-all', badge.unlocked ? 'bg-[var(--surface)]' : 'bg-[var(--border)]/50 opacity-50')}>
-                <div className={cn('w-8 h-8 rounded-[var(--radius-xs)] flex items-center justify-center', badge.unlocked ? 'bg-[var(--primary-soft)]' : 'bg-[var(--border)]')}>
-                  <BadgeIcon size={16} className={badge.unlocked ? 'text-[var(--primary)]' : 'text-[var(--text-tertiary)]'} weight={badge.unlocked ? 'fill' : 'regular'} />
-                </div>
-                <p className="text-[8px] text-center font-medium text-[var(--text-primary)] leading-tight">{badge.name}</p>
-              </div>
-            );
-          })}
+        <div className="grid grid-cols-4 sm:grid-cols-7 gap-3">
+          {user.badges.map((badge) => (
+            <div key={badge.id} className="flex flex-col items-center gap-1.5">
+              <BadgeSticker
+                name={badge.name}
+                unlocked={badge.unlocked}
+                size={52}
+                className={badge.unlocked ? '' : 'opacity-50 grayscale'}
+              />
+              <p className="text-[8px] text-center font-medium text-[var(--text-primary)] leading-tight">{badge.name}</p>
+            </div>
+          ))}
         </div>
       </motion.div>
 
