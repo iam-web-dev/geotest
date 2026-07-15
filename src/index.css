@@ -4,6 +4,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes gt-earth-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.gt-earth-spin {
+  animation: gt-earth-spin 7s linear infinite;
+  transform-origin: 100px 100px;
+  will-change: transform;
+}
+
+
 :root {
   --primary: #2563EB;
   --primary-hover: #1D4ED8;

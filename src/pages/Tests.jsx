@@ -101,7 +101,7 @@ function CategoryTestsPage({ type }) {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+      <div>
         <button
           onClick={() => navigate('/tests')}
           className="flex items-center gap-1 text-[var(--primary)] text-sm font-semibold mb-3"
@@ -114,17 +114,12 @@ function CategoryTestsPage({ type }) {
         <p className="text-sm font-semibold mt-1" style={{ color: meta.color }}>
           {category?.count || tests.length} ta test mavjud
         </p>
-      </motion.div>
+      </div>
 
       {/* Test cards */}
       <div className="grid sm:grid-cols-2 gap-4">
         {tests.map((test, i) => (
-          <motion.div
-            key={test.id}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.08 + i * 0.06 }}
-          >
+          <div key={test.id}>
             <Card className="overflow-hidden h-full">
               {/* Sticker header */}
               <div className="flex items-center gap-3 px-4 py-4" style={{ background: meta.bg }}>
@@ -169,7 +164,7 @@ function CategoryTestsPage({ type }) {
                 </button>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>
@@ -194,11 +189,7 @@ function TestExamCard({ test, index }) {
   const TypeSticker = typeStickerMap[test.type] || StickerMilliyBadge;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.06 }}
-    >
+    <div>
       <Card className="overflow-hidden hover:shadow-md transition-all h-full">
         {/* Colored header */}
         <div className="flex items-center gap-3 px-4 py-3" style={{ background: c.bg }}>
@@ -244,7 +235,7 @@ function TestExamCard({ test, index }) {
           </div>
         </CardContent>
       </Card>
-    </motion.div>
+    </div>
   );
 }
 
@@ -863,31 +854,25 @@ export default function Tests() {
 
   return (
     <div className="space-y-6">
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
+      <div>
         <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">Testlar</h1>
         <p className="text-sm text-[var(--text-secondary)] mt-1">Imtihon turini tanlang va tayyorgarlikni boshlang</p>
-      </motion.div>
+      </div>
 
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.08 }}
-        className="grid grid-cols-2 gap-3 w-full">
+      <div className="grid grid-cols-2 gap-3 w-full">
         {testCategories.map((cat) => (
           <TestCategoryCard key={cat.id} category={cat} />
         ))}
-      </motion.div>
+      </div>
 
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.14 }}>
+      <div>
         <h2 className="text-[17px] font-bold text-[var(--text-primary)] mb-3">Ommabop Testlar</h2>
         <div className="grid sm:grid-cols-2 gap-4">
           {popularTests.map((test, i) => {
             const meta = testStickers[test.type] || testStickers.milliy;
             const { Sticker } = meta;
             return (
-              <motion.div
-                key={test.id}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 + i * 0.05 }}
-              >
+              <div key={test.id}>
                 <Card className="cursor-pointer h-full overflow-hidden" onClick={() => navigate(`/tests/${test.type}`)}>
                   <div className="flex items-center gap-3 px-4 py-3" style={{ background: meta.bg }}>
                     <Sticker size={42} color={meta.color} />
@@ -913,11 +898,11 @@ export default function Tests() {
                     </div>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             );
           })}
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

@@ -116,9 +116,7 @@ export default function Rankings() {
     <div className="space-y-5">
 
       {/* ── Hero banner ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
+      <div
         className="relative overflow-hidden rounded-[var(--radius-lg)] p-5"
         style={{
           background: darkMode
@@ -160,15 +158,10 @@ export default function Rankings() {
             <p className="text-white/65 text-xs mt-0.5">Eng yaxshi geografiya bilimdonlari</p>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* ── Tabs ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.08 }}
-        className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none"
-      >
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
         {tabs.map(tab => (
           <button
             key={tab.id}
@@ -184,7 +177,7 @@ export default function Rankings() {
             {tab.label}
           </button>
         ))}
-      </motion.div>
+      </div>
 
       <AnimatePresence mode="wait">
         <motion.div
@@ -219,11 +212,8 @@ export default function Rankings() {
               const isLast = i === list.length - 1;
 
               return (
-                <motion.div
+                <div
                   key={person.id}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.04 + i * 0.05 }}
                   className={cn(
                     'flex items-center gap-3 px-4 py-3',
                     !isLast && 'border-b border-[var(--border)]',
@@ -313,7 +303,7 @@ export default function Rankings() {
                     </p>
                     <p className="text-[10px] text-[var(--text-tertiary)]">XP</p>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
           </Card>

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import {
   Flame, Clock, BookOpen, ArrowRight,
   Star, Calendar, Globe,
@@ -110,11 +109,7 @@ export default function Home() {
       </div>
 
       {/* ── Daily Stats ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35, delay: 0.08 }}
-      >
+      <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-[17px] font-bold text-[var(--text-primary)]">Kunlik Statistika</h2>
           <span className="text-xs text-[var(--text-secondary)]">Bugun</span>
@@ -122,18 +117,13 @@ export default function Home() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <StatCard icon={StatIconXP}       label="Bugungi Ball"      value={`+${dailyStats.xpGained}`} detail={`${dailyStats.streak} kunlik streak`} trend="+12%" />
           <StatCard icon={StatIconAccuracy} label="To'g'rilik"       value={`${dailyStats.accuracy}%`} detail={`${dailyStats.correctAnswers}/${dailyStats.questionsAnswered} savol`} />
-          <StatCard icon={StatIconTime}     label="O'qish Vaqti"     value={dailyStats.studyTime} detail="Bugun sarflandi" />
+          <StatCard icon={StatIconTime}     label="O'qish Vaqti"     value={dailyStats.studyTime} detail="Bugun sarflandi" trend="+18%" />
           <StatCard icon={StatIconTests}    label="Bajarilgan Test"  value={`${dailyStats.testsDone} ta`} detail={`${dailyStats.quizzesDone} ta viktorina`} />
         </div>
-      </motion.div>
+      </div>
 
       {/* ── Geography Fact ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35, delay: 0.12 }}
-      >
-        <div
+      <div
           className="rounded-[var(--radius)] overflow-hidden border"
           style={{ background: 'var(--fact-bg)', borderColor: 'var(--fact-border)' }}
         >
@@ -181,15 +171,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </motion.div>
 
       {/* ── Continue Learning ── */}
       {continueLearning.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.16 }}
-        >
+        <div>
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-[17px] font-bold text-[var(--text-primary)]">Davom Etirish</h2>
             <Link to="/tests" className="text-xs text-[var(--primary)] font-semibold hover:underline">
@@ -198,12 +183,7 @@ export default function Home() {
           </div>
           <div className="space-y-2">
             {continueLearning.map((item, i) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, x: -8 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.16 + i * 0.05 }}
-              >
+              <div key={item.id}>
                 {(() => {
                   const meta = testStickers[item.type] || testStickers.milliy;
                   const { Sticker } = meta;
@@ -255,18 +235,14 @@ export default function Home() {
                     </Card>
                   );
                 })()}
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       )}
 
       {/* ── Upcoming Exams ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35, delay: 0.28 }}
-      >
+      <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-[17px] font-bold text-[var(--text-primary)]">Yaqinlashayotgan Imtihonlar</h2>
         </div>
@@ -350,8 +326,7 @@ export default function Home() {
             );
           })}
         </div>
-      </motion.div>
-
+      </div>
 
     </div>
   );

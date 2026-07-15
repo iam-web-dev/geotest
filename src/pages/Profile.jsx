@@ -1,5 +1,4 @@
-import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+﻿import { useState, useMemo } from 'react';
 import {
   User, Gear, SignOut, Medal, BookOpen, Trophy, Target,
   Calendar, Clock, Star, Flame, Lightning, CaretRight,
@@ -76,7 +75,7 @@ export default function Profile() {
 
   return (
     <div className="space-y-6">
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
+      <div>
         <Card><CardContent className="p-6">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
             <div className="relative">
@@ -114,10 +113,9 @@ export default function Profile() {
             <ProgressBar value={48.4} size="md" />
           </div>
         </CardContent></Card>
-      </motion.div>
+      </div>
 
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.08 }}
-        className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <Card><CardContent className="p-4 text-center">
           <CircularProgress value={78} size={60} strokeWidth={4} color="#2F80ED" className="mb-2" />
           <p className="text-[10px] text-[var(--text-secondary)]">O'rtacha natija</p>
@@ -134,10 +132,10 @@ export default function Profile() {
           <p className="text-2xl font-bold text-[var(--warning)]">{user.achievements.hoursSpent}h</p>
           <p className="text-[10px] text-[var(--text-secondary)]">O'quv vaqti</p>
         </CardContent></Card>
-      </motion.div>
+      </div>
 
       {/* Performance Chart - Monkeytype style */}
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.12 }}>
+      <div>
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center justify-between mb-4">
@@ -205,10 +203,10 @@ export default function Profile() {
             </div>
           </CardContent>
         </Card>
-      </motion.div>
+      </div>
 
       {/* Badges with Stickers */}
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.16 }}>
+      <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold text-[var(--text-primary)]">Nishonlar</h2>
           <span className="text-xs text-[var(--text-secondary)]">{user.badges.filter(b => b.unlocked).length}/{user.badges.length}</span>
@@ -226,9 +224,9 @@ export default function Profile() {
             </div>
           ))}
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.20 }}>
+      <div>
         <Card><CardContent className="p-0">
           {menuItems.map((item, i) => (
             <div key={item.label} className={cn('flex items-center gap-3 p-4 cursor-pointer hover:bg-[var(--background)] transition-all', i < menuItems.length - 1 && 'border-b border-[var(--border)]')}>
@@ -243,9 +241,9 @@ export default function Profile() {
             </div>
           ))}
         </CardContent></Card>
-      </motion.div>
+      </div>
 
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.23 }}>
+      <div>
         <Card><CardContent className="p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[var(--primary-soft)] flex items-center justify-center">
@@ -260,9 +258,9 @@ export default function Profile() {
             <div className={cn('w-5 h-5 rounded-full bg-white absolute top-0.5 transition-all shadow-sm', darkMode ? 'left-6' : 'left-0.5')} />
           </button>
         </CardContent></Card>
-      </motion.div>
+      </div>
 
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.26 }}>
+      <div>
         <h2 className="text-lg font-bold text-[var(--text-primary)] mb-4">Oxirgi Faoliyat</h2>
         <div className="space-y-2">
           {recentActivities.map((activity) => (
@@ -278,12 +276,12 @@ export default function Profile() {
             </CardContent></Card>
           ))}
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.29 }} className="text-center pb-4">
+      <div className="text-center pb-4">
         <p className="text-xs text-[var(--text-secondary)]">Geo-Test.uz v1.0.0</p>
         <p className="text-[10px] text-[var(--text-secondary)] mt-0.5">O'zbekiston geografiya ta'lim platformasi</p>
-      </motion.div>
+      </div>
     </div>
   );
 }

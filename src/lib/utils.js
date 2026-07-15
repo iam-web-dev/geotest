@@ -73,6 +73,20 @@ export function getExamTypeColor(type) {
   }
 }
 
+export function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+export function sampleN(arr, n, exclude) {
+  const pool = exclude ? arr.filter(x => x !== exclude) : arr;
+  return shuffle(pool).slice(0, n);
+}
+
 export function getExamTypeLabel(type) {
   switch (type) {
     case 'milliy': return 'Milliy Sertifikat';

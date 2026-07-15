@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+﻿import { useState } from 'react';
 import { MagnifyingGlass, Bookmark, Clock, Heart, ChatCircle, Tag, BookOpen } from '@phosphor-icons/react';
 import { cn } from '../lib/utils';
 import { Card, CardContent } from '../components/ui/Card';
@@ -18,32 +17,31 @@ export default function Articles() {
 
   return (
     <div className="space-y-8">
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
+      <div>
         <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">Maqolalar</h1>
         <p className="text-sm text-[var(--text-secondary)] mt-1">Geografiya bo'yicha foydali maqolalar</p>
-      </motion.div>
+      </div>
 
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.08 }}>
+      <div>
         <div className="relative">
           <MagnifyingGlass size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)]" />
           <input type="text" placeholder="Maqola qidirish..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full h-11 pl-11 pr-4 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)] text-sm placeholder:text-[var(--text-tertiary)] focus:border-[var(--primary)] focus:outline-none transition-all shadow-sm" />
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.12 }}
-        className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
         {allTags.map((tag) => (
           <button key={tag} onClick={() => setActiveTag(tag)}
             className={cn('px-4 py-2 rounded-[var(--radius-sm)] text-sm font-medium whitespace-nowrap transition-all border', activeTag === tag ? 'bg-[var(--primary)] text-white border-[var(--primary)]' : 'bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--primary-soft)] hover:text-[var(--primary)] border-[var(--border)]')}>
             {tag === 'all' ? 'Barchasi' : `#${tag}`}
           </button>
         ))}
-      </motion.div>
+      </div>
 
       <div className="space-y-3">
         {filteredArticles.map((article, i) => (
-          <motion.div key={article.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06 }} >
+          <div key={article.id}>
             <Card><CardContent className="p-5">
               <div className="flex gap-4">
                 <div className="w-16 h-16 rounded-[var(--radius-sm)] bg-[var(--primary-soft)] flex items-center justify-center shrink-0">
@@ -79,7 +77,7 @@ export default function Articles() {
                 </div>
               </div>
             </CardContent></Card>
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>
