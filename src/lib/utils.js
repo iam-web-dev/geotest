@@ -1,6 +1,8 @@
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+export const canHover = window.matchMedia('(hover: hover) and (any-pointer: fine)').matches;
+
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
@@ -64,11 +66,25 @@ export function getDifficultyLabel(difficulty) {
 export function getExamTypeColor(type) {
   switch (type) {
     case 'milliy': return '#2F80ED';
-    case 'dtm': return '#8B5CF6';
+    case 'dtm': return '#171796';
     case 'olympiad': return '#F59E0B';
     case 'attestation': return '#22C55E';
     default: return '#6B7280';
   }
+}
+
+export function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+export function sampleN(arr, n, exclude) {
+  const pool = exclude ? arr.filter(x => x !== exclude) : arr;
+  return shuffle(pool).slice(0, n);
 }
 
 export function getExamTypeLabel(type) {

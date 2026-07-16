@@ -1,17 +1,14 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { Home, Compass, Search } from 'lucide-react';
 import Button from '../components/ui/Button';
 
 export default function NotFound() {
   return (
     <div className="min-h-[80dvh] flex items-center justify-center">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        className="text-center max-w-md mx-auto px-4"
-      >
+      <SEO title="Sahifa Topilmadi" description="Siz qidirayotgan sahifa topilmadi." noindex />
+      <div className="text-center max-w-md mx-auto px-4">
         <motion.div
           animate={{ rotate: [0, 10, -10, 0] }}
           transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
@@ -36,7 +33,7 @@ export default function NotFound() {
             </Button>
           </Link>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }
