@@ -1,10 +1,21 @@
 import { NavLink } from 'react-router-dom';
 import {
-  House, BookOpen, Books, GameController, User, Trophy, Newspaper, Compass, Sun, Moon
+  House, BookOpen, Books, GameController, User, Trophy, Newspaper, Compass, Sun, Moon,
+  GraduationCap, Student, ChalkboardTeacher,
 } from '@phosphor-icons/react';
 import { cn } from '../../lib/utils';
 import { useTheme } from '../../context/ThemeContext';
 import { user } from '../../data/mockData';
+
+const ROLE_META = {
+  school_student: { Icon: GraduationCap, color: '#2563EB' },
+  student:        { Icon: Student,        color: '#7C3AED' },
+  teacher:        { Icon: ChalkboardTeacher, color: '#16A34A' },
+};
+
+function loadSettings() {
+  try { return JSON.parse(localStorage.getItem('geo_user_settings')) || {}; } catch { return {}; }
+}
 
 const navItems = [
   { to: '/', icon: House, label: 'Bosh Sahifa' },
@@ -19,15 +30,16 @@ const navItems = [
 
 export default function Sidebar() {
   const { darkMode, toggleTheme } = useTheme();
+  const settings = loadSettings();
+  const merged = { ...user, ...settings };
+  const roleMeta = ROLE_META[merged.role] || ROLE_META.school_student;
+  const RoleIcon = roleMeta.Icon;
 
   return (
     <aside className="hidden lg:flex flex-col w-64 h-screen sticky top-0 bg-[var(--surface)] border-r border-[var(--border)] p-4">
       <div className="flex items-center gap-3 px-3 py-4 mb-6">
-        <div className="w-10 h-10 rounded-[var(--radius-sm)] geo-gradient flex items-center justify-center text-white font-bold text-lg">G</div>
-        <div>
-          <h1 className="text-lg font-bold text-[var(--text-primary)]">Geo-Test</h1>
-          <p className="text-xs text-[var(--text-secondary)]">.uz</p>
-        </div>
+        <img src="/main_logo.png" alt="Geo-Test" className="w-10 h-10 object-contain" />
+        <h1 className="text-lg font-bold text-[var(--text-primary)]">Geo-Test</h1>
       </div>
 
       <nav className="flex-1 space-y-1">
@@ -52,11 +64,12 @@ export default function Sidebar() {
 
       <div className="border-t border-[var(--border)] pt-4 mt-4">
         <NavLink to="/profile" className="flex items-center gap-3 px-3 py-2.5 rounded-[var(--radius-sm)] hover:bg-[var(--background)] transition-all duration-200">
-          <div className="w-9 h-9 rounded-full geo-gradient flex items-center justify-center text-white text-sm font-bold">
-            {user.name.charAt(0)}
+          <div className="w-9 h-9 rounded-full flex items-center justify-center text-white shrink-0"
+            style={{ background: `linear-gradient(135deg, ${roleMeta.color} 0%, ${roleMeta.color}99 100%)` }}>
+            <RoleIcon size={18} weight="duotone" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-[var(--text-primary)] truncate">{user.name}</p>
+            <p className="text-sm font-medium text-[var(--text-primary)] truncate">{merged.name}</p>
             <p className="text-xs text-[var(--text-secondary)]">{user.xp.toLocaleString()} XP</p>
           </div>
         </NavLink>

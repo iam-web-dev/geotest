@@ -39,5 +39,5 @@ function buildQuestions() {
 
 export default function ClimateGame() {
   const questions = useMemo(buildQuestions, []);
-  return <QuizEngine title="Iqlim Match" color="#EA580C" questions={questions} xpPerCorrect={8} timePerQuestion={15} />;
+  return <QuizEngine title="Iqlimni Aniqlang" color="#EA580C" questions={questions} xpPerCorrect={8} timePerQuestion={15} />;
 }

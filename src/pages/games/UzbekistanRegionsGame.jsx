@@ -19,7 +19,6 @@ const difficultyMeta = {
 };
 
 const modeMeta = {
-  practice: { label: 'Mashq', desc: 'Vaqtsiz, 2 marta urinish huquqi' },
   timeAttack: { label: 'Vaqtga qarshi', desc: '90 soniyada imkon boricha ko\'proq toping' },
   survival: { label: 'Omon qolish', desc: '3 ta jon, xato qilsangiz jon kamayadi' },
   daily: { label: 'Kunlik', desc: '10 ta aralash savol, maxsus mukofot' },
@@ -27,7 +26,7 @@ const modeMeta = {
 
 function SetupPicker({ onStart, onExit }) {
   const [difficulty, setDifficulty] = useState('easy');
-  const [mode, setMode] = useState('practice');
+  const [mode, setMode] = useState('timeAttack');
   return (
     <div className="max-w-md mx-auto space-y-5">
       <div className="flex items-center gap-2">
@@ -87,6 +86,7 @@ function UzMap({ getFill, getStroke, onPick, zoom, pan, onPanStart, onPanMove, o
   return (
     <svg
       viewBox={uzbekistanMap.viewBox}
+      preserveAspectRatio="xMidYMid slice"
       className="w-full h-full touch-none select-none"
       onPointerDown={onPanStart}
       onPointerMove={onPanMove}
@@ -130,6 +130,8 @@ function UzbekistanRegionsRound({ difficulty, mode, onExit }) {
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const panDrag = useRef(null);
+  const dragStartPos = useRef(null);
+  const draggedRef = useRef(false);
   const startRef = useRef(Date.now());
   const answeredRef = useRef(0);
   const advanceTimer = useRef(null);
@@ -171,6 +173,7 @@ function UzbekistanRegionsRound({ difficulty, mode, onExit }) {
 
   const handlePick = useCallback((loc) => {
     if (status === 'answered' || result || paused) return;
+    if (draggedRef.current) return;
     const isCorrect = loc.id === current.id;
 
     if (isCorrect) {
@@ -211,17 +214,8 @@ function UzbekistanRegionsRound({ difficulty, mode, onExit }) {
       return;
     }
 
-    if (mode === 'practice') {
-      const nextAttempts = attempts + 1;
-      setAttempts(nextAttempts);
-      const newMistakes = mistakes + 1;
-      setMistakes(newMistakes);
-      if (nextAttempts >= 2) {
-        answeredRef.current += 1;
-        setStatus('answered');
-        setRevealId(current.id);
-        advanceTimer.current = setTimeout(() => goNext(score, newMistakes), 1800);
-      }
+    if (false) {
+      // practice mode removed
       return;
     }
 
@@ -259,9 +253,16 @@ function UzbekistanRegionsRound({ difficulty, mode, onExit }) {
   };
   const getStroke = (loc) => loc.id === 'aral-sea' ? '#8FC7E0' : '#3F6B57';
 
-  const onPanStart = (e) => { panDrag.current = { x: e.clientX - pan.x, y: e.clientY - pan.y }; };
+  const onPanStart = (e) => {
+    panDrag.current = { x: e.clientX - pan.x, y: e.clientY - pan.y };
+    dragStartPos.current = { x: e.clientX, y: e.clientY };
+    draggedRef.current = false;
+  };
   const onPanMove = (e) => {
     if (!panDrag.current) return;
+    if (dragStartPos.current && Math.hypot(e.clientX - dragStartPos.current.x, e.clientY - dragStartPos.current.y) > 8) {
+      draggedRef.current = true;
+    }
     setPan({ x: e.clientX - panDrag.current.x, y: e.clientY - panDrag.current.y });
   };
   const onPanEnd = () => { panDrag.current = null; };
@@ -310,9 +311,6 @@ function UzbekistanRegionsRound({ difficulty, mode, onExit }) {
 
           {combo >= 3 && status === 'idle' && (
             <p className="text-xs font-bold" style={{ color: COLOR }}>🔥 Combo x{Math.min(3, 1 + Math.floor(combo / 3))}</p>
-          )}
-          {mode === 'practice' && attempts === 1 && status === 'idle' && (
-            <p className="text-xs font-semibold text-[var(--danger)]">Yana bir urinish qoldi!</p>
           )}
         </div>
       )}

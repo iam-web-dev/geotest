@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import SEO from '../components/SEO';
 import {
   MagnifyingGlass, BookOpen, Download, Bookmark, Star,
   Book, FileText, Notebook, SortAscending, X,
@@ -67,50 +68,41 @@ function BookCard({ book, onBookmark, onRead }) {
   const isDone    = book.readPages >= book.pages;
 
   return (
-    <div className="bg-[var(--surface)] rounded-[var(--radius)] border border-[var(--border)] p-4 flex gap-4 hover:border-[var(--primary)] transition-colors group">
-      <BookCover book={book} />
-
-      <div className="flex-1 min-w-0">
-        {/* top row */}
-        <div className="flex items-start justify-between gap-2">
-          <div className="min-w-0">
+    <div className="bg-[var(--surface)] rounded-[var(--radius)] border border-[var(--border)] hover:border-[var(--primary)] transition-colors overflow-hidden">
+      {/* Row 1: rasm + title */}
+      <div className="flex gap-3 p-3">
+        <BookCover book={book} />
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between gap-1">
             <p className="text-sm font-semibold text-[var(--text-primary)] leading-snug line-clamp-2">{book.title}</p>
-            <p className="text-[11px] text-[var(--text-tertiary)] mt-0.5">{book.author}</p>
+            <button
+              onClick={() => onBookmark(book.id)}
+              className="shrink-0 p-1 rounded-lg hover:bg-[var(--primary-soft)] transition-colors"
+            >
+              <Bookmark
+                size={15}
+                weight={book.isBookmarked ? 'fill' : 'regular'}
+                style={{ color: book.isBookmarked ? meta.color : 'var(--text-tertiary)' }}
+              />
+            </button>
           </div>
-          <button
-            onClick={() => onBookmark(book.id)}
-            className="shrink-0 p-1 -mr-1 -mt-1 rounded-lg hover:bg-[var(--primary-soft)] transition-colors"
-          >
-            <Bookmark
-              size={16}
-              weight={book.isBookmarked ? 'fill' : 'regular'}
-              style={{ color: book.isBookmarked ? meta.color : 'var(--text-tertiary)' }}
-            />
-          </button>
+          <p className="text-[11px] text-[var(--text-tertiary)] mt-0.5">{book.author}</p>
+          <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ background: meta.bg, color: meta.color }}>
+              {book.category}
+            </span>
+            <span className="flex items-center gap-0.5 text-[10px] text-[var(--text-tertiary)]">
+              <Star size={10} weight="fill" style={{ color: '#D97706' }} />{book.rating}
+            </span>
+            <span className="text-[10px] text-[var(--text-tertiary)]">{book.pages} bet</span>
+          </div>
         </div>
+      </div>
 
-        {/* meta chips */}
-        <div className="flex items-center gap-2 mt-2 flex-wrap">
-          <span
-            className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
-            style={{ background: meta.bg, color: meta.color }}
-          >
-            {book.category}
-          </span>
-          <span className="flex items-center gap-0.5 text-[10px] text-[var(--text-tertiary)]">
-            <Star size={10} weight="fill" style={{ color: '#D97706' }} />
-            {book.rating}
-          </span>
-          <span className="text-[10px] text-[var(--text-tertiary)]">{book.pages} bet</span>
-          <span className="text-[10px] text-[var(--text-tertiary)]">
-            <Download size={9} className="inline mr-0.5" />
-            {(book.downloads / 1000).toFixed(1)}k
-          </span>
-        </div>
-
-        {/* progress */}
+      {/* Row 2: foiz + tugmalar */}
+      <div className="px-3 pb-3 flex flex-col gap-2 border-t border-[var(--border)] pt-2.5">
         {(isReading || isDone) && (
-          <div className="mt-2.5">
+          <div>
             <div className="flex items-center justify-between text-[10px] mb-1" style={{ color: meta.color }}>
               <span>{isDone ? "✓ Tugatildi" : `${progress}% o'qildi`}</span>
               {!isDone && <span className="text-[var(--text-tertiary)]">{book.readPages}/{book.pages} bet</span>}
@@ -118,35 +110,21 @@ function BookCard({ book, onBookmark, onRead }) {
             <ProgressBar value={progress} size="sm" color={isDone ? '#16A34A' : meta.color} />
           </div>
         )}
-
-        {/* actions */}
-        <div className="flex items-center gap-2 mt-3">
+        <div className="flex items-center gap-2">
           {isReading ? (
-            <button
-              onClick={() => onRead(book.id)}
-              className="flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg transition-colors"
-              style={{ background: meta.bg, color: meta.color }}
-            >
+            <button onClick={() => onRead(book.id)} className="flex-1 flex items-center justify-center gap-1.5 text-[11px] font-semibold px-3 py-2 rounded-lg transition-colors" style={{ background: meta.bg, color: meta.color }}>
               <BookOpen size={12} /> Davom etish
             </button>
           ) : isDone ? (
-            <button
-              onClick={() => onRead(book.id)}
-              className="flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg transition-colors"
-              style={{ background: '#F0FDF4', color: '#16A34A' }}
-            >
+            <button onClick={() => onRead(book.id)} className="flex-1 flex items-center justify-center gap-1.5 text-[11px] font-semibold px-3 py-2 rounded-lg transition-colors" style={{ background: '#F0FDF4', color: '#16A34A' }}>
               <BookOpen size={12} /> Qayta o'qish
             </button>
           ) : (
-            <button
-              onClick={() => onRead(book.id)}
-              className="flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg transition-colors"
-              style={{ background: meta.bg, color: meta.color }}
-            >
+            <button onClick={() => onRead(book.id)} className="flex-1 flex items-center justify-center gap-1.5 text-[11px] font-semibold px-3 py-2 rounded-lg transition-colors" style={{ background: meta.bg, color: meta.color }}>
               <BookOpen size={12} /> O'qishni boshlash
             </button>
           )}
-          <button className="flex items-center gap-1.5 text-[11px] font-medium px-3 py-1.5 rounded-lg border border-[var(--border)] text-[var(--text-secondary)] hover:bg-[var(--primary-soft)] hover:text-[var(--primary)] hover:border-[var(--primary)] transition-colors">
+          <button className="flex items-center gap-1.5 text-[11px] font-medium px-3 py-2 rounded-lg border border-[var(--border)] text-[var(--text-secondary)] hover:bg-[var(--primary-soft)] hover:text-[var(--primary)] hover:border-[var(--primary)] transition-colors">
             <Download size={12} /> Yuklab olish
           </button>
         </div>
@@ -193,6 +171,11 @@ export default function Library() {
 
   return (
     <div className="space-y-6">
+      <SEO
+        title="Geografiya Kutubxonasi"
+        description="Geografiya darsliklari, atlaslar, o'quv materiallari va ta'lim PDFlarini o'qing va yuklab oling."
+        url="/library"
+      />
 
       {/* ── Header ── */}
       <div>

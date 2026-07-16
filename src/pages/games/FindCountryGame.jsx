@@ -4,13 +4,52 @@ import { motion } from 'framer-motion';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import { MagnifyingGlassPlus, MagnifyingGlassMinus, ArrowsCounterClockwise, CaretLeft } from '@phosphor-icons/react';
 import { worldCountries, countryPools } from '../../data/worldCountries';
-import { shuffle, formatTime } from '../../lib/utils';
+import { shuffle, formatTime, canHover } from '../../lib/utils';
 import GameShell from '../../components/games/GameShell';
 import { playCorrect, playWrong, playFinish, vibrate } from '../../lib/gameSound';
 
 const TOTAL = 8;
 const ROUND_TIME = 20;
 const COLOR = '#16A34A';
+
+const continentView = {
+  europe:       { center: [15, 54],   zoom: 3.2 },
+  asia:         { center: [90, 35],   zoom: 2.2 },
+  centralAsia:  { center: [63, 42],   zoom: 4.0 },
+  africa:       { center: [20, 5],    zoom: 2.2 },
+  northAmerica: { center: [-100, 48], zoom: 2.0 },
+  southAmerica: { center: [-60, -15], zoom: 2.2 },
+  oceania:      { center: [140, -25], zoom: 2.8 },
+  middleEast:   { center: [45, 28],   zoom: 3.5 },
+  world:        { center: [0, 10],    zoom: 1.0 },
+};
+
+const countryContinent = {
+  // Easy
+  'Russia': 'europe', 'Canada': 'northAmerica', 'United States of America': 'northAmerica',
+  'Brazil': 'southAmerica', 'China': 'asia', 'Australia': 'oceania', 'India': 'asia',
+  'Argentina': 'southAmerica', 'Kazakhstan': 'centralAsia', 'Algeria': 'africa',
+  'Mexico': 'northAmerica', 'Indonesia': 'oceania', 'Sudan': 'africa',
+  'Mongolia': 'asia', 'Saudi Arabia': 'middleEast',
+  // Medium
+  'France': 'europe', 'Germany': 'europe', 'Spain': 'europe', 'Ukraine': 'europe',
+  'Turkey': 'middleEast', 'Egypt': 'africa', 'South Africa': 'africa', 'Nigeria': 'africa',
+  'Japan': 'asia', 'Uzbekistan': 'centralAsia', 'Iran': 'middleEast', 'Pakistan': 'asia',
+  'Thailand': 'asia', 'Kenya': 'africa', 'Poland': 'europe', 'Italy': 'europe',
+  'Sweden': 'europe', 'Norway': 'europe', 'Afghanistan': 'centralAsia',
+  'Tajikistan': 'centralAsia', 'Kyrgyzstan': 'centralAsia', 'Turkmenistan': 'centralAsia',
+  // Hard
+  'Fiji': 'oceania', 'Jamaica': 'northAmerica', 'Lebanon': 'middleEast', 'Israel': 'middleEast',
+  'Kuwait': 'middleEast', 'Qatar': 'middleEast', 'Cyprus': 'middleEast',
+  'Luxembourg': 'europe', 'Montenegro': 'europe', 'Moldova': 'europe',
+  'Slovenia': 'europe', 'Estonia': 'europe', 'eSwatini': 'africa',
+  'Djibouti': 'africa', 'Timor-Leste': 'oceania', 'Brunei': 'asia', 'Vanuatu': 'oceania',
+};
+
+function getView(countryName) {
+  const key = countryContinent[countryName] || 'world';
+  return continentView[key];
+}
 
 const difficultyMeta = {
   easy: { label: 'Oson', desc: 'Yirik va mashhur davlatlar', dotColor: '#22C55E' },
@@ -26,7 +65,7 @@ function DifficultyPicker({ onSelect, onExit }) {
           <CaretLeft size={18} weight="bold" />
         </button>
         <div>
-          <p className="text-sm font-bold text-[var(--text-primary)]">Davlatni Top</p>
+          <p className="text-sm font-bold text-[var(--text-primary)]">Xaritada Davlat</p>
           <p className="text-xs text-[var(--text-secondary)]">Qiyinlik darajasini tanlang</p>
         </div>
       </div>
@@ -63,10 +102,13 @@ function FindCountryRound({ difficulty, onExit }) {
   const [timeLeft, setTimeLeft] = useState(ROUND_TIME);
   const [paused, setPaused] = useState(false);
   const [result, setResult] = useState(null);
-  const [zoom, setZoom] = useState(1);
-  const [center, setCenter] = useState([0, 10]);
+  const initialView = getView(targets[0]);
+  const [zoom, setZoom] = useState(initialView.zoom);
+  const [center, setCenter] = useState(initialView.center);
   const startRef = useRef(Date.now());
   const advanceTimer = useRef(null);
+  const dragStartPos = useRef(null);
+  const draggedRef = useRef(false);
 
   const current = targets[index];
 
@@ -87,16 +129,21 @@ function FindCountryRound({ difficulty, onExit }) {
   const advance = useCallback((finalScore, finalMistakes) => {
     if (index + 1 >= TOTAL) finish(finalScore, finalMistakes);
     else {
+      const next = targets[index + 1];
+      const view = getView(next);
       setIndex(i => i + 1);
       setStatus('idle');
       setFlash(null);
       setRevealId(null);
       setTimeLeft(ROUND_TIME);
+      setZoom(view.zoom);
+      setCenter(view.center);
     }
-  }, [index, finish]);
+  }, [index, targets, finish]);
 
   const handlePick = useCallback((geo) => {
     if (status !== 'idle' || result) return;
+    if (draggedRef.current) return;
     const name = geo.properties.name;
     const isCorrect = name === current;
     setStatus('answered');
@@ -146,7 +193,8 @@ function FindCountryRound({ difficulty, onExit }) {
   const restart = () => {
     setIndex(0); setScore(0); setMistakes(0); setCombo(0);
     setStatus('idle'); setFlash(null); setRevealId(null);
-    setTimeLeft(ROUND_TIME); setResult(null); setZoom(1); setCenter([0, 10]);
+    const v0 = getView(targets[0]);
+    setTimeLeft(ROUND_TIME); setResult(null); setZoom(v0.zoom); setCenter(v0.center);
     startRef.current = Date.now();
   };
 
@@ -158,7 +206,7 @@ function FindCountryRound({ difficulty, onExit }) {
 
   return (
     <GameShell
-      title="Davlatni Top"
+      title="Xaritada Davlat"
       color={COLOR}
       score={score}
       progress={{ current: index + 1, total: TOTAL }}
@@ -180,7 +228,15 @@ function FindCountryRound({ difficulty, onExit }) {
             Toping: {current}
           </motion.div>
 
-          <div className="relative w-full rounded-[var(--radius)] overflow-hidden border border-[var(--border)]" style={{ height: 320, background: '#BFE3F5' }}>
+          <div
+            className="relative w-full rounded-[var(--radius)] overflow-hidden border border-[var(--border)]"
+            style={{ height: 320, background: '#BFE3F5' }}
+            onPointerDown={(e) => { dragStartPos.current = { x: e.clientX, y: e.clientY }; draggedRef.current = false; }}
+            onPointerMove={(e) => {
+              if (!dragStartPos.current) return;
+              if (Math.hypot(e.clientX - dragStartPos.current.x, e.clientY - dragStartPos.current.y) > 8) draggedRef.current = true;
+            }}
+          >
             <ComposableMap projection="geoEqualEarth" style={{ width: '100%', height: '100%' }}>
               <ZoomableGroup zoom={zoom} center={center} onMoveEnd={({ zoom: z, coordinates }) => { setZoom(z); setCenter(coordinates); }} minZoom={1} maxZoom={6}>
                 <Geographies geography={worldCountries}>
@@ -192,7 +248,7 @@ function FindCountryRound({ difficulty, onExit }) {
                         onClick={() => handlePick(geo)}
                         style={{
                           default: { fill: geoFill(geo), stroke: '#5B7A63', strokeWidth: 0.6, outline: 'none', transition: 'fill 150ms' },
-                          hover: { fill: status === 'idle' ? '#4ADE80' : geoFill(geo), stroke: '#166534', strokeWidth: 0.8, outline: 'none', cursor: 'pointer' },
+                          hover: { fill: canHover && status === 'idle' ? '#4ADE80' : geoFill(geo), stroke: canHover ? '#166534' : '#5B7A63', strokeWidth: canHover ? 0.8 : 0.6, outline: 'none', cursor: 'pointer' },
                           pressed: { fill: '#22C55E', outline: 'none' },
                         }}
                       />
@@ -209,7 +265,7 @@ function FindCountryRound({ difficulty, onExit }) {
               <button onClick={() => setZoom(z => Math.max(1, z - 1))} className="w-9 h-9 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center shadow-sm">
                 <MagnifyingGlassMinus size={15} />
               </button>
-              <button onClick={() => { setZoom(1); setCenter([0, 10]); }} className="w-9 h-9 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center shadow-sm">
+              <button onClick={() => { const v = getView(current); setZoom(v.zoom); setCenter(v.center); }} className="w-9 h-9 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center shadow-sm">
                 <ArrowsCounterClockwise size={14} />
               </button>
             </div>

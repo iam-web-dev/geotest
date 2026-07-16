@@ -66,7 +66,7 @@ export function getDifficultyLabel(difficulty) {
 export function getExamTypeColor(type) {
   switch (type) {
     case 'milliy': return '#2F80ED';
-    case 'dtm': return '#8B5CF6';
+    case 'dtm': return '#171796';
     case 'olympiad': return '#F59E0B';
     case 'attestation': return '#22C55E';
     default: return '#6B7280';

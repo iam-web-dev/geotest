@@ -58,9 +58,7 @@ export default function Auth() {
         {/* Logo & Title */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2.5 mb-4">
-            <div className="w-12 h-12 rounded-[var(--radius)] geo-gradient flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-[var(--primary)]/20">
-              G
-            </div>
+            <img src="/main_logo.png" alt="Geo-Test" className="w-12 h-12 object-contain" />
             <span className="text-2xl font-bold text-[var(--text-primary)]">GeoTest</span>
           </Link>
           <h1 className="text-2xl font-bold text-[var(--text-primary)]">

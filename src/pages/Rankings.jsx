@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, Users, Buildings, MapPin, Globe, Crown, Star, Flame } from '@phosphor-icons/react';
+import SEO from '../components/SEO';
+import { Trophy, Buildings, MapPin, Globe, Crown, Star, Flame } from '@phosphor-icons/react';
 import { cn } from '../lib/utils';
 import { Card, CardContent } from '../components/ui/Card';
 import { rankings } from '../data/mockData';
@@ -10,7 +11,6 @@ const tabs = [
   { id: 'national', label: 'Milliy',    icon: Globe     },
   { id: 'regional', label: 'Viloyat',   icon: MapPin    },
   { id: 'school',   label: 'Maktab',    icon: Buildings },
-  { id: 'friends',  label: "Do'stlar",  icon: Users     },
 ];
 
 const AV_COLORS = ['#2F80ED','#8B5CF6','#22C55E','#F59E0B','#EF4444','#06B6D4','#EC4899','#F97316'];
@@ -114,6 +114,11 @@ export default function Rankings() {
 
   return (
     <div className="space-y-5">
+      <SEO
+        title="Reyting Jadvali"
+        description="O'z natijalaringizni kuzating va boshqa o'quvchilar bilan geografiya bilimlarini solishtiring."
+        url="/rankings"
+      />
 
       {/* ── Hero banner ── */}
       <div

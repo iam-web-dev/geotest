@@ -1,10 +1,72 @@
 <!doctype html>
-<html lang="en">
+<html lang="uz">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>geotest</title>
+
+    <!-- Primary Meta -->
+    <title>Geo-Test – Interaktiv Geografiya O'rganish Platformasi</title>
+    <meta name="description" content="Geo-Test — geografiyani o'rganish uchun zamonaviy platforma. DTM, Milliy Sertifikat, Olimpiada testlari, interaktiv viktorinalar, o'yinlar va raqamli kutubxona." />
+    <meta name="author" content="Geo-Test Team" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#2F80ED" />
+
+    <!-- Favicons -->
+    <link rel="icon" href="/main_logo.png" />
+    <link rel="shortcut icon" href="/main_logo.png" />
+    <link rel="apple-touch-icon" href="/main_logo.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Geo-Test" />
+    <meta property="og:locale" content="uz_UZ" />
+    <meta property="og:title" content="Geo-Test – Interaktiv Geografiya O'rganish Platformasi" />
+    <meta property="og:description" content="DTM, Milliy Sertifikat, Olimpiada testlari, interaktiv viktorinalar, o'yinlar va raqamli kutubxona bilan geografiyani o'rganing." />
+    <meta property="og:image" content="https://geo-test.uz/main_logo.png" />
+    <meta property="og:url" content="https://geo-test.uz" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Geo-Test – Interaktiv Geografiya O'rganish Platformasi" />
+    <meta name="twitter:description" content="DTM, Milliy Sertifikat, Olimpiada testlari, interaktiv viktorinalar va ko'proq." />
+    <meta name="twitter:image" content="https://geo-test.uz/main_logo.png" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://geo-test.uz/#organization",
+          "name": "Geo-Test",
+          "url": "https://geo-test.uz",
+          "logo": "https://geo-test.uz/main_logo.png",
+          "description": "Geografiyani o'rganish uchun zamonaviy interaktiv platforma"
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://geo-test.uz/#website",
+          "url": "https://geo-test.uz",
+          "name": "Geo-Test",
+          "publisher": { "@id": "https://geo-test.uz/#organization" },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://geo-test.uz/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "EducationalOrganization",
+          "@id": "https://geo-test.uz/#edu",
+          "name": "Geo-Test",
+          "url": "https://geo-test.uz",
+          "description": "DTM, Milliy Sertifikat va Olimpiada uchun geografiya tayyorgarlik platformasi"
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -121,13 +121,12 @@ export function StickerMedal({ size = 48, className = '', color = '#8B5CF6' }) {
   );
 }
 
-export function StickerCertificate({ size = 48, className = '', color = '#2F80ED' }) {
+export function StickerCertificate({ size = 48, className = '' }) {
+  const d = Math.round(size * 0.96);
   return (
-    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" className={className}>
-      <circle cx="24" cy="24" r="22" fill={hexToRgba(color, 0.12)} stroke={color} strokeWidth="2" />
-      <rect x="16" y="16" width="16" height="18" rx="2" stroke={color} strokeWidth="2" />
-      <path d="M20 24L23 27L28 21" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <div className={`inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
+      <img src="/src/components/images/bba.svg" alt="BBA" style={{ width: d, height: d, objectFit: 'contain' }} />
+    </div>
   );
 }
 
@@ -173,14 +172,14 @@ export function StickerDocumentCheck({ size = 48, className = '', color = '#22C5
   );
 }
 
-export function StickerDTMImage({ size = 48, className = '', color = '#8B5CF6' }) {
+export function StickerDTMImage({ size = 48, className = '', color = '#171796' }) {
   return (
     <div className={`relative inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
       <svg width={size} height={size} viewBox="0 0 48 48" fill="none" className="absolute inset-0">
         <circle cx="24" cy="24" r="22" fill={hexToRgba(color, 0.12)} stroke={color} strokeWidth="2" />
       </svg>
       <img
-        src="/src/components/images/dtm.png"
+        src="/src/components/images/dtm.svg"
         alt="DTM"
         style={{ width: size * 0.55, height: size * 0.55 }}
         className="object-contain relative z-10"
@@ -191,20 +190,16 @@ export function StickerDTMImage({ size = 48, className = '', color = '#8B5CF6' }
 
 // ==================== HOME PAGE STICKERS ====================
 
-export function StickerMilliyBadge({ size = 48, className = '', color = '#2F80ED' }) {
+export function StickerMilliyBadge({ size = 48, className = '' }) {
+  const d = Math.round(size * 0.96);
   return (
-    <svg width={size} height={size} viewBox="0 0 60 60" fill="none" className={className}>
-      <circle cx="30" cy="30" r="26" fill={color} stroke="white" strokeWidth="4" paintOrder="stroke" />
-      <circle cx="30" cy="30" r="20" fill="none" stroke="white" strokeWidth="2.5" strokeDasharray="2.5 4.2" strokeOpacity="0.65" />
-      <path
-        d="M30 16 L32.4 23.5 L40.4 23.5 L34 28 L36.4 35.5 L30 31 L23.6 35.5 L26 28 L19.6 23.5 L27.6 23.5 Z"
-        fill="white" fillOpacity="0.92"
-      />
-    </svg>
+    <div className={`inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
+      <img src="/src/components/images/bba.svg" alt="BBA" style={{ width: d, height: d, objectFit: 'contain' }} />
+    </div>
   );
 }
 
-export function StickerDTMRocket({ size = 48, className = '', color = '#8B5CF6' }) {
+export function StickerDTMRocket({ size = 48, className = '', color = '#171796' }) {
   return (
     <div className={`relative inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
       <svg width={size} height={size} viewBox="0 0 60 60" fill="none" className="absolute inset-0">
@@ -212,7 +207,7 @@ export function StickerDTMRocket({ size = 48, className = '', color = '#8B5CF6' 
         <circle cx="30" cy="30" r="22" fill="none" stroke="white" strokeWidth="1.5" strokeOpacity="0.35" />
       </svg>
       <img
-        src="/src/components/images/dtm.png"
+        src="/src/components/images/dtm.svg"
         alt="DTM"
         style={{ width: size * 0.54, height: size * 0.54, filter: 'grayscale(100%) brightness(10)' }}
         className="object-contain relative z-10"
@@ -221,25 +216,16 @@ export function StickerDTMRocket({ size = 48, className = '', color = '#8B5CF6' 
   );
 }
 
-export function StickerOlympiadTrophy({ size = 48, className = '', color = '#F59E0B' }) {
+export function StickerOlympiadTrophy({ size = 48, className = '', color = '#D4A820' }) {
+  const d = Math.round(size * 0.85);
   return (
-    <svg width={size} height={size} viewBox="0 0 60 60" fill="none" className={className}>
-      <path
-        d="M14 20 L14 36 C14 43 21 48 30 48 C39 48 46 43 46 36 L46 20 Z"
-        fill={color} stroke="white" strokeWidth="3.5" paintOrder="stroke"
-      />
-      <path d="M14 24 C8 24 6 27 6 30 C6 33 8 37 14 37" stroke="white" strokeWidth="9" strokeLinecap="round" fill="none" />
-      <path d="M14 24 C8 24 6 27 6 30 C6 33 8 37 14 37" stroke={color} strokeWidth="5.5" strokeLinecap="round" fill="none" />
-      <path d="M46 24 C52 24 54 27 54 30 C54 33 52 37 46 37" stroke="white" strokeWidth="9" strokeLinecap="round" fill="none" />
-      <path d="M46 24 C52 24 54 27 54 30 C54 33 52 37 46 37" stroke={color} strokeWidth="5.5" strokeLinecap="round" fill="none" />
-      <path
-        d="M30 5 L32 11 L38.5 11 L33.5 15 L35 21.5 L30 17.5 L25 21.5 L26.5 15 L21.5 11 L28 11 Z"
-        fill="#ffd92e" stroke="white" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke"
-      />
-      <rect x="26" y="48" width="8" height="6" rx="2" fill={color} stroke="white" strokeWidth="3.5" paintOrder="stroke" />
-      <rect x="18" y="54" width="24" height="4" rx="2" fill={color} stroke="white" strokeWidth="3.5" paintOrder="stroke" />
-      <path d="M21 36 L39 36" stroke="white" strokeWidth="2" strokeLinecap="round" strokeOpacity="0.5" />
-    </svg>
+    <div className={`relative inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
+      <svg width={size} height={size} viewBox="0 0 60 60" fill="none" className="absolute inset-0">
+        <circle cx="30" cy="30" r="26" fill={hexToRgba(color, 0.15)} stroke={color} strokeWidth="2" />
+        <circle cx="30" cy="30" r="22" fill="none" stroke={color} strokeWidth="1" strokeOpacity="0.3" />
+      </svg>
+      <img src="/src/components/images/fom.svg" alt="FOM" style={{ width: d, height: d, objectFit: 'contain' }} className="relative z-10" />
+    </div>
   );
 }
 
@@ -317,15 +303,143 @@ export function BadgeSticker({ name, unlocked = true, size = 56, className = '' 
     <div className={`relative inline-flex flex-col items-center ${className}`}>
       <div className={`relative ${unlocked ? 'opacity-100' : 'opacity-40 grayscale'}`}>
         <Sticker size={size} />
-        {!unlocked && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <svg width={size*0.3} height={size*0.3} viewBox="0 0 24 24" fill="none" className="text-[var(--text-tertiary)]">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
-              <line x1="8" y1="8" x2="16" y2="16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-          </div>
-        )}
       </div>
+    </div>
+  );
+}
+
+// ── Unique SVG badge icons (per badge name) ───────────────────────────────────
+
+const BADGE_SVGS = {
+  'Birinchi Qadam': (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
+    <path d="M20 10 L22.5 17.5 H30 L24 22 L26.5 29.5 L20 25 L13.5 29.5 L16 22 L10 17.5 H17.5 Z" fill={c} fillOpacity=".85"/></>
+  ),
+  'Qiziquvchan': (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
+    <circle cx="20" cy="20" r="8" stroke={c} strokeWidth="2"/>
+    <line x1="20" y1="4" x2="20" y2="9" stroke={c} strokeWidth="2" strokeLinecap="round"/>
+    <line x1="20" y1="31" x2="20" y2="36" stroke={c} strokeWidth="2" strokeLinecap="round"/>
+    <line x1="4" y1="20" x2="9" y2="20" stroke={c} strokeWidth="2" strokeLinecap="round"/>
+    <line x1="31" y1="20" x2="36" y2="20" stroke={c} strokeWidth="2" strokeLinecap="round"/>
+    <circle cx="20" cy="20" r="2.5" fill={c}/></>
+  ),
+  'Izlanuvchan': (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
+    <circle cx="18" cy="18" r="7" stroke={c} strokeWidth="2.5"/>
+    <line x1="23.5" y1="23.5" x2="30" y2="30" stroke={c} strokeWidth="3" strokeLinecap="round"/></>
+  ),
+  '100 ta Test': (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
+    <path d="M12 19 L17 24 L28 13" stroke={c} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+    <text x="20" y="33" textAnchor="middle" fontSize="6.5" fill={c} fontWeight="bold">100</text></>
+  ),
+  "A'lochi": (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
+    <text x="19" y="26" textAnchor="middle" fontSize="17" fill={c} fontWeight="900">A</text>
+    <circle cx="29" cy="12" r="5.5" fill={c}/>
+    <text x="29" y="15.5" textAnchor="middle" fontSize="8" fill="white" fontWeight="bold">+</text></>
+  ),
+  'Geografiya Fanatigi': (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
+    <circle cx="20" cy="20" r="9" stroke={c} strokeWidth="1.5"/>
+    <ellipse cx="20" cy="20" rx="4.5" ry="9" stroke={c} strokeWidth="1.5"/>
+    <line x1="11" y1="20" x2="29" y2="20" stroke={c} strokeWidth="1.5"/>
+    <line x1="13" y1="14.5" x2="27" y2="14.5" stroke={c} strokeWidth="1" strokeOpacity=".6"/>
+    <line x1="13" y1="25.5" x2="27" y2="25.5" stroke={c} strokeWidth="1" strokeOpacity=".6"/></>
+  ),
+  "Barcha O'yinlar": (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
+    <rect x="11" y="15" width="18" height="12" rx="3" stroke={c} strokeWidth="1.5"/>
+    <line x1="15" y1="21" x2="18" y2="21" stroke={c} strokeWidth="1.5" strokeLinecap="round"/>
+    <line x1="16.5" y1="19.5" x2="16.5" y2="22.5" stroke={c} strokeWidth="1.5" strokeLinecap="round"/>
+    <circle cx="23" cy="20" r="1.2" fill={c}/>
+    <circle cx="26" cy="22" r="1.2" fill={c}/></>
+  ),
+  'Test Ustasi': (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
+    <polygon points="20,9 22.8,17.5 32,17.5 24.6,22.7 27.4,31.2 20,26 12.6,31.2 15.4,22.7 8,17.5 17.2,17.5" fill={c} fillOpacity=".75"/></>
+  ),
+  'Kamolot': (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
+    <path d="M13 23 Q14 12 20 11 Q26 12 27 23 L24 29 H16 Z" fill={c} fillOpacity=".3" stroke={c} strokeWidth="1.5"/>
+    <rect x="16" y="28" width="8" height="3" rx="1.5" fill={c}/>
+    <rect x="14" y="30.5" width="12" height="2.5" rx="1.25" fill={c}/></>
+  ),
+  'Bilim Dengizi': (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
+    <rect x="10" y="13" width="5.5" height="14" rx="1" stroke={c} strokeWidth="1.5"/>
+    <rect x="17" y="10" width="6" height="17" rx="1" stroke={c} strokeWidth="1.5"/>
+    <rect x="24.5" y="14" width="5.5" height="13" rx="1" stroke={c} strokeWidth="1.5"/></>
+  ),
+  'Olimpiada Sovrindori': (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
+    <path d="M14 10 H26 L24 20 Q20 27 20 27 Q20 27 16 20 Z" fill={c} fillOpacity=".35" stroke={c} strokeWidth="1.5"/>
+    <path d="M11 10 H14 L16 17 Q12.5 18 11.5 14.5 Z" fill={c} fillOpacity=".5"/>
+    <path d="M29 10 H26 L24 17 Q27.5 18 28.5 14.5 Z" fill={c} fillOpacity=".5"/>
+    <rect x="17" y="27" width="6" height="3" rx="1" fill={c}/>
+    <rect x="14" y="29.5" width="12" height="2.5" rx="1.25" fill={c}/></>
+  ),
+  'Milliy Sertifikat': (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
+    <rect x="10" y="11" width="18" height="16" rx="2" stroke={c} strokeWidth="1.5"/>
+    <line x1="14" y1="17" x2="24" y2="17" stroke={c} strokeWidth="1.5" strokeLinecap="round"/>
+    <line x1="14" y1="21" x2="20" y2="21" stroke={c} strokeWidth="1.5" strokeLinecap="round"/>
+    <circle cx="27" cy="29" r="5.5" fill={c}/>
+    <path d="M24.3 29 L26.5 31.2 L30.2 27" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></>
+  ),
+  "To'liq Kurs": (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
+    <polygon points="20,10 31,17 20,24 9,17" fill={c} fillOpacity=".3" stroke={c} strokeWidth="1.5"/>
+    <path d="M9 17 L9 24 Q9 30 20 30 Q31 30 31 24 L31 17" stroke={c} strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+    <line x1="31" y1="17" x2="31" y2="26" stroke={c} strokeWidth="2" strokeLinecap="round"/></>
+  ),
+  'Mukammallik': (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".12" stroke={c} strokeWidth="1.5"/>
+    <polygon points="20,9 22.5,16.5 30.5,16.5 24,21.5 26.5,29.5 20,24.5 13.5,29.5 16,21.5 9.5,16.5 17.5,16.5" fill={c} fillOpacity=".85"/>
+    <polygon points="20,12.5 21.8,18 27,18 23,21 24.5,26 20,23 15.5,26 17,21 13,18 18.2,18" fill="white" fillOpacity=".35"/></>
+  ),
+  'Ensiklopedist': (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".12" stroke={c} strokeWidth="1.5"/>
+    <path d="M20 10 C20 10 10 13 10 20 C10 27 15 30 20 30 C25 30 30 27 30 20 C30 13 20 10 20 10Z" fill={c} fillOpacity=".2" stroke={c} strokeWidth="1.5"/>
+    <ellipse cx="20" cy="20" rx="6" ry="4" fill={c} fillOpacity=".5"/>
+    <circle cx="20" cy="20" r="2.5" fill="white"/></>
+  ),
+  'DTM 90/90': (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".12" stroke={c} strokeWidth="1.5"/>
+    <circle cx="20" cy="19" r="10" stroke={c} strokeWidth="1" strokeOpacity=".4"/>
+    <circle cx="20" cy="19" r="6" stroke={c} strokeWidth="1" strokeOpacity=".6"/>
+    <circle cx="20" cy="19" r="2.5" fill={c}/>
+    <line x1="20" y1="9" x2="20" y2="13" stroke={c} strokeWidth="2.5" strokeLinecap="round"/>
+    <text x="20" y="36" textAnchor="middle" fontSize="6" fill={c} fontWeight="bold">90/90</text></>
+  ),
+  'Geo Master': (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".12" stroke={c} strokeWidth="1.5"/>
+    <circle cx="20" cy="21" r="8" stroke={c} strokeWidth="1.5"/>
+    <ellipse cx="20" cy="21" rx="4" ry="8" stroke={c} strokeWidth="1.5"/>
+    <line x1="12" y1="21" x2="28" y2="21" stroke={c} strokeWidth="1.5"/>
+    <polygon points="20,9 21.5,13 25.5,13 22,15.5 23.5,19.5 20,17 16.5,19.5 18,15.5 14.5,13 18.5,13" fill={c}/></>
+  ),
+  'Afsonaviy': (c) => (
+    <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".1" stroke={c} strokeWidth="2"/>
+    <circle cx="20" cy="20" r="14" fill="none" stroke={c} strokeWidth="1" strokeOpacity=".35" strokeDasharray="3 2"/>
+    <path d="M20 7 L21.8 14 L29 11.5 L24.5 17.5 L31 20 L24.5 22.5 L29 28.5 L21.8 26 L20 33 L18.2 26 L11 28.5 L15.5 22.5 L9 20 L15.5 17.5 L11 11.5 L18.2 14 Z" fill={c} fillOpacity=".9"/>
+    <circle cx="20" cy="20" r="4" fill="white" fillOpacity=".5"/></>
+  ),
+};
+
+export function BadgeIcon({ name, size = 36, color = '#94A3B8', unlocked = true, className = '' }) {
+  const paths = BADGE_SVGS[name];
+  return (
+    <div className={`inline-flex items-center justify-center ${className}`}
+      style={{ width: size, height: size, opacity: unlocked ? 1 : 0.3, filter: unlocked ? 'none' : 'grayscale(1)' }}>
+      <svg width={size} height={size} viewBox="0 0 40 40" fill="none">
+        {paths ? paths(color) : (
+          <><circle cx="20" cy="20" r="18" fill={color} fillOpacity=".15" stroke={color} strokeWidth="1.5"/>
+          <circle cx="20" cy="16" r="5" stroke={color} strokeWidth="1.5"/>
+          <path d="M11 30 Q11 24 20 24 Q29 24 29 30" stroke={color} strokeWidth="1.5" strokeLinecap="round"/></>
+        )}
+      </svg>
     </div>
   );
 }
@@ -365,19 +479,12 @@ export function EarthCompassPin({ size = 80, className = '', darkMode: dm }) {
   );
 }
 
-export function GlobeCertificate({ size = 80, className = '', darkMode: dm }) {
-  const { darkMode } = useColors();
-  const c = SvgColors({ darkMode: dm ?? darkMode });
+export function GlobeCertificate({ size = 80, className = '' }) {
+  const d = Math.round(size * 0.96);
   return (
-    <svg width={size} height={size} viewBox="0 0 80 80" fill="none" className={className}>
-      <circle cx="32" cy="35" r="18" stroke={c.primary} strokeWidth="2" />
-      <ellipse cx="32" cy="35" rx="18" ry="7" stroke={c.light} strokeWidth="1.5" />
-      <line x1="14" y1="35" x2="50" y2="35" stroke={c.light} strokeWidth="1.5" />
-      <path d="M32 28L29 35H35L32 28Z" fill={c.primary} />
-      <circle cx="60" cy="20" r="12" stroke={c.primary} strokeWidth="2" />
-      <path d="M55 20L58.5 23.5L65 17" stroke={c.primary} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M62 28V38L58 35L54 38V28" stroke={c.light} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <div className={`inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
+      <img src="/src/components/images/bba.svg" alt="BBA" style={{ width: d, height: d, objectFit: 'contain' }} />
+    </div>
   );
 }
 

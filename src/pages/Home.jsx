@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
+import SEO from '../components/SEO';
 import {
   Flame, Clock, BookOpen, ArrowRight,
-  Star, Calendar, Globe,
+  Star, Calendar, Globe, Bell, X,
 } from '@phosphor-icons/react';
 import {
   StickerIcons, StickerMilliyBadge, StickerDTMRocket, StickerOlympiadTrophy, StickerAttestationShield,
@@ -22,8 +24,8 @@ import { canHover, getDifficultyColor, getDifficultyLabel } from '../lib/utils';
 
 const statMeta = {
   StatIconXP:       { color: '#F97316', bg: 'var(--pal-orange)' },
-  StatIconAccuracy: { color: '#2F80ED', bg: 'var(--pal-milliy)' },
-  StatIconTime:     { color: '#8B5CF6', bg: 'var(--pal-dtm)' },
+  StatIconAccuracy: { color: '#326D62', bg: 'var(--pal-milliy)' },
+  StatIconTime:     { color: '#171796', bg: 'var(--pal-dtm)' },
   StatIconTests:    { color: '#22C55E', bg: 'var(--pal-attestation)' },
 };
 
@@ -64,17 +66,31 @@ function StatCard({ icon: Icon, label, value, detail, trend }) {
 
 
 const testStickers = {
-  milliy:      { Sticker: StickerMilliyBadge,      color: '#2F80ED', bg: 'var(--pal-milliy)', label: 'Milliy Sertifikat' },
-  dtm:         { Sticker: StickerDTMRocket,         color: '#8B5CF6', bg: 'var(--pal-dtm)', label: 'DTM' },
-  olympiad:    { Sticker: StickerOlympiadTrophy,    color: '#F59E0B', bg: 'var(--pal-olympiad)', label: 'Olimpiada' },
+  milliy:      { Sticker: StickerMilliyBadge,      color: '#326D62', bg: 'var(--pal-milliy)', label: 'Milliy Sertifikat' },
+  dtm:         { Sticker: StickerDTMRocket,         color: '#171796', bg: 'var(--pal-dtm)', label: 'DTM' },
+  olympiad:    { Sticker: StickerOlympiadTrophy,    color: '#D4A820', bg: 'var(--pal-olympiad)', label: 'Olimpiada' },
   attestation: { Sticker: StickerAttestationShield, color: '#22C55E', bg: 'var(--pal-attestation)', label: 'Attestatsiya' },
 };
 
+const NOTIFICATIONS = [
+  { id: 1, title: "Yangi test mavjud", body: "O'zbekiston geografiyasi bo'yicha yangi test qo'shildi.", time: "5 daqiqa oldin", unread: true },
+  { id: 2, title: "Natijangiz tayyor", body: "Jahon geografiyasi testida 94 ball to'pladingiz!", time: "2 soat oldin", unread: true },
+  { id: 3, title: "Haftalik reyting", body: "Siz bu hafta 12-o'rinda turibsiz. Davom eting!", time: "Kecha", unread: false },
+];
+
 export default function Home() {
   const navigate = useNavigate();
+  const [notifOpen, setNotifOpen] = useState(false);
+  const unreadCount = NOTIFICATIONS.filter(n => n.unread).length;
 
   return (
     <div className="space-y-10">
+      <SEO
+        title="Interaktiv Geografiya O'rganish Platformasi"
+        description="DTM, Milliy Sertifikat, Olimpiada testlari, interaktiv viktorinalar, o'yinlar va raqamli kutubxona bilan geografiyani o'rganing."
+        url="/"
+        jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: "Geo-Test Bosh Sahifa", url: 'https://geo-test.uz' }}
+      />
 
       {/* ── Hero ── */}
       <div
@@ -90,8 +106,21 @@ export default function Home() {
         </div>
 
         <div className="relative z-10">
-          <p className="text-white/70 text-sm font-medium mb-1">Xush kelibsiz!</p>
-          <h1 className="text-2xl sm:text-3xl font-bold mb-2">{user.name}</h1>
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-white/70 text-sm font-medium mb-1">Xush kelibsiz!</p>
+              <h1 className="text-2xl sm:text-3xl font-bold mb-2">{user.name}</h1>
+            </div>
+            <button onClick={() => setNotifOpen(o => !o)}
+              className="relative w-10 h-10 rounded-full bg-white/15 flex items-center justify-center hover:bg-white/25 transition-all shrink-0 mt-1">
+              <Bell size={20} weight={notifOpen ? 'fill' : 'regular'} className="text-white" />
+              {unreadCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-red-500 text-white text-[9px] font-black flex items-center justify-center">
+                  {unreadCount}
+                </span>
+              )}
+            </button>
+          </div>
           <p className="text-white/65 text-sm max-w-xs">
             Bugun geografiya bilimingizni sinash uchun ajoyib kun!
           </p>
@@ -107,6 +136,48 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* ── Notifications panel ── */}
+      <AnimatePresence>
+        {notifOpen && (
+          <motion.div
+            key="notif-panel"
+            initial={{ opacity: 0, y: -12, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.97 }}
+            transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+            className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] overflow-hidden -mt-6">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border)]">
+              <p className="text-sm font-bold text-[var(--text-primary)]">Bildirishnomalar</p>
+              <button onClick={() => setNotifOpen(false)}
+                className="w-7 h-7 rounded-full flex items-center justify-center hover:bg-[var(--background)] transition-all text-[var(--text-tertiary)]">
+                <X size={14} weight="bold" />
+              </button>
+            </div>
+            {NOTIFICATIONS.length === 0 ? (
+              <p className="text-sm text-[var(--text-secondary)] text-center py-8">Bildirishnoma yo'q</p>
+            ) : (
+              <div className="divide-y divide-[var(--border)]">
+                {NOTIFICATIONS.map((n, i) => (
+                  <motion.div
+                    key={n.id}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.06, duration: 0.18 }}
+                    className="flex items-start gap-3 px-4 py-3">
+                    <div className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${n.unread ? 'bg-blue-500' : 'bg-transparent'}`} />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-[var(--text-primary)]">{n.title}</p>
+                      <p className="text-xs text-[var(--text-secondary)] mt-0.5">{n.body}</p>
+                      <p className="text-[10px] text-[var(--text-tertiary)] mt-1">{n.time}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Daily Stats ── */}
       <div>
@@ -136,14 +207,14 @@ export default function Home() {
               className="w-7 h-7 rounded-[var(--radius-xs)] flex items-center justify-center shrink-0"
               style={{ background: 'var(--pal-milliy)' }}
             >
-              <Globe size={14} style={{ color: '#2F80ED' }} />
+              <Globe size={14} style={{ color: '#326D62' }} />
             </div>
-            <span className="text-xs font-bold flex-1" style={{ color: '#2F80ED' }}>
+            <span className="text-xs font-bold flex-1" style={{ color: '#326D62' }}>
               Bugungi Geografiya Fakti
             </span>
             <span
               className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-              style={{ background: 'var(--pal-milliy)', color: '#2F80ED' }}
+              style={{ background: 'var(--pal-milliy)', color: '#326D62' }}
             >
               #bugun
             </span>

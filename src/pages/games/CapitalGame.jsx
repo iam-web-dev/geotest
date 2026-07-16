@@ -26,5 +26,5 @@ function buildQuestions() {
 
 export default function CapitalGame() {
   const questions = useMemo(buildQuestions, []);
-  return <QuizEngine title="Poytaxtlar Challenge" color="#D97706" questions={questions} xpPerCorrect={8} timePerQuestion={12} />;
+  return <QuizEngine title="Poytaxtni Top" color="#D97706" questions={questions} xpPerCorrect={8} timePerQuestion={12} />;
 }

@@ -13,6 +13,11 @@ import Quiz from './pages/Quiz';
 import Games from './pages/Games';
 import GamePlay from './pages/GamePlay';
 import Articles from './pages/Articles';
+import ArticleDetail from './pages/ArticleDetail';
+import Settings from './pages/Settings';
+import Certificates from './pages/Certificates';
+import Oferta from './pages/Oferta';
+import Activity from './pages/Activity';
 import Rankings from './pages/Rankings';
 import Profile from './pages/Profile';
 import Auth from './pages/Auth';
@@ -52,6 +57,11 @@ function App() {
                 <Route path="/games" element={<Games />} />
                 <Route path="/games/play/:slug" element={<GamePlay />} />
                 <Route path="/articles" element={<Articles />} />
+                <Route path="/articles/:id" element={<ArticleDetail />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/certificates" element={<Certificates />} />
+                <Route path="/oferta" element={<Oferta />} />
+                <Route path="/activity" element={<Activity />} />
                 <Route path="/rankings" element={<Rankings />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="*" element={<NotFound />} />

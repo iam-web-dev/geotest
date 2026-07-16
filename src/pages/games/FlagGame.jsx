@@ -25,5 +25,5 @@ function buildQuestions() {
 
 export default function FlagGame() {
   const questions = useMemo(buildQuestions, []);
-  return <QuizEngine title="Bayroqni Top" color="#2563EB" questions={questions} xpPerCorrect={10} timePerQuestion={12} />;
+  return <QuizEngine title="Bayroqni Bil" color="#2563EB" questions={questions} xpPerCorrect={10} timePerQuestion={12} />;
 }

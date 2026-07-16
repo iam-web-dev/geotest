@@ -7,7 +7,7 @@ import GameShell from '../../components/games/GameShell';
 import { playCorrect, playWrong, playFinish, vibrate } from '../../lib/gameSound';
 
 const TOTAL = 15;
-const ROUND_MS = 2500;
+const ROUND_MS = 5000;
 
 export default function ContinentRushGame() {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ export default function ContinentRushGame() {
   const [combo, setCombo] = useState(0);
   const [selected, setSelected] = useState(null);
   const [status, setStatus] = useState('idle');
-  const [progressPct, setProgressPct] = useState(100);
+  const timerBarRef = useRef(null);
   const [paused, setPaused] = useState(false);
   const [result, setResult] = useState(null);
   const startRef = useRef(Date.now());
@@ -76,19 +76,39 @@ export default function ContinentRushGame() {
     advanceTimer.current = setTimeout(() => advance(newScore, newMistakes), 450);
   }, [status, result, current, score, mistakes, combo, advance]);
 
-  // round countdown bar + auto-timeout as wrong
+  // CSS-animation timer bar — no React state updates during countdown
   useEffect(() => {
-    if (paused || status !== 'idle' || result) return;
-    roundStart.current = Date.now();
+    const bar = timerBarRef.current;
+    if (!bar || paused || status !== 'idle' || result) return;
+
+    // restart animation
+    bar.style.transition = 'none';
+    bar.style.width = '100%';
+    bar.style.background = '#7C3AED';
+    // force reflow
+    void bar.offsetWidth;
+    bar.style.transition = `width ${ROUND_MS}ms linear`;
+    bar.style.width = '0%';
+
+    const timeout = setTimeout(() => handleAnswer(null), ROUND_MS);
+    return () => clearTimeout(timeout);
+  }, [index, paused, status, result, handleAnswer]);
+
+  // color shift: green → yellow → red via rAF
+  useEffect(() => {
+    const bar = timerBarRef.current;
+    if (!bar || status !== 'idle' || result) return;
+    const start = Date.now();
     const tick = () => {
-      const pct = Math.max(0, 100 - ((Date.now() - roundStart.current) / ROUND_MS) * 100);
-      setProgressPct(pct);
-      if (pct <= 0) { handleAnswer(null); return; }
-      rafRef.current = requestAnimationFrame(tick);
+      const pct = 1 - Math.min(1, (Date.now() - start) / ROUND_MS);
+      const r = pct > 0.5 ? Math.round((1 - pct) * 2 * 255) : 220;
+      const g = pct > 0.5 ? 180 : Math.round(pct * 2 * 180);
+      bar.style.background = `rgb(${r},${g},30)`;
+      if (pct > 0) rafRef.current = requestAnimationFrame(tick);
     };
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [index, paused, status, result, handleAnswer]);
+  }, [index, status, result]);
 
   useEffect(() => () => clearTimeout(advanceTimer.current), []);
 
@@ -100,7 +120,7 @@ export default function ContinentRushGame() {
 
   return (
     <GameShell
-      title="Qit'alar Poygasi"
+      title="Qit'ani Toping"
       color="#7C3AED"
       score={score}
       progress={{ current: index + 1, total: TOTAL }}
@@ -112,8 +132,8 @@ export default function ContinentRushGame() {
     >
       {current && (
         <div className="flex flex-col items-center gap-5 w-full">
-          <div className="w-full max-w-xs h-1.5 rounded-full bg-[var(--border)] overflow-hidden">
-            <div className="h-full bg-[#7C3AED] transition-[width] duration-75 ease-linear" style={{ width: `${progressPct}%` }} />
+          <div className="w-full max-w-xs h-3 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
+            <div ref={timerBarRef} className="h-full rounded-full" style={{ width: '100%', background: '#7C3AED' }} />
           </div>
 
           <AnimatePresence mode="wait">

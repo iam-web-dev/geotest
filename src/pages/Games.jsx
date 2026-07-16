@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Play, Trophy, Clock, Star, GlobeHemisphereWest, MapTrifold, Buildings,
@@ -37,18 +39,19 @@ function useFavorites() {
 }
 
 function GameModal({ game, onClose, onStart, isFavorite, onToggleFavorite }) {
-  const [mode, setMode] = useState('practice');
+  const [mode, setMode] = useState('ranked');
   if (!game) return null;
   const Icon = gameIcons[game.icon] || Sparkle;
 
-  return (
+  return createPortal(
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
+        style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999 }}
+        className="flex items-end sm:items-center justify-center p-0 sm:p-4"
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       >
         <motion.div
-          className="absolute inset-0 bg-black/50"
+          style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)' }}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
           onClick={onClose}
         />
@@ -136,29 +139,6 @@ function GameModal({ game, onClose, onStart, isFavorite, onToggleFavorite }) {
               <p className="text-[11px] text-[var(--text-secondary)] leading-snug">{game.scoring}</p>
             </div>
 
-            <div className="sm:col-span-2">
-              <p className="text-xs font-bold text-[var(--text-primary)] mb-1.5">Rejimni tanlang</p>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  onClick={() => setMode('practice')}
-                  className={cn(
-                    'flex items-center justify-center gap-1.5 py-2 rounded-[var(--radius-sm)] border-2 transition-all text-xs font-semibold',
-                    mode === 'practice' ? 'border-[var(--primary)] bg-[var(--primary-soft)] text-[var(--primary)]' : 'border-[var(--border)] text-[var(--text-secondary)]'
-                  )}
-                >
-                  <BookOpen size={15} /> Mashq
-                </button>
-                <button
-                  onClick={() => setMode('ranked')}
-                  className={cn(
-                    'flex items-center justify-center gap-1.5 py-2 rounded-[var(--radius-sm)] border-2 transition-all text-xs font-semibold',
-                    mode === 'ranked' ? 'border-[#F59E0B] bg-[#FEF3C7] dark:bg-[#F59E0B]/15 text-[#D97706]' : 'border-[var(--border)] text-[var(--text-secondary)]'
-                  )}
-                >
-                  <Medal size={15} /> Reyting
-                </button>
-              </div>
-            </div>
 
             {game.playable ? (
               <Button className="w-full sm:col-span-2" onClick={() => onStart(game, mode)}>
@@ -172,7 +152,8 @@ function GameModal({ game, onClose, onStart, isFavorite, onToggleFavorite }) {
           </div>
         </motion.div>
       </motion.div>
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
 
@@ -198,6 +179,11 @@ export default function Games() {
 
   return (
     <div className="space-y-8">
+      <SEO
+        title="Geografiya O'yinlari"
+        description="Xaritalar, daryolar, tog'lar, bayroqlar, poytaxtlar va qit'alar bo'yicha interaktiv ta'limiy o'yinlar orqali geografiyani o'rganing."
+        url="/games"
+      />
       <div>
         <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">O'yinlar</h1>
         <p className="text-sm text-[var(--text-secondary)] mt-1">Geografiyani o'ynab o'rganing</p>
@@ -255,6 +241,25 @@ export default function Games() {
             </CardContent>
           </Card>
         ))}
+      </div>
+
+      {/* Viktorinalar — mobile only */}
+      <div className="sm:hidden">
+        <button
+          onClick={() => navigate('/quiz')}
+          className="w-full flex items-center justify-between px-4 py-3.5 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] text-sm font-semibold text-[var(--text-primary)] active:scale-[0.98] transition-all"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-[10px] flex items-center justify-center bg-[#8B5CF6]/10">
+              <Sparkle size={18} weight="fill" className="text-[#8B5CF6]" />
+            </div>
+            <div className="text-left">
+              <p className="font-bold">Viktorinalar</p>
+              <p className="text-xs text-[var(--text-secondary)] font-normal">Bilimingizni sinab ko'ring</p>
+            </div>
+          </div>
+          <ArrowRight size={18} className="text-[var(--text-secondary)]" />
+        </button>
       </div>
 
       {/* Filter chips */}

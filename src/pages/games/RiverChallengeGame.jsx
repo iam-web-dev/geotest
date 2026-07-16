@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'; // eslint-disable-line
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { CaretLeft, MapPin, MagnifyingGlassPlus, MagnifyingGlassMinus, ArrowsCounterClockwise } from '@phosphor-icons/react';
+import { CaretLeft, MapPin, MagnifyingGlassPlus, MagnifyingGlassMinus, ArrowsCounterClockwise, CaretDown, CaretUp } from '@phosphor-icons/react';
 import { rivers, riverRegions } from '../../data/rivers';
 import { shuffle, sampleN, formatTime } from '../../lib/utils';
 import GameShell from '../../components/games/GameShell';
@@ -13,7 +13,6 @@ const COLOR = '#0EA5E9';
 const TARGET_COUNT = 10;
 
 const mapMeta = {
-  uzbekistan: { label: "O'zbekiston daryolari" },
   centralAsia: { label: 'Markaziy Osiyo daryolari' },
   world: { label: 'Dunyo daryolari' },
 };
@@ -34,7 +33,6 @@ const difficultyMeta = {
 };
 
 const modeMeta = {
-  practice: { label: 'Mashq', desc: 'Vaqtsiz, cheksiz urinish' },
   timeAttack: { label: 'Vaqtga qarshi', desc: '90 soniyada imkon boricha ko\'proq toping' },
   survival: { label: 'Omon qolish', desc: '3 ta jon' },
   daily: { label: 'Kunlik', desc: '10 ta aralash savol' },
@@ -88,46 +86,80 @@ function buildQuestions(mapRegion, questionType, difficulty) {
   return list;
 }
 
-function SetupPicker({ onStart, onExit }) {
-  const [mapRegion, setMapRegion] = useState('uzbekistan');
-  const [questionType, setQuestionType] = useState('findRiver');
-  const [difficulty, setDifficulty] = useState('easy');
-  const [mode, setMode] = useState('practice');
-
-  const Group = ({ title, entries, value, onChange, cols = 1 }) => (
-    <div>
-      <p className="text-xs font-bold text-[var(--text-primary)] mb-2">{title}</p>
-      <div className={cols === 2 ? 'grid grid-cols-2 gap-2' : 'space-y-2'}>
-        {Object.entries(entries).map(([key, meta]) => (
-          <button
-            key={key}
-            onClick={() => onChange(key)}
-            className={`text-left p-3 rounded-[var(--radius-sm)] border-2 transition-colors ${value === key ? 'border-[var(--primary)] bg-[var(--primary-soft)]' : 'border-[var(--border)]'}`}
-          >
-            <span className="block text-xs font-bold text-[var(--text-primary)]">{meta.label}</span>
-            <span className="block text-[10px] text-[var(--text-secondary)] leading-snug mt-0.5">{meta.desc}</span>
-          </button>
-        ))}
-      </div>
+function ChipRow({ entries, value, onChange }) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {Object.entries(entries).map(([key, meta]) => (
+        <button
+          key={key}
+          onClick={() => onChange(key)}
+          className="px-3 py-1.5 rounded-full text-xs font-semibold border transition-all"
+          style={{
+            background: value === key ? COLOR : 'var(--surface)',
+            color: value === key ? '#fff' : 'var(--text-primary)',
+            borderColor: value === key ? COLOR : 'var(--border)',
+          }}
+        >
+          {meta.label}
+        </button>
+      ))}
     </div>
   );
+}
+
+function SetupPicker({ onStart, onExit }) {
+  const [mapRegion, setMapRegion] = useState('centralAsia');
+  const [questionType, setQuestionType] = useState('findRiver');
+  const [difficulty, setDifficulty] = useState('easy');
+  const [mode, setMode] = useState('timeAttack');
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="max-w-md mx-auto space-y-5">
+    <div className="max-w-md mx-auto space-y-4">
       <div className="flex items-center gap-2">
         <button onClick={onExit} className="w-9 h-9 rounded-full flex items-center justify-center bg-[var(--background)] text-[var(--text-secondary)]">
           <CaretLeft size={18} weight="bold" />
         </button>
         <div>
-          <p className="text-sm font-bold text-[var(--text-primary)]">Daryo Challenge</p>
-          <p className="text-xs text-[var(--text-secondary)]">Xarita, savol turi, qiyinlik va rejimni tanlang</p>
+          <p className="text-sm font-bold text-[var(--text-primary)]">Daryolarni Bil</p>
+          <p className="text-xs text-[var(--text-secondary)]">Xarita va qiyinlikni tanlang</p>
         </div>
       </div>
 
-      <Group title="Xarita" entries={mapMeta} value={mapRegion} onChange={setMapRegion} />
-      <Group title="Savol turi" entries={typeMeta} value={questionType} onChange={setQuestionType} />
-      <Group title="Qiyinlik" entries={difficultyMeta} value={difficulty} onChange={setDifficulty} cols={2} />
-      <Group title="Rejim" entries={modeMeta} value={mode} onChange={setMode} cols={2} />
+      {/* Xarita */}
+      <div>
+        <p className="text-xs font-bold text-[var(--text-primary)] mb-2">Xarita</p>
+        <ChipRow entries={mapMeta} value={mapRegion} onChange={setMapRegion} />
+      </div>
+
+      {/* Qiyinlik */}
+      <div>
+        <p className="text-xs font-bold text-[var(--text-primary)] mb-2">Qiyinlik</p>
+        <ChipRow entries={difficultyMeta} value={difficulty} onChange={setDifficulty} />
+      </div>
+
+      {/* Qo'shimcha sozlamalar */}
+      <div className="rounded-[var(--radius-sm)] border border-[var(--border)] overflow-hidden">
+        <button
+          onClick={() => setOpen(o => !o)}
+          className="w-full flex items-center justify-between px-4 py-3 text-xs font-semibold text-[var(--text-primary)] bg-[var(--surface)]"
+        >
+          <span>Qo'shimcha sozlamalar</span>
+          {open ? <CaretUp size={14} /> : <CaretDown size={14} />}
+        </button>
+        {open && (
+          <div className="px-4 pb-4 pt-3 space-y-4 bg-[var(--background)]">
+            <div>
+              <p className="text-xs font-bold text-[var(--text-primary)] mb-2">Savol turi</p>
+              <ChipRow entries={{ ...typeMeta, mixed: { label: 'Aralash' } }} value={questionType} onChange={setQuestionType} />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-[var(--text-primary)] mb-2">Rejim</p>
+              <ChipRow entries={modeMeta} value={mode} onChange={setMode} />
+            </div>
+          </div>
+        )}
+      </div>
 
       <button
         onClick={() => onStart({ mapRegion, questionType, difficulty, mode })}
@@ -159,7 +191,6 @@ function RiverChallengeRound({ mapRegion, questionType, difficulty, mode, onExit
   const [globalTime, setGlobalTime] = useState(90);
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
-  const panDrag = useRef(null);
   const startRef = useRef(Date.now());
   const answeredRef = useRef(0);
   const advanceTimer = useRef(null);
@@ -220,39 +251,34 @@ function RiverChallengeRound({ mapRegion, questionType, difficulty, mode, onExit
     setCombo(0);
     setTimeout(() => setFlash(f => (f && f.kind === 'wrong' ? null : f)), 420);
 
+    const nextAttempts = attempts + 1;
+    setAttempts(nextAttempts);
+    const newMistakes = mistakes + 1;
+    setMistakes(newMistakes);
+
     if (mode === 'survival') {
       const nextLives = livesCurrent - 1;
       setLivesCurrent(nextLives);
-      const newMistakes = mistakes + 1;
-      setMistakes(newMistakes);
-      if (nextLives <= 0) {
+      const gameOver = nextLives <= 0;
+      if (nextAttempts >= 2 || gameOver) {
         answeredRef.current += 1;
         setStatus('answered');
         if (current.type === 'findRiver') setRevealId(current.river.id);
-        advanceTimer.current = setTimeout(() => finish(score, newMistakes), 1100);
+        advanceTimer.current = setTimeout(
+          () => gameOver ? finish(score, newMistakes) : goNext(score, newMistakes),
+          1200
+        );
       }
       return;
     }
 
-    if (mode === 'practice') {
-      const nextAttempts = attempts + 1;
-      setAttempts(nextAttempts);
-      const newMistakes = mistakes + 1;
-      setMistakes(newMistakes);
-      if (nextAttempts >= 2) {
-        answeredRef.current += 1;
-        setStatus('answered');
-        if (current.type === 'findRiver') setRevealId(current.river.id);
-        advanceTimer.current = setTimeout(() => goNext(score, newMistakes), 1400);
-      }
+    if (nextAttempts >= 2) {
+      answeredRef.current += 1;
+      setStatus('answered');
+      if (current.type === 'findRiver') setRevealId(current.river.id);
+      advanceTimer.current = setTimeout(() => goNext(score, newMistakes), 1300);
       return;
     }
-
-    answeredRef.current += 1;
-    setStatus('answered');
-    const newMistakes = mistakes + 1;
-    setMistakes(newMistakes);
-    advanceTimer.current = setTimeout(() => goNext(score, newMistakes), 500);
   }, [status, result, paused, current, combo, score, mistakes, mode, livesCurrent, attempts, goNext, finish]);
 
   const handleMapPick = useCallback((river) => {
@@ -283,13 +309,6 @@ function RiverChallengeRound({ mapRegion, questionType, difficulty, mode, onExit
     answeredRef.current = 0; startRef.current = Date.now();
   };
 
-  const onPanStart = (e) => { panDrag.current = { x: e.clientX - pan.x, y: e.clientY - pan.y }; };
-  const onPanMove = (e) => {
-    if (!panDrag.current) return;
-    setPan({ x: e.clientX - panDrag.current.x, y: e.clientY - panDrag.current.y });
-  };
-  const onPanEnd = () => { panDrag.current = null; };
-
   const getOptionState = (opt) => {
     if (status === 'idle') return 'idle';
     if (opt === current.correct) return 'correct';
@@ -301,7 +320,7 @@ function RiverChallengeRound({ mapRegion, questionType, difficulty, mode, onExit
 
   return (
     <GameShell
-      title="Daryo Challenge"
+      title="Daryolarni Bil"
       color={COLOR}
       score={score}
       progress={{ current: Math.min(index + 1, TARGET_COUNT), total: TARGET_COUNT }}
@@ -323,7 +342,7 @@ function RiverChallengeRound({ mapRegion, questionType, difficulty, mode, onExit
           <MapPin size={15} weight="fill" /> {current.prompt}
         </motion.div>
 
-        <div className="relative w-full rounded-[var(--radius)] overflow-hidden border border-[var(--border)]" style={{ height: 280 }}>
+        <div className="relative w-full rounded-[var(--radius)] overflow-hidden border border-[var(--border)]" style={{ height: 320, background: '#DCEEF7' }}>
           <RiverMap
             rivers={mapPool}
             highlightId={current.type !== 'findRiver' && current.type !== 'path' ? current.river.id : null}
@@ -334,15 +353,14 @@ function RiverChallengeRound({ mapRegion, questionType, difficulty, mode, onExit
             center={riverRegions[mapRegion].center}
             zoom={zoom * riverRegions[mapRegion].zoom}
             pan={pan}
-            onPanStart={onPanStart}
-            onPanMove={onPanMove}
-            onPanEnd={onPanEnd}
+            onPanChange={setPan}
+            onZoomChange={(z) => setZoom(z / riverRegions[mapRegion].zoom)}
           />
           <div className="absolute bottom-2 right-2 flex flex-col gap-1.5">
-            <button onClick={() => setZoom(z => Math.min(3, z + 0.4))} className="w-9 h-9 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center shadow-sm">
+            <button onClick={() => setZoom(z => Math.min(6, z + 0.5))} className="w-9 h-9 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center shadow-sm">
               <MagnifyingGlassPlus size={15} />
             </button>
-            <button onClick={() => setZoom(z => Math.max(1, z - 0.4))} className="w-9 h-9 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center shadow-sm">
+            <button onClick={() => setZoom(z => Math.max(1, z - 0.5))} className="w-9 h-9 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center shadow-sm">
               <MagnifyingGlassMinus size={15} />
             </button>
             <button onClick={() => { setZoom(1); setPan({ x: 0, y: 0 }); }} className="w-9 h-9 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center shadow-sm">
@@ -361,9 +379,6 @@ function RiverChallengeRound({ mapRegion, questionType, difficulty, mode, onExit
 
         {combo >= 3 && status === 'idle' && (
           <p className="text-xs font-bold" style={{ color: COLOR }}>🔥 Combo x{Math.min(3, 1 + Math.floor(combo / 3))}</p>
-        )}
-        {mode === 'practice' && attempts === 1 && status === 'idle' && (
-          <p className="text-xs font-semibold text-[var(--danger)]">Yana bir urinish qoldi!</p>
         )}
       </div>
     </GameShell>

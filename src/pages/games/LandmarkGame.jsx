@@ -12,7 +12,6 @@ function buildQuestions() {
     return {
       correct: target.country,
       options: shuffle([target.country, ...distractors]),
-      extra: `💡 ${target.fact}`,
       prompt: (
         <div className="flex flex-col items-center gap-3">
           <p className="text-sm text-[var(--text-secondary)] font-medium">Bu qaysi davlatga tegishli?</p>
@@ -28,5 +27,5 @@ function buildQuestions() {
 
 export default function LandmarkGame() {
   const questions = useMemo(buildQuestions, []);
-  return <QuizEngine title="Landmark Challenge" color="#8B5CF6" questions={questions} xpPerCorrect={8} timePerQuestion={14} />;
+  return <QuizEngine title="Mashhur Joylar" color="#8B5CF6" questions={questions} xpPerCorrect={8} timePerQuestion={14} />;
 }

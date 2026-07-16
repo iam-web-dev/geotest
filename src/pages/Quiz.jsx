@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SEO from '../components/SEO';
 import confetti from 'canvas-confetti';
 import { Lightning, Clock, Trophy, Star, ArrowRight, Check, X, ArrowsClockwise, Medal, SmileySad, ChartLineUp } from '@phosphor-icons/react';
 import { cn } from '../lib/utils';
@@ -57,6 +58,7 @@ export default function Quiz() {
     const isCorrect = answer === quizQuestions[currentQuestion].correct;
     if (isCorrect) setScore(prev => prev + 1);
     setAnswers(prev => [...prev, { question: currentQuestion, answer, correct: isCorrect }]);
+    setTimeout(() => handleNext(), 1000);
   };
 
   const handleNext = () => {
@@ -215,9 +217,20 @@ export default function Quiz() {
                 <Lightning size={16} weight="fill" />+{Math.round(score * 10)} XP
               </div>
 
-              <div className="flex gap-3">
-                <Button className="flex-1" onClick={startQuiz}><ArrowsClockwise size={16} /> Qayta boshlash</Button>
-                <Button className="flex-1" variant="outline" onClick={() => setGameState('menu')}><ChartLineUp size={16} /> Menyu</Button>
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={startQuiz}
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-[var(--radius-sm)] text-sm font-semibold text-white transition-all active:scale-[0.98]"
+                  style={{ background: tier.color }}
+                >
+                  <ArrowsClockwise size={16} /> Qayta boshlash
+                </button>
+                <button
+                  onClick={() => setGameState('menu')}
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-[var(--radius-sm)] text-sm font-semibold border border-[var(--border)] bg-transparent text-[var(--text-primary)] transition-all active:scale-[0.98]"
+                >
+                  <ChartLineUp size={16} /> Menyu
+                </button>
               </div>
             </CardContent>
           </Card>
@@ -230,6 +243,11 @@ export default function Quiz() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-4">
+      <SEO
+        title="Geografiya Viktorinasi"
+        description="Davlatlar, poytaxtlar, bayroqlar, daryolar, tog'lar va qit'alar bo'yicha interaktiv geografiya viktorinalarini ishlang."
+        url="/quiz"
+      />
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[#FEF3C7] flex items-center justify-center"><Lightning size={18} className="text-[#F59E0B]" /></div>
@@ -281,14 +299,6 @@ export default function Quiz() {
         </motion.div>
       </AnimatePresence>
 
-      {showResult && (
-        <div>
-          <Button className="w-full" onClick={handleNext}>
-            {currentQuestion < quizQuestions.length - 1 ? 'Keyingi savol' : "Natijani ko'rish"}
-            <ArrowRight size={16} />
-          </Button>
-        </div>
-      )}
     </div>
   );
 }

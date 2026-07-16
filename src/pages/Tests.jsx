@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   BookOpen, Clock, CaretLeft, CaretRight, Flag, CheckCircle,
@@ -30,16 +31,16 @@ const categoryStickerMap = {
 };
 
 const categoryPalette = {
-  milliy:      { color: '#2F80ED', bg: 'var(--pal-milliy)' },
-  dtm:         { color: '#8B5CF6', bg: 'var(--pal-dtm)' },
-  olympiad:    { color: '#F59E0B', bg: 'var(--pal-olympiad)' },
+  milliy:      { color: '#326D62', bg: 'var(--pal-milliy)' },
+  dtm:         { color: '#171796', bg: 'var(--pal-dtm)' },
+  olympiad:    { color: '#D4A820', bg: 'var(--pal-olympiad)' },
   attestation: { color: '#22C55E', bg: 'var(--pal-attestation)' },
 };
 
 const testStickers = {
-  milliy:      { Sticker: StickerMilliyBadge,      color: '#2F80ED', bg: 'var(--pal-milliy)',      label: 'Milliy Sertifikat' },
-  dtm:         { Sticker: StickerDTMRocket,         color: '#8B5CF6', bg: 'var(--pal-dtm)',         label: 'DTM' },
-  olympiad:    { Sticker: StickerOlympiadTrophy,    color: '#F59E0B', bg: 'var(--pal-olympiad)',    label: 'Olimpiada' },
+  milliy:      { Sticker: StickerMilliyBadge,      color: '#326D62', bg: 'var(--pal-milliy)',      label: 'Milliy Sertifikat' },
+  dtm:         { Sticker: StickerDTMRocket,         color: '#171796', bg: 'var(--pal-dtm)',         label: 'DTM' },
+  olympiad:    { Sticker: StickerOlympiadTrophy,    color: '#D4A820', bg: 'var(--pal-olympiad)',    label: 'Olimpiada' },
   attestation: { Sticker: StickerAttestationShield, color: '#22C55E', bg: 'var(--pal-attestation)', label: 'Attestatsiya' },
 };
 
@@ -98,8 +99,17 @@ function CategoryTestsPage({ type }) {
   const category = testCategories.find(c => c.id === type);
   const tests = popularTests.filter(t => t.type === type);
 
+  const pageSeoMap = {
+    milliy:      { title: "Milliy Sertifikat Geografiya Mock Testlari", desc: "Milliy Sertifikat geografiya imtihoniga real mock testlar, ochiq savollar va rasmiy format bilan tayyorlaning." },
+    dtm:         { title: "DTM Geografiya Testlari", desc: "O'zbekiston DTM kirish imtihoniga 90 savollik to'liq geografiya amaliy testlari bilan tayyorlaning." },
+    olympiad:    { title: "Geografiya Olimpiada Testlari", desc: "Musobaqa o'quvchilari uchun mo'ljallangan murakkab geografiya olimpiada savollarini ishlang." },
+    attestation: { title: "Attestatsiya Geografiya Testlari", desc: "Maktab attestatsiyasi uchun geografiya testlari — tezkor baholash va batafsil natijalar bilan." },
+  };
+  const seo = pageSeoMap[type] || { title: "Geografiya Testlari", desc: "Geografiya testlarini ishlang." };
+
   return (
     <div className="space-y-6">
+      <SEO title={seo.title} description={seo.desc} url={`/tests/${type}`} />
       {/* Header */}
       <div>
         <button
@@ -173,9 +183,9 @@ function CategoryTestsPage({ type }) {
 
 function TestExamCard({ test, index }) {
   const colors = {
-    milliy: { bg: 'var(--pal-milliy)', color: '#2F80ED', label: 'Milliy Sertifikat' },
-    dtm: { bg: 'var(--pal-dtm)', color: '#8B5CF6', label: 'DTM' },
-    olympiad: { bg: 'var(--pal-olympiad)', color: '#F59E0B', label: 'Olimpiada' },
+    milliy: { bg: 'var(--pal-milliy)', color: '#326D62', label: 'Milliy Sertifikat' },
+    dtm: { bg: 'var(--pal-dtm)', color: '#171796', label: 'DTM' },
+    olympiad: { bg: 'var(--pal-olympiad)', color: '#D4A820', label: 'Olimpiada' },
     attestation: { bg: 'var(--pal-attestation)', color: '#22C55E', label: 'Attestatsiya' },
   };
   const c = colors[test.type] || colors.milliy;
@@ -217,7 +227,7 @@ function TestExamCard({ test, index }) {
               {test.participants.toLocaleString()}
             </div>
             <div className="flex items-center gap-1.5 text-xs" style={{
-              color: test.difficulty === 'easy' ? '#22C55E' : test.difficulty === 'medium' ? '#F59E0B' : test.difficulty === 'hard' ? '#EF4444' : '#8B5CF6'
+              color: test.difficulty === 'easy' ? '#22C55E' : test.difficulty === 'medium' ? '#F59E0B' : test.difficulty === 'hard' ? '#EF4444' : '#171796'
             }}>
               <ChartBar size={13} />
               {test.difficulty === 'easy' ? 'Oson' : test.difficulty === 'medium' ? "O'rtacha" : test.difficulty === 'hard' ? 'Qiyin' : 'Ekspert'}
@@ -339,9 +349,9 @@ function MilliyTestView() {
                   </span>
                   <span className={cn(
                     'text-xs font-medium px-2 py-0.5 rounded-full',
-                    questions[currentQuestion].type === 'closed' ? 'bg-[var(--pal-milliy)] text-[#2F80ED]' :
-                    questions[currentQuestion].type === 'open' ? 'bg-[var(--pal-dtm)] text-[#8B5CF6]' :
-                    questions[currentQuestion].type === 'image' ? 'bg-[var(--pal-olympiad)] text-[#F59E0B]' :
+                    questions[currentQuestion].type === 'closed' ? 'bg-[var(--pal-milliy)] text-[#326D62]' :
+                    questions[currentQuestion].type === 'open' ? 'bg-[var(--pal-dtm)] text-[#171796]' :
+                    questions[currentQuestion].type === 'image' ? 'bg-[var(--pal-olympiad)] text-[#D4A820]' :
                     questions[currentQuestion].type === 'map' ? 'bg-[var(--pal-attestation)] text-[#22C55E]' :
                     'bg-[#FCE7F3] text-[#EC4899]'
                   )}>
@@ -460,19 +470,19 @@ function DTMTestView() {
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[var(--pal-dtm)] flex items-center justify-center">
-              <Target size={18} className="text-[#8B5CF6]" />
+              <Target size={18} className="text-[#171796]" />
             </div>
             <div>
               <p className="text-sm font-bold text-[var(--text-primary)]">DTM Blok Test</p>
               <p className="text-xs text-[var(--text-secondary)]">{answeredCount}/{questions.length} ta javob</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--pal-dtm)] text-[#8B5CF6] font-bold text-sm">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--pal-dtm)] text-[#171796] font-bold text-sm">
             <Clock size={16} />
             {formatTime(timeLeft)}
           </div>
         </div>
-        <ProgressBar value={progress} size="sm" color="#8B5CF6" />
+        <ProgressBar value={progress} size="sm" color="#171796" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -511,7 +521,7 @@ function DTMTestView() {
                                 onClick={() => setCurrentQuestion(qNum - 1)}
                                 className={cn(
                                   'aspect-square rounded-[var(--radius-xs)] text-[10px] font-semibold transition-all',
-                                  currentQuestion === qNum - 1 && 'ring-2 ring-[#8B5CF6] ring-offset-1 ring-offset-[var(--surface)]',
+                                  currentQuestion === qNum - 1 && 'ring-2 ring-[#171796] ring-offset-1 ring-offset-[var(--surface)]',
                                   q.userAnswer !== null && currentQuestion !== qNum - 1 && 'bg-[var(--success)]/20 text-[var(--success)]',
                                   currentQuestion !== qNum - 1 && !q.userAnswer && 'bg-[var(--border)] text-[var(--text-secondary)]'
                                 )}
@@ -545,7 +555,7 @@ function DTMTestView() {
                   <span className="text-xs font-medium text-[var(--text-secondary)]">
                     Savol {currentQuestion + 1} / {questions.length}
                   </span>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--pal-dtm)] text-[#8B5CF6] font-medium"
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--pal-dtm)] text-[#171796] font-medium"
                     style={{ background: `${currentSection?.color}22`, color: currentSection?.color }}>
                     {currentSection?.subject}
                   </span>
@@ -564,8 +574,8 @@ function DTMTestView() {
                     className={cn(
                       'w-full text-left p-3.5 rounded-[var(--radius-sm)] border-2 transition-all text-sm',
                       questions[currentQuestion].userAnswer === option.charAt(0)
-                        ? 'border-[#8B5CF6] bg-[var(--pal-dtm)] text-[#8B5CF6]'
-                        : 'border-[var(--border)] hover:border-[#8B5CF6]/50 hover:bg-[var(--background)] text-[var(--text-primary)]'
+                        ? 'border-[#171796] bg-[var(--pal-dtm)] text-[#171796]'
+                        : 'border-[var(--border)] hover:border-[#171796]/50 hover:bg-[var(--background)] text-[var(--text-primary)]'
                     )}
                   >
                     <span className="font-semibold">{option.charAt(0)})</span> {option.slice(3)}
@@ -626,18 +636,18 @@ function OlympiadTestView() {
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[var(--pal-olympiad)] flex items-center justify-center">
-              <Medal size={18} className="text-[#F59E0B]" />
+              <Medal size={18} className="text-[#D4A820]" />
             </div>
             <div>
               <p className="text-sm font-bold text-[var(--text-primary)]">Olimpiada</p>
               <p className="text-xs text-[var(--text-secondary)]">{answeredCount}/{questions.length}</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--pal-olympiad)] text-[#F59E0B] font-bold text-sm">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--pal-olympiad)] text-[#D4A820] font-bold text-sm">
             <Clock size={16} /> {formatTime(timeLeft)}
           </div>
         </div>
-        <ProgressBar value={(answeredCount / questions.length) * 100} size="sm" color="#F59E0B" />
+        <ProgressBar value={(answeredCount / questions.length) * 100} size="sm" color="#D4A820" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -652,14 +662,14 @@ function OlympiadTestView() {
                     onClick={() => setCurrentQuestion(i)}
                     className={cn(
                       'w-full aspect-square rounded-[var(--radius-xs)] text-xs font-semibold relative',
-                      i === currentQuestion && 'ring-2 ring-[#F59E0B] ring-offset-2 ring-offset-[var(--surface)]',
+                      i === currentQuestion && 'ring-2 ring-[#D4A820] ring-offset-2 ring-offset-[var(--surface)]',
                       q.userAnswer !== null && i !== currentQuestion && 'bg-[var(--success)]/20 text-[var(--success)]',
                       i !== currentQuestion && !q.userAnswer && 'bg-[var(--border)] text-[var(--text-secondary)]'
                     )}
                   >
                     {q.number}
                     {q.points > 1 && (
-                      <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-[#F59E0B] text-white text-[7px] flex items-center justify-center font-bold">
+                      <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-[#D4A820] text-white text-[7px] flex items-center justify-center font-bold">
                         {q.points}
                       </span>
                     )}
@@ -668,7 +678,7 @@ function OlympiadTestView() {
               </div>
               <div className="mt-3 flex items-center gap-2 text-[10px] text-[var(--text-secondary)]">
                 <span className="px-1.5 py-0.5 rounded bg-[var(--border)]">1 bal</span>
-                <span className="px-1.5 py-0.5 rounded bg-[var(--pal-olympiad)] text-[#F59E0B]">2 bal</span>
+                <span className="px-1.5 py-0.5 rounded bg-[var(--pal-olympiad)] text-[#D4A820]">2 bal</span>
                 <span className="px-1.5 py-0.5 rounded bg-[#FEE2E2] text-[#EF4444]">3+ bal</span>
               </div>
             </CardContent>
@@ -684,11 +694,11 @@ function OlympiadTestView() {
                   <span className={cn(
                     'text-xs px-2 py-0.5 rounded-full font-medium',
                     currentQ.difficulty === 'easy' ? 'bg-[var(--pal-attestation)] text-[#22C55E]' :
-                    currentQ.difficulty === 'medium' ? 'bg-[var(--pal-olympiad)] text-[#F59E0B]' :
+                    currentQ.difficulty === 'medium' ? 'bg-[var(--pal-olympiad)] text-[#D4A820]' :
                     currentQ.difficulty === 'hard' ? 'bg-[#FEE2E2] text-[#EF4444]' :
-                    'bg-[var(--pal-dtm)] text-[#8B5CF6]'
+                    'bg-[var(--pal-dtm)] text-[#171796]'
                   )}>{currentQ.difficulty === 'easy' ? 'Oson' : currentQ.difficulty === 'medium' ? "O'rtacha" : currentQ.difficulty === 'hard' ? 'Qiyin' : 'Ekspert'}</span>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--pal-olympiad)] text-[#F59E0B] font-medium">{currentQ.points} bal</span>
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--pal-olympiad)] text-[#D4A820] font-medium">{currentQ.points} bal</span>
                 </div>
               </div>
 
@@ -705,8 +715,8 @@ function OlympiadTestView() {
                       className={cn(
                         'w-full text-left p-3.5 rounded-[var(--radius-sm)] border-2 transition-all text-sm',
                         currentQ.userAnswer === option.charAt(0)
-                          ? 'border-[#F59E0B] bg-[var(--pal-olympiad)] text-[#F59E0B]'
-                          : 'border-[var(--border)] hover:border-[#F59E0B]/50 hover:bg-[var(--background)] text-[var(--text-primary)]'
+                          ? 'border-[#D4A820] bg-[var(--pal-olympiad)] text-[#D4A820]'
+                          : 'border-[var(--border)] hover:border-[#D4A820]/50 hover:bg-[var(--background)] text-[var(--text-primary)]'
                       )}
                     >
                       <span className="font-semibold">{option.charAt(0)})</span> {option.slice(3)}
@@ -716,7 +726,7 @@ function OlympiadTestView() {
               ) : (
                 <div className="space-y-3">
                   <textarea
-                    className="w-full min-h-[200px] p-4 rounded-[var(--radius-sm)] border-2 border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)] text-sm resize-none focus:border-[#F59E0B] focus:outline-none transition-all"
+                    className="w-full min-h-[200px] p-4 rounded-[var(--radius-sm)] border-2 border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)] text-sm resize-none focus:border-[#D4A820] focus:outline-none transition-all"
                     placeholder="Javobingizni yozing..."
                     value={currentQ.userAnswer || ''}
                     onChange={(e) => handleAnswer(e.target.value)}
@@ -854,6 +864,11 @@ export default function Tests() {
 
   return (
     <div className="space-y-6">
+      <SEO
+        title="Geografiya Testlari"
+        description="DTM, Milliy Sertifikat, Olimpiada va maktab imtihonlari uchun geografiya testlarini ishlang — natijalar va batafsil tahlil bilan."
+        url="/tests"
+      />
       <div>
         <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">Testlar</h1>
         <p className="text-sm text-[var(--text-secondary)] mt-1">Imtihon turini tanlang va tayyorgarlikni boshlang</p>

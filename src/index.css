@@ -40,9 +40,9 @@
   --sticker-bg: #EFF6FF;
   --sticker-border: #2563EB;
   /* Category palette bg */
-  --pal-milliy: #DCEBFF;
-  --pal-dtm: #EDE9FE;
-  --pal-olympiad: #FEF3C7;
+  --pal-milliy: #D6ECEA;
+  --pal-dtm: #E0E0F8;
+  --pal-olympiad: #fff1bea4;
   --pal-attestation: #DCFCE7;
   --pal-orange: #FFF7ED;
   /* Utility card bg */
@@ -72,9 +72,9 @@
   --sticker-bg: #1E2A3A;
   --sticker-border: #3B82F6;
   /* Category palette bg (dark) */
-  --pal-milliy: rgba(47, 128, 237, 0.14);
-  --pal-dtm: rgba(139, 92, 246, 0.14);
-  --pal-olympiad: rgba(245, 158, 11, 0.14);
+  --pal-milliy: rgba(50, 109, 98, 0.14);
+  --pal-dtm: rgba(23, 23, 150, 0.14);
+  --pal-olympiad: rgba(212, 168, 32, 0.14);
   --pal-attestation: rgba(34, 197, 94, 0.14);
   --pal-orange: rgba(249, 115, 22, 0.12);
   /* Utility card bg (dark) */

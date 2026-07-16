@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { CaretLeft, Pause, Play, Lightning, Target, Clock, XCircle, ArrowsClockwise, House, Star, Heart } from '@phosphor-icons/react';
@@ -71,9 +72,20 @@ export function ResultScreen({ color, result, onPlayAgain, onExit }) {
             </div>
           </div>
 
-          <div className="flex gap-3 pt-1">
-            <Button className="flex-1" onClick={onPlayAgain}><ArrowsClockwise size={16} /> Qayta o'ynash</Button>
-            <Button className="flex-1" variant="outline" onClick={onExit}><House size={16} /> O'yinlar</Button>
+          <div className="flex flex-col gap-2 pt-1">
+            <button
+              onClick={onPlayAgain}
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-[var(--radius-sm)] text-sm font-semibold text-white transition-all active:scale-[0.98]"
+              style={{ background: color }}
+            >
+              <ArrowsClockwise size={16} /> Qayta o'ynash
+            </button>
+            <button
+              onClick={onExit}
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-[var(--radius-sm)] text-sm font-semibold border border-[var(--border)] bg-transparent text-[var(--text-primary)] transition-all active:scale-[0.98] hover:bg-[var(--background)]"
+            >
+              <House size={16} /> O'yinlar
+            </button>
           </div>
         </div>
       </div>
@@ -146,18 +158,28 @@ export default function GameShell({
           )}
         </AnimatePresence>
 
-        {paused && !result && (
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="absolute inset-0 rounded-[var(--radius-lg)] bg-[var(--surface)]/95 backdrop-blur-sm flex flex-col items-center justify-center gap-4 z-10"
-          >
-            <p className="text-lg font-bold text-[var(--text-primary)]">To'xtatildi</p>
-            <div className="flex gap-3">
-              <Button onClick={onPauseToggle}><Play size={16} weight="fill" /> Davom etish</Button>
-              <Button variant="outline" onClick={onExit}><House size={16} /> Chiqish</Button>
-            </div>
-          </motion.div>
-        )}
+        <AnimatePresence>
+          {paused && !result && createPortal(
+            <motion.div
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1rem', background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }}
+            >
+              <motion.div
+                initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.92, opacity: 0 }}
+                transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
+                className="bg-[var(--surface)] rounded-2xl p-8 flex flex-col items-center gap-4 shadow-2xl min-w-[260px]"
+              >
+                <p className="text-lg font-bold text-[var(--text-primary)]">To'xtatildi</p>
+                <div className="flex gap-3">
+                  <Button onClick={onPauseToggle}><Play size={16} weight="fill" /> Davom etish</Button>
+                  <Button variant="outline" onClick={onExit}><House size={16} /> Chiqish</Button>
+                </div>
+              </motion.div>
+            </motion.div>,
+            document.body
+          )}
+        </AnimatePresence>
       </div>
 
       {!result && hint && (
