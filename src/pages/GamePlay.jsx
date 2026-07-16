@@ -1,25 +1,17 @@
 import { useParams, Navigate } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
 import SEO from '../components/SEO';
-import FlagGame from './games/FlagGame';
-import CapitalGame from './games/CapitalGame';
-import LandmarkGame from './games/LandmarkGame';
-import ClimateGame from './games/ClimateGame';
-import ContinentRushGame from './games/ContinentRushGame';
-import FindCountryGame from './games/FindCountryGame';
-import UzbekistanRegionsGame from './games/UzbekistanRegionsGame';
-import RiverChallengeGame from './games/RiverChallengeGame';
-import MountainCountryGame from './games/MountainCountryGame';
 
 const registry = {
-  flag: FlagGame,
-  capital: CapitalGame,
-  landmark: LandmarkGame,
-  climate: ClimateGame,
-  continentRush: ContinentRushGame,
-  findCountry: FindCountryGame,
-  uzbRegions: UzbekistanRegionsGame,
-  river: RiverChallengeGame,
-  mountainCountry: MountainCountryGame,
+  flag: lazy(() => import('./games/FlagGame')),
+  capital: lazy(() => import('./games/CapitalGame')),
+  landmark: lazy(() => import('./games/LandmarkGame')),
+  climate: lazy(() => import('./games/ClimateGame')),
+  continentRush: lazy(() => import('./games/ContinentRushGame')),
+  findCountry: lazy(() => import('./games/FindCountryGame')),
+  uzbRegions: lazy(() => import('./games/UzbekistanRegionsGame')),
+  river: lazy(() => import('./games/RiverChallengeGame')),
+  mountainCountry: lazy(() => import('./games/MountainCountryGame')),
 };
 
 const gameMeta = {
@@ -42,7 +34,9 @@ export default function GamePlay() {
   return (
     <>
       <SEO title={meta.title} description={meta.desc} url={`/games/play/${slug}`} />
-      <GameComponent key={slug} />
+      <Suspense fallback={null}>
+        <GameComponent key={slug} />
+      </Suspense>
     </>
   );
 }

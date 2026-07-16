@@ -58,7 +58,7 @@ export default function Auth() {
         {/* Logo & Title */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2.5 mb-4">
-            <img src="/main_logo.png" alt="Geo-Test" className="w-12 h-12 object-contain" />
+            <img src={`${import.meta.env.BASE_URL}main_logo.png`} alt="Geo-Test" className="w-12 h-12 object-contain" />
             <span className="text-2xl font-bold text-[var(--text-primary)]">GeoTest</span>
           </Link>
           <h1 className="text-2xl font-bold text-[var(--text-primary)]">

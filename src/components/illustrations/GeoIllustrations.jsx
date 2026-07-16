@@ -4,6 +4,9 @@
 // Dark mode: uses currentColor / CSS variables via className
 
 import { useTheme } from '../../context/ThemeContext';
+import bbaSvg from '../images/bba.svg';
+import dtmSvg from '../images/dtm.svg';
+import fomSvg from '../images/fom.svg';
 
 // ==================== STICKER PACK ====================
 
@@ -125,7 +128,7 @@ export function StickerCertificate({ size = 48, className = '' }) {
   const d = Math.round(size * 0.96);
   return (
     <div className={`inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
-      <img src="/src/components/images/bba.svg" alt="BBA" style={{ width: d, height: d, objectFit: 'contain' }} />
+      <img src={bbaSvg} alt="BBA" style={{ width: d, height: d, objectFit: 'contain' }} />
     </div>
   );
 }
@@ -179,7 +182,7 @@ export function StickerDTMImage({ size = 48, className = '', color = '#171796' }
         <circle cx="24" cy="24" r="22" fill={hexToRgba(color, 0.12)} stroke={color} strokeWidth="2" />
       </svg>
       <img
-        src="/src/components/images/dtm.svg"
+        src={dtmSvg}
         alt="DTM"
         style={{ width: size * 0.55, height: size * 0.55 }}
         className="object-contain relative z-10"
@@ -194,7 +197,7 @@ export function StickerMilliyBadge({ size = 48, className = '' }) {
   const d = Math.round(size * 0.96);
   return (
     <div className={`inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
-      <img src="/src/components/images/bba.svg" alt="BBA" style={{ width: d, height: d, objectFit: 'contain' }} />
+      <img src={bbaSvg} alt="BBA" style={{ width: d, height: d, objectFit: 'contain' }} />
     </div>
   );
 }
@@ -207,7 +210,7 @@ export function StickerDTMRocket({ size = 48, className = '', color = '#171796' 
         <circle cx="30" cy="30" r="22" fill="none" stroke="white" strokeWidth="1.5" strokeOpacity="0.35" />
       </svg>
       <img
-        src="/src/components/images/dtm.svg"
+        src={dtmSvg}
         alt="DTM"
         style={{ width: size * 0.54, height: size * 0.54, filter: 'grayscale(100%) brightness(10)' }}
         className="object-contain relative z-10"
@@ -224,7 +227,7 @@ export function StickerOlympiadTrophy({ size = 48, className = '', color = '#D4A
         <circle cx="30" cy="30" r="26" fill={hexToRgba(color, 0.15)} stroke={color} strokeWidth="2" />
         <circle cx="30" cy="30" r="22" fill="none" stroke={color} strokeWidth="1" strokeOpacity="0.3" />
       </svg>
-      <img src="/src/components/images/fom.svg" alt="FOM" style={{ width: d, height: d, objectFit: 'contain' }} className="relative z-10" />
+      <img src={fomSvg} alt="FOM" style={{ width: d, height: d, objectFit: 'contain' }} className="relative z-10" />
     </div>
   );
 }
@@ -483,7 +486,7 @@ export function GlobeCertificate({ size = 80, className = '' }) {
   const d = Math.round(size * 0.96);
   return (
     <div className={`inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
-      <img src="/src/components/images/bba.svg" alt="BBA" style={{ width: d, height: d, objectFit: 'contain' }} />
+      <img src={bbaSvg} alt="BBA" style={{ width: d, height: d, objectFit: 'contain' }} />
     </div>
   );
 }

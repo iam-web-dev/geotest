@@ -38,7 +38,7 @@ export default function Sidebar() {
   return (
     <aside className="hidden lg:flex flex-col w-64 h-screen sticky top-0 bg-[var(--surface)] border-r border-[var(--border)] p-4">
       <div className="flex items-center gap-3 px-3 py-4 mb-6">
-        <img src="/main_logo.png" alt="Geo-Test" className="w-10 h-10 object-contain" />
+        <img src={`${import.meta.env.BASE_URL}main_logo.png`} alt="Geo-Test" className="w-10 h-10 object-contain" />
         <h1 className="text-lg font-bold text-[var(--text-primary)]">Geo-Test</h1>
       </div>
 
