@@ -176,7 +176,7 @@ export default function ArticleDetail() {
         <p className="text-lg font-semibold mb-3">Maqola topilmadi</p>
         <button onClick={() => navigate('/articles')}
           className="text-sm font-medium text-[var(--primary)] underline">
-          Maqolalarga qaytish
+          Maqolalarga qaytiş
         </button>
       </div>
     );
@@ -288,7 +288,7 @@ export default function ArticleDetail() {
           <button
             onClick={() => navigator.share?.({ title: article.title, text: article.excerpt, url: window.location.href })}
             className="ml-auto flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border border-[var(--border)] text-[var(--text-secondary)] transition-all hover:bg-[var(--background)]">
-            <Share size={15} /> Ulashish
+            <Share size={15} /> Ulaşiş
           </button>
         </div>
       </div>

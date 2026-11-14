@@ -14,7 +14,7 @@ function buildQuestions() {
       options: shuffle([target.country, ...distractors]),
       prompt: (
         <div className="flex flex-col items-center gap-3">
-          <p className="text-sm text-[var(--text-secondary)] font-medium">Bu qaysi davlatga tegishli?</p>
+          <p className="text-sm text-[var(--text-secondary)] font-medium">Bu qaysi davlatga tegişli?</p>
           <div className="w-40 h-40 rounded-[28px] bg-[var(--background)] flex flex-col items-center justify-center gap-1">
             <span className="text-[70px] leading-none">{target.emoji}</span>
             <span className="text-xs font-semibold text-[var(--text-secondary)]">{target.name}</span>
@@ -27,5 +27,5 @@ function buildQuestions() {
 
 export default function LandmarkGame() {
   const questions = useMemo(buildQuestions, []);
-  return <QuizEngine title="Mashhur Joylar" color="#8B5CF6" questions={questions} xpPerCorrect={8} timePerQuestion={14} />;
+  return <QuizEngine title="Maşhur Joylar" color="#8B5CF6" questions={questions} xpPerCorrect={8} timePerQuestion={14} />;
 }

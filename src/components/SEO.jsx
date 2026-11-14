@@ -4,7 +4,7 @@ const SITE_NAME = 'GeoBek';
 const BASE_URL = 'https://geobek.uz';
 const DEFAULT_IMAGE = `${BASE_URL}/main_logo.png`;
 const DEFAULT_DESCRIPTION =
-  "GeoBek — O'zbekiston va jahon geografiyasini o'rganish uchun zamonaviy ta'lim portali. Maktab darslik taqdimotlari (7-11 sinf), DTM, Milliy Sertifikat, Olimpiada testlari, interaktiv viktorinalar va raqamli kutubxona.";
+  "GeoBek — Özbekiston va jahon geografiyasini örganiş uçun zamonaviy taʼlim portali. Maktab darslik taqdimotlari (7–11-sinf), DTM, Milliy Sertifikat, Olimpiada testlari, interaktiv viktorinalar va raqamli kutubxona.";
 
 export default function SEO({
   title,
@@ -23,7 +23,7 @@ export default function SEO({
       <html lang="uz" />
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      <meta name="keywords" content="geografiya, GeoBek, O'zbekiston geografiyasi, maktab ta'limi, 7 sinf geografiya, 8 sinf geografiya, 9 sinf geografiya, 10 sinf geografiya, 11 sinf geografiya, taqdimotlar, DTM, Milliy Sertifikat, geografiya testlari, kutubxona, interaktiv ta'lim" />
+      <meta name="keywords" content="geografiya, GeoBek, Özbekiston geografiyasi, maktab taʼlimi, 7 sinf geografiya, 8 sinf geografiya, 9 sinf geografiya, 10 sinf geografiya, 11 sinf geografiya, taqdimotlar, DTM, Milliy Sertifikat, geografiya testlari, kutubxona, interaktiv taʼlim" />
       <meta name="author" content="GeoBek Jamoasi" />
       <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
       <meta name="theme-color" content="#2563EB" />

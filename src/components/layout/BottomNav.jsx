@@ -15,7 +15,7 @@ function loadSettings() {
 
 // 5 Main Core Sections requested by client
 const navItems = [
-  { to: '/', icon: House, label: 'Bosh' },
+  { to: '/', icon: House, label: 'Boş' },
   { to: '/tests', icon: BookOpen, label: 'Testlar' },
   { to: '/school', icon: GraduationCap, label: 'Maktab' },
   { to: '/library', icon: Books, label: 'Kutubxona' },
@@ -85,7 +85,7 @@ export default function BottomNav() {
                 )}
               </div>
               <span className={cn('text-[10px] font-medium transition-all duration-200', isActive ? 'text-[var(--primary)] font-bold' : 'text-[var(--text-secondary)]')}>
-                {user ? 'Profil' : 'Kirish'}
+                {user ? 'Profil' : 'Kiriş'}
               </span>
             </>
           )}

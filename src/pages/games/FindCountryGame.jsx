@@ -52,9 +52,9 @@ function getView(countryName) {
 }
 
 const difficultyMeta = {
-  easy: { label: 'Oson', desc: 'Yirik va mashhur davlatlar', dotColor: '#22C55E' },
-  medium: { label: "O'rtacha", desc: "Yevropa va o'rta hajmdagi davlatlar", dotColor: '#F59E0B' },
-  hard: { label: 'Qiyin', desc: 'Kichik davlatlar va orollar', dotColor: '#EF4444' },
+  easy: { label: 'Oson', desc: 'Yirik va maşhur davlatlar', dotColor: '#22C55E' },
+  medium: { label: "Örtaça", desc: "Yevropa va örta hajmdagi davlatlar", dotColor: '#F59E0B' },
+  hard: { label: 'Qiyin', desc: 'Kiçik davlatlar va orollar', dotColor: '#EF4444' },
 };
 
 function DifficultyPicker({ onSelect, onExit }) {

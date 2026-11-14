@@ -21,7 +21,7 @@ const gameIcons = {
 };
 
 const filters = [
-  { key: 'all', label: 'Barchasi' },
+  { key: 'all', label: 'Barçasi' },
   { key: 'popular', label: 'Ommabop' },
   { key: 'favorites', label: 'Sevimlilar' },
 ];
@@ -145,11 +145,11 @@ function GameModal({ game, onClose, onStart, isFavorite, onToggleFavorite }) {
 
             {game.playable ? (
               <Button className="w-full sm:col-span-2" onClick={() => onStart(game, mode)}>
-                <Play size={15} weight="fill" /> O'yinni boshlash <ArrowRight size={15} />
+                <Play size={15} weight="fill" /> Öyinni boşlaş <ArrowRight size={15} />
               </Button>
             ) : (
               <div className="w-full sm:col-span-2 flex items-center justify-center gap-2 py-3 rounded-[var(--radius-sm)] bg-[var(--background)] text-xs font-semibold text-[var(--text-secondary)]">
-                <HourglassMedium size={15} /> Bu o'yin hozircha tayyorlanmoqda
+                <HourglassMedium size={15} /> Bu öyin hozirça tayyorlanmoqda
               </div>
             )}
           </div>
@@ -183,13 +183,13 @@ export default function Games() {
   return (
     <div className="space-y-8">
       <SEO
-        title="Geografiya O'yinlari"
-        description="Xaritalar, daryolar, tog'lar, bayroqlar, poytaxtlar va qit'alar bo'yicha interaktiv ta'limiy o'yinlar orqali geografiyani o'rganing."
+        title="Geografiya Öyinlari"
+        description="Xaritalar, daryolar, toğlar, bayroqlar, poytaxtlar va qit'alar böyiça interaktiv ta'limiy öyinlar orqali geografiyani örganing."
         url="/games"
       />
       <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">O'yinlar</h1>
-        <p className="text-sm text-[var(--text-secondary)] mt-1">Geografiyani o'ynab o'rganing</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">Öyinlar</h1>
+        <p className="text-sm text-[var(--text-secondary)] mt-1">Geografiyani öynab örganing</p>
       </div>
 
       {/* Featured banner */}
@@ -219,7 +219,7 @@ export default function Games() {
             </span>
           </div>
           <Button className="bg-white text-[var(--primary)] hover:bg-white/90" onClick={() => handlePlay(featured)}>
-            <Play size={14} weight="fill" /> O'ynash
+            <Play size={14} weight="fill" /> Öynaş
           </Button>
         </div>
       </div>
@@ -227,9 +227,9 @@ export default function Games() {
       {/* Personal stats strip */}
       <div className="grid grid-cols-3 gap-3">
         {[
-          { label: "O'yinlar", value: gameStats.gamesPlayed, Icon: Sparkle, color: '#2563EB' },
+          { label: "Öyinlar", value: gameStats.gamesPlayed, Icon: Sparkle, color: '#2563EB' },
           { label: 'Aniqlik', value: `${gameStats.accuracy}%`, Icon: Target, color: '#16A34A' },
-          { label: 'Eng yaxshi', value: gameStats.bestScore, Icon: Trophy, color: '#8B5CF6' },
+          { label: 'Eng yaxşi', value: gameStats.bestScore, Icon: Trophy, color: '#8B5CF6' },
         ].map(({ label, value, Icon, color }) => (
           <Card key={label}>
             <CardContent className="p-3.5 flex items-center gap-2.5">
@@ -257,7 +257,7 @@ export default function Games() {
             </div>
             <div className="text-left">
               <p className="font-bold">Viktorinalar</p>
-              <p className="text-xs text-[var(--text-secondary)] font-normal">Bilimingizni sinab ko'ring</p>
+              <p className="text-xs text-[var(--text-secondary)] font-normal">Bilimingizni sinab köring</p>
             </div>
           </div>
           <ArrowRight size={18} className="text-[var(--text-secondary)]" />
@@ -284,7 +284,7 @@ export default function Games() {
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {visible.length === 0 && filter === 'favorites' && (
           <p className="col-span-full text-center text-sm text-[var(--text-secondary)] py-10">
-            Hali sevimli o'yinlar yo'q. Kartadagi yurak belgisini bosing.
+            Hali sevimli öyinlar yöq. Kartadagi yurak belgisini bosing.
           </p>
         )}
         {visible.map((game, i) => {
@@ -335,7 +335,7 @@ export default function Games() {
 
                   <div className="flex items-center gap-2 mt-3.5">
                     <Button size="sm" className="flex-1" onClick={() => handlePlay(game)}>
-                      {game.playable ? <Play size={12} weight="fill" /> : <HourglassMedium size={12} />} O'ynash
+                      {game.playable ? <Play size={12} weight="fill" /> : <HourglassMedium size={12} />} Öynaş
                     </Button>
                     <Button size="sm" variant="outline" onClick={() => setActiveGame(game)}>
                       <Info size={14} />

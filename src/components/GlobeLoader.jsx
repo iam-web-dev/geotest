@@ -5,7 +5,7 @@ import EarthDetailedGlobe from './EarthDetailedGlobe';
 const PHRASES = [
   "Dunyo xaritasi va materiklar yuklanmoqda...",
   "Geografik koordinatalar va darsliklar...",
-  "GeoBek platformasiga xush kelibsiz!",
+  "GeoBek platformasiga xuş kelibsiz!",
 ];
 
 function CyclingText({ dark }) {
@@ -83,10 +83,6 @@ export default function GlobeLoader({ onDone, fadeIn = false }) {
           <h2 className="text-2xl font-black tracking-tight text-[var(--text-primary)]">
             Geo<span className="text-blue-600">Bek</span>
           </h2>
-
-          <p className="text-xs text-[var(--text-secondary)] font-medium max-w-xs">
-            Oʻzbekiston va Jahon Geografiyasi Taʼlim Portali
-          </p>
 
           <div className="pt-2">
             <CyclingText dark={darkMode} />

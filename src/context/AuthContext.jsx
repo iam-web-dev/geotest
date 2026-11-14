@@ -157,8 +157,8 @@ export function AuthProvider({ children }) {
       username: u.user_metadata?.username || 'user',
       phone: u.phone || u.user_metadata?.phone || null,
       grade: u.user_metadata?.grade || 9,
-      school: u.user_metadata?.school || "O'zbekiston maktabi",
-      region: u.user_metadata?.region || 'Toshkent shahri',
+      school: u.user_metadata?.school || "Özbekiston maktabi",
+      region: u.user_metadata?.region || 'Toşkent şahri',
       role: u.user_metadata?.role || 'school_student',
       favoriteSubject: 'Geografiya',
     };
@@ -171,11 +171,11 @@ export function AuthProvider({ children }) {
     const cleanUsername = (formData.username || '').trim().replace(/^@/, '').toLowerCase();
     const cleanName = (formData.name || '').trim();
 
-    if (!cleanName) throw new Error('Iltimos, toʻliq ismingizni kiriting');
+    if (!cleanName) throw new Error('Iltimos, töliq ismingizni kiriting');
     if (!cleanUsername) throw new Error('Iltimos, username kiriting');
-    if (cleanUsername.length < 3) throw new Error('Username kamida 3 ta belgidan iborat boʻlishi kerak');
-    if (phone.replace(/\D/g, '').length < 12) throw new Error('Iltimos, toʻliq telefon raqamini kiriting (+998...)');
-    if (!formData.password || formData.password.length < 6) throw new Error('Parol kamida 6 ta belgidan iborat boʻlishi kerak');
+    if (cleanUsername.length < 3) throw new Error('Username kamida 3 ta belgidan iborat bölişi kerak');
+    if (phone.replace(/\D/g, '').length < 12) throw new Error('Iltimos, töliq telefon raqamini kiriting (+998...)');
+    if (!formData.password || formData.password.length < 6) throw new Error('Parol kamida 6 ta belgidan iborat bölişi kerak');
 
     // Check local accounts for duplicates
     const accounts = getStoredAccounts();
@@ -184,9 +184,9 @@ export function AuthProvider({ children }) {
     );
     if (existing) {
       if (existing.username.toLowerCase() === cleanUsername) {
-        throw new Error(`"@${cleanUsername}" username allaqachon band. Boshqa username tanlang.`);
+        throw new Error(`"@${cleanUsername}" username allaqaçon band. Boşqa username tanlang.`);
       }
-      throw new Error('Bu telefon raqami allaqachon roʻyxatdan oʻtgan');
+      throw new Error('Bu telefon raqami allaqaçon röyxatdan ötgan');
     }
 
     let newUser = null;
@@ -204,8 +204,8 @@ export function AuthProvider({ children }) {
               phone,
               role: formData.role || 'school_student',
               grade: formData.grade || 9,
-              school: formData.school || "O'zbekiston maktabi",
-              region: formData.region || 'Toshkent shahri',
+              school: formData.school || "Özbekiston maktabi",
+              region: formData.region || 'Toşkent şahri',
             },
           },
         });
@@ -228,8 +228,8 @@ export function AuthProvider({ children }) {
         phone,
         role: formData.role || 'school_student',
         grade: formData.grade || 9,
-        school: formData.school || "O'zbekiston maktabi",
-        region: formData.region || 'Toshkent shahri',
+        school: formData.school || "Özbekiston maktabi",
+        region: formData.region || 'Toşkent şahri',
         email: `${cleanUsername}@geobek.uz`,
         password: formData.password,
         avatar: null,
@@ -245,11 +245,11 @@ export function AuthProvider({ children }) {
         badges: [
           {
             id: 1,
-            name: 'Birinchi Qadam',
+            name: 'Birinçi Qadam',
             icon: 'star',
             unlocked: true,
             date: new Date().toISOString().split('T')[0],
-            desc: 'GeoBek safiga qoʻshildi',
+            desc: 'GeoBek safiga qöşildi',
             tier: 'bronze',
           },
         ],
@@ -340,12 +340,12 @@ export function AuthProvider({ children }) {
             phone: '+998901234567',
           };
         } else {
-          throw new Error('Bunday username yoki telefon raqamiga ega foydalanuvchi topilmadi');
+          throw new Error('Bunday username yoki telefon raqamiga ega foydalanuvçi topilmadi');
         }
       } else {
         // Validate password
         if (match.password && match.password !== password) {
-          throw new Error('Kiritilgan parol notoʻgʻri. Iltimos, qayta tekshirib koʻring.');
+          throw new Error('Kiritilgan parol notöğri. Iltimos, qayta tekşirib köring.');
         }
         foundUser = match;
       }

@@ -77,7 +77,7 @@ export default function Layout() {
             <button
               onClick={toggleTheme}
               className="w-8 h-8 rounded-xl bg-[var(--background)] flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all"
-              aria-label="Mavzuni oʻzgartirish"
+              aria-label="Mavzuni özgartiriş"
             >
               {darkMode ? <Sun size={17} weight="bold" /> : <Moon size={17} weight="bold" />}
             </button>
@@ -96,7 +96,7 @@ export default function Layout() {
                 to="/auth"
                 className="px-3 py-1.5 rounded-xl bg-[var(--primary)] text-white text-xs font-bold hover:bg-[var(--primary-hover)] transition-all"
               >
-                Kirish
+                Kiriş
               </NavLink>
             )}
           </div>

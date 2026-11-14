@@ -62,7 +62,7 @@ export default function School() {
       .map(u => ({
         ...u,
         chapterId: 'custom',
-        chapterTitle: u.chapter || 'Qoʻshimcha darslar',
+        chapterTitle: u.chapter || 'Qöşimça darslar',
       }));
 
     return [...list, ...userGradeUploads];
@@ -122,17 +122,17 @@ Sayt: https://geobek.uz`;
       slidesCount: Number(uploadForm.slidesCount) || 20,
       fileSize: "15.0 MB",
       format: "PPTX",
-      author: uploadForm.author.trim() || "O'qituvchi",
+      author: uploadForm.author.trim() || "Öqituvçi",
       downloads: 1,
       date: new Date().toISOString().split('T')[0],
-      chapter: uploadForm.chapter || "Qo'shimcha mavzular",
-      description: "Oʻqituvchi tomonidan platformaga yuklangan taqdimot fayli.",
+      chapter: uploadForm.chapter || "Qöşimça mavzular",
+      description: "Öqituvçi tomonidan platformaga yuklangan taqdimot fayli.",
       slides: [
         {
           title: uploadForm.title.trim(),
           subtitle: `${uploadForm.grade}-sinf Geografiya`,
-          content: "Oʻqituvchi tomonidan tayyorlangan dars taqdimoti.",
-          points: ["1. Mavzuning asosiy rejalari", "2. Yangi tushunchalar", "3. Mustahkamlash savollari"]
+          content: "Öqituvçi tomonidan tayyorlangan dars taqdimoti.",
+          points: ["1. Mavzuning asosiy rejalari", "2. Yangi tuşunçalar", "3. Mustahkamlaş savollari"]
         }
       ]
     };
@@ -164,7 +164,7 @@ Sayt: https://geobek.uz`;
     <div className="space-y-6 pb-12">
       <SEO
         title="Maktab Ta'limi — 7, 8, 9, 10, 11-sinf Geografiya Taqdimotlari"
-        description="O'zbekiston maktab darsliklarining barcha taqdimotlari (prezentatsiyalari) sinfma-sinf joylashtirilgan bo'lim."
+        description="Özbekiston maktab darsliklarining barça taqdimotlari (prezentatsiyalari) sinfma-sinf joylaştirilgan bölim."
         url="/school"
       />
 
@@ -201,7 +201,7 @@ Sayt: https://geobek.uz`;
             Hamma sinf darsliklarining rasmiy taqdimotlari
           </h1>
           <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
-            7, 8, 9, 10 va 11-sinf geografiya darsliklarining barcha mavzulari boʻyicha tayyor prezentatsiyalar (PPTX), xaritalar va dars ishlanmalari toʻplami.
+            7, 8, 9, 10 va 11-sinf geografiya darsliklarining barça mavzulari böyiça tayyor prezentatsiyalar (PPTX), xaritalar va dars işlanmalari töplami.
           </p>
 
           <div className="pt-2 flex flex-wrap gap-2.5">
@@ -213,7 +213,7 @@ Sayt: https://geobek.uz`;
               className="px-4 py-2.5 rounded-xl bg-white text-[var(--primary)] font-bold text-xs hover:bg-white/90 transition-all shadow-md flex items-center gap-2"
             >
               <UploadSimple size={15} weight="bold" />
-              <span>Taqdimot joylash</span>
+              <span>Taqdimot joylaş</span>
             </button>
 
             <button
@@ -241,7 +241,7 @@ Sayt: https://geobek.uz`;
               className={cn(
                 'px-4 py-2.5 rounded-2xl text-xs font-bold transition-all shrink-0 flex items-center gap-2 border',
                 isSelected
-                  ? 'bg-[var(--primary)] text-white border-[var(--primary)] shadow-md shadow-blue-500/20'
+                  ? 'bg-[var(--primary)] text-white border-[var(--primary)] şadow-md şadow-blue-500/20'
                   : 'bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:border-[var(--primary)]/40 hover:text-[var(--text-primary)]'
               )}
             >
@@ -269,7 +269,7 @@ Sayt: https://geobek.uz`;
             </h2>
           </div>
           <p className="text-xs text-[var(--text-secondary)]">
-            Darslik mualliflari: <span className="font-medium text-[var(--text-primary)]">{currentGradeData.author}</span> • {currentGradeData.year}-yil nashri ({currentGradeData.hours})
+            Darslik mualliflari: <span className="font-medium text-[var(--text-primary)]">{currentGradeData.author}</span> • {currentGradeData.year}-yil naşri ({currentGradeData.hours})
           </p>
         </div>
 
@@ -290,7 +290,7 @@ Sayt: https://geobek.uz`;
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Mavzu yoki kalit soʻz boʻyicha qidirish..."
+            placeholder="Mavzu yoki kalit söz böyiça qidiriş..."
             className="w-full h-11 pl-10 pr-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-xs text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:border-[var(--primary)] transition-all"
           />
           {searchQuery && (
@@ -310,7 +310,7 @@ Sayt: https://geobek.uz`;
             onChange={(e) => setSelectedChapter(e.target.value)}
             className="w-full h-11 px-3.5 pr-8 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-xs text-[var(--text-primary)] focus:outline-none focus:border-[var(--primary)] transition-all appearance-none cursor-pointer"
           >
-            <option value="all">Barcha boblar</option>
+            <option value="all">Barça boblar</option>
             {currentGradeData.chapters.map(ch => (
               <option key={ch.id} value={ch.id}>{ch.title}</option>
             ))}
@@ -326,8 +326,8 @@ Sayt: https://geobek.uz`;
             <div className="w-12 h-12 rounded-2xl bg-[var(--primary-soft)] text-[var(--primary)] flex items-center justify-center mx-auto">
               <FilePpt size={24} weight="duotone" />
             </div>
-            <p className="text-sm font-bold text-[var(--text-primary)]">Hech qanday taqdimot topilmadi</p>
-            <p className="text-xs text-[var(--text-secondary)]">Qidiruv soʻzini oʻzgartirib koʻring yoki yangi taqdimot yuklang.</p>
+            <p className="text-sm font-bold text-[var(--text-primary)]">Heç qanday taqdimot topilmadi</p>
+            <p className="text-xs text-[var(--text-secondary)]">Qidiruv sözini özgartirib köring yoki yangi taqdimot yuklang.</p>
           </div>
         ) : (
           filteredTopics.map((topic) => (
@@ -371,7 +371,7 @@ Sayt: https://geobek.uz`;
                     <span>•</span>
                     <span className="flex items-center gap-1">
                       <DownloadSimple size={12} weight="bold" />
-                      <span>{topic.downloads} yuklab olish</span>
+                      <span>{topic.downloads} yuklab oliş</span>
                     </span>
                   </div>
                 </div>
@@ -388,7 +388,7 @@ Sayt: https://geobek.uz`;
                     className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl border border-[var(--border)] bg-[var(--background)] text-[var(--text-secondary)] hover:text-[var(--primary)] hover:border-[var(--primary)]/30 text-xs font-semibold transition-all flex items-center justify-center gap-1.5"
                   >
                     <Eye size={15} weight="bold" />
-                    <span>Koʻrish</span>
+                    <span>Köriş</span>
                   </button>
                 )}
 
@@ -397,7 +397,7 @@ Sayt: https://geobek.uz`;
                   className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-[var(--primary)] text-white text-xs font-bold hover:bg-[var(--primary-hover)] transition-all shadow-sm flex items-center justify-center gap-1.5"
                 >
                   <DownloadSimple size={15} weight="bold" />
-                  <span>Yuklab olish</span>
+                  <span>Yuklab oliş</span>
                 </button>
               </div>
             </div>
@@ -420,7 +420,7 @@ Sayt: https://geobek.uz`;
               <div className="flex items-start justify-between gap-3 pb-3 border-b border-[var(--border)]">
                 <div>
                   <span className="text-[10px] uppercase font-bold tracking-wider text-[var(--primary)]">
-                    {selectedGrade}-sinf • Taqdimotni koʻrish
+                    {selectedGrade}-sinf • Taqdimotni köriş
                   </span>
                   <h3 className="text-base font-bold text-[var(--text-primary)] leading-snug">
                     {previewTopic.title}
@@ -512,7 +512,7 @@ Sayt: https://geobek.uz`;
                     className="px-4 py-2 rounded-xl bg-[var(--primary)] text-white text-xs font-bold flex items-center gap-1.5 shadow-sm"
                   >
                     <DownloadSimple size={14} weight="bold" />
-                    <span>Yuklab olish</span>
+                    <span>Yuklab oliş</span>
                   </button>
                 )}
               </div>
@@ -538,8 +538,8 @@ Sayt: https://geobek.uz`;
                     <UploadSimple size={18} weight="bold" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-[var(--text-primary)]">Taqdimot joylash</h3>
-                    <p className="text-[11px] text-[var(--text-secondary)]">Geografiya darslari uchun yangi taqdimot</p>
+                    <h3 className="text-sm font-bold text-[var(--text-primary)]">Taqdimot joylaş</h3>
+                    <p className="text-[11px] text-[var(--text-secondary)]">Geografiya darslari uçun yangi taqdimot</p>
                   </div>
                 </div>
                 <button
@@ -556,7 +556,7 @@ Sayt: https://geobek.uz`;
                     <Check size={24} weight="bold" />
                   </div>
                   <p className="text-sm font-bold text-[var(--text-primary)]">Taqdimot muvaffaqiyatli yuklandi!</p>
-                  <p className="text-xs text-[var(--text-secondary)]">Fayl roʻyxatga qoʻshildi va foydalanishga tayyor.</p>
+                  <p className="text-xs text-[var(--text-secondary)]">Fayl röyxatga qöşildi va foydalanişga tayyor.</p>
                 </div>
               ) : (
                 <form onSubmit={handleUploadSubmit} className="space-y-3.5">
@@ -586,7 +586,7 @@ Sayt: https://geobek.uz`;
                     <input
                       type="text"
                       required
-                      placeholder="Masalan: Oʻzbekiston foydali qazilmalari"
+                      placeholder="Masalan: Özbekiston foydali qazilmalari"
                       value={uploadForm.title}
                       onChange={(e) => setUploadForm(prev => ({ ...prev, title: e.target.value }))}
                       className="w-full h-10 px-3.5 rounded-xl border border-[var(--border)] bg-[var(--background)] text-xs text-[var(--text-primary)] focus:outline-none focus:border-[var(--primary)]"
@@ -621,13 +621,13 @@ Sayt: https://geobek.uz`;
                     <label className="text-xs font-semibold text-[var(--text-primary)]">Taqdimot fayli (.pptx / .pdf)</label>
                     <div className="p-4 border-2 border-dashed border-[var(--border)] rounded-2xl text-center bg-[var(--background)] hover:border-[var(--primary)]/50 transition-colors cursor-pointer">
                       <FilePpt size={24} className="text-[var(--primary)] mx-auto mb-1" weight="duotone" />
-                      <p className="text-xs font-semibold text-[var(--text-primary)]">Faylni tanlang yoki shu yerga tashlang</p>
+                      <p className="text-xs font-semibold text-[var(--text-primary)]">Faylni tanlang yoki şu yerga taşlang</p>
                       <p className="text-[10px] text-[var(--text-tertiary)] mt-0.5">Maksimal hajm: 50 MB</p>
                     </div>
                   </div>
 
                   <Button type="submit" className="w-full h-11 rounded-xl text-xs font-bold mt-2">
-                    Taqdimotni yuklash
+                    Taqdimotni yuklaş
                   </Button>
                 </form>
               )}

@@ -20,14 +20,14 @@ const catMeta = {
 };
 
 const TABS = [
-  { id: 'all',      label: 'Barchasi' },
-  { id: 'reading',  label: "O'qilayotgan" },
+  { id: 'all',      label: 'Barçasi' },
+  { id: 'reading',  label: "Öqilayotgan" },
   { id: 'saved',    label: 'Saqlangan' },
 ];
 
 const SORTS = [
   { id: 'rating',    label: 'Reyting' },
-  { id: 'downloads', label: 'Yuklab olish' },
+  { id: 'downloads', label: 'Yuklab oliş' },
   { id: 'year',      label: 'Yil' },
 ];
 
@@ -104,7 +104,7 @@ function BookCard({ book, onBookmark, onRead }) {
         {(isReading || isDone) && (
           <div>
             <div className="flex items-center justify-between text-[10px] mb-1" style={{ color: meta.color }}>
-              <span>{isDone ? "✓ Tugatildi" : `${progress}% o'qildi`}</span>
+              <span>{isDone ? "✓ Tugatildi" : `${progress}% öqildi`}</span>
               {!isDone && <span className="text-[var(--text-tertiary)]">{book.readPages}/{book.pages} bet</span>}
             </div>
             <ProgressBar value={progress} size="sm" color={isDone ? '#16A34A' : meta.color} />
@@ -113,19 +113,19 @@ function BookCard({ book, onBookmark, onRead }) {
         <div className="flex items-center gap-2">
           {isReading ? (
             <button onClick={() => onRead(book.id)} className="flex-1 flex items-center justify-center gap-1.5 text-[11px] font-semibold px-3 py-2 rounded-lg transition-colors" style={{ background: meta.bg, color: meta.color }}>
-              <BookOpen size={12} /> Davom etish
+              <BookOpen size={12} /> Davom etiş
             </button>
           ) : isDone ? (
             <button onClick={() => onRead(book.id)} className="flex-1 flex items-center justify-center gap-1.5 text-[11px] font-semibold px-3 py-2 rounded-lg transition-colors" style={{ background: '#F0FDF4', color: '#16A34A' }}>
-              <BookOpen size={12} /> Qayta o'qish
+              <BookOpen size={12} /> Qayta öqiş
             </button>
           ) : (
             <button onClick={() => onRead(book.id)} className="flex-1 flex items-center justify-center gap-1.5 text-[11px] font-semibold px-3 py-2 rounded-lg transition-colors" style={{ background: meta.bg, color: meta.color }}>
-              <BookOpen size={12} /> O'qishni boshlash
+              <BookOpen size={12} /> Öqişni boşlaş
             </button>
           )}
           <button className="flex items-center gap-1.5 text-[11px] font-medium px-3 py-2 rounded-lg border border-[var(--border)] text-[var(--text-secondary)] hover:bg-[var(--primary-soft)] hover:text-[var(--primary)] hover:border-[var(--primary)] transition-colors">
-            <Download size={12} /> Yuklab olish
+            <Download size={12} /> Yuklab oliş
           </button>
         </div>
       </div>
@@ -173,14 +173,14 @@ export default function Library() {
     <div className="space-y-6">
       <SEO
         title="Geografiya Kutubxonasi"
-        description="Geografiya darsliklari, atlaslar, o'quv materiallari va ta'lim PDFlarini o'qing va yuklab oling."
+        description="Geografiya darsliklari, atlaslar, öquv materiallari va ta'lim PDFlarini öqing va yuklab oling."
         url="/library"
       />
 
       {/* ── Header ── */}
       <div>
         <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">Kutubxona</h1>
-        <p className="text-sm text-[var(--text-secondary)] mt-1">Geografiya bo'yicha barcha materiallar</p>
+        <p className="text-sm text-[var(--text-secondary)] mt-1">Geografiya böyiça barça materiallar</p>
       </div>
 
       {/* ── Stats banner ── */}
@@ -188,7 +188,7 @@ export default function Library() {
         {[
           { label: 'Jami kitob',   value: totalBooks,   color: '#2563EB', bg: '#EFF6FF' },
           { label: 'Saqlangan',    value: savedCount,   color: '#7C3AED', bg: '#F5F3FF' },
-          { label: "O'qilayotgan", value: readingCount, color: '#D97706', bg: '#FFFBEB' },
+          { label: "Öqilayotgan", value: readingCount, color: '#D97706', bg: '#FFFBEB' },
           { label: 'Tugatilgan',   value: doneCount,    color: '#16A34A', bg: '#F0FDF4' },
         ].map(s => (
           <div key={s.label} className="bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius)] p-3 text-center">
@@ -204,7 +204,7 @@ export default function Library() {
           <MagnifyingGlass size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)]" />
           <input
             type="text"
-            placeholder="Kitob yoki muallif qidirish..."
+            placeholder="Kitob yoki muallif qidiriş..."
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="w-full h-11 pl-10 pr-9 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)] text-sm placeholder:text-[var(--text-tertiary)] focus:border-[var(--primary)] focus:outline-none transition-colors"
@@ -253,7 +253,7 @@ export default function Library() {
             onClick={() => setActiveTab(t.id)}
             className={cn(
               'flex-1 py-2 px-3 rounded-[var(--radius-xs)] text-sm font-medium transition-all',
-              activeTab === t.id ? 'bg-[var(--primary)] text-white shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              activeTab === t.id ? 'bg-[var(--primary)] text-white şadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
             )}
           >
             {t.label}
@@ -270,7 +270,7 @@ export default function Library() {
             activeCat === 'all' ? 'bg-[var(--primary)] text-white border-[var(--primary)]' : 'bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:border-[var(--primary)] hover:text-[var(--primary)]'
           )}
         >
-          Barchasi
+          Barçasi
         </button>
         {libraryCategories.map(cat => {
           const meta = catMeta[cat.name] || { color: '#2563EB', bg: '#EFF6FF' };
@@ -295,10 +295,10 @@ export default function Library() {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-[15px] font-bold text-[var(--text-primary)]">
-            {activeTab === 'reading' ? "O'qilayotgan kitoblar"
+            {activeTab === 'reading' ? "Öqilayotgan kitoblar"
               : activeTab === 'saved' ? 'Saqlangan kitoblar'
               : activeCat !== 'all' ? activeCat
-              : 'Barcha materiallar'}
+              : 'Barça materiallar'}
           </h2>
           <span className="text-xs text-[var(--text-tertiary)]">{filtered.length} ta</span>
         </div>
@@ -309,11 +309,11 @@ export default function Library() {
               <BookOpen size={28} style={{ color: 'var(--primary)' }} />
             </div>
             <p className="text-sm font-semibold text-[var(--text-secondary)]">
-              {search ? 'Qidiruv bo\'yicha hech narsa topilmadi' : 'Bu bo\'limda materiallar yo\'q'}
+              {search ? 'Qidiruv böyiça heç narsa topilmadi' : 'Bu bölimda materiallar yöq'}
             </p>
             {search && (
               <button onClick={() => setSearch('')} className="text-xs text-[var(--primary)] font-semibold underline underline-offset-2">
-                Qidiruvni tozalash
+                Qidiruvni tozalaş
               </button>
             )}
           </div>

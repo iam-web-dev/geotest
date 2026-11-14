@@ -116,7 +116,7 @@ export default function Rankings() {
     <div className="space-y-5">
       <SEO
         title="Reyting Jadvali"
-        description="O'z natijalaringizni kuzating va boshqa o'quvchilar bilan geografiya bilimlarini solishtiring."
+        description="Öz natijalaringizni kuzating va boşqa öquvçilar bilan geografiya bilimlarini soliştiring."
         url="/rankings"
       />
 
@@ -160,7 +160,7 @@ export default function Rankings() {
           </motion.div>
           <div>
             <h1 className="text-xl font-bold text-white">Reyting</h1>
-            <p className="text-white/65 text-xs mt-0.5">Eng yaxshi geografiya bilimdonlari</p>
+            <p className="text-white/65 text-xs mt-0.5">Eng yaxşi geografiya bilimdonlari</p>
           </div>
         </div>
       </div>
@@ -174,7 +174,7 @@ export default function Rankings() {
             className={cn(
               'flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all border',
               activeTab === tab.id
-                ? 'bg-[var(--primary)] text-white border-[var(--primary)] shadow-sm'
+                ? 'bg-[var(--primary)] text-white border-[var(--primary)] şadow-sm'
                 : 'bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)]'
             )}
           >

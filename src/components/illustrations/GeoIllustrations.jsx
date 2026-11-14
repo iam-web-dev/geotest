@@ -293,7 +293,7 @@ export function StatIconTests({ size = 48, className = '', color = '#22C55E' }) 
 
 export function BadgeSticker({ name, unlocked = true, size = 56, className = '' }) {
   const stickerMap = {
-    'Birinchi Test': StickerTarget,
+    'Birinçi Test': StickerTarget,
     '7 kunlik Streak': StickerFlame,
     'Geografiya Fanatigi': StickerGlobe,
     '100 ta Test': StickerCheckCircle,
@@ -314,11 +314,11 @@ export function BadgeSticker({ name, unlocked = true, size = 56, className = '' 
 // ── Unique SVG badge icons (per badge name) ───────────────────────────────────
 
 const BADGE_SVGS = {
-  'Birinchi Qadam': (c) => (
+  'Birinçi Qadam': (c) => (
     <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
     <path d="M20 10 L22.5 17.5 H30 L24 22 L26.5 29.5 L20 25 L13.5 29.5 L16 22 L10 17.5 H17.5 Z" fill={c} fillOpacity=".85"/></>
   ),
-  'Qiziquvchan': (c) => (
+  'Qiziquvçan': (c) => (
     <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
     <circle cx="20" cy="20" r="8" stroke={c} strokeWidth="2"/>
     <line x1="20" y1="4" x2="20" y2="9" stroke={c} strokeWidth="2" strokeLinecap="round"/>
@@ -327,7 +327,7 @@ const BADGE_SVGS = {
     <line x1="31" y1="20" x2="36" y2="20" stroke={c} strokeWidth="2" strokeLinecap="round"/>
     <circle cx="20" cy="20" r="2.5" fill={c}/></>
   ),
-  'Izlanuvchan': (c) => (
+  'Izlanuvçan': (c) => (
     <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
     <circle cx="18" cy="18" r="7" stroke={c} strokeWidth="2.5"/>
     <line x1="23.5" y1="23.5" x2="30" y2="30" stroke={c} strokeWidth="3" strokeLinecap="round"/></>
@@ -337,7 +337,7 @@ const BADGE_SVGS = {
     <path d="M12 19 L17 24 L28 13" stroke={c} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
     <text x="20" y="33" textAnchor="middle" fontSize="6.5" fill={c} fontWeight="bold">100</text></>
   ),
-  "A'lochi": (c) => (
+  "A'loçi": (c) => (
     <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
     <text x="19" y="26" textAnchor="middle" fontSize="17" fill={c} fontWeight="900">A</text>
     <circle cx="29" cy="12" r="5.5" fill={c}/>
@@ -351,7 +351,7 @@ const BADGE_SVGS = {
     <line x1="13" y1="14.5" x2="27" y2="14.5" stroke={c} strokeWidth="1" strokeOpacity=".6"/>
     <line x1="13" y1="25.5" x2="27" y2="25.5" stroke={c} strokeWidth="1" strokeOpacity=".6"/></>
   ),
-  "Barcha O'yinlar": (c) => (
+  "Barça Öyinlar": (c) => (
     <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
     <rect x="11" y="15" width="18" height="12" rx="3" stroke={c} strokeWidth="1.5"/>
     <line x1="15" y1="21" x2="18" y2="21" stroke={c} strokeWidth="1.5" strokeLinecap="round"/>
@@ -391,7 +391,7 @@ const BADGE_SVGS = {
     <circle cx="27" cy="29" r="5.5" fill={c}/>
     <path d="M24.3 29 L26.5 31.2 L30.2 27" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></>
   ),
-  "To'liq Kurs": (c) => (
+  "Töliq Kurs": (c) => (
     <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
     <polygon points="20,10 31,17 20,24 9,17" fill={c} fillOpacity=".3" stroke={c} strokeWidth="1.5"/>
     <path d="M9 17 L9 24 Q9 30 20 30 Q31 30 31 24 L31 17" stroke={c} strokeWidth="1.5" strokeLinecap="round" fill="none"/>

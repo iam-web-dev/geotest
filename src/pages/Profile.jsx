@@ -24,9 +24,9 @@ function loadUserSettings() {
 const PROFILE_GRAD = 'linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%)';
 
 const ROLE_META = {
-  school_student: { label: 'Maktab o\'quvchisi', Icon: GraduationCap },
+  school_student: { label: 'Maktab öquvçisi', Icon: GraduationCap },
   student:        { label: 'Talaba',              Icon: Student },
-  teacher:        { label: 'O\'qituvchi',         Icon: ChalkboardTeacher },
+  teacher:        { label: 'Öqituvçi',         Icon: ChalkboardTeacher },
 };
 
 const metricConfig = {
@@ -111,7 +111,7 @@ function ActivityModal({ activity, onClose }) {
   const Icon = activityIcons[a.type] || BookOpen;
   const color = activityColors[a.type] || '#2563EB';
   const pct = Math.round((a.score / a.total) * 100);
-  const typeLabel = { test: 'Test', quiz: 'Viktorina', game: "O'yin" }[a.type] || a.type;
+  const typeLabel = { test: 'Test', quiz: 'Viktorina', game: "Öyin" }[a.type] || a.type;
   const d = new Date(a.date);
   const dateStr = `${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()} · ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 
@@ -158,12 +158,12 @@ function ActivityModal({ activity, onClose }) {
           <div className="h-2 rounded-full bg-[var(--border)] overflow-hidden">
             <div className="h-full rounded-full" style={{ width: `${pct}%`, background: color }} />
           </div>
-          <p className="text-xs text-[var(--text-secondary)] text-right">{pct}% to'g'ri</p>
+          <p className="text-xs text-[var(--text-secondary)] text-right">{pct}% töğri</p>
         </div>
         <div className="grid grid-cols-3 gap-2">
           <div className="rounded-xl bg-[var(--background)] p-3 text-center">
             <p className="text-base font-black text-[var(--text-primary)]">+{a.xpGained}</p>
-            <p className="text-[10px] text-[var(--text-secondary)]">XP qo'shildi</p>
+            <p className="text-[10px] text-[var(--text-secondary)]">XP qöşildi</p>
           </div>
           <div className="rounded-xl bg-[var(--background)] p-3 text-center">
             <p className="text-base font-black" style={{ color: a.rankChange > 0 ? '#16A34A' : a.rankChange < 0 ? '#EF4444' : 'var(--text-primary)' }}>
@@ -178,7 +178,7 @@ function ActivityModal({ activity, onClose }) {
         </div>
         <button onClick={onClose}
           className="w-full h-11 rounded-2xl bg-[var(--background)] text-sm font-semibold text-[var(--text-secondary)]">
-          Yopish
+          Yopiş
         </button>
       </motion.div>
     </motion.div>,
@@ -206,14 +206,14 @@ export default function Profile() {
   if (!authUser) {
     return (
       <div className="max-w-md mx-auto py-12 px-4 text-center space-y-6">
-        <SEO title="Kirish — GeoBek" description="Shaxsiy profilingizga kiring" url="/profile" />
+        <SEO title="Kiriş — GeoBek" description="Şaxsiy profilingizga kiring" url="/profile" />
         <div className="w-20 h-20 rounded-3xl bg-[var(--surface)] border border-[var(--border)] shadow-xl mx-auto flex items-center justify-center p-3">
           <img src={`${import.meta.env.BASE_URL}main_logo.png`} alt="GeoBek" className="w-full h-full object-contain" />
         </div>
         <div className="space-y-2">
           <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight">GeoBek Profiliga kiring</h1>
           <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
-            Test natijalaringiz, yutuqlaringiz, milliy sertifikatlar va respublika reytingingizni koʻrish uchun tizimga kiring yoki roʻyxatdan oʻting.
+            Test natijalaringiz, yutuqlaringiz, milliy sertifikatlar va respublika reytingingizni köriş uçun tizimga kiring yoki röyxatdan öting.
           </p>
         </div>
 
@@ -222,7 +222,7 @@ export default function Profile() {
             onClick={() => navigate('/auth?mode=signin')}
             className="w-full h-12 rounded-2xl bg-[var(--primary)] text-white font-bold text-sm hover:bg-[var(--primary-hover)] transition-all shadow-md shadow-blue-500/20 flex items-center justify-center gap-2"
           >
-            <span>Tizimga kirish</span>
+            <span>Tizimga kiriş</span>
             <ArrowRight size={16} weight="bold" />
           </button>
 
@@ -230,7 +230,7 @@ export default function Profile() {
             onClick={() => navigate('/auth?mode=signup')}
             className="w-full h-12 rounded-2xl border border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)] font-bold text-sm hover:bg-[var(--background)] transition-all"
           >
-            <span>Yangi hisob yaratish</span>
+            <span>Yangi hisob yaratiş</span>
           </button>
         </div>
 
@@ -242,7 +242,7 @@ export default function Profile() {
             className="text-xs text-[var(--primary)] hover:underline font-semibold flex items-center justify-center gap-1.5 mx-auto"
           >
             <Lightning size={14} weight="fill" className="text-amber-500" />
-            <span>Demo hisob orqali davom etish</span>
+            <span>Demo hisob orqali davom etiş</span>
           </button>
         </div>
       </div>
@@ -259,9 +259,9 @@ export default function Profile() {
   const menuItems = [
     { icon: BookOpen, label: 'Sertifikatlar', color: '#2563EB', count: user.certificates ?? initialUser.certificates, to: '/certificates' },
     { icon: Trophy, label: 'Reyting', color: '#8B5CF6', count: `#${user.rank ?? initialUser.rank}`, to: '/rankings' },
-    { icon: Shield, label: "Foydalanuvchi ofertasi", color: '#06B6D4', count: null, to: '/oferta' },
+    { icon: Shield, label: "Foydalanuvçi ofertasi", color: '#06B6D4', count: null, to: '/oferta' },
     { icon: Question, label: 'Yordam', color: '#F97316', count: null, href: 'https://t.me/geobek_admin' },
-    { icon: SignOut, label: 'Tizimdan chiqish', color: '#EF4444', count: null, isDanger: true, action: () => setShowLogout(true) },
+    { icon: SignOut, label: 'Tizimdan çiqiş', color: '#EF4444', count: null, isDanger: true, action: () => setShowLogout(true) },
   ];
 
   return (
@@ -372,7 +372,7 @@ export default function Profile() {
         {[
           { label: 'Testlar', value: user.totalTests, color: '#2563EB', bg: '#EFF6FF', darkBg: 'rgba(37,99,235,0.12)' },
           { label: 'Reyting', value: `#${initialUser.rank}`, color: '#8B5CF6', bg: '#F5F3FF', darkBg: 'rgba(139,92,246,0.12)' },
-          { label: "O'quv vaqti", value: `${user.achievements.hoursSpent}h`, color: '#22C55E', bg: '#F0FDF4', darkBg: 'rgba(34,197,94,0.12)' },
+          { label: "Öquv vaqti", value: `${user.achievements.hoursSpent}h`, color: '#22C55E', bg: '#F0FDF4', darkBg: 'rgba(34,197,94,0.12)' },
         ].map(s => (
           <div key={s.label} className="rounded-xl p-4 border border-[var(--border)] bg-[var(--surface)]">
             <p className="text-2xl font-bold" style={{ color: s.color }}>{s.value}</p>
@@ -390,7 +390,7 @@ export default function Profile() {
           <button onClick={() => setChartMetric('all')}
             className={cn('px-2.5 py-1 rounded-full text-[10px] font-semibold transition-all shrink-0',
               chartMetric === 'all' ? 'bg-[var(--text-primary)] text-[var(--surface)]' : 'text-[var(--text-secondary)] bg-[var(--background)]')}>
-            Barchasi
+            Barçasi
           </button>
           {Object.entries(metricConfig).map(([key, c]) => (
             <button key={key} onClick={() => setChartMetric(key)}
@@ -408,7 +408,7 @@ export default function Profile() {
             <button key={r.key} onClick={() => setChartRange(r.key)}
               className={cn('flex-1 py-1 rounded-lg text-[10px] font-semibold transition-all',
                 chartRange === r.key
-                  ? 'bg-[var(--background)] text-[var(--text-primary)] shadow-sm'
+                  ? 'bg-[var(--background)] text-[var(--text-primary)] şadow-sm'
                   : 'text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]')}>
               {r.label}
             </button>
@@ -467,7 +467,7 @@ export default function Profile() {
       {(() => {
         const TIERS = [
           { tier: 'bronze',    label: 'Bronza',    color: '#CD7F32', glow: 'rgba(205,127,50,0.35)',   bg: 'rgba(205,127,50,0.08)'   },
-          { tier: 'silver',    label: 'Kumush',    color: '#94A3B8', glow: 'rgba(148,163,184,0.35)',  bg: 'rgba(148,163,184,0.08)'  },
+          { tier: 'silver',    label: 'Kumuş',    color: '#94A3B8', glow: 'rgba(148,163,184,0.35)',  bg: 'rgba(148,163,184,0.08)'  },
           { tier: 'gold',      label: 'Oltin',     color: '#D4A820', glow: 'rgba(212,168,32,0.4)',    bg: 'rgba(212,168,32,0.08)'   },
           { tier: 'platinum',  label: 'Platina',   color: '#7C3AED', glow: 'rgba(124,58,237,0.4)',    bg: 'rgba(124,58,237,0.08)'   },
           { tier: 'legendary', label: 'Afsonaviy', color: '#EF4444', glow: 'rgba(239,68,68,0.4)',     bg: 'rgba(239,68,68,0.08)'    },
@@ -488,7 +488,7 @@ export default function Profile() {
               <div className="flex items-start justify-between gap-3 mb-4">
                 <div>
                   <h2 className="text-lg font-black leading-tight"
-                    style={{ color: darkMode ? 'white' : '#1e1b4b' }}>Nishonlar</h2>
+                    style={{ color: darkMode ? 'white' : '#1e1b4b' }}>Nişonlar</h2>
                 </div>
                 <div className="flex items-center gap-2 mt-1">
                   {/* stacked preview icons */}
@@ -517,7 +517,7 @@ export default function Profile() {
               {/* Progress bar */}
               <div className="space-y-1.5">
                 <div className="flex justify-between text-[10px]">
-                  <span style={{ color: darkMode ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.4)' }}>{unlockedBadges.length} ta ochilgan</span>
+                  <span style={{ color: darkMode ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.4)' }}>{unlockedBadges.length} ta oçilgan</span>
                   <span className="font-bold" style={{ color: darkMode ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.7)' }}>{pct}%</span>
                 </div>
                 <div className="h-1.5 rounded-full" style={{ background: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)' }}>
@@ -641,8 +641,8 @@ export default function Profile() {
             {darkMode ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} className="text-blue-500" />}
           </div>
           <div className="flex-1">
-            <p className="text-sm font-medium text-[var(--text-primary)]">{darkMode ? "Yorqin rejim" : "Qorong'i rejim"}</p>
-            <p className="text-[10px] text-[var(--text-secondary)]">Tashqi ko'rinish</p>
+            <p className="text-sm font-medium text-[var(--text-primary)]">{darkMode ? "Yorqin rejim" : "Qoronği rejim"}</p>
+            <p className="text-[10px] text-[var(--text-secondary)]">Taşqi köriniş</p>
           </div>
           <button onClick={toggleTheme}
             className={cn('w-12 h-6 rounded-full transition-all relative shrink-0', darkMode ? 'bg-blue-500' : 'bg-[var(--border)]')}>
@@ -657,7 +657,7 @@ export default function Profile() {
           <h2 className="text-base font-bold text-[var(--text-primary)]">Oxirgi Faoliyat</h2>
           <button onClick={() => navigate('/activity')}
             className="text-xs font-semibold text-[var(--primary)] hover:opacity-70 transition-opacity">
-            Ko'proq →
+            Köproq →
           </button>
         </div>
         <div className="space-y-2">
@@ -710,21 +710,21 @@ export default function Profile() {
                   <SignOut size={22} weight="fill" className="text-red-500" />
                 </div>
                 <div>
-                  <p className="font-bold text-[var(--text-primary)]">Chiqishni tasdiqlang</p>
-                  <p className="text-sm text-[var(--text-secondary)] mt-1">Hisobingizdan chiqishni xohlaysizmi?</p>
+                  <p className="font-bold text-[var(--text-primary)]">Çiqişni tasdiqlang</p>
+                  <p className="text-sm text-[var(--text-secondary)] mt-1">Hisobingizdan çiqişni xohlaysizmi?</p>
                 </div>
               </div>
               <div className="flex gap-2">
                 <button
                   onClick={() => setShowLogout(false)}
                   className="flex-1 h-11 rounded-xl border border-[var(--border)] text-sm font-semibold text-[var(--text-secondary)] hover:bg-[var(--background)] transition-all">
-                  Bekor qilish
+                  Bekor qiliş
                 </button>
                 <button
                   onClick={handleLogout}
                   className="flex-1 h-11 rounded-xl bg-red-500 text-sm font-semibold text-white hover:bg-red-600 transition-all flex items-center justify-center gap-1.5 shadow-md shadow-red-500/20">
                   <SignOut size={16} weight="bold" />
-                  <span>Chiqish</span>
+                  <span>Çiqiş</span>
                 </button>
               </div>
             </motion.div>

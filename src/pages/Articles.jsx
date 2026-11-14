@@ -88,7 +88,7 @@ function FeaturedCard({ article, onOpen, liked, bookmarked, onLike, onBookmark }
             <button onClick={onOpen}
               className="flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full text-white"
               style={{ background: cat.color }}>
-              O'qish <ArrowRight size={11} weight="bold" />
+              Öqiş <ArrowRight size={11} weight="bold" />
             </button>
           </div>
         </div>
@@ -179,7 +179,7 @@ export default function Articles() {
     <div className="space-y-6">
       <SEO
         title="Geografiya Maqolalari"
-        description="Jismoniy geografiya, iqlim, davlatlar, daryolar, tog'lar va inson geografiyasiga oid ta'limiy maqolalarni o'qing."
+        description="Jismoniy geografiya, iqlim, davlatlar, daryolar, toğlar va inson geografiyasiga oid ta'limiy maqolalarni öqing."
         url="/articles"
       />
 
@@ -190,7 +190,7 @@ export default function Articles() {
 
       <div className="relative">
         <MagnifyingGlass size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)]" />
-        <input type="text" placeholder="Maqola qidirish..."
+        <input type="text" placeholder="Maqola qidiriş..."
           value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
           className="w-full h-11 pl-10 pr-4 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)] text-sm placeholder:text-[var(--text-tertiary)] focus:border-[var(--primary)] focus:outline-none transition-all" />
         {searchQuery && (
@@ -207,7 +207,7 @@ export default function Articles() {
             activeTag === 'all'
               ? 'bg-[var(--primary)] text-white border-[var(--primary)]'
               : 'bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:border-[var(--primary)]/40')}>
-          Barchasi
+          Barçasi
         </button>
         <button onClick={() => setActiveTag(activeTag === '__bookmarked' ? 'all' : '__bookmarked')}
           className={cn('px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all border shrink-0 flex items-center gap-1.5',
@@ -241,7 +241,7 @@ export default function Articles() {
               className="text-center py-16 text-[var(--text-tertiary)]">
               <BookOpen size={40} className="mx-auto mb-3 opacity-30" />
               <p className="text-sm font-medium">
-                {activeTag === '__bookmarked' ? "Saqlanganlar yo'q" : 'Maqola topilmadi'}
+                {activeTag === '__bookmarked' ? "Saqlanganlar yöq" : 'Maqola topilmadi'}
               </p>
             </motion.div>
           );

@@ -15,22 +15,22 @@ const registry = {
 };
 
 const gameMeta = {
-  flag:          { title: 'Bayroqni Bil',              desc: "Dunyo davlatlarining bayroqlarini taxmin qiling va geografiya bilimlaringizni sinab ko'ring." },
-  capital:       { title: 'Poytaxtni Top',             desc: "Davlatlar poytaxtlarini toping — interaktiv va qiziqarli geografiya o'yini." },
-  landmark:      { title: 'Mashhur Joylar',            desc: "Dunyo bo'ylab mashhur tarixiy va geografik yodgorliklarni toping." },
-  climate:       { title: 'Iqlimni Aniqlang',          desc: "Dunyo iqlim mintaqalari va ob-havosi haqida bilimlaringizni sinab ko'ring." },
-  continentRush: { title: "Qit'ani Toping",            desc: "Qit'alarni tez aniqlang — vaqt cheklangan tezlik o'yini." },
+  flag:          { title: 'Bayroqni Bil',              desc: "Dunyo davlatlarining bayroqlarini taxmin qiling va geografiya bilimlaringizni sinab köring." },
+  capital:       { title: 'Poytaxtni Top',             desc: "Davlatlar poytaxtlarini toping — interaktiv va qiziqarli geografiya öyini." },
+  landmark:      { title: 'Maşhur Joylar',            desc: "Dunyo böylab maşhur tarixiy va geografik yodgorliklarni toping." },
+  climate:       { title: 'Iqlimni Aniqlang',          desc: "Dunyo iqlim mintaqalari va ob-havosi haqida bilimlaringizni sinab köring." },
+  continentRush: { title: "Qit'ani Toping",            desc: "Qit'alarni tez aniqlang — vaqt çeklangan tezlik öyini." },
   findCountry:   { title: 'Xaritada Davlat',           desc: "Interaktiv dunyo xaritasida berilgan davlatni toping." },
-  uzbRegions:    { title: "O'zbekiston Viloyatlari",   desc: "O'zbekiston viloyatlarini xaritada toping va ularga oid savollarni javoblang." },
+  uzbRegions:    { title: "Özbekiston Viloyatlari",   desc: "Özbekiston viloyatlarini xaritada toping va ularga oid savollarni javoblang." },
   river:         { title: "Daryolarni Bil",            desc: "Dunyo va Markaziy Osiyo daryolarini xaritada toping va aniqlang." },
-  mountainCountry: { title: "Tog' va Davlat",          desc: "Tog' tizmalari rasmlarini ko'rib, qaysi davlatda ekanligini toping." },
+  mountainCountry: { title: "Toğ va Davlat",          desc: "Toğ tizmalari rasmlarini körib, qaysi davlatda ekanligini toping." },
 };
 
 export default function GamePlay() {
   const { slug } = useParams();
   const GameComponent = registry[slug];
   if (!GameComponent) return <Navigate to="/games" replace />;
-  const meta = gameMeta[slug] || { title: "O'yin", desc: "Interaktiv geografiya o'yini." };
+  const meta = gameMeta[slug] || { title: "Öyin", desc: "Interaktiv geografiya öyini." };
   return (
     <>
       <SEO title={meta.title} description={meta.desc} url={`/games/play/${slug}`} />

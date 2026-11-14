@@ -9,9 +9,11 @@ Act as a senior full-stack engineer.
 - Never write unnecessary code.
 - Prefer simple, maintainable solutions.
 - Follow SOLID, DRY and clean code principles.
+- Do not commit and push the project to the github until I say it
 
 ## Frontend
 - Always use frontend-design skill for UI tasks.
+- Strictly adhere to `ui-skills` (`baseline-ui`, `improve-ui`, `tailwind-design-system`, `fixing-accessibility`, etc. in `.agents/skills/`) to eliminate AI-generated slop, maintain clear visual hierarchy, enforce accessibility, and optimize performance.
 - Use React and Tailwind CSS when appropriate.
 - Follow React best practices.
 - Build responsive and accessible interfaces.

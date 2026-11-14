@@ -100,12 +100,12 @@ function CategoryTestsPage({ type }) {
   const tests = popularTests.filter(t => t.type === type);
 
   const pageSeoMap = {
-    milliy:      { title: "Milliy Sertifikat Geografiya Mock Testlari", desc: "Milliy Sertifikat geografiya imtihoniga real mock testlar, ochiq savollar va rasmiy format bilan tayyorlaning." },
-    dtm:         { title: "DTM Geografiya Testlari", desc: "O'zbekiston DTM kirish imtihoniga 90 savollik to'liq geografiya amaliy testlari bilan tayyorlaning." },
-    olympiad:    { title: "Geografiya Olimpiada Testlari", desc: "Musobaqa o'quvchilari uchun mo'ljallangan murakkab geografiya olimpiada savollarini ishlang." },
-    attestation: { title: "Attestatsiya Geografiya Testlari", desc: "Maktab attestatsiyasi uchun geografiya testlari — tezkor baholash va batafsil natijalar bilan." },
+    milliy:      { title: "Milliy Sertifikat Geografiya Mock Testlari", desc: "Milliy Sertifikat geografiya imtihoniga real mock testlar, oçiq savollar va rasmiy format bilan tayyorlaning." },
+    dtm:         { title: "DTM Geografiya Testlari", desc: "Özbekiston DTM kiriş imtihoniga 90 savollik töliq geografiya amaliy testlari bilan tayyorlaning." },
+    olympiad:    { title: "Geografiya Olimpiada Testlari", desc: "Musobaqa öquvçilari uçun möljallangan murakkab geografiya olimpiada savollarini işlang." },
+    attestation: { title: "Attestatsiya Geografiya Testlari", desc: "Maktab attestatsiyasi uçun geografiya testlari — tezkor baholaş va batafsil natijalar bilan." },
   };
-  const seo = pageSeoMap[type] || { title: "Geografiya Testlari", desc: "Geografiya testlarini ishlang." };
+  const seo = pageSeoMap[type] || { title: "Geografiya Testlari", desc: "Geografiya testlarini işlang." };
 
   return (
     <div className="space-y-6">
@@ -160,7 +160,7 @@ function CategoryTestsPage({ type }) {
                     <p className="text-sm font-bold" style={{ color: meta.color }}>
                       {test.participants.toLocaleString()}
                     </p>
-                    <p className="text-[10px] text-[var(--text-tertiary)] mt-0.5">Ishtirok</p>
+                    <p className="text-[10px] text-[var(--text-tertiary)] mt-0.5">Iştirok</p>
                   </div>
                 </div>
 
@@ -170,7 +170,7 @@ function CategoryTestsPage({ type }) {
                   className="w-full py-2.5 rounded-[var(--radius-xs)] text-sm font-bold text-white transition-opacity active:opacity-80"
                   style={{ background: meta.color }}
                 >
-                  Boshlash
+                  Boşlaş
                 </button>
               </CardContent>
             </Card>
@@ -230,17 +230,17 @@ function TestExamCard({ test, index }) {
               color: test.difficulty === 'easy' ? '#22C55E' : test.difficulty === 'medium' ? '#F59E0B' : test.difficulty === 'hard' ? '#EF4444' : '#171796'
             }}>
               <ChartBar size={13} />
-              {test.difficulty === 'easy' ? 'Oson' : test.difficulty === 'medium' ? "O'rtacha" : test.difficulty === 'hard' ? 'Qiyin' : 'Ekspert'}
+              {test.difficulty === 'easy' ? 'Oson' : test.difficulty === 'medium' ? "Örtaça" : test.difficulty === 'hard' ? 'Qiyin' : 'Ekspert'}
             </div>
           </div>
 
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs text-[var(--text-secondary)]">O'rtacha natija</p>
+              <p className="text-xs text-[var(--text-secondary)]">Örtaça natija</p>
               <p className="text-lg font-bold" style={{ color: c.color }}>{test.averageScore}%</p>
             </div>
             <Button>
-              Boshlash <CaretRight size={16} />
+              Boşlaş <CaretRight size={16} />
             </Button>
           </div>
         </CardContent>
@@ -332,7 +332,7 @@ function MilliyTestView() {
               <div className="flex items-center gap-3 mt-4 pt-3 border-t border-[var(--border)] text-xs text-[var(--text-secondary)]">
                 <div className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-[var(--success)]/20" /> Javob</div>
                 <div className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-[var(--warning)]/20" /> Bayroq</div>
-                <div className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-[var(--border)]" /> Bo'sh</div>
+                <div className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-[var(--border)]" /> Böş</div>
               </div>
             </CardContent>
           </Card>
@@ -356,9 +356,9 @@ function MilliyTestView() {
                     'bg-[#FCE7F3] text-[#EC4899]'
                   )}>
                     {questions[currentQuestion].type === 'closed' ? 'Yopiq' :
-                     questions[currentQuestion].type === 'open' ? 'Ochiq' :
+                     questions[currentQuestion].type === 'open' ? 'Oçiq' :
                      questions[currentQuestion].type === 'image' ? 'Rasm' :
-                     questions[currentQuestion].type === 'map' ? 'Xarita' : 'Moslashtirish'}
+                     questions[currentQuestion].type === 'map' ? 'Xarita' : 'Moslaştiriş'}
                   </span>
                 </div>
                 <button
@@ -371,7 +371,7 @@ function MilliyTestView() {
                   )}
                 >
                   <Flag size={13} />
-                  {questions[currentQuestion].isFlagged ? 'Bayroqlangan' : 'Bayroqlash'}
+                  {questions[currentQuestion].isFlagged ? 'Bayroqlangan' : 'Bayroqlaş'}
                 </button>
               </div>
 
@@ -428,7 +428,7 @@ function MilliyTestView() {
                 {answeredCount} / {questions.length} ta javob berildi
               </p>
               <Button variant="gradient" disabled={answeredCount < questions.length}>
-                Testni Yakunlash <Lightning size={16} />
+                Testni Yakunlaş <Lightning size={16} />
               </Button>
             </CardContent>
           </Card>
@@ -489,7 +489,7 @@ function DTMTestView() {
         <div className="order-2 lg:order-1 lg:col-span-1">
           <Card className="sticky top-28">
             <CardContent className="p-4">
-              <p className="text-sm font-semibold text-[var(--text-primary)] mb-3">Bo'limlar</p>
+              <p className="text-sm font-semibold text-[var(--text-primary)] mb-3">Bölimlar</p>
               <div className="space-y-2">
                 {dtmSections.map((section) => {
                   const answeredInSection = questions.filter(
@@ -602,7 +602,7 @@ function DTMTestView() {
                 {answeredCount} / {questions.length} ta javob berildi
               </p>
               <Button variant="gradient" disabled={answeredCount < questions.length}>
-                Testni Yakunlash <Lightning size={16} />
+                Testni Yakunlaş <Lightning size={16} />
               </Button>
             </CardContent>
           </Card>
@@ -697,7 +697,7 @@ function OlympiadTestView() {
                     currentQ.difficulty === 'medium' ? 'bg-[var(--pal-olympiad)] text-[#D4A820]' :
                     currentQ.difficulty === 'hard' ? 'bg-[#FEE2E2] text-[#EF4444]' :
                     'bg-[var(--pal-dtm)] text-[#171796]'
-                  )}>{currentQ.difficulty === 'easy' ? 'Oson' : currentQ.difficulty === 'medium' ? "O'rtacha" : currentQ.difficulty === 'hard' ? 'Qiyin' : 'Ekspert'}</span>
+                  )}>{currentQ.difficulty === 'easy' ? 'Oson' : currentQ.difficulty === 'medium' ? "Örtaça" : currentQ.difficulty === 'hard' ? 'Qiyin' : 'Ekspert'}</span>
                   <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--pal-olympiad)] text-[#D4A820] font-medium">{currentQ.points} bal</span>
                 </div>
               </div>
@@ -866,12 +866,12 @@ export default function Tests() {
     <div className="space-y-6">
       <SEO
         title="Geografiya Testlari"
-        description="DTM, Milliy Sertifikat, Olimpiada va maktab imtihonlari uchun geografiya testlarini ishlang — natijalar va batafsil tahlil bilan."
+        description="DTM, Milliy Sertifikat, Olimpiada va maktab imtihonlari uçun geografiya testlarini işlang — natijalar va batafsil tahlil bilan."
         url="/tests"
       />
       <div>
         <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">Testlar</h1>
-        <p className="text-sm text-[var(--text-secondary)] mt-1">Imtihon turini tanlang va tayyorgarlikni boshlang</p>
+        <p className="text-sm text-[var(--text-secondary)] mt-1">Imtihon turini tanlang va tayyorgarlikni boşlang</p>
       </div>
 
       <div className="grid grid-cols-2 gap-3 w-full">
@@ -908,7 +908,7 @@ export default function Tests() {
                       </div>
                       <div className="py-2">
                         <p className="text-sm font-bold" style={{ color: meta.color }}>{test.participants.toLocaleString()}</p>
-                        <p className="text-[10px] text-[var(--text-tertiary)]">Ishtirok</p>
+                        <p className="text-[10px] text-[var(--text-tertiary)]">Iştirok</p>
                       </div>
                     </div>
                   </CardContent>

@@ -21,17 +21,17 @@ function loadSettings() {
 
 // 5 Main Core Sections requested by client
 const mainNavItems = [
-  { to: '/', icon: House, label: 'Bosh Sahifa' },
+  { to: '/', icon: House, label: 'Boş Sahifa' },
   { to: '/tests', icon: BookOpen, label: 'Testlar' },
   { to: '/school', icon: GraduationCap, label: "Maktab Ta'limi" },
   { to: '/library', icon: Books, label: 'Kutubxona' },
-  { to: '/profile', icon: User, label: 'Shaxsiy Profil' },
+  { to: '/profile', icon: User, label: 'Şaxsiy Profil' },
 ];
 
 // Secondary interactive modules
 const secondaryNavItems = [
   { to: '/quiz', icon: GameController, label: 'Viktorina' },
-  { to: '/games', icon: Compass, label: "O'yinlar" },
+  { to: '/games', icon: Compass, label: "Öyinlar" },
   { to: '/rankings', icon: Trophy, label: 'Reyting' },
   { to: '/articles', icon: Newspaper, label: 'Maqolalar' },
 ];
@@ -78,7 +78,7 @@ export default function Sidebar() {
         {/* Main 5 Sections */}
         <div className="space-y-1">
           <p className="px-3 text-[10px] font-bold uppercase tracking-wider text-[var(--text-tertiary)] mb-1">
-            Asosiy Boʻlimlar
+            Asosiy Bölimlar
           </p>
           {mainNavItems.map((item) => (
             <NavLink
@@ -152,7 +152,7 @@ export default function Sidebar() {
 
             <button
               onClick={() => setShowLogoutModal(true)}
-              title="Tizimdan chiqish"
+              title="Tizimdan çiqiş"
               className="w-8 h-8 rounded-lg flex items-center justify-center text-[var(--text-secondary)] hover:text-red-500 hover:bg-red-500/10 transition-colors shrink-0"
             >
               <SignOut size={16} weight="bold" />
@@ -167,8 +167,8 @@ export default function Sidebar() {
               <SignIn size={18} weight="bold" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold truncate leading-tight">Tizimga kirish</p>
-              <p className="text-[11px] opacity-80 truncate">Roʻyxatdan oʻtish</p>
+              <p className="text-sm font-semibold truncate leading-tight">Tizimga kiriş</p>
+              <p className="text-[11px] opacity-80 truncate">Röyxatdan ötiş</p>
             </div>
           </NavLink>
         )}
@@ -193,7 +193,7 @@ export default function Sidebar() {
           className="flex items-center gap-3 w-full px-3 py-2.5 rounded-[var(--radius-sm)] text-sm text-[var(--text-secondary)] hover:bg-[var(--background)] hover:text-[var(--text-primary)] transition-all duration-200"
         >
           {darkMode ? <Sun size={18} /> : <Moon size={18} />}
-          <span>{darkMode ? 'Yorqin rejim' : "Qorong'i rejim"}</span>
+          <span>{darkMode ? 'Yorqin rejim' : "Qoronği rejim"}</span>
         </button>
       </div>
 
@@ -206,8 +206,8 @@ export default function Sidebar() {
                 <SignOut size={22} weight="fill" />
               </div>
               <div>
-                <p className="font-bold text-[var(--text-primary)]">Chiqishni tasdiqlang</p>
-                <p className="text-xs text-[var(--text-secondary)] mt-1">GeoBek hisobingizdan chiqishni xohlaysizmi?</p>
+                <p className="font-bold text-[var(--text-primary)]">Çiqişni tasdiqlang</p>
+                <p className="text-xs text-[var(--text-secondary)] mt-1">GeoBek hisobingizdan çiqişni xohlaysizmi?</p>
               </div>
             </div>
             <div className="flex gap-2">
@@ -215,14 +215,14 @@ export default function Sidebar() {
                 onClick={() => setShowLogoutModal(false)}
                 className="flex-1 h-10 rounded-xl border border-[var(--border)] text-xs font-semibold text-[var(--text-secondary)] hover:bg-[var(--background)] transition-all"
               >
-                Bekor qilish
+                Bekor qiliş
               </button>
               <button
                 onClick={handleLogout}
                 className="flex-1 h-10 rounded-xl bg-red-500 text-xs font-semibold text-white hover:bg-red-600 transition-all flex items-center justify-center gap-1.5"
               >
                 <SignOut size={15} weight="bold" />
-                <span>Chiqish</span>
+                <span>Çiqiş</span>
               </button>
             </div>
           </div>

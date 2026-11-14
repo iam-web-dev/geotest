@@ -12,28 +12,28 @@ import { useAuth } from '../context/AuthContext';
 import SEO from '../components/SEO';
 
 const ROLES = [
-  { id: 'school_student', title: "Maktab o'quvchisi", icon: GraduationCap },
+  { id: 'school_student', title: "Maktab öquvçisi", icon: GraduationCap },
   { id: 'student', title: 'Abituriyent / Talaba', icon: Student },
-  { id: 'teacher', title: "O'qituvchi", icon: ChalkboardTeacher },
+  { id: 'teacher', title: "Öqituvçi", icon: ChalkboardTeacher },
 ];
 
 const GRADES = [7, 8, 9, 10, 11];
 
 const REGIONS = [
-  'Toshkent shahri',
-  'Toshkent viloyati',
+  'Toşkent şahri',
+  'Toşkent viloyati',
   'Samarqand viloyati',
-  'Fargʻona viloyati',
+  'Farğona viloyati',
   'Andijon viloyati',
   'Namangan viloyati',
   'Buxoro viloyati',
-  'Qashqadaryo viloyati',
+  'Qaşqadaryo viloyati',
   'Surxondaryo viloyati',
   'Xorazm viloyati',
   'Navoiy viloyati',
   'Jizzax viloyati',
   'Sirdaryo viloyati',
-  'Qoraqalpogʻiston Respublikasi',
+  'Qoraqalpoğiston Respublikasi',
 ];
 
 export default function Auth({ initialMode }) {
@@ -70,7 +70,7 @@ export default function Auth({ initialMode }) {
     username: '',
     role: 'school_student',
     grade: 9,
-    region: 'Toshkent shahri',
+    region: 'Toşkent şahri',
     password: '',
     confirmPassword: '',
   });
@@ -102,11 +102,11 @@ export default function Auth({ initialMode }) {
 
     switch (score) {
       case 1:
-        return { score: 1, label: 'Kuchsiz', color: '#EF4444', width: '25%' };
+        return { score: 1, label: 'Kuçsiz', color: '#EF4444', width: '25%' };
       case 2:
-        return { score: 2, label: "O'rtacha", color: '#F59E0B', width: '50%' };
+        return { score: 2, label: "Örtaça", color: '#F59E0B', width: '50%' };
       case 3:
-        return { score: 3, label: 'Yaxshi', color: '#3B82F6', width: '75%' };
+        return { score: 3, label: 'Yaxşi', color: '#3B82F6', width: '75%' };
       case 4:
         return { score: 4, label: 'Mustahkam', color: '#10B981', width: '100%' };
       default:
@@ -131,12 +131,12 @@ export default function Auth({ initialMode }) {
       return setError('Ismingizni kiriting');
     }
     if (signupForm.name.trim().length < 3) {
-      return setError('Ism kamida 3 ta harfdan iborat boʻlishi kerak');
+      return setError('Ism kamida 3 ta harfdan iborat bölişi kerak');
     }
 
     const digits = signupForm.phone.replace(/\D/g, '');
     if (digits.length < 12) {
-      return setError('9 xonali telefon raqamingizni toʻliq kiriting');
+      return setError('9 xonali telefon raqamingizni töliq kiriting');
     }
 
     const cleanUsername = signupForm.username.trim().replace(/^@/, '');
@@ -144,23 +144,23 @@ export default function Auth({ initialMode }) {
       return setError('Username kiriting');
     }
     if (cleanUsername.length < 3) {
-      return setError('Username kamida 3 ta belgidan iborat boʻlishi kerak');
+      return setError('Username kamida 3 ta belgidan iborat bölişi kerak');
     }
     if (!/^[a-zA-Z0-9_]+$/.test(cleanUsername)) {
-      return setError('Username faqat lotin harflari, raqamlar va pastki chiziqdan iborat boʻlishi mumkin');
+      return setError('Username faqat lotin harflari, raqamlar va pastki çiziqdan iborat bölişi mumkin');
     }
 
     if (!signupForm.password) {
       return setError('Parol kiriting');
     }
     if (signupForm.password.length < 6) {
-      return setError('Parol kamida 6 ta belgidan iborat boʻlishi kerak');
+      return setError('Parol kamida 6 ta belgidan iborat bölişi kerak');
     }
     if (signupForm.password !== signupForm.confirmPassword) {
       return setError('Kiritilgan parollar mos kelmadi');
     }
     if (!agreedToTerms) {
-      return setError('Foydalanish shartlariga rozilik bildiring');
+      return setError('Foydalaniş şartlariga rozilik bildiring');
     }
 
     try {
@@ -175,12 +175,12 @@ export default function Auth({ initialMode }) {
         password: signupForm.password,
       });
 
-      setSuccess('Muvaffaqiyatli roʻyxatdan oʻtdingiz');
+      setSuccess('Muvaffaqiyatli röyxatdan ötdingiz');
       setTimeout(() => {
         navigate(from, { replace: true });
       }, 500);
     } catch (err) {
-      setError(err.message || 'Roʻyxatdan oʻtishda xatolik yuz berdi');
+      setError(err.message || 'Röyxatdan ötişda xatolik yuz berdi');
     } finally {
       setIsSubmitting(false);
     }
@@ -230,8 +230,8 @@ export default function Auth({ initialMode }) {
   return (
     <div className="min-h-dvh flex flex-col justify-between bg-[var(--background)] px-4 py-6">
       <SEO
-        title={mode === 'signin' ? 'Kirish' : "Ro'yxatdan o'tish"}
-        description="GeoBek platformasiga kirish"
+        title={mode === 'signin' ? 'Kiriş' : "Röyxatdan ötiş"}
+        description="GeoBek platformasiga kiriş"
         url="/auth"
       />
 
@@ -281,7 +281,7 @@ export default function Auth({ initialMode }) {
                   transition={{ type: 'spring', stiffness: 500, damping: 38 }}
                 />
               )}
-              <span>Kirish</span>
+              <span>Kiriş</span>
             </button>
 
             <button
@@ -301,19 +301,19 @@ export default function Auth({ initialMode }) {
                   transition={{ type: 'spring', stiffness: 500, damping: 38 }}
                 />
               )}
-              <span>Roʻyxatdan oʻtish</span>
+              <span>Röyxatdan ötiş</span>
             </button>
           </div>
 
           {/* Title */}
           <div className="mb-5">
             <h1 className="text-xl font-bold text-[var(--text-primary)]">
-              {mode === 'signin' ? 'Hisobga kirish' : 'Roʻyxatdan oʻtish'}
+              {mode === 'signin' ? 'Hisobga kiriş' : 'Röyxatdan ötiş'}
             </h1>
             <p className="text-xs text-[var(--text-secondary)] mt-0.5">
               {mode === 'signin'
                 ? 'Username yoki telefon raqamingizni kiriting'
-                : 'Yangi profil yaratish uchun maʼlumotlarni toʻldiring'}
+                : 'Yangi profil yaratiş uçun maʼlumotlarni töldiring'}
             </p>
           </div>
 
@@ -413,7 +413,7 @@ export default function Auth({ initialMode }) {
                     onChange={(e) => setRememberMe(e.target.checked)}
                     className="w-4 h-4 rounded border-[var(--border)] text-[var(--primary)] accent-[var(--primary)]"
                   />
-                  <span className="text-xs text-[var(--text-secondary)]">Eslab qolish</span>
+                  <span className="text-xs text-[var(--text-secondary)]">Eslab qoliş</span>
                 </label>
               </div>
 
@@ -426,7 +426,7 @@ export default function Auth({ initialMode }) {
                   <span>Kutilmoqda...</span>
                 ) : (
                   <>
-                    <span>Kirish</span>
+                    <span>Kiriş</span>
                     <ArrowRight size={15} weight="bold" />
                   </>
                 )}
@@ -440,7 +440,7 @@ export default function Auth({ initialMode }) {
                   className="w-full h-10 rounded-xl border border-[var(--border)] bg-[var(--background)] hover:bg-[var(--primary-soft)] hover:border-[var(--primary)]/30 text-[var(--text-secondary)] hover:text-[var(--primary)] text-xs font-semibold transition-all flex items-center justify-center gap-1.5"
                 >
                   <Lightning size={14} weight="bold" className="text-amber-500" />
-                  <span>Demo hisob bilan kirish</span>
+                  <span>Demo hisob bilan kiriş</span>
                 </button>
               </div>
             </form>
@@ -450,7 +450,7 @@ export default function Auth({ initialMode }) {
               {/* Full name */}
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-[var(--text-primary)]">
-                  Toʻliq ism
+                  Töliq ism
                 </label>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] pointer-events-none">
@@ -459,7 +459,7 @@ export default function Auth({ initialMode }) {
                   <input
                     type="text"
                     autoComplete="name"
-                    placeholder="Alisher Navoiy"
+                    placeholder="Alişer Navoiy"
                     value={signupForm.name}
                     onChange={(e) => setSignupForm(prev => ({ ...prev, name: e.target.value }))}
                     className="w-full h-11 pl-9 pr-3.5 rounded-xl border border-[var(--border)] bg-[var(--background)] text-sm text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/10 transition-all"
@@ -575,7 +575,7 @@ export default function Auth({ initialMode }) {
                         className={cn(
                           'py-1.5 rounded-lg text-xs font-bold transition-all border text-center',
                           signupForm.grade === g
-                            ? 'bg-[var(--primary)] text-white border-[var(--primary)] shadow-sm'
+                            ? 'bg-[var(--primary)] text-white border-[var(--primary)] şadow-sm'
                             : 'bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:border-[var(--primary)]/40'
                         )}
                       >
@@ -636,7 +636,7 @@ export default function Auth({ initialMode }) {
 
                 <div className="space-y-1">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-semibold text-[var(--text-primary)]">Tasdiqlash</label>
+                    <label className="text-xs font-semibold text-[var(--text-primary)]">Tasdiqlaş</label>
                     {signupForm.confirmPassword && signupForm.password === signupForm.confirmPassword && (
                       <span className="text-[10px] text-emerald-500 font-bold flex items-center gap-0.5">
                         <Check size={11} weight="bold" /> Mos
@@ -694,9 +694,9 @@ export default function Auth({ initialMode }) {
               <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-start gap-2.5">
                 <PaperPlaneTilt size={16} weight="fill" className="shrink-0 text-blue-600 dark:text-blue-400 mt-0.5" />
                 <div className="space-y-0.5">
-                  <p className="font-bold text-xs text-[var(--text-primary)]">Telegram bot orqali tasdiqlash</p>
+                  <p className="font-bold text-xs text-[var(--text-primary)]">Telegram bot orqali tasdiqlaş</p>
                   <p className="text-[11px] text-[var(--text-secondary)] leading-snug">
-                    Xavfsizlik va natijalarni kuzatish uchun profilingiz <b>@geobek_bot</b> bilan integratsiya qilinadi.
+                    Xavfsizlik va natijalarni kuzatiş uçun profilingiz <b>@geobek_bot</b> bilan integratsiya qilinadi.
                   </p>
                 </div>
               </div>
@@ -711,7 +711,7 @@ export default function Auth({ initialMode }) {
                 />
                 <span className="text-[11px] text-[var(--text-secondary)] leading-tight">
                   <Link to="/oferta" target="_blank" className="text-[var(--primary)] hover:underline font-semibold">
-                    Foydalanish shartlariga
+                    Foydalaniş şartlariga
                   </Link>{' '}
                   roziman
                 </span>
@@ -726,7 +726,7 @@ export default function Auth({ initialMode }) {
                   <span>Kutilmoqda...</span>
                 ) : (
                   <>
-                    <span>Roʻyxatdan oʻtish</span>
+                    <span>Röyxatdan ötiş</span>
                     <ArrowRight size={15} weight="bold" />
                   </>
                 )}
@@ -738,13 +738,13 @@ export default function Auth({ initialMode }) {
           <div className="mt-5 text-center text-xs text-[var(--text-secondary)]">
             {mode === 'signin' ? (
               <>
-                Hisobingiz yoʻqmi?{' '}
+                Hisobingiz yöqmi?{' '}
                 <button
                   type="button"
                   onClick={() => setMode('signup')}
                   className="font-bold text-[var(--primary)] hover:underline"
                 >
-                  Roʻyxatdan oʻtish
+                  Röyxatdan ötiş
                 </button>
               </>
             ) : (
@@ -755,7 +755,7 @@ export default function Auth({ initialMode }) {
                   onClick={() => setMode('signin')}
                   className="font-bold text-[var(--primary)] hover:underline"
                 >
-                  Kirish
+                  Kiriş
                 </button>
               </>
             )}
@@ -784,13 +784,13 @@ export default function Auth({ initialMode }) {
                   <Question size={18} weight="bold" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-[var(--text-primary)]">Parolni tiklash</h3>
-                  <p className="text-[11px] text-[var(--text-secondary)]">Qoʻllab-quvvatlash xizmati</p>
+                  <h3 className="text-sm font-bold text-[var(--text-primary)]">Parolni tiklaş</h3>
+                  <p className="text-[11px] text-[var(--text-secondary)]">Qöllab-quvvatlaş xizmati</p>
                 </div>
               </div>
 
               <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                Parolni tiklash uchun maʼmuriyat bilan bogʻlaning va profilingiz username yoki telefon raqamini koʻrsating.
+                Parolni tiklaş uçun maʼmuriyat bilan boğlaning va profilingiz username yoki telefon raqamini körsating.
               </p>
 
               <a
@@ -799,7 +799,7 @@ export default function Auth({ initialMode }) {
                 rel="noreferrer"
                 className="block text-center py-2 px-3 rounded-xl bg-[var(--primary)] text-white text-xs font-bold hover:bg-[var(--primary-hover)] transition-colors"
               >
-                Telegram orqali bogʻlanish (@geobek_admin)
+                Telegram orqali boğlaniş (@geobek_admin)
               </a>
 
               <button
@@ -807,7 +807,7 @@ export default function Auth({ initialMode }) {
                 onClick={() => setForgotModalOpen(false)}
                 className="w-full h-9 rounded-xl border border-[var(--border)] text-xs font-semibold text-[var(--text-secondary)] hover:bg-[var(--background)] transition-all"
               >
-                Yopish
+                Yopiş
               </button>
             </div>
           </div>

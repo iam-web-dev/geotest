@@ -15,15 +15,15 @@ function saveSettings(s) {
 }
 
 const REGIONS = [
-  'Toshkent shahri', 'Toshkent viloyati', 'Andijon', 'Farg\'ona', 'Namangan',
-  'Samarqand', 'Buxoro', 'Navoiy', 'Qashqadaryo', 'Surxondaryo',
-  'Jizzax', 'Sirdaryo', 'Xorazm', 'Qoraqalpog\'iston',
+  'Toşkent şahri', 'Toşkent viloyati', 'Andijon', 'Farğona', 'Namangan',
+  'Samarqand', 'Buxoro', 'Navoiy', 'Qaşqadaryo', 'Surxondaryo',
+  'Jizzax', 'Sirdaryo', 'Xorazm', 'Qoraqalpoğiston',
 ];
 
 const ROLES = [
   {
     key: 'school_student',
-    label: 'Maktab o\'quvchisi',
+    label: 'Maktab öquvçisi',
     desc: '1–11 sinf',
     Icon: GraduationCap,
     color: '#2563EB',
@@ -37,8 +37,8 @@ const ROLES = [
   },
   {
     key: 'teacher',
-    label: 'O\'qituvchi',
-    desc: 'Pedagoglar uchun',
+    label: 'Öqituvçi',
+    desc: 'Pedagoglar uçun',
     Icon: ChalkboardTeacher,
     color: '#16A34A',
   },
@@ -182,7 +182,7 @@ export default function Settings() {
       {/* Basic fields */}
       <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 space-y-4">
         <Field label="Ism Familiya">
-          <Input value={form.name} onChange={v => set('name', v)} placeholder="To'liq ismingiz" />
+          <Input value={form.name} onChange={v => set('name', v)} placeholder="Töliq ismingiz" />
         </Field>
 
         <Field label="Ta'lim muassasasi">
@@ -190,7 +190,7 @@ export default function Settings() {
             placeholder={form.role === 'teacher' ? 'Maktab yoki muassasa nomi' : 'Maktab / Universitet nomi'} />
         </Field>
 
-        <Field label="Viloyat / Shahar">
+        <Field label="Viloyat / Şahar">
           <Select value={form.region} onChange={v => set('region', v)}
             options={REGIONS} placeholder="Tanlang..." />
         </Field>
@@ -243,7 +243,7 @@ export default function Settings() {
       <button onClick={handleSave}
         className="w-full h-12 rounded-2xl text-sm font-bold text-white transition-all flex items-center justify-center gap-2 shadow-md shadow-blue-500/20"
         style={{ background: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%)' }}>
-        <Check size={16} weight="bold" /> Saqlash
+        <Check size={16} weight="bold" /> Saqlaş
       </button>
 
       {/* Logout button */}
@@ -253,7 +253,7 @@ export default function Settings() {
         className="w-full h-12 rounded-2xl border border-red-500/30 text-red-500 hover:bg-red-500/10 text-sm font-semibold transition-all flex items-center justify-center gap-2"
       >
         <SignOut size={16} weight="bold" />
-        <span>Hisobdan chiqish</span>
+        <span>Hisobdan çiqiş</span>
       </button>
 
       {/* Logout confirmation modal */}
@@ -265,8 +265,8 @@ export default function Settings() {
                 <SignOut size={22} weight="fill" />
               </div>
               <div>
-                <p className="font-bold text-[var(--text-primary)]">Chiqishni tasdiqlang</p>
-                <p className="text-xs text-[var(--text-secondary)] mt-1">GeoBek hisobingizdan chiqishni xohlaysizmi?</p>
+                <p className="font-bold text-[var(--text-primary)]">Çiqişni tasdiqlang</p>
+                <p className="text-xs text-[var(--text-secondary)] mt-1">GeoBek hisobingizdan çiqişni xohlaysizmi?</p>
               </div>
             </div>
             <div className="flex gap-2">
@@ -274,14 +274,14 @@ export default function Settings() {
                 onClick={() => setShowLogoutModal(false)}
                 className="flex-1 h-10 rounded-xl border border-[var(--border)] text-xs font-semibold text-[var(--text-secondary)] hover:bg-[var(--background)] transition-all"
               >
-                Bekor qilish
+                Bekor qiliş
               </button>
               <button
                 onClick={handleLogout}
                 className="flex-1 h-10 rounded-xl bg-red-500 text-xs font-semibold text-white hover:bg-red-600 transition-all flex items-center justify-center gap-1.5"
               >
                 <SignOut size={15} weight="bold" />
-                <span>Chiqish</span>
+                <span>Çiqiş</span>
               </button>
             </div>
           </div>

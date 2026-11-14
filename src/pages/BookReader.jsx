@@ -11,7 +11,7 @@ import GlobeLoader from '../components/GlobeLoader';
 const THEMES = {
   light: { bg: '#FFFFFF', text: '#1a1a1a', surface: '#F8F9FA', border: '#E5E7EB', label: 'Oq' },
   sepia: { bg: '#F9F3E8', text: '#3B2D1F', surface: '#EFE6D0', border: '#D6C9A8', label: 'Sepia' },
-  dark:  { bg: '#1A1A2E', text: '#E2E8F0', surface: '#16213E', border: '#2D3748', label: "Qo'ng'ir" },
+  dark:  { bg: '#1A1A2E', text: '#E2E8F0', surface: '#16213E', border: '#2D3748', label: "Qönğir" },
   black: { bg: '#0D0D0D', text: '#CCCCCC', surface: '#1A1A1A', border: '#2A2A2A', label: 'Qora' },
 };
 const FONT_SIZES   = [14, 16, 18, 20, 22, 24];
@@ -126,8 +126,8 @@ function PageContent({ page, book, total, pageNum: pn, t, contentStyle,
                 </div>
                 <p className="text-center text-[11px] mt-2" style={{ color: t.text, opacity: 0.4 }}>
                   {hoverRating === 1 ? 'Yomon' : hoverRating === 2 ? 'Qoniqarsiz'
-                    : hoverRating === 3 ? "O'rtacha" : hoverRating === 4 ? 'Yaxshi'
-                    : hoverRating === 5 ? "A'lo!" : 'Yulduzcha bosing'}
+                    : hoverRating === 3 ? "Örtaça" : hoverRating === 4 ? 'Yaxşi'
+                    : hoverRating === 5 ? "A'lo!" : 'Yulduzça bosing'}
                 </p>
               </>
             )}
@@ -136,7 +136,7 @@ function PageContent({ page, book, total, pageNum: pn, t, contentStyle,
             <button onClick={goBack}
               className="w-full py-3 rounded-xl text-sm font-semibold text-white hover:opacity-90 transition-opacity"
               style={{ background: 'linear-gradient(135deg,#2563EB 0%,#7C3AED 100%)' }}>
-              Kutubxonaga qaytish
+              Kutubxonaga qaytiş
             </button>
           </div>
         </div>
@@ -241,7 +241,7 @@ export default function BookReader() {
       <div className="min-h-screen flex items-center justify-center gap-4 flex-col" style={{ background: '#F8FAFC' }}>
         <p className="text-lg font-semibold text-gray-600">Kitob topilmadi</p>
         <button onClick={() => navigate('/library')} className="flex items-center gap-2 text-blue-600 font-medium">
-          <ArrowLeft size={16} /> Kutubxonaga qaytish
+          <ArrowLeft size={16} /> Kutubxonaga qaytiş
         </button>
       </div>
     );
@@ -347,13 +347,13 @@ export default function BookReader() {
         <div className="fixed top-[57px] right-4 z-40 rounded-[16px] shadow-xl overflow-hidden w-80"
           style={{ background: t.bg, border: `1px solid ${t.border}` }} onClick={e => e.stopPropagation()}>
           <div className="px-4 py-3 border-b flex items-center justify-between" style={{ borderColor: t.border }}>
-            <p className="text-sm font-bold" style={{ color: t.text }}>O'qish sozlamalari</p>
+            <p className="text-sm font-bold" style={{ color: t.text }}>Öqiş sozlamalari</p>
             <button onClick={() => setShowSettings(false)} style={{ color: t.text }}><X size={15} /></button>
           </div>
           <div className="p-4 space-y-5">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-wider mb-3"
-                style={{ color: isDark ? '#64748B' : '#9CA3AF' }}>Shrift o'lchami</p>
+                style={{ color: isDark ? '#64748B' : '#9CA3AF' }}>Şrift ölçami</p>
               <div className="flex items-center gap-2">
                 <button onClick={() => setFontSize(f => Math.max(0, f - 1))} disabled={fontSize === 0}
                   className="w-8 h-8 rounded-lg font-bold flex items-center justify-center text-sm"
@@ -373,7 +373,7 @@ export default function BookReader() {
             </div>
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-wider mb-2"
-                style={{ color: isDark ? '#64748B' : '#9CA3AF' }}>Shrift turi</p>
+                style={{ color: isDark ? '#64748B' : '#9CA3AF' }}>Şrift turi</p>
               <div className="flex gap-2">
                 {FONTS.map((f, i) => (
                   <button key={f.id} onClick={() => setFontIdx(i)}
@@ -387,7 +387,7 @@ export default function BookReader() {
             </div>
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-wider mb-2"
-                style={{ color: isDark ? '#64748B' : '#9CA3AF' }}>Qator oralig'i</p>
+                style={{ color: isDark ? '#64748B' : '#9CA3AF' }}>Qator oraliği</p>
               <div className="flex gap-2">
                 {LINE_HEIGHTS.map((l, i) => (
                   <button key={l.id} onClick={() => setLineIdx(i)}
@@ -454,7 +454,7 @@ export default function BookReader() {
           <div className="flex-1 text-center">
             <p className="text-xs font-semibold" style={{ color: t.text }}>{pageNum + 1} / {total}</p>
             <p className="text-[10px] mt-0.5" style={{ color: isDark ? '#64748B' : '#9CA3AF' }}>
-              {progress}% o'qildi
+              {progress}% öqildi
             </p>
           </div>
           <button onClick={goNext} disabled={pageNum === total - 1 || !!animDir}

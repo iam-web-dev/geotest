@@ -18,24 +18,24 @@ const mapMeta = {
 };
 
 const typeMeta = {
-  findRiver: { label: 'Daryoni top', desc: 'Xaritada to\'g\'ri daryoni bosing' },
+  findRiver: { label: 'Daryoni top', desc: 'Xaritada töğri daryoni bosing' },
   nameRiver: { label: 'Nomini top', desc: 'Belgilangan daryo nomini tanlang' },
-  source: { label: 'Manba', desc: 'Daryo qayerdan boshlanishini toping' },
-  mouth: { label: 'Quyilish', desc: 'Daryo qayerga quyilishini toping' },
-  path: { label: 'Yo\'l', desc: 'Manba va quyilishga qarab daryoni toping' },
+  source: { label: 'Manba', desc: 'Daryo qayerdan boşlanişini toping' },
+  mouth: { label: 'Quyiliş', desc: 'Daryo qayerga quyilişini toping' },
+  path: { label: 'Yöl', desc: 'Manba va quyilişga qarab daryoni toping' },
 };
 
 const difficultyMeta = {
   easy: { label: 'Oson', desc: 'Faqat yirik daryolar, vaqt bosimisiz' },
-  medium: { label: "O'rtacha", desc: "O'rta daryolar, qisqa taymer" },
-  hard: { label: 'Qiyin', desc: 'Kichikroq daryolar, cheklangan vaqt' },
-  expert: { label: 'Ekspert', desc: 'Aralash savol turlari, tezkor o\'yin' },
+  medium: { label: "Örtaça", desc: "Örta daryolar, qisqa taymer" },
+  hard: { label: 'Qiyin', desc: 'Kiçikroq daryolar, çeklangan vaqt' },
+  expert: { label: 'Ekspert', desc: 'Aralaş savol turlari, tezkor öyin' },
 };
 
 const modeMeta = {
-  timeAttack: { label: 'Vaqtga qarshi', desc: '90 soniyada imkon boricha ko\'proq toping' },
-  survival: { label: 'Omon qolish', desc: '3 ta jon' },
-  daily: { label: 'Kunlik', desc: '10 ta aralash savol' },
+  timeAttack: { label: 'Vaqtga qarşi', desc: '90 soniyada imkon boriça köproq toping' },
+  survival: { label: 'Omon qoliş', desc: '3 ta jon' },
+  daily: { label: 'Kunlik', desc: '10 ta aralaş savol' },
 };
 
 function regionPool(mapRegion) {
@@ -62,7 +62,7 @@ function makeQuestion(river, type) {
   }
   if (type === 'source') {
     const distractors = sampleN(rivers, 3, river).map(r => r.source);
-    return { type, river, prompt: 'Bu daryo qayerdan boshlanadi?', options: shuffle([river.source, ...distractors]), correct: river.source };
+    return { type, river, prompt: 'Bu daryo qayerdan boşlanadi?', options: shuffle([river.source, ...distractors]), correct: river.source };
   }
   if (type === 'mouth') {
     const distractors = sampleN(rivers, 3, river).map(r => r.mouth);
@@ -138,20 +138,20 @@ function SetupPicker({ onStart, onExit }) {
         <ChipRow entries={difficultyMeta} value={difficulty} onChange={setDifficulty} />
       </div>
 
-      {/* Qo'shimcha sozlamalar */}
+      {/* Qöşimça sozlamalar */}
       <div className="rounded-[var(--radius-sm)] border border-[var(--border)] overflow-hidden">
         <button
           onClick={() => setOpen(o => !o)}
           className="w-full flex items-center justify-between px-4 py-3 text-xs font-semibold text-[var(--text-primary)] bg-[var(--surface)]"
         >
-          <span>Qo'shimcha sozlamalar</span>
+          <span>Qöşimça sozlamalar</span>
           {open ? <CaretUp size={14} /> : <CaretDown size={14} />}
         </button>
         {open && (
           <div className="px-4 pb-4 pt-3 space-y-4 bg-[var(--background)]">
             <div>
               <p className="text-xs font-bold text-[var(--text-primary)] mb-2">Savol turi</p>
-              <ChipRow entries={{ ...typeMeta, mixed: { label: 'Aralash' } }} value={questionType} onChange={setQuestionType} />
+              <ChipRow entries={{ ...typeMeta, mixed: { label: 'Aralaş' } }} value={questionType} onChange={setQuestionType} />
             </div>
             <div>
               <p className="text-xs font-bold text-[var(--text-primary)] mb-2">Rejim</p>
@@ -166,7 +166,7 @@ function SetupPicker({ onStart, onExit }) {
         className="w-full py-3 rounded-[var(--radius-sm)] text-sm font-bold text-white"
         style={{ background: COLOR }}
       >
-        Boshlash
+        Boşlaş
       </button>
     </div>
   );

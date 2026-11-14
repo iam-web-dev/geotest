@@ -13,15 +13,15 @@ const TARGET_COUNT = 10;
 
 const difficultyMeta = {
   easy: { label: 'Oson', desc: 'Viloyat nomlari' },
-  medium: { label: "O'rtacha", desc: 'Viloyat markazlari (poytaxtlari)' },
-  hard: { label: 'Qiyin', desc: 'Geografik savollar (chegaralar, joylashuv)' },
-  expert: { label: 'Ekspert', desc: 'Aralash savollar' },
+  medium: { label: "Örtaça", desc: 'Viloyat markazlari (poytaxtlari)' },
+  hard: { label: 'Qiyin', desc: 'Geografik savollar (çegaralar, joylaşuv)' },
+  expert: { label: 'Ekspert', desc: 'Aralaş savollar' },
 };
 
 const modeMeta = {
-  timeAttack: { label: 'Vaqtga qarshi', desc: '90 soniyada imkon boricha ko\'proq toping' },
-  survival: { label: 'Omon qolish', desc: '3 ta jon, xato qilsangiz jon kamayadi' },
-  daily: { label: 'Kunlik', desc: '10 ta aralash savol, maxsus mukofot' },
+  timeAttack: { label: 'Vaqtga qarşi', desc: '90 soniyada imkon boriça köproq toping' },
+  survival: { label: 'Omon qoliş', desc: '3 ta jon, xato qilsangiz jon kamayadi' },
+  daily: { label: 'Kunlik', desc: '10 ta aralaş savol, maxsus mukofot' },
 };
 
 function SetupPicker({ onStart, onExit }) {
@@ -34,7 +34,7 @@ function SetupPicker({ onStart, onExit }) {
           <CaretLeft size={18} weight="bold" />
         </button>
         <div>
-          <p className="text-sm font-bold text-[var(--text-primary)]">O'zbekiston Viloyatlari</p>
+          <p className="text-sm font-bold text-[var(--text-primary)]">Özbekiston Viloyatlari</p>
           <p className="text-xs text-[var(--text-secondary)]">Qiyinlik va rejimni tanlang</p>
         </div>
       </div>
@@ -76,7 +76,7 @@ function SetupPicker({ onStart, onExit }) {
         className="w-full py-3 rounded-[var(--radius-sm)] text-sm font-bold text-white"
         style={{ background: COLOR }}
       >
-        Boshlash
+        Boşlaş
       </button>
     </div>
   );
@@ -269,7 +269,7 @@ function UzbekistanRegionsRound({ difficulty, mode, onExit }) {
 
   return (
     <GameShell
-      title="O'zbekiston Viloyatlari"
+      title="Özbekiston Viloyatlari"
       color={COLOR}
       score={score}
       progress={{ current: Math.min(index + 1, TARGET_COUNT), total: TARGET_COUNT }}

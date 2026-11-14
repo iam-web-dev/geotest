@@ -138,7 +138,7 @@ export default function Quiz() {
                   </div>
 
                   <Button className="w-full group" variant={variant} onClick={startQuiz}>
-                    Boshlash <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+                    Boşlaş <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
                   </Button>
                 </CardContent>
               </Card>
@@ -154,7 +154,7 @@ export default function Quiz() {
     const tier = percentage >= 80
       ? { label: 'Ajoyib!', sub: 'Siz haqiqiy geografiya ustasisiz', color: '#F59E0B', bg: 'linear-gradient(135deg,#FEF3C7 0%,#FDE68A 100%)', Icon: Trophy }
       : percentage >= 50
-      ? { label: 'Yaxshi natija!', sub: 'Yana bir oz mashq qilsangiz mukammal bo\'ladi', color: '#2563EB', bg: 'linear-gradient(135deg,#DBEAFE 0%,#BFDBFE 100%)', Icon: Medal }
+      ? { label: 'Yaxşi natija!', sub: 'Yana bir oz mashq qilsangiz mukammal bo\'ladi', color: '#2563EB', bg: 'linear-gradient(135deg,#DBEAFE 0%,#BFDBFE 100%)', Icon: Medal }
       : { label: 'Davom eting!', sub: 'Har bir urinish sizni yaxshilaydi', color: '#64748B', bg: 'linear-gradient(135deg,#F1F5F9 0%,#E2E8F0 100%)', Icon: SmileySad };
     const { Icon } = tier;
 
@@ -204,11 +204,11 @@ export default function Quiz() {
               <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-[var(--radius-sm)] bg-[var(--background)] py-3 flex flex-col items-center gap-1">
                   <div className="flex items-center gap-1 text-[var(--success)]"><Check size={16} weight="bold" /><span className="text-lg font-bold">{score}</span></div>
-                  <p className="text-[11px] text-[var(--text-secondary)]">To'g'ri javob</p>
+                  <p className="text-[11px] text-[var(--text-secondary)]">Töğri javob</p>
                 </div>
                 <div className="rounded-[var(--radius-sm)] bg-[var(--background)] py-3 flex flex-col items-center gap-1">
                   <div className="flex items-center gap-1 text-[var(--danger)]"><X size={16} weight="bold" /><span className="text-lg font-bold">{quizQuestions.length - score}</span></div>
-                  <p className="text-[11px] text-[var(--text-secondary)]">Noto'g'ri javob</p>
+                  <p className="text-[11px] text-[var(--text-secondary)]">Notöğri javob</p>
                 </div>
               </div>
 
@@ -223,7 +223,7 @@ export default function Quiz() {
                   className="w-full flex items-center justify-center gap-2 py-3 rounded-[var(--radius-sm)] text-sm font-semibold text-white transition-all active:scale-[0.98]"
                   style={{ background: tier.color }}
                 >
-                  <ArrowsClockwise size={16} /> Qayta boshlash
+                  <ArrowsClockwise size={16} /> Qayta boşlaş
                 </button>
                 <button
                   onClick={() => setGameState('menu')}
@@ -245,7 +245,7 @@ export default function Quiz() {
     <div className="max-w-2xl mx-auto space-y-4">
       <SEO
         title="Geografiya Viktorinasi"
-        description="Davlatlar, poytaxtlar, bayroqlar, daryolar, tog'lar va qit'alar bo'yicha interaktiv geografiya viktorinalarini ishlang."
+        description="Davlatlar, poytaxtlar, bayroqlar, daryolar, toğlar va qit'alar böyiça interaktiv geografiya viktorinalarini işlang."
         url="/quiz"
       />
       <div className="flex items-center justify-between">

@@ -129,7 +129,7 @@ export default function QuizEngine({ title, color, questions, xpPerCorrect = XP_
               {current.prompt}
 
               {streak >= 2 && status === 'idle' && (
-                <p className="text-xs font-bold text-[#F59E0B] mt-2">🔥 {streak} ketma-ket to'g'ri!</p>
+                <p className="text-xs font-bold text-[#F59E0B] mt-2">🔥 {streak} ketma-ket töğri!</p>
               )}
             </motion.div>
           </AnimatePresence>

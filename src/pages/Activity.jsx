@@ -8,7 +8,7 @@ import { recentActivities } from '../data/mockData';
 
 const activityColors = { test: '#2563EB', quiz: '#F59E0B', game: '#22C55E' };
 const activityIcons  = { test: BookOpen,  quiz: Lightning,  game: Compass  };
-const typeLabels     = { test: 'Test',    quiz: 'Viktorina', game: "O'yin" };
+const typeLabels     = { test: 'Test',    quiz: 'Viktorina', game: "Öyin" };
 
 const pad = n => String(n).padStart(2, '0');
 function formatDateTime(iso) {
@@ -64,12 +64,12 @@ function ActivityModal({ activity, onClose }) {
           <div className="h-2 rounded-full bg-[var(--border)] overflow-hidden">
             <div className="h-full rounded-full" style={{ width: `${pct}%`, background: color }} />
           </div>
-          <p className="text-xs text-[var(--text-secondary)] text-right">{pct}% to'g'ri</p>
+          <p className="text-xs text-[var(--text-secondary)] text-right">{pct}% töğri</p>
         </div>
         <div className="grid grid-cols-3 gap-2">
           <div className="rounded-xl bg-[var(--background)] p-3 text-center">
             <p className="text-base font-black text-[var(--text-primary)]">+{a.xpGained}</p>
-            <p className="text-[10px] text-[var(--text-secondary)]">XP qo'shildi</p>
+            <p className="text-[10px] text-[var(--text-secondary)]">XP qöşildi</p>
           </div>
           <div className="rounded-xl bg-[var(--background)] p-3 text-center">
             <p className="text-base font-black" style={{ color: a.rankChange > 0 ? '#16A34A' : a.rankChange < 0 ? '#EF4444' : 'var(--text-primary)' }}>
@@ -84,7 +84,7 @@ function ActivityModal({ activity, onClose }) {
         </div>
         <button onClick={onClose}
           className="w-full h-11 rounded-2xl bg-[var(--background)] text-sm font-semibold text-[var(--text-secondary)]">
-          Yopish
+          Yopiş
         </button>
       </motion.div>
     </motion.div>,
@@ -108,14 +108,14 @@ export default function Activity() {
           <CaretLeft size={18} weight="bold" />
         </button>
         <div className="flex-1">
-          <h1 className="text-xl font-bold text-[var(--text-primary)]">Barcha Faoliyat</h1>
+          <h1 className="text-xl font-bold text-[var(--text-primary)]">Barça Faoliyat</h1>
           <p className="text-xs text-[var(--text-secondary)]">{filtered.length} ta yozuv</p>
         </div>
       </div>
 
       {/* Filter tabs */}
       <div className="flex gap-2">
-        {[['all', 'Barchasi'], ['test', 'Testlar'], ['quiz', 'Viktorina'], ['game', "O'yinlar"]].map(([key, label]) => (
+        {[['all', 'Barçasi'], ['test', 'Testlar'], ['quiz', 'Viktorina'], ['game', "Öyinlar"]].map(([key, label]) => (
           <button key={key} onClick={() => setFilter(key)}
             className={cn('px-3 py-1.5 rounded-xl text-xs font-semibold transition-all',
               filter === key

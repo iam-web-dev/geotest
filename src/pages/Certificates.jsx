@@ -81,7 +81,7 @@ export default function Certificates() {
                     style={{ background: `${gradeColor}10` }}>
                     <Trophy size={16} style={{ color: gradeColor }} />
                     <div>
-                      <p className="text-xs font-bold text-[var(--text-primary)]">{cert.rank}-o'rin</p>
+                      <p className="text-xs font-bold text-[var(--text-primary)]">{cert.rank}-örin</p>
                       <p className="text-[10px] text-[var(--text-secondary)]">Reyting</p>
                     </div>
                   </div>
@@ -91,7 +91,7 @@ export default function Certificates() {
                       style={{ background: gradeColor }}>N</div>
                     <div>
                       <p className="text-xs font-bold text-[var(--text-primary)]">{cert.totalParticipants.toLocaleString()}</p>
-                      <p className="text-[10px] text-[var(--text-secondary)]">Ishtirokchi</p>
+                      <p className="text-[10px] text-[var(--text-secondary)]">Iştirokçi</p>
                     </div>
                   </div>
                 </div>
