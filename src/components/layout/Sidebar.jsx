@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   House, BookOpen, Books, GameController, User, Trophy, Newspaper, Compass, Sun, Moon,
-  GraduationCap, Student, ChalkboardTeacher, SignOut, SignIn
+  GraduationCap, Student, ChalkboardTeacher, SignOut, SignIn, Terminal
 } from '@phosphor-icons/react';
 import { cn } from '../../lib/utils';
 import { useTheme } from '../../context/ThemeContext';
@@ -172,6 +172,21 @@ export default function Sidebar() {
             </div>
           </NavLink>
         )}
+
+        <NavLink
+          to="/creator"
+          className={({ isActive }) =>
+            cn(
+              "flex items-center gap-3 w-full px-3 py-2 rounded-[var(--radius-sm)] text-xs font-mono transition-all duration-200 border",
+              isActive
+                ? "bg-[var(--primary-soft)] text-[var(--primary)] border-[var(--primary)]/30 font-bold"
+                : "text-[var(--text-secondary)] hover:bg-[var(--background)] hover:text-[var(--text-primary)] border-transparent hover:border-[var(--border)]"
+            )
+          }
+        >
+          <Terminal size={16} />
+          <span>Muallif & Manifest</span>
+        </NavLink>
 
         <button
           onClick={toggleTheme}

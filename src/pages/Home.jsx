@@ -7,7 +7,7 @@ import {
   BookOpen, Globe, ArrowRight, Play,
   Flag, GlobeHemisphereWest, MapTrifold, Buildings, Mountains, Drop, Sun, Sparkle,
   Megaphone, GraduationCap, Books, User, Calendar, X,
-  Users, CheckCircle
+  Users, CheckCircle, Terminal
 } from '@phosphor-icons/react';
 import {
   StickerMilliyBadge, StickerDTMRocket, StickerOlympiadTrophy, StickerAttestationShield,
@@ -570,6 +570,33 @@ export default function Home() {
             );
           })}
         </div>
+      </div>
+
+      {/* ── Creator Manifesto & Colophon (dhh.dk & omarchy.org inspired) ── */}
+      <div className="pt-2">
+        <Link
+          to="/creator"
+          className="group block p-5 sm:p-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--primary)] transition-all duration-200"
+        >
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono">
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2 text-xs text-[var(--primary)] font-bold">
+                <Terminal size={15} weight="bold" />
+                <span>GEOBEK.UZ // CREATOR MANIFESTO</span>
+              </div>
+              <h3 className="text-base sm:text-lg font-bold text-[var(--text-primary)] font-serif">
+                «Nega GeoBek yaratildi? Reklamasiz taʼlim va veb-hunarmandchilik»
+              </h3>
+              <p className="text-xs text-[var(--text-secondary)] font-sans max-w-2xl leading-relaxed">
+                Loyiha muallifi Ibrohimjon Mamirovning shaxsiy manifesti, texnik arxitektura va Oʻzbekiston geografiya taʼlimi falsafasi.
+              </p>
+            </div>
+            <div className="shrink-0 flex items-center gap-1.5 text-xs font-semibold text-[var(--primary)] group-hover:translate-x-1 transition-transform">
+              <span>Manifestni oʻqish</span>
+              <ArrowRight size={14} weight="bold" />
+            </div>
+          </div>
+        </Link>
       </div>
 
       {/* ── Full Announcement Modal ── */}

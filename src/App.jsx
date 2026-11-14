@@ -24,6 +24,7 @@ const Rankings = lazy(() => import('./pages/Rankings'));
 const Profile = lazy(() => import('./pages/Profile'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const BookReader = lazy(() => import('./pages/BookReader'));
+const Creator = lazy(() => import('./pages/Creator'));
 
 const queryClient = new QueryClient();
 
@@ -60,6 +61,10 @@ function App() {
               <Route path="/auth" element={<Auth />} />
               <Route path="/login" element={<Auth initialMode="signin" />} />
               <Route path="/register" element={<Auth initialMode="signup" />} />
+              <Route path="/creator" element={<Creator />} />
+              <Route path="/muallif" element={<Creator />} />
+              <Route path="/author" element={<Creator />} />
+              <Route path="/ibrohimjon" element={<Creator />} />
               <Route element={<Layout />}>
                 <Route path="/" element={<Home />} />
                 <Route path="/tests" element={<Tests />} />
