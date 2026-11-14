@@ -80,11 +80,6 @@ export default function GlobeLoader({ onDone, fadeIn = false }) {
 
         {/* Brand and Status */}
         <div className="mt-6 text-center space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-[11px] font-semibold text-blue-600 dark:text-blue-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span>41°18′N 69°16′E • Toshkent</span>
-          </div>
-
           <h2 className="text-2xl font-black tracking-tight text-[var(--text-primary)]">
             Geo<span className="text-blue-600">Bek</span>
           </h2>
