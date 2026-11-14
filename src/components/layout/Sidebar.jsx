@@ -177,15 +177,15 @@ export default function Sidebar() {
           to="/creator"
           className={({ isActive }) =>
             cn(
-              "flex items-center gap-3 w-full px-3 py-2 rounded-[var(--radius-sm)] text-xs font-mono transition-all duration-200 border",
+              "flex items-center gap-3 w-full px-3 py-2 rounded-[var(--radius-sm)] text-xs font-medium transition-all duration-200 border",
               isActive
                 ? "bg-[var(--primary-soft)] text-[var(--primary)] border-[var(--primary)]/30 font-bold"
                 : "text-[var(--text-secondary)] hover:bg-[var(--background)] hover:text-[var(--text-primary)] border-transparent hover:border-[var(--border)]"
             )
           }
         >
-          <Terminal size={16} />
-          <span>Muallif & Manifest</span>
+          <ChalkboardTeacher size={16} weight="bold" />
+          <span>Ustoz Qambarov O.X.</span>
         </NavLink>
 
         <button

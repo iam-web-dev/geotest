@@ -11,24 +11,6 @@ export default function PlusProPromo() {
 
   const features = [
     {
-      icon: Robot,
-      title: 'GeoAI ustozga kuniga 100 tagacha savol',
-      desc: 'Murakkab geografik masalalar, xaritalar va testlarni sunʼiy intellekt orqali chuqur tahlil qilish',
-      color: '#3B82F6',
-    },
-    {
-      icon: Trophy,
-      title: 'Arxividagi nufuzli musobaqalar masalalaridan foydalanish',
-      desc: 'Respublika va xalqaro geografiya olimpiadalarining barcha yillardagi amaliy topshiriqlari',
-      color: '#F59E0B',
-    },
-    {
-      icon: Users,
-      title: 'Yechimingizni boshqalarniki bilan taqqoslash',
-      desc: 'Oʻzbekiston boʻyicha tengdoshlaringiz va reyting peshqadamlarining yechimlari bilan solishtirish',
-      color: '#10B981',
-    },
-    {
       icon: BookOpen,
       title: 'Oʻquv rejalardagi premium materiallar',
       desc: '5–11-sinf barcha darslik taqdimotlari (PPTX), metodik konspektlar va yopiq test savollari',
@@ -49,7 +31,7 @@ export default function PlusProPromo() {
   ];
 
   return (
-    <div className="rounded-3xl border border-[var(--border)] bg-gradient-to-b from-[var(--surface)] to-[var(--surface-raised)] p-6 sm:p-8 shadow-sm space-y-6 relative overflow-hidden">
+    <div className="rounded-3xl border border-[var(--border)] bg-gradient-to-b from-[var(--surface)] to-[var(--surface-raised)] p-6 sm:p-8 shadow-sm relative overflow-hidden">
       {/* Background soft glow decoration */}
       <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
@@ -63,7 +45,7 @@ export default function PlusProPromo() {
               <span>Plus & Pro</span>
             </span>
             <span className="text-xs font-semibold text-[var(--text-secondary)]">
-              GeoBek Ilgʻor Taʼlim Imkoniyatlari
+              GeoBek Obunasi Imkoniyatlari
             </span>
           </div>
 
@@ -119,30 +101,6 @@ export default function PlusProPromo() {
             </div>
           );
         })}
-      </div>
-
-      {/* Plan mini badge cards */}
-      <div className="pt-2 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-4 text-xs text-[var(--text-secondary)] relative z-10">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-2.5 h-2.5 rounded-full bg-blue-500" />
-            <span className="font-semibold text-[var(--text-primary)]">Plus:</span>
-            <span>Barcha testlar va GeoAI maslahatlari</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2.5 h-2.5 rounded-full bg-indigo-500" />
-            <span className="font-semibold text-[var(--text-primary)]">Pro:</span>
-            <span>Video darslar, shaxsiy mentor va yoʻl xaritasi</span>
-          </div>
-        </div>
-
-        <button
-          onClick={() => navigate('/oferta')}
-          className="text-xs font-bold text-[var(--primary)] hover:underline flex items-center gap-1"
-        >
-          <span>Barcha tarif rejalari va narxlar</span>
-          <ArrowRight size={13} weight="bold" />
-        </button>
       </div>
     </div>
   );

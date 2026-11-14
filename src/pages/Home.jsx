@@ -148,7 +148,6 @@ export default function Home() {
           {/* Interactive Detailed Globe in Hero */}
           <div className="hidden sm:flex flex-col items-center justify-center shrink-0">
             <EarthDetailedGlobe size={150} interactive={true} />
-            <span className="text-[10px] text-sky-200/80 font-mono mt-1">Interaktiv Yer shari (aylantiring)</span>
           </div>
         </div>
       </div>
@@ -504,27 +503,27 @@ export default function Home() {
       {/* ── Hududlar bo'yicha foydalanuvchilar geografiyasi (Robocontest style) ── */}
       <UserGeographyMap />
 
-      {/* ── Creator Manifesto & Colophon (dhh.dk & omarchy.org inspired) ── */}
+      {/* ── Creator / Ustoz Qambarov O.X. & GEOHISTORY ── */}
       <div className="pt-2">
         <Link
           to="/creator"
           className="group block p-5 sm:p-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--primary)] transition-all duration-200"
         >
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="space-y-1.5">
               <div className="flex items-center gap-2 text-xs text-[var(--primary)] font-bold">
-                <Terminal size={15} weight="bold" />
-                <span>GEOBEK.UZ // CREATOR MANIFESTO</span>
+                <GraduationCap size={16} weight="bold" />
+                <span>GEOBEK // MUALLIF VA ILMIY RAHBAR</span>
               </div>
               <h3 className="text-base sm:text-lg font-bold text-[var(--text-primary)] font-serif">
-                «Nega GeoBek yaratildi? Reklamasiz taʼlim va veb-hunarmandchilik»
+                «Geograf ustoz Qambarov O.X. — GEOHISTORY va GeoBek metodikasi»
               </h3>
               <p className="text-xs text-[var(--text-secondary)] font-sans max-w-2xl leading-relaxed">
-                Loyiha muallifi Ibrohimjon Mamirovning shaxsiy manifesti, texnik arxitektura va Oʻzbekiston geografiya taʼlimi falsafasi.
+                5–11-sinf maktab taqdimotlari muallifi, geografiya fani ustozi Qambarov O.X.ning hayot yoʻli, pedagogik tajribasi va taʼlim falsafasi.
               </p>
             </div>
             <div className="shrink-0 flex items-center gap-1.5 text-xs font-semibold text-[var(--primary)] group-hover:translate-x-1 transition-transform">
-              <span>Manifestni oʻqish</span>
+              <span>Batafsil oʻqish</span>
               <ArrowRight size={14} weight="bold" />
             </div>
           </div>
