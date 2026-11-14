@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CaretLeft, Check, Camera, GraduationCap, Student, ChalkboardTeacher, Buildings } from '@phosphor-icons/react';
+import { CaretLeft, Check, Camera, GraduationCap, Student, ChalkboardTeacher, SignOut } from '@phosphor-icons/react';
 import { cn } from '../lib/utils';
+import { useAuth } from '../context/AuthContext';
 import { user as initialUser } from '../data/mockData';
 
 const STORAGE_KEY = 'geo_user_settings';
@@ -10,7 +11,7 @@ function loadSettings() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
 }
 function saveSettings(s) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch {}
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch (e) { void e; }
 }
 
 const REGIONS = [
@@ -81,8 +82,9 @@ function Select({ value, onChange, options, placeholder }) {
 
 export default function Settings() {
   const navigate = useNavigate();
+  const { user: authUser, updateProfile, signOut } = useAuth();
   const saved = loadSettings();
-  const merged = { ...initialUser, ...saved };
+  const merged = { ...initialUser, ...(authUser || {}), ...saved };
 
   const [form, setForm] = useState({
     name:       merged.name       || '',
@@ -95,6 +97,7 @@ export default function Settings() {
     avatar:     merged.avatar     || '',
   });
   const fileInputRef = useRef(null);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const set = (key, val) => setForm(f => ({ ...f, [key]: val }));
 
@@ -108,7 +111,14 @@ export default function Settings() {
 
   const handleSave = () => {
     saveSettings(form);
+    if (updateProfile) updateProfile(form);
     navigate('/profile');
+  };
+
+  const handleLogout = async () => {
+    await signOut();
+    setShowLogoutModal(false);
+    navigate('/auth');
   };
 
   return (
@@ -231,10 +241,52 @@ export default function Settings() {
 
       {/* Save button */}
       <button onClick={handleSave}
-        className="w-full h-12 rounded-2xl text-sm font-bold text-white transition-all flex items-center justify-center gap-2"
+        className="w-full h-12 rounded-2xl text-sm font-bold text-white transition-all flex items-center justify-center gap-2 shadow-md shadow-blue-500/20"
         style={{ background: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%)' }}>
         <Check size={16} weight="bold" /> Saqlash
       </button>
+
+      {/* Logout button */}
+      <button
+        type="button"
+        onClick={() => setShowLogoutModal(true)}
+        className="w-full h-12 rounded-2xl border border-red-500/30 text-red-500 hover:bg-red-500/10 text-sm font-semibold transition-all flex items-center justify-center gap-2"
+      >
+        <SignOut size={16} weight="bold" />
+        <span>Hisobdan chiqish</span>
+      </button>
+
+      {/* Logout confirmation modal */}
+      {showLogoutModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 w-full max-w-sm space-y-4 shadow-2xl">
+            <div className="flex flex-col items-center gap-3 text-center">
+              <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
+                <SignOut size={22} weight="fill" />
+              </div>
+              <div>
+                <p className="font-bold text-[var(--text-primary)]">Chiqishni tasdiqlang</p>
+                <p className="text-xs text-[var(--text-secondary)] mt-1">GeoBek hisobingizdan chiqishni xohlaysizmi?</p>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setShowLogoutModal(false)}
+                className="flex-1 h-10 rounded-xl border border-[var(--border)] text-xs font-semibold text-[var(--text-secondary)] hover:bg-[var(--background)] transition-all"
+              >
+                Bekor qilish
+              </button>
+              <button
+                onClick={handleLogout}
+                className="flex-1 h-10 rounded-xl bg-red-500 text-xs font-semibold text-white hover:bg-red-600 transition-all flex items-center justify-center gap-1.5"
+              >
+                <SignOut size={15} weight="bold" />
+                <span>Chiqish</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

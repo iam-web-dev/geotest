@@ -1,4 +1,4 @@
-// Geo-Test Custom Illustration System
+// GeoBek Custom Illustration System
 // Handcrafted SVG illustrations for the geography education platform
 // Style: 2px stroke, rounded caps/joins, flat design, 2-3 colors, no gradients/shadows
 // Dark mode: uses currentColor / CSS variables via className

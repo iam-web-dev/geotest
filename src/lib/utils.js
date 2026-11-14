@@ -1,7 +1,9 @@
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-export const canHover = window.matchMedia('(hover: hover) and (any-pointer: fine)').matches;
+export const canHover = typeof window !== 'undefined' && window.matchMedia
+  ? window.matchMedia('(hover: hover) and (any-pointer: fine)').matches
+  : false;
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
@@ -95,4 +97,70 @@ export function getExamTypeLabel(type) {
     case 'attestation': return 'Attestatsiya';
     default: return type;
   }
+}
+
+/**
+ * Normalizes phone number to format +998901234567
+ */
+export function normalizeUzPhone(raw) {
+  if (!raw) return '';
+  const digits = String(raw).replace(/\D/g, '');
+  if (digits.startsWith('998')) return '+' + digits.slice(0, 12);
+  if (digits.startsWith('8') && digits.length === 10) return '+998' + digits.slice(1);
+  if (digits.length <= 9) return '+998' + digits;
+  return '+' + digits.slice(0, 12);
+}
+
+/**
+ * Formats Uzbek phone number into clean display: +998 (90) 123-45-67
+ * Always starts with +998.
+ */
+export function formatUzPhone(raw) {
+  if (!raw) return '+998 ';
+  const str = String(raw);
+  let digits = str.replace(/\D/g, '');
+  
+  if (digits.startsWith('998')) {
+    digits = digits.slice(3);
+  } else if (digits.startsWith('8') && digits.length >= 10) {
+    digits = digits.slice(1);
+  }
+  digits = digits.slice(0, 9); // max 9 digits after 998
+
+  if (digits.length === 0) return '+998 ';
+  if (digits.length <= 2) return `+998 (${digits}`;
+  if (digits.length <= 5) return `+998 (${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  if (digits.length <= 7) return `+998 (${digits.slice(0, 2)}) ${digits.slice(2, 5)}-${digits.slice(5)}`;
+  return `+998 (${digits.slice(0, 2)}) ${digits.slice(2, 5)}-${digits.slice(5, 7)}-${digits.slice(7, 9)}`;
+}
+
+/**
+ * Returns operator info for a given Uzbek phone number
+ */
+export function getUzPhoneOperator(raw) {
+  if (!raw) return null;
+  const digits = String(raw).replace(/\D/g, '');
+  let code = '';
+  if (digits.startsWith('998') && digits.length >= 5) {
+    code = digits.slice(3, 5);
+  } else if (digits.length >= 2) {
+    code = digits.slice(0, 2);
+  }
+
+  const operators = {
+    '90': { name: 'Beeline', color: '#F59E0B' },
+    '91': { name: 'Beeline', color: '#F59E0B' },
+    '93': { name: 'Ucell', color: '#8B5CF6' },
+    '94': { name: 'Ucell', color: '#8B5CF6' },
+    '50': { name: 'Ucell', color: '#8B5CF6' },
+    '97': { name: 'Mobiuz', color: '#EF4444' },
+    '88': { name: 'Mobiuz', color: '#EF4444' },
+    '95': { name: 'Mobiuz', color: '#EF4444' },
+    '99': { name: 'Uztelecom', color: '#0EA5E9' },
+    '77': { name: 'Uztelecom', color: '#0EA5E9' },
+    '33': { name: 'Humans', color: '#EC4899' },
+    '98': { name: 'Perfectum', color: '#6366F1' },
+  };
+
+  return operators[code] || null;
 }

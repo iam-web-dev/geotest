@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Play, Trophy, Clock, Star, GlobeHemisphereWest, MapTrifold, Buildings,
+  Play, Trophy, Clock, GlobeHemisphereWest, MapTrifold, Buildings,
   Mountains, Drop, Sun, Sparkle, Flag, X, Info, Lightning, ChartBar,
-  Target, ListChecks, Lightbulb, BookOpen, Medal, ArrowRight,
+  Target, ListChecks, Lightbulb, ArrowRight,
   HourglassMedium, Heart, Fire,
 } from '@phosphor-icons/react';
 import { cn, getDifficultyColor, getDifficultyLabel } from '../lib/utils';
@@ -28,18 +28,21 @@ const filters = [
 
 function useFavorites() {
   const [favorites, setFavorites] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('geotest-fav-games') || '[]'); }
-    catch { return []; }
+    try {
+      return JSON.parse(localStorage.getItem('geobek-fav-games') || localStorage.getItem('geotest-fav-games') || '[]');
+    } catch {
+      return [];
+    }
   });
   useEffect(() => {
-    localStorage.setItem('geotest-fav-games', JSON.stringify(favorites));
+    localStorage.setItem('geobek-fav-games', JSON.stringify(favorites));
   }, [favorites]);
   const toggle = (id) => setFavorites(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
   return { favorites, toggle };
 }
 
 function GameModal({ game, onClose, onStart, isFavorite, onToggleFavorite }) {
-  const [mode, setMode] = useState('ranked');
+  const mode = 'ranked';
   if (!game) return null;
   const Icon = gameIcons[game.icon] || Sparkle;
 

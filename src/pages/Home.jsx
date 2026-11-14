@@ -1,37 +1,33 @@
+import { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import SEO from '../components/SEO';
+import { useAuth } from '../context/AuthContext';
 import {
-  Clock, BookOpen,
-  Star, Calendar, Globe, ArrowRight, Tree, Cloud,
-  Play, ChartBar, Lightning,
+  BookOpen, Globe, ArrowRight, Play,
   Flag, GlobeHemisphereWest, MapTrifold, Buildings, Mountains, Drop, Sun, Sparkle,
+  Megaphone, GraduationCap, Books, User, Calendar, X,
+  Users, CheckCircle
 } from '@phosphor-icons/react';
 import {
-  StickerIcons, StickerMilliyBadge, StickerDTMRocket, StickerOlympiadTrophy, StickerAttestationShield,
+  StickerMilliyBadge, StickerDTMRocket, StickerOlympiadTrophy, StickerAttestationShield,
   StatIconXP, StatIconAccuracy, StatIconTime, StatIconTests,
 } from '../components/illustrations/GeoIllustrations';
+import EarthDetailedGlobe from '../components/EarthDetailedGlobe';
 import Button from '../components/ui/Button';
 import { Card, CardContent } from '../components/ui/Card';
 import {
   dailyStats,
   upcomingExams, geographyFact,
-  todayRecommendation, user, games, articles,
+  user, games,
 } from '../data/mockData';
-import { EarthCompassPin } from '../components/illustrations/GeoIllustrations';
-import { canHover, getDifficultyColor, getDifficultyLabel } from '../lib/utils';
+import { announcements, ANNOUNCEMENT_CATEGORIES } from '../data/announcementsData';
+import { getDifficultyColor, getDifficultyLabel, cn } from '../lib/utils';
 
 const gameIcons = {
   Flag, GlobeHemisphereWest, MapTrifold, Buildings,
   Droplets: Drop, Mountain: Mountains, Sun, Earth: GlobeHemisphereWest, Sparkle,
 };
-
-const articleCategoryMeta = {
-  'Geografiya': { color: '#2563EB', bg: 'var(--pal-milliy)',      Icon: Globe },
-  'Ekologiya':  { color: '#16A34A', bg: 'var(--pal-attestation)', Icon: Tree },
-  'Iqlim':      { color: '#0891B2', bg: '#E0F2FE',                Icon: Cloud },
-  'Turizm':     { color: '#D4A820', bg: 'var(--pal-olympiad)',    Icon: Mountains },
-};
-
 
 const statMeta = {
   StatIconXP:       { color: '#F97316', bg: 'var(--pal-orange)' },
@@ -59,22 +55,18 @@ function StatCard({ icon: Icon, label, value, detail, trend }) {
           <Icon size={22} color={meta.color} />
         </div>
         {trend && (
-          <span
-            className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-            style={{ background: meta.bg, color: meta.color }}
-          >
-            ↑ {trend}
+          <span className="text-[11px] font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-full">
+            {trend}
           </span>
         )}
       </div>
 
-      <p className="text-2xl font-bold text-[var(--text-primary)] leading-none">{value}</p>
-      <p className="text-xs font-semibold mt-1.5" style={{ color: meta.color }}>{label}</p>
-      {detail && <p className="text-[11px] text-[var(--text-tertiary)] mt-0.5 leading-tight">{detail}</p>}
+      <p className="text-2xl font-bold text-[var(--text-primary)] mb-0.5">{value}</p>
+      <p className="text-xs font-medium text-[var(--text-secondary)]">{label}</p>
+      {detail && <p className="text-[11px] text-[var(--text-tertiary)] mt-1">{detail}</p>}
     </div>
   );
 }
-
 
 const testStickers = {
   milliy:      { Sticker: StickerMilliyBadge,      color: '#326D62', bg: 'var(--pal-milliy)', label: 'Milliy Sertifikat' },
@@ -85,56 +77,357 @@ const testStickers = {
 
 export default function Home() {
   const navigate = useNavigate();
+  const { user: authUser } = useAuth();
+  const activeUser = authUser || user;
+
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
+
+  const filteredAnnouncements = useMemo(() => {
+    if (activeCategory === 'all') return announcements;
+    if (activeCategory === 'pinned') return announcements.filter(a => a.isPinned);
+    return announcements.filter(a => a.category === activeCategory);
+  }, [activeCategory]);
+
   const popularGames = games.filter(g => g.popular).slice(0, 3);
-  const mainArticle = articles[0];
-  const articleCat = articleCategoryMeta[mainArticle.category] || articleCategoryMeta['Geografiya'];
-  const ArticleCatIcon = articleCat.Icon;
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8">
       <SEO
-        title="Interaktiv Geografiya O'rganish Platformasi"
-        description="DTM, Milliy Sertifikat, Olimpiada testlari, interaktiv viktorinalar, o'yinlar va raqamli kutubxona bilan geografiyani o'rganing."
+        title="Bosh Sahifa — E'lonlar va Geografiya Ta'lim Portali"
+        description="GeoBek platformasining rasmiy e'lonlari, yangiliklari, maktab darslik taqdimotlari va testlari."
         url="/"
-        jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: "Geo-Test Bosh Sahifa", url: 'https://geo-test.uz' }}
       />
 
-      {/* ── Hero ── */}
+      {/* ── Hero Banner ── */}
       <div
-        className="relative overflow-hidden rounded-[var(--radius-lg)] p-6 sm:p-8 text-white"
-        style={{ background: 'linear-gradient(135deg, #1A6ED4 0%, var(--primary) 55%, #3B9EF5 100%)' }}
+        className="relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white shadow-lg border border-blue-400/20"
+        style={{
+          background: 'linear-gradient(135deg, #1E40AF 0%, #1D4ED8 45%, #2563EB 80%, #0284C7 100%)',
+        }}
       >
-        {/* Decorative orbs */}
-        <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-white/10 pointer-events-none" />
-        <div className="absolute top-8 -right-4 w-24 h-24 rounded-full bg-white/8 pointer-events-none" />
+        <div className="absolute -top-12 -right-12 w-64 h-64 rounded-full bg-white/5 pointer-events-none blur-xl" />
+        <div className="absolute -bottom-10 left-1/3 w-48 h-48 rounded-full bg-sky-400/10 pointer-events-none blur-2xl" />
 
-        <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-20 hidden sm:block pointer-events-none">
-          <EarthCompassPin size={150} />
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="space-y-3 max-w-xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-xs font-semibold">
+              <Megaphone size={14} weight="bold" />
+              <span>GeoBek Rasmiy Taʼlim Portali</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse ml-0.5" />
+            </div>
+
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+              Salom, {activeUser.name}!
+            </h1>
+            <p className="text-white/85 text-xs sm:text-sm max-w-lg leading-relaxed">
+              Oʻzbekiston va jahon geografiyasi boʻyicha maktab darslik taqdimotlari (7–11-sinf), DTM va Milliy sertifikat sinov testlari platformasiga xush kelibsiz.
+            </p>
+
+            <div className="flex items-center gap-2.5 pt-1.5 flex-wrap">
+              <button
+                onClick={() => navigate('/school')}
+                className="px-4 py-2.5 rounded-xl bg-white text-blue-700 font-bold text-xs hover:bg-white/95 transition-all shadow-md flex items-center gap-1.5 active:scale-95"
+              >
+                <GraduationCap size={16} weight="bold" />
+                <span>Maktab taʼlimi darsliklari</span>
+              </button>
+
+              <button
+                onClick={() => navigate('/tests')}
+                className="px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 border border-white/25 text-white font-bold text-xs transition-all flex items-center gap-1.5 active:scale-95 backdrop-blur-sm"
+              >
+                <BookOpen size={16} weight="bold" />
+                <span>Sinov testlari</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Interactive Detailed Globe in Hero */}
+          <div className="hidden sm:flex flex-col items-center justify-center shrink-0">
+            <EarthDetailedGlobe size={150} interactive={true} />
+            <span className="text-[10px] text-sky-200/80 font-mono mt-1">Interaktiv Yer shari (aylantiring)</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Key Sections Navigation Cards (Asosiy 4 bo'limga tezkor yo'naltirish) ── */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div
+          onClick={() => navigate('/tests')}
+          className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--primary)]/50 transition-all cursor-pointer group shadow-sm flex flex-col justify-between"
+        >
+          <div className="space-y-2">
+            <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+              <BookOpen size={20} weight="bold" />
+            </div>
+            <div>
+              <h2 className="text-sm font-bold text-[var(--text-primary)] group-hover:text-[var(--primary)] transition-colors">
+                Testlar
+              </h2>
+              <p className="text-[11px] text-[var(--text-secondary)] mt-0.5">
+                DTM, Milliy sertifikat va attestatsiya
+              </p>
+            </div>
+          </div>
+          <div className="pt-3 flex items-center gap-1 text-[11px] font-bold text-[var(--primary)]">
+            <span>Oʻtish</span>
+            <ArrowRight size={12} weight="bold" className="group-hover:translate-x-1 transition-transform" />
+          </div>
         </div>
 
-        <div className="relative z-10">
-          <div className="flex items-start justify-between">
+        <div
+          onClick={() => navigate('/school')}
+          className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border)] hover:border-emerald-500/50 transition-all cursor-pointer group shadow-sm flex flex-col justify-between"
+        >
+          <div className="space-y-2">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+              <GraduationCap size={20} weight="bold" />
+            </div>
             <div>
-              <p className="text-white/70 text-sm font-medium mb-1">Xush kelibsiz!</p>
-              <h1 className="text-2xl sm:text-3xl font-bold mb-2">{user.name}</h1>
+              <h2 className="text-sm font-bold text-[var(--text-primary)] group-hover:text-emerald-600 transition-colors">
+                Maktab taʼlimi
+              </h2>
+              <p className="text-[11px] text-[var(--text-secondary)] mt-0.5">
+                7, 8, 9, 10, 11-sinf taqdimotlari
+              </p>
             </div>
           </div>
-          <p className="text-white/65 text-sm max-w-xs">
-            Bugun geografiya bilimingizni sinash uchun ajoyib kun!
+          <div className="pt-3 flex items-center gap-1 text-[11px] font-bold text-emerald-600">
+            <span>Oʻtish</span>
+            <ArrowRight size={12} weight="bold" className="group-hover:translate-x-1 transition-transform" />
+          </div>
+        </div>
+
+        <div
+          onClick={() => navigate('/library')}
+          className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border)] hover:border-purple-500/50 transition-all cursor-pointer group shadow-sm flex flex-col justify-between"
+        >
+          <div className="space-y-2">
+            <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+              <Books size={20} weight="bold" />
+            </div>
+            <div>
+              <h2 className="text-sm font-bold text-[var(--text-primary)] group-hover:text-purple-600 transition-colors">
+                Kutubxona
+              </h2>
+              <p className="text-[11px] text-[var(--text-secondary)] mt-0.5">
+                Elektron darsliklar va atlaslar
+              </p>
+            </div>
+          </div>
+          <div className="pt-3 flex items-center gap-1 text-[11px] font-bold text-purple-600">
+            <span>Oʻtish</span>
+            <ArrowRight size={12} weight="bold" className="group-hover:translate-x-1 transition-transform" />
+          </div>
+        </div>
+
+        <div
+          onClick={() => navigate('/profile')}
+          className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border)] hover:border-amber-500/50 transition-all cursor-pointer group shadow-sm flex flex-col justify-between"
+        >
+          <div className="space-y-2">
+            <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+              <User size={20} weight="bold" />
+            </div>
+            <div>
+              <h2 className="text-sm font-bold text-[var(--text-primary)] group-hover:text-amber-600 transition-colors">
+                Shaxsiy profil
+              </h2>
+              <p className="text-[11px] text-[var(--text-secondary)] mt-0.5">
+                Natijalar, ballar va sertifikatlar
+              </p>
+            </div>
+          </div>
+          <div className="pt-3 flex items-center gap-1 text-[11px] font-bold text-amber-600">
+            <span>Oʻtish</span>
+            <ArrowRight size={12} weight="bold" className="group-hover:translate-x-1 transition-transform" />
+          </div>
+        </div>
+      </div>
+
+      {/* ── Loyiha Konsepsiyasi: 5 000+ Yuklama & Asosiy Imkoniyatlar ── */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] flex items-center gap-3 shadow-sm">
+          <div className="w-9 h-9 rounded-xl bg-blue-500/10 text-[var(--primary)] flex items-center justify-center shrink-0">
+            <Users size={18} weight="bold" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-sm font-black text-[var(--text-primary)] leading-tight">5 000+</p>
+            <p className="text-[10px] text-[var(--text-secondary)] truncate">Bir vaqtdagi yuklama</p>
+          </div>
+        </div>
+
+        <div className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] flex items-center gap-3 shadow-sm">
+          <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center shrink-0">
+            <GraduationCap size={18} weight="bold" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-sm font-black text-[var(--text-primary)] leading-tight">7–11-sinf</p>
+            <p className="text-[10px] text-[var(--text-secondary)] truncate">Barcha taqdimotlar (PPTX)</p>
+          </div>
+        </div>
+
+        <div className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] flex items-center gap-3 shadow-sm">
+          <div className="w-9 h-9 rounded-xl bg-purple-500/10 text-purple-600 flex items-center justify-center shrink-0">
+            <Globe size={18} weight="bold" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-sm font-black text-[var(--text-primary)] leading-tight">14 Hudud</p>
+            <p className="text-[10px] text-[var(--text-secondary)] truncate">Respublika qamrovi</p>
+          </div>
+        </div>
+
+        <div className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] flex items-center gap-3 shadow-sm">
+          <div className="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center shrink-0">
+            <CheckCircle size={18} weight="bold" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-sm font-black text-[var(--text-primary)] leading-tight">100% Rasmiy</p>
+            <p className="text-[10px] text-[var(--text-secondary)] truncate">BBA & DTM standartlari</p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── 100 000 so'm Oylik Tarif Promo Kartasi ── */}
+      <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-white/20 tracking-wider">
+              Yagona Taʼlim Tarifi
+            </span>
+            <span className="text-xs text-white/80 font-medium">• Cheksiz kirish</span>
+          </div>
+          <h3 className="text-lg sm:text-xl font-black">
+            100 000 soʻm / oy — Toʻliq darslik taqdimotlari va testlar
+          </h3>
+          <p className="text-xs text-white/80 max-w-xl leading-relaxed">
+            Milliy sertifikat, DTM, olimpiada testlari, 7–11-sinf prezentatsiyalari va barcha oʻquv materiallariga toʻliq ruxsat.
           </p>
-          <div className="flex items-center gap-2 mt-4 flex-wrap">
-            <div className="flex items-center gap-1.5 bg-white/15 rounded-full px-3 py-1.5">
-              <Star size={13} weight="fill" style={{ color: '#FFD700' }} />
-              <span className="text-sm font-semibold">{user.level}-daraja</span>
+        </div>
+
+        <div className="flex items-center gap-2 shrink-0">
+          <button
+            onClick={() => navigate('/school')}
+            className="px-4 py-2.5 rounded-xl bg-white text-blue-700 font-bold text-xs hover:bg-white/95 transition-all shadow-md active:scale-95"
+          >
+            Maktab taʼlimi
+          </button>
+          <button
+            onClick={() => navigate('/tests')}
+            className="px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 border border-white/25 text-white font-bold text-xs transition-all active:scale-95"
+          >
+            Testlarni boshlash
+          </button>
+        </div>
+      </div>
+
+      {/* ── CORE SECTION: E'LONLAR VA RASMIY BIZDIRISHNOMALAR (Client Main Requirement) ── */}
+      <div className="space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="space-y-0.5">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse" />
+              <h2 className="text-lg font-bold text-[var(--text-primary)]">
+                Bosh Sahifa Eʼlonlari
+              </h2>
             </div>
+            <p className="text-xs text-[var(--text-secondary)]">
+              Platforma yangiliklari, maktab darslik taqdimotlari va rasmiy sinovlar
+            </p>
           </div>
+
+          {/* Category Filter Pills */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+            {ANNOUNCEMENT_CATEGORIES.map(cat => {
+              const isSelected = activeCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={cn(
+                    'px-3 py-1.5 rounded-xl text-xs font-semibold transition-all shrink-0',
+                    isSelected
+                      ? 'bg-[var(--primary)] text-white shadow-sm'
+                      : 'bg-[var(--surface)] text-[var(--text-secondary)] border border-[var(--border)] hover:text-[var(--text-primary)]'
+                  )}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Announcements List */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {filteredAnnouncements.map((item) => (
+            <div
+              key={item.id}
+              onClick={() => setSelectedAnnouncement(item)}
+              className={cn(
+                'p-5 rounded-2xl bg-[var(--surface)] border transition-all cursor-pointer flex flex-col justify-between gap-3 group shadow-sm',
+                item.isPinned
+                  ? 'border-[var(--primary)]/40 hover:border-[var(--primary)] bg-gradient-to-br from-[var(--surface)] to-[var(--primary-soft)]/20'
+                  : 'border-[var(--border)] hover:border-[var(--border)] hover:shadow-md'
+              )}
+            >
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between gap-2 flex-wrap">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="text-[10px] font-bold px-2.5 py-0.5 rounded-full"
+                      style={{
+                        background: `${item.categoryColor}15`,
+                        color: item.categoryColor,
+                      }}
+                    >
+                      {item.categoryLabel}
+                    </span>
+                    {item.isPinned && (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                        {item.badge}
+                      </span>
+                    )}
+                  </div>
+
+                  <span className="text-[11px] text-[var(--text-tertiary)] flex items-center gap-1 font-medium">
+                    <Calendar size={12} weight="bold" />
+                    <span>{item.date}</span>
+                  </span>
+                </div>
+
+                <h3 className="text-sm font-bold text-[var(--text-primary)] group-hover:text-[var(--primary)] transition-colors leading-snug">
+                  {item.title}
+                </h3>
+
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed line-clamp-2">
+                  {item.summary}
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between pt-2 border-t border-[var(--border)] text-xs">
+                <span className="text-[11px] text-[var(--text-tertiary)] font-medium">
+                  {item.author}
+                </span>
+
+                <button
+                  type="button"
+                  className="font-bold text-[var(--primary)] flex items-center gap-1 group-hover:underline"
+                >
+                  <span>Batafsil</span>
+                  <ArrowRight size={13} weight="bold" className="group-hover:translate-x-0.5 transition-transform" />
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
       {/* ── Daily Stats ── */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-[17px] font-bold text-[var(--text-primary)]">Kunlik Statistika</h2>
+          <h2 className="text-base font-bold text-[var(--text-primary)]">Kunlik Statistika</h2>
           <span className="text-xs text-[var(--text-secondary)]">Bugun</span>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -147,107 +440,51 @@ export default function Home() {
 
       {/* ── Geography Fact ── */}
       <div
-          className="rounded-[var(--radius)] overflow-hidden border"
-          style={{ background: 'var(--fact-bg)', borderColor: 'var(--fact-border)' }}
+        className="rounded-[var(--radius)] overflow-hidden border"
+        style={{ background: 'var(--fact-bg)', borderColor: 'var(--fact-border)' }}
+      >
+        <div
+          className="flex items-center gap-2.5 px-4 py-3 border-b"
+          style={{ borderColor: 'var(--fact-border)' }}
         >
-          {/* Header strip */}
           <div
-            className="flex items-center gap-2.5 px-4 py-3 border-b"
+            className="w-7 h-7 rounded-[var(--radius-xs)] flex items-center justify-center shrink-0"
+            style={{ background: 'var(--pal-milliy)' }}
+          >
+            <Globe size={14} style={{ color: '#326D62' }} />
+          </div>
+          <span className="text-xs font-bold flex-1" style={{ color: '#326D62' }}>
+            Bugungi Geografiya Fakti
+          </span>
+          <span
+            className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+            style={{ background: 'var(--pal-milliy)', color: '#326D62' }}
+          >
+            #bugun
+          </span>
+        </div>
+
+        <div className="relative px-5 pt-4 pb-4">
+          <p className="text-sm text-[var(--text-primary)] leading-relaxed relative z-10">
+            {geographyFact.text}
+          </p>
+          <div
+            className="flex items-center gap-2 mt-3 pt-3 border-t"
             style={{ borderColor: 'var(--fact-border)' }}
           >
-            <div
-              className="w-7 h-7 rounded-[var(--radius-xs)] flex items-center justify-center shrink-0"
-              style={{ background: 'var(--pal-milliy)' }}
-            >
-              <Globe size={14} style={{ color: '#326D62' }} />
-            </div>
-            <span className="text-xs font-bold flex-1" style={{ color: '#326D62' }}>
-              Bugungi Geografiya Fakti
-            </span>
-            <span
-              className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-              style={{ background: 'var(--pal-milliy)', color: '#326D62' }}
-            >
-              #bugun
-            </span>
-          </div>
-
-          {/* Body */}
-          <div className="relative px-5 pt-4 pb-4">
-            {/* Decorative large quote */}
-            <span
-              className="absolute top-1 left-3 text-7xl font-black leading-none select-none pointer-events-none"
-              style={{ color: '#2F80ED', opacity: 0.08 }}
-            >"</span>
-
-            <p className="text-sm text-[var(--text-primary)] leading-relaxed relative z-10">
-              {geographyFact.text}
-            </p>
-
-            {/* Source */}
-            <div
-              className="flex items-center gap-2 mt-3 pt-3 border-t"
-              style={{ borderColor: 'var(--fact-border)' }}
-            >
-              <BookOpen size={12} style={{ color: '#2F80ED', opacity: 0.6 }} />
-              <span className="text-xs text-[var(--text-tertiary)]">{geographyFact.source}</span>
-            </div>
+            <BookOpen size={12} style={{ color: '#2F80ED', opacity: 0.6 }} />
+            <span className="text-xs text-[var(--text-tertiary)]">{geographyFact.source}</span>
           </div>
         </div>
-
-      {/* ── Main Article ── */}
-      <div>
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-[17px] font-bold text-[var(--text-primary)]"> Maqola</h2>
-          <Link to="/articles" className="text-xs text-[var(--primary)] font-semibold hover:underline">
-            Hammasi
-          </Link>
-        </div>
-        <Card className="overflow-hidden cursor-pointer" onClick={() => navigate(`/articles/${mainArticle.id}`)}>
-          <div className="relative h-48 sm:h-56 overflow-hidden">
-            {mainArticle.coverImage ? (
-              <>
-                <img src={mainArticle.coverImage} alt={mainArticle.title}
-                  className="w-full h-full object-cover" loading="lazy" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-              </>
-             ) : (
-              <div className="w-full h-full flex items-center justify-center"
-                style={{ background: `linear-gradient(135deg, ${articleCat.color}18 0%, ${articleCat.color}40 100%)` }}>
-                <ArticleCatIcon size={100} weight="duotone" style={{ color: articleCat.color, opacity: 0.2 }} />
-              </div>
-            )}
-            <div className="absolute bottom-0 left-0 right-0 p-5 space-y-2">
-              <span className="inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full"
-                style={{ background: articleCat.bg, color: articleCat.color }}>
-                <ArticleCatIcon size={10} weight="fill" /> {mainArticle.category}
-              </span>
-              <h3 className="text-lg sm:text-xl font-bold text-white leading-tight max-w-md drop-shadow">
-                {mainArticle.title}
-              </  h3>
-            </div>
-          </div>
-          <CardContent className="p-4">
-            <p className="text-xs text-[var(--text-secondary)] leading-relaxed line-clamp-2 mb-4">{mainArticle.excerpt}</p>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3 text-[11px] text-[var(--text-tertiary)]">
-                <span className="font-medium text-[var(--text-secondary)]">{mainArticle.author}</span>
-                <span>{mainArticle.readTime} daqiqa</span>
-              </div>
-              <button onClick={(e) => { e.stopPropagation(); navigate(`/articles/${mainArticle.id}`); }}
-                className="flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full text-white"
-                style={{ background: articleCat.color }}>
-                O'qish <ArrowRight size={11} weight="bold" />
-              </button>
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
       {/* ── Upcoming Exams ── */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-[17px] font-bold text-[var(--text-primary)]">Yaqinlashayotgan Imtihonlar</h2>
+          <h2 className="text-base font-bold text-[var(--text-primary)]">Yaqinlashayotgan Imtihonlar</h2>
+          <Link to="/tests" className="text-xs text-[var(--primary)] font-semibold hover:underline">
+            Hammasi
+          </Link>
         </div>
         <div className="grid sm:grid-cols-3 gap-3">
           {upcomingExams.map((exam) => {
@@ -259,16 +496,10 @@ export default function Home() {
             const countBg    = urgent ? 'var(--danger-soft)' : soon ? 'var(--warning-soft)' : meta.bg;
             const diffColor  = getDifficultyColor(exam.difficulty);
             const diffLabel  = getDifficultyLabel(exam.difficulty);
-            const dateObj = new Date(exam.date);
-            const dd = String(dateObj.getDate()).padStart(2, '0');
-            const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
-            const yyyy = dateObj.getFullYear();
-            const formattedDate = `${dd}.${mm}.${yyyy}`;
             return (
-              <Card key={exam.id} className="overflow-hidden cursor-pointer flex flex-col">
-                {/* Sticker panel */}
+              <Card key={exam.id} className="overflow-hidden cursor-pointer flex flex-col" onClick={() => navigate('/tests')}>
                 <div className="flex items-center justify-between px-4 py-4" style={{ background: meta.bg }}>
-                  <div className="flex flex-col gap-1.5">
+                  <div className="flex flex-col gap-1">
                     <span
                       className="self-start text-[11px] font-bold px-2.5 py-0.5 rounded-full"
                       style={{ background: meta.color + '25', color: meta.color }}
@@ -277,28 +508,10 @@ export default function Home() {
                     </span>
                     <p className="text-sm font-bold text-[var(--text-primary)] leading-snug">{exam.title}</p>
                   </div>
-                  <Sticker size={52} color={meta.color} />
+                  <Sticker size={48} color={meta.color} />
                 </div>
 
                 <CardContent className="p-4 flex flex-col gap-3 flex-1">
-                  {/* Date */}
-                  <div className="flex items-center gap-2">
-                    <div
-                      className="w-8 h-8 rounded-[var(--radius-xs)] flex items-center justify-center shrink-0"
-                      style={{ background: meta.bg }}
-                    >
-                      {/* Custom calendar icon — no number inside */}
-                      <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
-                        <rect x="1" y="3" width="14" height="11" rx="2" stroke={meta.color} strokeWidth="1.5"/>
-                        <line x1="1" y1="7" x2="15" y2="7" stroke={meta.color} strokeWidth="1.5"/>
-                        <line x1="5" y1="1" x2="5" y2="5" stroke={meta.color} strokeWidth="1.5" strokeLinecap="round"/>
-                        <line x1="11" y1="1" x2="11" y2="5" stroke={meta.color} strokeWidth="1.5" strokeLinecap="round"/>
-                      </svg>
-                    </div>
-                    <p className="text-xs font-semibold text-[var(--text-primary)]">{formattedDate}</p>
-                  </div>
-
-                  {/* Stats row */}
                   <div className="grid grid-cols-3 rounded-[var(--radius-xs)] overflow-hidden border border-[var(--border)]">
                     <div className="flex flex-col items-center py-2 border-r border-[var(--border)]">
                       <span className="text-[13px] font-bold text-[var(--text-primary)] leading-none">{exam.questions} ta</span>
@@ -314,14 +527,13 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Countdown */}
                   <div
-                    className="flex items-center gap-3 rounded-[var(--radius-xs)] px-3 py-2.5 mt-auto"
+                    className="flex items-center gap-3 rounded-[var(--radius-xs)] px-3 py-2 mt-auto"
                     style={{ background: countBg }}
                   >
                     <div className="flex items-baseline gap-1 leading-none">
-                      <span className="text-3xl font-black" style={{ color: countColor }}>{exam.daysLeft}</span>
-                      <span className="text-sm font-bold" style={{ color: countColor }}> kun qoldi</span>
+                      <span className="text-2xl font-black" style={{ color: countColor }}>{exam.daysLeft}</span>
+                      <span className="text-xs font-bold" style={{ color: countColor }}> kun qoldi</span>
                     </div>
                   </div>
                 </CardContent>
@@ -334,7 +546,7 @@ export default function Home() {
       {/* ── Popular Games ── */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-[17px] font-bold text-[var(--text-primary)]">Ommabop O'yinlar</h2>
+          <h2 className="text-base font-bold text-[var(--text-primary)]">Ommabop O'yinlar</h2>
           <Link to="/games" className="text-xs text-[var(--primary)] font-semibold hover:underline">
             Hammasi
           </Link>
@@ -350,18 +562,7 @@ export default function Home() {
                 <CardContent className="p-4">
                   <p className="text-sm font-bold text-[var(--text-primary)] leading-tight">{game.title}</p>
                   <p className="text-xs text-[var(--text-tertiary)] leading-snug mt-1 line-clamp-2">{game.description}</p>
-                  <div className="flex items-center gap-2.5 mt-3 text-[11px] flex-wrap">
-                    <span className="flex items-center gap-1 font-semibold" style={{ color: getDifficultyColor(game.difficulty) }}>
-                      <ChartBar size={11} /> {getDifficultyLabel(game.difficulty)}
-                    </span>
-                    <span className="flex items-center gap-1 text-[var(--text-tertiary)]">
-                      <Clock size={11} /> {game.time}m
-                    </span>
-                    <span className="flex items-center gap-1 text-[#F59E0B] font-semibold">
-                      <Lightning size={11} weight="fill" /> {game.xp}
-                    </span>
-                  </div>
-                  <Button size="sm" className="w-full mt-3.5" onClick={(e) => { e.stopPropagation(); navigate(`/games/play/${game.slug}`); }}>
+                  <Button size="sm" className="w-full mt-3" onClick={(e) => { e.stopPropagation(); navigate(`/games/play/${game.slug}`); }}>
                     <Play size={12} weight="fill" /> O'ynash
                   </Button>
                 </CardContent>
@@ -370,6 +571,83 @@ export default function Home() {
           })}
         </div>
       </div>
+
+      {/* ── Full Announcement Modal ── */}
+      <AnimatePresence>
+        {selectedAnnouncement && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            onClick={() => setSelectedAnnouncement(null)}
+          >
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-xl bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-6 sm:p-7 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto"
+            >
+              <div className="flex items-start justify-between gap-3 pb-3 border-b border-[var(--border)]">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="text-[10px] font-bold px-2.5 py-0.5 rounded-full"
+                      style={{
+                        background: `${selectedAnnouncement.categoryColor}15`,
+                        color: selectedAnnouncement.categoryColor,
+                      }}
+                    >
+                      {selectedAnnouncement.categoryLabel}
+                    </span>
+                    <span className="text-[11px] text-[var(--text-tertiary)]">
+                      {selectedAnnouncement.date} • {selectedAnnouncement.time}
+                    </span>
+                  </div>
+                  <h3 className="text-base sm:text-lg font-bold text-[var(--text-primary)] leading-snug">
+                    {selectedAnnouncement.title}
+                  </h3>
+                </div>
+
+                <button
+                  onClick={() => setSelectedAnnouncement(null)}
+                  className="w-8 h-8 rounded-full bg-[var(--background)] flex items-center justify-center text-[var(--text-tertiary)] hover:text-[var(--text-primary)] shrink-0"
+                >
+                  <X size={16} weight="bold" />
+                </button>
+              </div>
+
+              <div className="text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed whitespace-pre-line py-2">
+                {selectedAnnouncement.content}
+              </div>
+
+              <div className="flex items-center justify-between pt-3 border-t border-[var(--border)] text-xs">
+                <span className="text-xs font-semibold text-[var(--text-secondary)]">
+                  {selectedAnnouncement.author}
+                </span>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setSelectedAnnouncement(null)}
+                    className="px-3.5 py-2 rounded-xl border border-[var(--border)] text-xs font-semibold text-[var(--text-secondary)] hover:bg-[var(--background)] transition-all"
+                  >
+                    Yopish
+                  </button>
+
+                  {selectedAnnouncement.actionLink && (
+                    <button
+                      onClick={() => {
+                        const link = selectedAnnouncement.actionLink;
+                        setSelectedAnnouncement(null);
+                        navigate(link);
+                      }}
+                      className="px-4 py-2 rounded-xl bg-[var(--primary)] text-white text-xs font-bold hover:bg-[var(--primary-hover)] transition-all flex items-center gap-1.5 shadow-sm"
+                    >
+                      <span>{selectedAnnouncement.actionText || 'Koʻrish'}</span>
+                      <ArrowRight size={13} weight="bold" />
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

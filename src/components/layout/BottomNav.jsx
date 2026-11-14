@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
-import { House, BookOpen, GameController, Books, GraduationCap, Student, ChalkboardTeacher } from '@phosphor-icons/react';
+import { House, BookOpen, Books, GraduationCap, Student, ChalkboardTeacher, SignIn } from '@phosphor-icons/react';
 import { cn } from '../../lib/utils';
+import { useAuth } from '../../context/AuthContext';
 
 const ROLE_META = {
   school_student: { Icon: GraduationCap, color: '#2563EB' },
@@ -12,40 +13,42 @@ function loadSettings() {
   try { return JSON.parse(localStorage.getItem('geo_user_settings')) || {}; } catch { return {}; }
 }
 
-const staticItems = [
+// 5 Main Core Sections requested by client
+const navItems = [
   { to: '/', icon: House, label: 'Bosh' },
   { to: '/tests', icon: BookOpen, label: 'Testlar' },
-  { to: '/games', icon: GameController, label: "O'yin" },
+  { to: '/school', icon: GraduationCap, label: 'Maktab' },
   { to: '/library', icon: Books, label: 'Kutubxona' },
 ];
 
 export default function BottomNav() {
+  const { user } = useAuth();
   const settings = loadSettings();
-  const role = settings.role || 'school_student';
+  const role = user?.role || settings.role || 'school_student';
   const roleMeta = ROLE_META[role] || ROLE_META.school_student;
   const RoleIcon = roleMeta.Icon;
-  const avatar = settings.avatar;
+  const avatar = user?.avatar || settings.avatar;
 
   return (
     <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[var(--surface)] border-t border-[var(--border)] safe-area-bottom">
-      <div className="flex items-center justify-around px-2 py-1">
-        {staticItems.map((item) => (
+      <div className="flex items-center justify-around px-1 py-1">
+        {navItems.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
             className={({ isActive }) =>
               cn(
-                'flex flex-col items-center gap-0.5 py-2 px-3 rounded-[var(--radius-sm)] transition-all duration-200 min-w-[56px]',
+                'flex flex-col items-center gap-0.5 py-1.5 px-2.5 rounded-[var(--radius-sm)] transition-all duration-200 min-w-[52px]',
                 isActive ? 'text-[var(--primary)]' : 'text-[var(--text-secondary)]'
               )
             }
           >
             {({ isActive }) => (
               <>
-                <div className={cn('p-1.5 rounded-lg transition-all duration-200', isActive && 'bg-[var(--primary-soft)]')}>
-                  <item.icon size={20} />
+                <div className={cn('p-1 rounded-lg transition-all duration-200', isActive && 'bg-[var(--primary-soft)]')}>
+                  <item.icon size={19} weight={isActive ? 'bold' : 'regular'} />
                 </div>
-                <span className={cn('text-[10px] font-medium transition-all duration-200', isActive ? 'text-[var(--primary)]' : 'text-[var(--text-secondary)]')}>
+                <span className={cn('text-[10px] font-medium transition-all duration-200', isActive ? 'text-[var(--primary)] font-bold' : 'text-[var(--text-secondary)]')}>
                   {item.label}
                 </span>
               </>
@@ -53,24 +56,36 @@ export default function BottomNav() {
           </NavLink>
         ))}
 
-        {/* Profile with role avatar */}
-        <NavLink to="/profile"
+        {/* Profile / Login */}
+        <NavLink
+          to={user ? '/profile' : '/auth'}
           className={({ isActive }) =>
-            cn('flex flex-col items-center gap-0.5 py-2 px-3 rounded-[var(--radius-sm)] transition-all duration-200 min-w-[56px]',
-              isActive ? 'text-[var(--primary)]' : 'text-[var(--text-secondary)]')
-          }>
+            cn(
+              'flex flex-col items-center gap-0.5 py-1.5 px-2.5 rounded-[var(--radius-sm)] transition-all duration-200 min-w-[52px]',
+              isActive ? 'text-[var(--primary)]' : 'text-[var(--text-secondary)]'
+            )
+          }
+        >
           {({ isActive }) => (
             <>
-              <div className={cn('p-1.5 rounded-lg transition-all duration-200', isActive && 'bg-[var(--primary-soft)]')}>
-                <div className="w-5 h-5 rounded-full flex items-center justify-center overflow-hidden"
-                  style={{ background: isActive ? 'transparent' : 'var(--primary-soft)' }}>
-                  {avatar
-                    ? <img src={avatar} alt="" className="w-full h-full object-cover" />
-                    : <RoleIcon size={16} style={{ color: 'var(--primary)' }} weight="duotone" />}
-                </div>
+              <div className={cn('p-1 rounded-lg transition-all duration-200', isActive && 'bg-[var(--primary-soft)]')}>
+                {user ? (
+                  <div
+                    className="w-5 h-5 rounded-full flex items-center justify-center overflow-hidden"
+                    style={{ background: isActive ? 'transparent' : 'var(--primary-soft)' }}
+                  >
+                    {avatar ? (
+                      <img src={avatar} alt="" className="w-full h-full object-cover" />
+                    ) : (
+                      <RoleIcon size={16} style={{ color: 'var(--primary)' }} weight="duotone" />
+                    )}
+                  </div>
+                ) : (
+                  <SignIn size={19} />
+                )}
               </div>
-              <span className={cn('text-[10px] font-medium transition-all duration-200', isActive ? 'text-[var(--primary)]' : 'text-[var(--text-secondary)]')}>
-                Profil
+              <span className={cn('text-[10px] font-medium transition-all duration-200', isActive ? 'text-[var(--primary)] font-bold' : 'text-[var(--text-secondary)]')}>
+                {user ? 'Profil' : 'Kirish'}
               </span>
             </>
           )}

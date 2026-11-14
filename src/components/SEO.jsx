@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet-async';
 
-const SITE_NAME = 'Geo-Test';
-const BASE_URL = 'https://geo-test.uz';
+const SITE_NAME = 'GeoBek';
+const BASE_URL = 'https://geobek.uz';
 const DEFAULT_IMAGE = `${BASE_URL}/main_logo.png`;
 const DEFAULT_DESCRIPTION =
-  "Geo-Test — geografiyani o'rganish uchun zamonaviy platforma. DTM, Milliy Sertifikat, Olimpiada testlari, interaktiv viktorinalar, o'yinlar va raqamli kutubxona.";
+  "GeoBek — O'zbekiston va jahon geografiyasini o'rganish uchun zamonaviy ta'lim portali. Maktab darslik taqdimotlari (7-11 sinf), DTM, Milliy Sertifikat, Olimpiada testlari, interaktiv viktorinalar va raqamli kutubxona.";
 
 export default function SEO({
   title,
@@ -15,7 +15,7 @@ export default function SEO({
   noindex = false,
   jsonLd,
 }) {
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} – Interaktiv Geografiya O'rganish Platformasi`;
+  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} – Geografiya Taʼlim Portali`;
   const canonicalUrl = url ? `${BASE_URL}${url}` : BASE_URL;
 
   return (
@@ -23,10 +23,10 @@ export default function SEO({
       <html lang="uz" />
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      <meta name="keywords" content="geografiya, Geo-Test, O'zbekiston geografiyasi, DTM, Milliy Sertifikat, geografiya testlari, viktorina, olimpiada, geografiya kitoblari, interaktiv ta'lim" />
-      <meta name="author" content="Geo-Test Team" />
+      <meta name="keywords" content="geografiya, GeoBek, O'zbekiston geografiyasi, maktab ta'limi, 7 sinf geografiya, 8 sinf geografiya, 9 sinf geografiya, 10 sinf geografiya, 11 sinf geografiya, taqdimotlar, DTM, Milliy Sertifikat, geografiya testlari, kutubxona, interaktiv ta'lim" />
+      <meta name="author" content="GeoBek Jamoasi" />
       <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
-      <meta name="theme-color" content="#2F80ED" />
+      <meta name="theme-color" content="#2563EB" />
       <link rel="canonical" href={canonicalUrl} />
 
       {/* Open Graph */}

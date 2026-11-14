@@ -4,7 +4,7 @@ export const user = {
   username: '@yodgorov',
   avatar: null,
   phone: '+998 90 123 45 67',
-  email: 'yodgorov@geotest.uz',
+  email: 'yodgorov@geobek.uz',
   role: 'school_student',
   grade: 11,
   course: null,

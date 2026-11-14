@@ -1,16 +1,17 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect } from 'react';
 
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
   const [darkMode, setDarkMode] = useState(() => {
-    const saved = localStorage.getItem('geotest-theme');
+    const saved = localStorage.getItem('geobek-theme') || localStorage.getItem('geotest-theme');
     if (saved) return saved === 'dark';
     return false;
   });
 
   useEffect(() => {
-    localStorage.setItem('geotest-theme', darkMode ? 'dark' : 'light');
+    localStorage.setItem('geobek-theme', darkMode ? 'dark' : 'light');
     if (darkMode) {
       document.documentElement.classList.add('dark');
     } else {

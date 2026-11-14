@@ -1,11 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { CaretLeft, SealCheck, Trophy, BookOpen } from '@phosphor-icons/react';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 import { user as initialUser } from '../data/mockData';
 
 export default function Certificates() {
   const navigate = useNavigate();
   const { darkMode } = useTheme();
+  const { user: authUser } = useAuth();
+  const user = authUser || initialUser;
+  const certList = (user.nationalCertificates && user.nationalCertificates.length > 0)
+    ? user.nationalCertificates
+    : initialUser.nationalCertificates;
 
   return (
     <div className="max-w-lg mx-auto space-y-5 pb-10">
@@ -17,7 +23,7 @@ export default function Certificates() {
         </button>
         <div className="flex-1">
           <h1 className="text-xl font-bold text-[var(--text-primary)]">Sertifikatlar</h1>
-          <p className="text-xs text-[var(--text-secondary)]">{initialUser.certificates} ta milliy sertifikat</p>
+          <p className="text-xs text-[var(--text-secondary)]">{certList.length} ta milliy sertifikat</p>
         </div>
         <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#2563EB18' }}>
           <BookOpen size={18} style={{ color: '#2563EB' }} />
@@ -26,7 +32,7 @@ export default function Certificates() {
 
       {/* Certificate cards */}
       <div className="space-y-3">
-        {initialUser.nationalCertificates.map(cert => {
+        {certList.map(cert => {
           const pct = Math.round((cert.score / cert.maxScore) * 100);
           const gradeColor = pct >= 90 ? '#16A34A' : pct >= 75 ? '#2563EB' : '#F59E0B';
 

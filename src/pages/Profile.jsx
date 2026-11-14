@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO';
 import {
-  Gear, SignOut, Medal, BookOpen, Trophy, Target,
-  Lightning, CaretRight, X,
+  Gear, SignOut, BookOpen, Trophy,
+  Lightning, CaretRight, X, ArrowRight,
   Sun, Moon, Shield, Question,
   Compass, GraduationCap, Student, ChalkboardTeacher,
-
 } from '@phosphor-icons/react';
 import { cn } from '../lib/utils';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 import { user as initialUser, recentActivities } from '../data/mockData';
 import { BadgeIcon } from '../components/illustrations/GeoIllustrations';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -46,14 +46,6 @@ const RANGES = [
 
 const UZ_DAYS   = ['Yak', 'Dush', 'Sesh', 'Chor', 'Pay', 'Jum', 'Shan'];
 const UZ_MONTHS = ['Yan', 'Fev', 'Mar', 'Apr', 'May', 'Iyn', 'Iyl', 'Avg', 'Sen', 'Okt', 'Noy', 'Dek'];
-
-function dateLabel(date, rangeKey) {
-  if (rangeKey === 'daily')   return `${String(date.getHours()).padStart(2,'0')}:00`;
-  if (rangeKey === 'weekly')  return UZ_DAYS[date.getDay()];
-  if (rangeKey === 'monthly') return `${date.getDate()}-${UZ_MONTHS[date.getMonth()]}`;
-  if (rangeKey === 'yearly')  return UZ_MONTHS[date.getMonth()];
-  return `${UZ_MONTHS[date.getMonth()]} ${String(date.getFullYear()).slice(2)}`;
-}
 
 function genData(rangeKey) {
   let points = [];
@@ -197,18 +189,67 @@ function ActivityModal({ activity, onClose }) {
 export default function Profile() {
   const navigate = useNavigate();
   const { darkMode, toggleTheme } = useTheme();
+  const { user: authUser, signOut, loginAsDemo } = useAuth();
   const [chartMetric, setChartMetric] = useState('accuracy');
   const [chartRange, setChartRange] = useState('monthly');
   const [badgesOpen, setBadgesOpen] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState(null);
   const [showLogout, setShowLogout] = useState(false);
-  const [user, setUser] = useState(() => ({ ...initialUser, ...loadUserSettings() }));
+  const [userSettings] = useState(loadUserSettings);
 
-  // re-read localStorage every time this page is visited
-  useEffect(() => {
-    setUser({ ...initialUser, ...loadUserSettings() });
-  }, []);
+  const handleLogout = async () => {
+    await signOut();
+    setShowLogout(false);
+    navigate('/auth');
+  };
 
+  if (!authUser) {
+    return (
+      <div className="max-w-md mx-auto py-12 px-4 text-center space-y-6">
+        <SEO title="Kirish — GeoBek" description="Shaxsiy profilingizga kiring" url="/profile" />
+        <div className="w-20 h-20 rounded-3xl bg-[var(--surface)] border border-[var(--border)] shadow-xl mx-auto flex items-center justify-center p-3">
+          <img src={`${import.meta.env.BASE_URL}main_logo.png`} alt="GeoBek" className="w-full h-full object-contain" />
+        </div>
+        <div className="space-y-2">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight">GeoBek Profiliga kiring</h1>
+          <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
+            Test natijalaringiz, yutuqlaringiz, milliy sertifikatlar va respublika reytingingizni koʻrish uchun tizimga kiring yoki roʻyxatdan oʻting.
+          </p>
+        </div>
+
+        <div className="space-y-3 pt-2">
+          <button
+            onClick={() => navigate('/auth?mode=signin')}
+            className="w-full h-12 rounded-2xl bg-[var(--primary)] text-white font-bold text-sm hover:bg-[var(--primary-hover)] transition-all shadow-md shadow-blue-500/20 flex items-center justify-center gap-2"
+          >
+            <span>Tizimga kirish</span>
+            <ArrowRight size={16} weight="bold" />
+          </button>
+
+          <button
+            onClick={() => navigate('/auth?mode=signup')}
+            className="w-full h-12 rounded-2xl border border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)] font-bold text-sm hover:bg-[var(--background)] transition-all"
+          >
+            <span>Yangi hisob yaratish</span>
+          </button>
+        </div>
+
+        <div className="pt-4 border-t border-[var(--border)]">
+          <button
+            onClick={() => {
+              loginAsDemo();
+            }}
+            className="text-xs text-[var(--primary)] hover:underline font-semibold flex items-center justify-center gap-1.5 mx-auto"
+          >
+            <Lightning size={14} weight="fill" className="text-amber-500" />
+            <span>Demo hisob orqali davom etish</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const user = { ...initialUser, ...authUser, ...userSettings };
   const cfg = metricConfig[chartMetric] || null;
   const roleMeta = ROLE_META[user.role] || ROLE_META.school_student;
   const chartData = genData(chartRange);
@@ -216,10 +257,11 @@ export default function Profile() {
   const xpPercent = Math.round((2420 / 5000) * 100);
 
   const menuItems = [
-    { icon: BookOpen, label: 'Sertifikatlar',    color: '#2563EB', count: initialUser.certificates, to: '/certificates' },
-    { icon: Trophy,   label: 'Reyting',          color: '#8B5CF6', count: `#${initialUser.rank}`, to: '/rankings' },
-    { icon: Shield,   label: "Foydalanuvchi o'ffertasi", color: '#06B6D4', count: null, to: '/oferta' },
-    { icon: Question, label: 'Yordam',           color: '#F97316', count: null, to: null },
+    { icon: BookOpen, label: 'Sertifikatlar', color: '#2563EB', count: user.certificates ?? initialUser.certificates, to: '/certificates' },
+    { icon: Trophy, label: 'Reyting', color: '#8B5CF6', count: `#${user.rank ?? initialUser.rank}`, to: '/rankings' },
+    { icon: Shield, label: "Foydalanuvchi ofertasi", color: '#06B6D4', count: null, to: '/oferta' },
+    { icon: Question, label: 'Yordam', color: '#F97316', count: null, href: 'https://t.me/geobek_admin' },
+    { icon: SignOut, label: 'Tizimdan chiqish', color: '#EF4444', count: null, isDanger: true, action: () => setShowLogout(true) },
   ];
 
   return (
@@ -565,19 +607,27 @@ export default function Profile() {
       <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] overflow-hidden">
         {menuItems.map((item, i) => (
           <div key={item.label}
-            onClick={() => item.to && navigate(item.to)}
+            onClick={() => {
+              if (item.action) item.action();
+              else if (item.href) window.open(item.href, '_blank');
+              else if (item.to) navigate(item.to);
+            }}
             className={cn('flex items-center gap-3 px-4 py-3.5 cursor-pointer hover:bg-[var(--background)] transition-all',
-              i < menuItems.length - 1 && 'border-b border-[var(--border)]')}>
+              i < menuItems.length - 1 && 'border-b border-[var(--border)]',
+              item.isDanger && 'hover:bg-red-500/10 text-red-500'
+            )}>
             <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-              style={{ background: `${item.color}18` }}>
-              <item.icon size={18} style={{ color: item.color }} />
+              style={{ background: item.isDanger ? 'rgba(239, 68, 68, 0.12)' : `${item.color}18` }}>
+              <item.icon size={18} style={{ color: item.color }} weight={item.isDanger ? 'bold' : 'regular'} />
             </div>
-            <p className="flex-1 text-sm font-medium text-[var(--text-primary)]">{item.label}</p>
+            <p className={cn('flex-1 text-sm font-medium', item.isDanger ? 'text-red-500 font-semibold' : 'text-[var(--text-primary)]')}>
+              {item.label}
+            </p>
             <div className="flex items-center gap-2">
               {item.count !== null && (
                 <span className="text-xs font-semibold text-[var(--text-secondary)]">{item.count}</span>
               )}
-              <CaretRight size={15} className="text-[var(--text-tertiary)]" />
+              <CaretRight size={15} className={item.isDanger ? 'text-red-400' : 'text-[var(--text-tertiary)]'} />
             </div>
           </div>
         ))}
@@ -671,12 +721,10 @@ export default function Profile() {
                   Bekor qilish
                 </button>
                 <button
-                  onClick={() => {
-                    localStorage.removeItem('geo_user_settings');
-                    navigate('/auth');
-                  }}
-                  className="flex-1 h-11 rounded-xl bg-red-500 text-sm font-semibold text-white hover:bg-red-600 transition-all">
-                  Chiqish
+                  onClick={handleLogout}
+                  className="flex-1 h-11 rounded-xl bg-red-500 text-sm font-semibold text-white hover:bg-red-600 transition-all flex items-center justify-center gap-1.5 shadow-md shadow-red-500/20">
+                  <SignOut size={16} weight="bold" />
+                  <span>Chiqish</span>
                 </button>
               </div>
             </motion.div>
@@ -685,7 +733,7 @@ export default function Profile() {
         )}
       </AnimatePresence>
 
-      <p className="text-center text-[10px] text-[var(--text-tertiary)] pb-2">Geo-Test.uz v1.0.0</p>
+      <p className="text-center text-[10px] text-[var(--text-tertiary)] pb-2">GeoBek.uz v1.0.0</p>
     </div>
   );
 }

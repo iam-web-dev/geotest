@@ -24,7 +24,7 @@ export default function Oferta() {
 
         <section className="space-y-2">
           <h2 className="text-base font-bold text-[var(--text-primary)]">1. Umumiy qoidalar</h2>
-          <p>Ushbu foydalanuvchi o'ffertasi (keyingi o'rinlarda "Oferta") Geo-Test platformasi (keyingi o'rinlarda "Platforma") va uning foydalanuvchilari o'rtasidagi munosabatlarni tartibga soladi.</p>
+          <p>Ushbu foydalanuvchi o'ffertasi (keyingi o'rinlarda "Oferta") GeoBek platformasi (keyingi o'rinlarda "Platforma") va uning foydalanuvchilari o'rtasidagi munosabatlarni tartibga soladi.</p>
           <p>Platformaga ro'yxatdan o'tgan yoki undan foydalangan har bir shaxs ushbu Oferta shartlarini qabul qilgan hisoblanadi.</p>
         </section>
 
@@ -47,7 +47,7 @@ export default function Oferta() {
 
         <section className="space-y-2">
           <h2 className="text-base font-bold text-[var(--text-primary)]">4. Intellektual mulk</h2>
-          <p>Platformadagi barcha test savollari, maqolalar, rasmlar va boshqa materiallar Geo-Test platformasiga tegishli bo'lib, mualliflik huquqi bilan himoyalangan.</p>
+          <p>Platformadagi barcha test savollari, maqolalar, rasmlar va boshqa materiallar GeoBek platformasiga tegishli bo'lib, mualliflik huquqi bilan himoyalangan.</p>
           <p>Materiallarni platforma ruxsatisiz ko'paytirish, tarqatish yoki tijorat maqsadida ishlatish taqiqlanadi.</p>
         </section>
 
@@ -63,7 +63,7 @@ export default function Oferta() {
 
         <section className="space-y-2">
           <h2 className="text-base font-bold text-[var(--text-primary)]">7. Bog'lanish</h2>
-          <p>Savollar yoki shikoyatlar bo'lsa: <span className="text-[var(--primary)] font-medium">support@geo-test.uz</span></p>
+          <p>Savollar yoki shikoyatlar bo'lsa: <span className="text-[var(--primary)] font-medium">support@geobek.uz</span></p>
         </section>
 
       </div>
