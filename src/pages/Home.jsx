@@ -7,7 +7,7 @@ import {
   BookOpen, Globe, ArrowRight, Play,
   Flag, GlobeHemisphereWest, MapTrifold, Buildings, Mountains, Drop, Sun, Sparkle,
   Megaphone, GraduationCap, Books, User, Calendar, X,
-  Users, CheckCircle, Terminal
+  Terminal
 } from '@phosphor-icons/react';
 import {
   StickerMilliyBadge, StickerDTMRocket, StickerOlympiadTrophy, StickerAttestationShield,
@@ -242,49 +242,6 @@ export default function Home() {
           <div className="pt-3 flex items-center gap-1 text-[11px] font-bold text-amber-600">
             <span>Oʻtish</span>
             <ArrowRight size={12} weight="bold" className="group-hover:translate-x-1 transition-transform" />
-          </div>
-        </div>
-      </div>
-
-      {/* ── Loyiha Konsepsiyasi: 5 000+ Yuklama & Asosiy Imkoniyatlar ── */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <div className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] flex items-center gap-3 shadow-sm">
-          <div className="w-9 h-9 rounded-xl bg-blue-500/10 text-[var(--primary)] flex items-center justify-center shrink-0">
-            <Users size={18} weight="bold" />
-          </div>
-          <div className="min-w-0">
-            <p className="text-sm font-black text-[var(--text-primary)] leading-tight">5 000+</p>
-            <p className="text-[10px] text-[var(--text-secondary)] truncate">Bir vaqtdagi yuklama</p>
-          </div>
-        </div>
-
-        <div className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] flex items-center gap-3 shadow-sm">
-          <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center shrink-0">
-            <GraduationCap size={18} weight="bold" />
-          </div>
-          <div className="min-w-0">
-            <p className="text-sm font-black text-[var(--text-primary)] leading-tight">7–11-sinf</p>
-            <p className="text-[10px] text-[var(--text-secondary)] truncate">Barcha taqdimotlar (PPTX)</p>
-          </div>
-        </div>
-
-        <div className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] flex items-center gap-3 shadow-sm">
-          <div className="w-9 h-9 rounded-xl bg-purple-500/10 text-purple-600 flex items-center justify-center shrink-0">
-            <Globe size={18} weight="bold" />
-          </div>
-          <div className="min-w-0">
-            <p className="text-sm font-black text-[var(--text-primary)] leading-tight">14 Hudud</p>
-            <p className="text-[10px] text-[var(--text-secondary)] truncate">Respublika qamrovi</p>
-          </div>
-        </div>
-
-        <div className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] flex items-center gap-3 shadow-sm">
-          <div className="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center shrink-0">
-            <CheckCircle size={18} weight="bold" />
-          </div>
-          <div className="min-w-0">
-            <p className="text-sm font-black text-[var(--text-primary)] leading-tight">100% Rasmiy</p>
-            <p className="text-[10px] text-[var(--text-secondary)] truncate">BBA & DTM standartlari</p>
           </div>
         </div>
       </div>
