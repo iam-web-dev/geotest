@@ -46,3 +46,7 @@ Act as a senior full-stack engineer.
 - Reuse existing project architecture.
 - Review code before finishing.
 - Do not modify unrelated files.
+
+## Execution & Sub-agents
+- Only ask user confirmation when deleting files or directories (e.g. `rm`, `rimraf`, irreversible file deletion). For all other operations (reads, builds, tests, git operations, file writes/edits), execute directly without asking.
+- Claude Code (`claude` CLI) is available and can be used as a sub-agent for complex tasks, multi-perspective reviews, or sub-delegation using `claude -p "<prompt>"`.
