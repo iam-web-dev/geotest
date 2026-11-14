@@ -126,15 +126,7 @@ export default function Home() {
               Oʻzbekiston va jahon geografiyasi boʻyicha maktab darslik taqdimotlari (7–11-sinf), DTM va Milliy sertifikat sinov testlari platformasiga xush kelibsiz.
             </p>
 
-            <div className="flex items-center gap-2.5 pt-1.5 flex-wrap">
-              <button
-                onClick={() => navigate('/school')}
-                className="px-4 py-2.5 rounded-xl bg-white text-blue-700 font-bold text-xs hover:bg-white/95 transition-all shadow-md flex items-center gap-1.5 active:scale-95"
-              >
-                <GraduationCap size={16} weight="bold" />
-                <span>Maktab taʼlimi darsliklari</span>
-              </button>
-
+            {/* <div className="flex items-center gap-2.5 pt-1.5 flex-wrap">
               <button
                 onClick={() => navigate('/tests')}
                 className="px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 border border-white/25 text-white font-bold text-xs transition-all flex items-center gap-1.5 active:scale-95 backdrop-blur-sm"
@@ -142,7 +134,7 @@ export default function Home() {
                 <BookOpen size={16} weight="bold" />
                 <span>Sinov testlari</span>
               </button>
-            </div>
+            </div> */}
           </div>
 
           {/* Interactive Detailed Globe in Hero */}
@@ -247,9 +239,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── Plus va Pro: Maqsadingizga tezroq yeting ── */}
-      <PlusProPromo />
-
       {/* ── CORE SECTION: E'LONLAR VA RASMIY BIZDIRISHNOMALAR (Client Main Requirement) ── */}
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -352,61 +341,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── Daily Stats ── */}
-      <div>
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-base font-bold text-[var(--text-primary)]">Kunlik Statistika</h2>
-          <span className="text-xs text-[var(--text-secondary)]">Bugun</span>
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <StatCard icon={StatIconXP}       label="Bugungi Ball"      value={`+${dailyStats.xpGained}`} detail="Bugun to'plangan" trend="+12%" />
-          <StatCard icon={StatIconAccuracy} label="To'g'rilik"       value={`${dailyStats.accuracy}%`} detail={`${dailyStats.correctAnswers}/${dailyStats.questionsAnswered} savol`} />
-          <StatCard icon={StatIconTime}     label="O'qish Vaqti"     value={dailyStats.studyTime} detail="Bugun sarflandi" trend="+18%" />
-          <StatCard icon={StatIconTests}    label="Bajarilgan Test"  value={`${dailyStats.testsDone} ta`} detail={`${dailyStats.quizzesDone} ta viktorina`} />
-        </div>
-      </div>
-
-      {/* ── Geography Fact ── */}
-      <div
-        className="rounded-[var(--radius)] overflow-hidden border"
-        style={{ background: 'var(--fact-bg)', borderColor: 'var(--fact-border)' }}
-      >
-        <div
-          className="flex items-center gap-2.5 px-4 py-3 border-b"
-          style={{ borderColor: 'var(--fact-border)' }}
-        >
-          <div
-            className="w-7 h-7 rounded-[var(--radius-xs)] flex items-center justify-center shrink-0"
-            style={{ background: 'var(--pal-milliy)' }}
-          >
-            <Globe size={14} style={{ color: '#326D62' }} />
-          </div>
-          <span className="text-xs font-bold flex-1" style={{ color: '#326D62' }}>
-            Bugungi Geografiya Fakti
-          </span>
-          <span
-            className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-            style={{ background: 'var(--pal-milliy)', color: '#326D62' }}
-          >
-            #bugun
-          </span>
-        </div>
-
-        <div className="relative px-5 pt-4 pb-4">
-          <p className="text-sm text-[var(--text-primary)] leading-relaxed relative z-10">
-            {geographyFact.text}
-          </p>
-          <div
-            className="flex items-center gap-2 mt-3 pt-3 border-t"
-            style={{ borderColor: 'var(--fact-border)' }}
-          >
-            <BookOpen size={12} style={{ color: '#2F80ED', opacity: 0.6 }} />
-            <span className="text-xs text-[var(--text-tertiary)]">{geographyFact.source}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Upcoming Exams ── */}
+      {/* ── Upcoming Exams (Yaqinlashayotgan Imtihonlar & Sinovlar) ── */}
       <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-base font-bold text-[var(--text-primary)]">Yaqinlashayotgan Imtihonlar</h2>
@@ -471,7 +406,10 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── Popular Games ── */}
+      {/* ── Plus va Pro: Maqsadingizga tezroq yeting ── */}
+      <PlusProPromo />
+
+      {/* ── Popular Games (Ommabop O'yinlar) ── */}
       <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-base font-bold text-[var(--text-primary)]">Ommabop O'yinlar</h2>
@@ -497,6 +435,60 @@ export default function Home() {
               </Card>
             );
           })}
+        </div>
+      </div>
+
+      {/* ── Daily Stats (Foydalanuvchi Ko'rsatkichlari) ── */}
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-base font-bold text-[var(--text-primary)]">Kunlik Statistika</h2>
+          <span className="text-xs text-[var(--text-secondary)]">Bugun</span>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <StatCard icon={StatIconXP}       label="Bugungi Ball"      value={`+${dailyStats.xpGained}`} detail="Bugun to'plangan" trend="+12%" />
+          <StatCard icon={StatIconAccuracy} label="To'g'rilik"       value={`${dailyStats.accuracy}%`} detail={`${dailyStats.correctAnswers}/${dailyStats.questionsAnswered} savol`} />
+          <StatCard icon={StatIconTime}     label="O'qish Vaqti"     value={dailyStats.studyTime} detail="Bugun sarflandi" trend="+18%" />
+          <StatCard icon={StatIconTests}    label="Bajarilgan Test"  value={`${dailyStats.testsDone} ta`} detail={`${dailyStats.quizzesDone} ta viktorina`} />
+        </div>
+      </div>
+
+      {/* ── Geography Fact (Kunlik Geografik Fakt) ── */}
+      <div
+        className="rounded-[var(--radius)] overflow-hidden border"
+        style={{ background: 'var(--fact-bg)', borderColor: 'var(--fact-border)' }}
+      >
+        <div
+          className="flex items-center gap-2.5 px-4 py-3 border-b"
+          style={{ borderColor: 'var(--fact-border)' }}
+        >
+          <div
+            className="w-7 h-7 rounded-[var(--radius-xs)] flex items-center justify-center shrink-0"
+            style={{ background: 'var(--pal-milliy)' }}
+          >
+            <Globe size={14} style={{ color: '#326D62' }} />
+          </div>
+          <span className="text-xs font-bold flex-1" style={{ color: '#326D62' }}>
+            Bugungi Geografiya Fakti
+          </span>
+          <span
+            className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+            style={{ background: 'var(--pal-milliy)', color: '#326D62' }}
+          >
+            #bugun
+          </span>
+        </div>
+
+        <div className="relative px-5 pt-4 pb-4">
+          <p className="text-sm text-[var(--text-primary)] leading-relaxed relative z-10">
+            {geographyFact.text}
+          </p>
+          <div
+            className="flex items-center gap-2 mt-3 pt-3 border-t"
+            style={{ borderColor: 'var(--fact-border)' }}
+          >
+            <BookOpen size={12} style={{ color: '#2F80ED', opacity: 0.6 }} />
+            <span className="text-xs text-[var(--text-tertiary)]">{geographyFact.source}</span>
+          </div>
         </div>
       </div>
 
