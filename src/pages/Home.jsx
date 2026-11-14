@@ -14,6 +14,8 @@ import {
   StatIconXP, StatIconAccuracy, StatIconTime, StatIconTests,
 } from '../components/illustrations/GeoIllustrations';
 import EarthDetailedGlobe from '../components/EarthDetailedGlobe';
+import PlusProPromo from '../components/home/PlusProPromo';
+import UserGeographyMap from '../components/home/UserGeographyMap';
 import Button from '../components/ui/Button';
 import { Card, CardContent } from '../components/ui/Card';
 import {
@@ -246,38 +248,8 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── 100 000 so'm Oylik Tarif Promo Kartasi ── */}
-      <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-white/20 tracking-wider">
-              Yagona Taʼlim Tarifi
-            </span>
-            <span className="text-xs text-white/80 font-medium">• Cheksiz kirish</span>
-          </div>
-          <h3 className="text-lg sm:text-xl font-black">
-            100 000 soʻm / oy — Toʻliq darslik taqdimotlari va testlar
-          </h3>
-          <p className="text-xs text-white/80 max-w-xl leading-relaxed">
-            Milliy sertifikat, DTM, olimpiada testlari, 7–11-sinf prezentatsiyalari va barcha oʻquv materiallariga toʻliq ruxsat.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2 shrink-0">
-          <button
-            onClick={() => navigate('/school')}
-            className="px-4 py-2.5 rounded-xl bg-white text-blue-700 font-bold text-xs hover:bg-white/95 transition-all shadow-md active:scale-95"
-          >
-            Maktab taʼlimi
-          </button>
-          <button
-            onClick={() => navigate('/tests')}
-            className="px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 border border-white/25 text-white font-bold text-xs transition-all active:scale-95"
-          >
-            Testlarni boshlash
-          </button>
-        </div>
-      </div>
+      {/* ── Plus va Pro: Maqsadingizga tezroq yeting ── */}
+      <PlusProPromo />
 
       {/* ── CORE SECTION: E'LONLAR VA RASMIY BIZDIRISHNOMALAR (Client Main Requirement) ── */}
       <div className="space-y-4">
@@ -528,6 +500,9 @@ export default function Home() {
           })}
         </div>
       </div>
+
+      {/* ── Hududlar bo'yicha foydalanuvchilar geografiyasi (Robocontest style) ── */}
+      <UserGeographyMap />
 
       {/* ── Creator Manifesto & Colophon (dhh.dk & omarchy.org inspired) ── */}
       <div className="pt-2">
