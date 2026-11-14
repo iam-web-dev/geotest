@@ -3,18 +3,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   Eye, EyeSlash, User, Phone, Lock, CheckCircle, WarningCircle,
-  ArrowRight, GraduationCap, Student, MapPin, PaperPlaneTilt, CaretDown,
+  ArrowRight, GraduationCap, Student, MapPin, CaretDown,
   ChalkboardTeacher, Lightning, At, Check, X, Question
 } from '@phosphor-icons/react';
-import { cn, formatUzPhone, getUzPhoneOperator } from '../lib/utils';
+import { cn, formatUzPhone } from '../lib/utils';
 import Button from '../components/ui/Button';
 import { useAuth } from '../context/AuthContext';
 import SEO from '../components/SEO';
 
 const ROLES = [
-  { id: 'school_student', title: "Maktab öquvçisi", icon: GraduationCap },
+  { id: 'school_student', title: "Maktab o'quvchisi", icon: GraduationCap },
   { id: 'student', title: 'Abituriyent / Talaba', icon: Student },
-  { id: 'teacher', title: "Öqituvçi", icon: ChalkboardTeacher },
+  { id: 'teacher', title: "O'qituvchi", icon: ChalkboardTeacher },
 ];
 
 const GRADES = [7, 8, 9, 10, 11];
@@ -84,11 +84,6 @@ export default function Auth({ initialMode }) {
   if (user && !location.state?.forceAuth) {
     navigate(from, { replace: true });
   }
-
-  // Operator
-  const phoneOperator = useMemo(() => {
-    return getUzPhoneOperator(signupForm.phone);
-  }, [signupForm.phone]);
 
   // Password strength
   const passwordStrength = useMemo(() => {
@@ -469,22 +464,9 @@ export default function Auth({ initialMode }) {
 
               {/* Phone starting with +998 */}
               <div className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <label className="text-xs font-semibold text-[var(--text-primary)]">
-                    Telefon raqam
-                  </label>
-                  {phoneOperator && (
-                    <span
-                      className="text-[10px] font-bold px-1.5 py-0.5 rounded"
-                      style={{
-                        background: `${phoneOperator.color}15`,
-                        color: phoneOperator.color,
-                      }}
-                    >
-                      {phoneOperator.name}
-                    </span>
-                  )}
-                </div>
+                <label className="text-xs font-semibold text-[var(--text-primary)]">
+                  Telefon raqam
+                </label>
 
                 <div className="relative flex items-center">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5 pointer-events-none select-none">
@@ -530,32 +512,27 @@ export default function Auth({ initialMode }) {
                 </div>
               </div>
 
-              {/* Role selection pills */}
+              {/* Role selection (select dropdown) */}
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-[var(--text-primary)]">
-                  Maqomingiz
+                <label className="text-xs font-semibold text-[var(--text-primary)] flex items-center gap-1.5">
+                  <GraduationCap size={14} weight="bold" className="text-[var(--primary)]" />
+                  <span>Maqomingiz</span>
                 </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {ROLES.map((r) => {
-                    const Icon = r.icon;
-                    const isSelected = signupForm.role === r.id;
-                    return (
-                      <button
-                        key={r.id}
-                        type="button"
-                        onClick={() => setSignupForm(prev => ({ ...prev, role: r.id }))}
-                        className={cn(
-                          'py-2 px-1.5 rounded-xl border text-center transition-all flex items-center justify-center gap-1.5 text-xs',
-                          isSelected
-                            ? 'border-[var(--primary)] bg-[var(--primary-soft)] text-[var(--primary)] font-bold'
-                            : 'border-[var(--border)] bg-[var(--background)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
-                        )}
-                      >
-                        <Icon size={14} weight={isSelected ? 'bold' : 'regular'} />
-                        <span className="text-[11px]">{r.title}</span>
-                      </button>
-                    );
-                  })}
+                <div className="relative">
+                  <select
+                    value={signupForm.role}
+                    onChange={(e) => setSignupForm(prev => ({ ...prev, role: e.target.value }))}
+                    className="w-full h-11 pl-3.5 pr-9 rounded-xl border border-[var(--border)] bg-[var(--background)] text-xs font-medium text-[var(--text-primary)] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/10 transition-all appearance-none cursor-pointer"
+                  >
+                    {ROLES.map((r) => (
+                      <option key={r.id} value={r.id}>
+                        {r.title}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text-tertiary)]">
+                    <CaretDown size={14} weight="bold" />
+                  </div>
                 </div>
               </div>
 
@@ -689,17 +666,6 @@ export default function Auth({ initialMode }) {
                   </div>
                 </div>
               )}
-
-              {/* Telegram Bot verification badge */}
-              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-start gap-2.5">
-                <PaperPlaneTilt size={16} weight="fill" className="shrink-0 text-blue-600 dark:text-blue-400 mt-0.5" />
-                <div className="space-y-0.5">
-                  <p className="font-bold text-xs text-[var(--text-primary)]">Telegram bot orqali tasdiqlaş</p>
-                  <p className="text-[11px] text-[var(--text-secondary)] leading-snug">
-                    Xavfsizlik va natijalarni kuzatiş uçun profilingiz <b>@geobek_bot</b> bilan integratsiya qilinadi.
-                  </p>
-                </div>
-              </div>
 
               {/* Terms */}
               <label className="flex items-start gap-2 cursor-pointer pt-0.5 select-none">
