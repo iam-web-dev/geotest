@@ -21,7 +21,7 @@ const gameIcons = {
 };
 
 const filters = [
-  { key: 'all', label: 'Barçasi' },
+  { key: 'all', label: 'Barchasi' },
   { key: 'popular', label: 'Ommabop' },
   { key: 'favorites', label: 'Sevimlilar' },
 ];
@@ -145,11 +145,11 @@ function GameModal({ game, onClose, onStart, isFavorite, onToggleFavorite }) {
 
             {game.playable ? (
               <Button className="w-full sm:col-span-2" onClick={() => onStart(game, mode)}>
-                <Play size={15} weight="fill" /> Öyinni boşlaş <ArrowRight size={15} />
+                <Play size={15} weight="fill" /> Oʻyinni boshlash <ArrowRight size={15} />
               </Button>
             ) : (
               <div className="w-full sm:col-span-2 flex items-center justify-center gap-2 py-3 rounded-[var(--radius-sm)] bg-[var(--background)] text-xs font-semibold text-[var(--text-secondary)]">
-                <HourglassMedium size={15} /> Bu öyin hozirça tayyorlanmoqda
+                <HourglassMedium size={15} /> Bu oʻyin hozircha tayyorlanmoqda
               </div>
             )}
           </div>
@@ -183,13 +183,13 @@ export default function Games() {
   return (
     <div className="space-y-8">
       <SEO
-        title="Geografiya Öyinlari"
-        description="Xaritalar, daryolar, toğlar, bayroqlar, poytaxtlar va qit'alar böyiça interaktiv ta'limiy öyinlar orqali geografiyani örganing."
+        title="Geografiya Oʻyinlari"
+        description="Xaritalar, daryolar, togʻlar, bayroqlar, poytaxtlar va qit'alar boʻyicha interaktiv ta'limiy oʻyinlar orqali geografiyani oʻrganing."
         url="/games"
       />
       <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">Öyinlar</h1>
-        <p className="text-sm text-[var(--text-secondary)] mt-1">Geografiyani öynab örganing</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">Oʻyinlar</h1>
+        <p className="text-sm text-[var(--text-secondary)] mt-1">Geografiyani oʻynab oʻrganing</p>
       </div>
 
       {/* Featured banner */}
@@ -219,7 +219,7 @@ export default function Games() {
             </span>
           </div>
           <Button className="bg-white text-[var(--primary)] hover:bg-white/90" onClick={() => handlePlay(featured)}>
-            <Play size={14} weight="fill" /> Öynaş
+            <Play size={14} weight="fill" /> Oʻynash
           </Button>
         </div>
       </div>
@@ -227,14 +227,14 @@ export default function Games() {
       {/* Personal stats strip */}
       <div className="grid grid-cols-3 gap-3">
         {[
-          { label: "Öyinlar", value: gameStats.gamesPlayed, Icon: Sparkle, color: '#2563EB' },
-          { label: 'Aniqlik', value: `${gameStats.accuracy}%`, Icon: Target, color: '#16A34A' },
-          { label: 'Eng yaxşi', value: gameStats.bestScore, Icon: Trophy, color: '#8B5CF6' },
-        ].map(({ label, value, Icon, color }) => (
+          { label: "Oʻyinlar", value: gameStats.gamesPlayed, Icon: Sparkle },
+          { label: 'Aniqlik', value: `${gameStats.accuracy}%`, Icon: Target },
+          { label: 'Eng yaxshi', value: gameStats.bestScore, Icon: Trophy },
+        ].map(({ label, value, Icon }) => (
           <Card key={label}>
             <CardContent className="p-3.5 flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0" style={{ background: `${color}18` }}>
-                <Icon size={17} style={{ color }} weight="fill" />
+              <div className="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0 bg-[var(--primary-soft)]">
+                <Icon size={17} className="text-[var(--primary)]" weight="fill" />
               </div>
               <div className="min-w-0">
                 <p className="text-base font-bold text-[var(--text-primary)] leading-tight">{value}</p>
@@ -252,12 +252,12 @@ export default function Games() {
           className="w-full flex items-center justify-between px-4 py-3.5 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] text-sm font-semibold text-[var(--text-primary)] active:scale-[0.98] transition-all"
         >
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-[10px] flex items-center justify-center bg-[#8B5CF6]/10">
-              <Sparkle size={18} weight="fill" className="text-[#8B5CF6]" />
+            <div className="w-9 h-9 rounded-[10px] flex items-center justify-center bg-[var(--primary-soft)]">
+              <Sparkle size={18} weight="fill" className="text-[var(--primary)]" />
             </div>
             <div className="text-left">
               <p className="font-bold">Viktorinalar</p>
-              <p className="text-xs text-[var(--text-secondary)] font-normal">Bilimingizni sinab köring</p>
+              <p className="text-xs text-[var(--text-secondary)] font-normal">Bilimingizni sinab koʻring</p>
             </div>
           </div>
           <ArrowRight size={18} className="text-[var(--text-secondary)]" />
@@ -284,7 +284,7 @@ export default function Games() {
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {visible.length === 0 && filter === 'favorites' && (
           <p className="col-span-full text-center text-sm text-[var(--text-secondary)] py-10">
-            Hali sevimli öyinlar yöq. Kartadagi yurak belgisini bosing.
+            Hali sevimli oʻyinlar yoʻq. Kartadagi yurak belgisini bosing.
           </p>
         )}
         {visible.map((game, i) => {
@@ -335,7 +335,7 @@ export default function Games() {
 
                   <div className="flex items-center gap-2 mt-3.5">
                     <Button size="sm" className="flex-1" onClick={() => handlePlay(game)}>
-                      {game.playable ? <Play size={12} weight="fill" /> : <HourglassMedium size={12} />} Öynaş
+                      {game.playable ? <Play size={12} weight="fill" /> : <HourglassMedium size={12} />} Oʻynash
                     </Button>
                     <Button size="sm" variant="outline" onClick={() => setActiveGame(game)}>
                       <Info size={14} />

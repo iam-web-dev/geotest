@@ -4,36 +4,38 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   Eye, EyeSlash, User, Phone, Lock, CheckCircle, WarningCircle,
   ArrowRight, GraduationCap, Student, MapPin, CaretDown,
-  ChalkboardTeacher, Lightning, At, Check, X, Question
+  ChalkboardTeacher, Lightning, At, Check, X, Question, Target
 } from '@phosphor-icons/react';
 import { cn, formatUzPhone } from '../lib/utils';
 import Button from '../components/ui/Button';
 import { useAuth } from '../context/AuthContext';
 import SEO from '../components/SEO';
+import Logo from '../components/Logo';
 
 const ROLES = [
   { id: 'school_student', title: "Maktab o'quvchisi", icon: GraduationCap },
-  { id: 'student', title: 'Abituriyent / Talaba', icon: Student },
+  { id: 'applicant', title: "Abituriyent", icon: Target },
+  { id: 'student', title: "Talaba", icon: Student },
   { id: 'teacher', title: "O'qituvchi", icon: ChalkboardTeacher },
 ];
 
 const GRADES = [7, 8, 9, 10, 11];
 
 const REGIONS = [
-  'Toşkent şahri',
-  'Toşkent viloyati',
+  'Toshkent shahri',
+  'Toshkent viloyati',
   'Samarqand viloyati',
-  'Farğona viloyati',
+  'Fargʻona viloyati',
   'Andijon viloyati',
   'Namangan viloyati',
   'Buxoro viloyati',
-  'Qaşqadaryo viloyati',
+  'Qashqadaryo viloyati',
   'Surxondaryo viloyati',
   'Xorazm viloyati',
   'Navoiy viloyati',
   'Jizzax viloyati',
   'Sirdaryo viloyati',
-  'Qoraqalpoğiston Respublikasi',
+  'Qoraqalpogʻiston Respublikasi',
 ];
 
 export default function Auth({ initialMode }) {
@@ -69,8 +71,7 @@ export default function Auth({ initialMode }) {
     phone: '+998 ',
     username: '',
     role: 'school_student',
-    grade: 9,
-    region: 'Toşkent şahri',
+    region: 'Toshkent shahri',
     password: '',
     confirmPassword: '',
   });
@@ -97,11 +98,11 @@ export default function Auth({ initialMode }) {
 
     switch (score) {
       case 1:
-        return { score: 1, label: 'Kuçsiz', color: '#EF4444', width: '25%' };
+        return { score: 1, label: 'Kuchsiz', color: '#EF4444', width: '25%' };
       case 2:
-        return { score: 2, label: "Örtaça", color: '#F59E0B', width: '50%' };
+        return { score: 2, label: "Oʻrtacha", color: '#F59E0B', width: '50%' };
       case 3:
-        return { score: 3, label: 'Yaxşi', color: '#3B82F6', width: '75%' };
+        return { score: 3, label: 'Yaxshi', color: '#3B82F6', width: '75%' };
       case 4:
         return { score: 4, label: 'Mustahkam', color: '#10B981', width: '100%' };
       default:
@@ -126,36 +127,36 @@ export default function Auth({ initialMode }) {
       return setError('Ismingizni kiriting');
     }
     if (signupForm.name.trim().length < 3) {
-      return setError('Ism kamida 3 ta harfdan iborat bölişi kerak');
+      return setError('Ism kamida 3 ta harfdan iborat boʻlishi kerak');
     }
 
     const digits = signupForm.phone.replace(/\D/g, '');
     if (digits.length < 12) {
-      return setError('9 xonali telefon raqamingizni töliq kiriting');
+      return setError('9 xonali telefon raqamingizni toʻliq kiriting');
     }
 
     const cleanUsername = signupForm.username.trim().replace(/^@/, '');
     if (!cleanUsername) {
-      return setError('Username kiriting');
+      return setError('Foydalanuvchi nomini kiriting');
     }
     if (cleanUsername.length < 3) {
-      return setError('Username kamida 3 ta belgidan iborat bölişi kerak');
+      return setError('Foydalanuvchi nomi kamida 3 ta belgidan iborat boʻlishi kerak');
     }
     if (!/^[a-zA-Z0-9_]+$/.test(cleanUsername)) {
-      return setError('Username faqat lotin harflari, raqamlar va pastki çiziqdan iborat bölişi mumkin');
+      return setError('Foydalanuvchi nomi faqat lotin harflari, raqamlar va pastki chiziqdan iborat boʻlishi mumkin');
     }
 
     if (!signupForm.password) {
       return setError('Parol kiriting');
     }
     if (signupForm.password.length < 6) {
-      return setError('Parol kamida 6 ta belgidan iborat bölişi kerak');
+      return setError('Parol kamida 6 ta belgidan iborat boʻlishi kerak');
     }
     if (signupForm.password !== signupForm.confirmPassword) {
       return setError('Kiritilgan parollar mos kelmadi');
     }
     if (!agreedToTerms) {
-      return setError('Foydalaniş şartlariga rozilik bildiring');
+      return setError('Foydalanish shartlariga rozilik bildiring');
     }
 
     try {
@@ -165,17 +166,16 @@ export default function Auth({ initialMode }) {
         phone: signupForm.phone,
         username: cleanUsername,
         role: signupForm.role,
-        grade: signupForm.grade,
         region: signupForm.region,
         password: signupForm.password,
       });
 
-      setSuccess('Muvaffaqiyatli röyxatdan ötdingiz');
+      setSuccess('Muvaffaqiyatli roʻyxatdan oʻtdingiz');
       setTimeout(() => {
         navigate(from, { replace: true });
       }, 500);
     } catch (err) {
-      setError(err.message || 'Röyxatdan ötişda xatolik yuz berdi');
+      setError(err.message || 'Roʻyxatdan oʻtishda xatolik yuz berdi');
     } finally {
       setIsSubmitting(false);
     }
@@ -189,7 +189,7 @@ export default function Auth({ initialMode }) {
 
     const identifier = loginForm.identifier.trim();
     if (!identifier) {
-      return setError('Username yoki telefon raqamingizni kiriting');
+      return setError('Foydalanuvchi nomi yoki telefon raqamingizni kiriting');
     }
     if (!loginForm.password) {
       return setError('Parolingizni kiriting');
@@ -225,26 +225,18 @@ export default function Auth({ initialMode }) {
   return (
     <div className="min-h-dvh flex flex-col justify-between bg-[var(--background)] px-4 py-6">
       <SEO
-        title={mode === 'signin' ? 'Kiriş' : "Röyxatdan ötiş"}
-        description="GeoBek platformasiga kiriş"
+        title={mode === 'signin' ? 'Kirish' : "Roʻyxatdan oʻtish"}
+        description="GEOBEK platformasiga kirish"
         url="/auth"
       />
 
       {/* Top bar with logo only (Bosh sahifa buttoni olib tashlandi) */}
       <div className="w-full max-w-md mx-auto flex items-center justify-center pt-2 pb-1">
         <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-sky-500 p-[1.5px] flex items-center justify-center shrink-0 shadow-sm transition-transform group-hover:scale-105">
-            <div className="w-full h-full rounded-[14px] bg-[var(--surface)] flex items-center justify-center overflow-hidden">
-              <img
-                src={`${import.meta.env.BASE_URL}main_logo.png`}
-                alt="GeoBek"
-                className="w-6 h-6 object-contain"
-              />
-            </div>
-          </div>
+          <Logo className="w-8 h-8 shrink-0 transition-transform group-hover:scale-105" />
           <div className="flex items-center gap-1.5">
             <span className="font-black text-lg text-[var(--text-primary)] tracking-tight">
-              Geo<span className="text-[var(--primary)]">Bek</span>
+              GEO<span className="text-[var(--primary)]">BEK</span>
             </span>
             <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[var(--primary-soft)] text-[var(--primary)] uppercase tracking-wider">
               UZ
@@ -276,7 +268,7 @@ export default function Auth({ initialMode }) {
                   transition={{ type: 'spring', stiffness: 500, damping: 38 }}
                 />
               )}
-              <span>Kiriş</span>
+              <span>Kirish</span>
             </button>
 
             <button
@@ -296,19 +288,19 @@ export default function Auth({ initialMode }) {
                   transition={{ type: 'spring', stiffness: 500, damping: 38 }}
                 />
               )}
-              <span>Röyxatdan ötiş</span>
+              <span>Roʻyxatdan oʻtish</span>
             </button>
           </div>
 
           {/* Title */}
           <div className="mb-5">
             <h1 className="text-xl font-bold text-[var(--text-primary)]">
-              {mode === 'signin' ? 'Hisobga kiriş' : 'Röyxatdan ötiş'}
+              {mode === 'signin' ? 'Hisobga kirish' : 'Roʻyxatdan oʻtish'}
             </h1>
             <p className="text-xs text-[var(--text-secondary)] mt-0.5">
               {mode === 'signin'
-                ? 'Username yoki telefon raqamingizni kiriting'
-                : 'Yangi profil yaratiş uçun maʼlumotlarni töldiring'}
+                ? 'Foydalanuvchi nomi yoki telefon raqamingizni kiriting'
+                : 'Yangi profil yaratish uchun maʼlumotlarni toʻldiring'}
             </p>
           </div>
 
@@ -349,7 +341,7 @@ export default function Auth({ initialMode }) {
             <form onSubmit={handleSignInSubmit} className="space-y-3.5">
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-[var(--text-primary)]">
-                  Username yoki Telefon
+                  Foydalanuvchi nomi yoki Telefon
                 </label>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] pointer-events-none">
@@ -408,7 +400,7 @@ export default function Auth({ initialMode }) {
                     onChange={(e) => setRememberMe(e.target.checked)}
                     className="w-4 h-4 rounded border-[var(--border)] text-[var(--primary)] accent-[var(--primary)]"
                   />
-                  <span className="text-xs text-[var(--text-secondary)]">Eslab qoliş</span>
+                  <span className="text-xs text-[var(--text-secondary)]">Eslab qolish</span>
                 </label>
               </div>
 
@@ -421,7 +413,7 @@ export default function Auth({ initialMode }) {
                   <span>Kutilmoqda...</span>
                 ) : (
                   <>
-                    <span>Kiriş</span>
+                    <span>Kirish</span>
                     <ArrowRight size={15} weight="bold" />
                   </>
                 )}
@@ -435,7 +427,7 @@ export default function Auth({ initialMode }) {
                   className="w-full h-10 rounded-xl border border-[var(--border)] bg-[var(--background)] hover:bg-[var(--primary-soft)] hover:border-[var(--primary)]/30 text-[var(--text-secondary)] hover:text-[var(--primary)] text-xs font-semibold transition-all flex items-center justify-center gap-1.5"
                 >
                   <Lightning size={14} weight="bold" className="text-amber-500" />
-                  <span>Demo hisob bilan kiriş</span>
+                  <span>Demo hisob bilan kirish</span>
                 </button>
               </div>
             </form>
@@ -445,7 +437,7 @@ export default function Auth({ initialMode }) {
               {/* Full name */}
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-[var(--text-primary)]">
-                  Töliq ism
+                  Toʻliq ism
                 </label>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] pointer-events-none">
@@ -454,7 +446,7 @@ export default function Auth({ initialMode }) {
                   <input
                     type="text"
                     autoComplete="name"
-                    placeholder="Alişer Navoiy"
+                    placeholder="Ismingiz"
                     value={signupForm.name}
                     onChange={(e) => setSignupForm(prev => ({ ...prev, name: e.target.value }))}
                     className="w-full h-11 pl-9 pr-3.5 rounded-xl border border-[var(--border)] bg-[var(--background)] text-sm text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/10 transition-all"
@@ -489,10 +481,10 @@ export default function Auth({ initialMode }) {
                 </div>
               </div>
 
-              {/* Username */}
+              {/* Foydalanuvchi nomi */}
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-[var(--text-primary)]">
-                  Username
+                  Foydalanuvchi nomi
                 </label>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] pointer-events-none">
@@ -501,7 +493,7 @@ export default function Auth({ initialMode }) {
                   <input
                     type="text"
                     autoComplete="username"
-                    placeholder="yodgorov"
+                    placeholder="Foydalanuvchi nomi"
                     value={signupForm.username}
                     onChange={(e) => {
                       const val = e.target.value.replace(/[^a-zA-Z0-9_]/g, '').toLowerCase();
@@ -512,11 +504,11 @@ export default function Auth({ initialMode }) {
                 </div>
               </div>
 
-              {/* Role selection (select dropdown) */}
+              {/* Daraja selection */}
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-[var(--text-primary)] flex items-center gap-1.5">
                   <GraduationCap size={14} weight="bold" className="text-[var(--primary)]" />
-                  <span>Maqomingiz</span>
+                  <span>Ta'lim darajangiz</span>
                 </label>
                 <div className="relative">
                   <select
@@ -535,33 +527,6 @@ export default function Auth({ initialMode }) {
                   </div>
                 </div>
               </div>
-
-              {/* Grade selector for school students */}
-              {signupForm.role === 'school_student' && (
-                <div className="space-y-1.5 p-3 rounded-xl bg-[var(--background)] border border-[var(--border)]">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-[var(--text-primary)]">Sinfingiz</span>
-                    <span className="text-[10px] text-[var(--primary)] font-bold">{signupForm.grade}-sinf Geografiya</span>
-                  </div>
-                  <div className="grid grid-cols-5 gap-1.5 pt-0.5">
-                    {GRADES.map((g) => (
-                      <button
-                        key={g}
-                        type="button"
-                        onClick={() => setSignupForm(prev => ({ ...prev, grade: g }))}
-                        className={cn(
-                          'py-1.5 rounded-lg text-xs font-bold transition-all border text-center',
-                          signupForm.grade === g
-                            ? 'bg-[var(--primary)] text-white border-[var(--primary)] şadow-sm'
-                            : 'bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:border-[var(--primary)]/40'
-                        )}
-                      >
-                        {g}-sinf
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
 
               {/* Region selection */}
               <div className="space-y-1">
@@ -587,66 +552,35 @@ export default function Auth({ initialMode }) {
                 </div>
               </div>
 
-              {/* Passwords */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                <div className="space-y-1">
-                  <label className="text-xs font-semibold text-[var(--text-primary)]">Parol</label>
-                  <div className="relative">
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      autoComplete="new-password"
-                      placeholder="Kamida 6 belgi"
-                      value={signupForm.password}
-                      onChange={(e) => setSignupForm(prev => ({ ...prev, password: e.target.value }))}
-                      className="w-full h-10 px-3 pr-8 rounded-xl border border-[var(--border)] bg-[var(--background)] text-xs text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/10 transition-all"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] p-1"
-                      tabIndex={-1}
-                    >
-                      {showPassword ? <EyeSlash size={14} weight="bold" /> : <Eye size={14} weight="bold" />}
-                    </button>
+              {/* Parol (alohida qatorda) */}
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-[var(--text-primary)]">
+                  Parol
+                </label>
+                <div className="relative">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] pointer-events-none">
+                    <Lock size={16} weight="bold" />
                   </div>
-                </div>
-
-                <div className="space-y-1">
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs font-semibold text-[var(--text-primary)]">Tasdiqlaş</label>
-                    {signupForm.confirmPassword && signupForm.password === signupForm.confirmPassword && (
-                      <span className="text-[10px] text-emerald-500 font-bold flex items-center gap-0.5">
-                        <Check size={11} weight="bold" /> Mos
-                      </span>
-                    )}
-                  </div>
-                  <div className="relative">
-                    <input
-                      type={showConfirmPassword ? 'text' : 'password'}
-                      autoComplete="new-password"
-                      placeholder="Parolni qaytaring"
-                      value={signupForm.confirmPassword}
-                      onChange={(e) => setSignupForm(prev => ({ ...prev, confirmPassword: e.target.value }))}
-                      className={cn(
-                        'w-full h-10 px-3 pr-8 rounded-xl border bg-[var(--background)] text-xs text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:ring-2 transition-all',
-                        signupForm.confirmPassword && signupForm.password !== signupForm.confirmPassword
-                          ? 'border-red-400 focus:border-red-500 focus:ring-red-500/10'
-                          : 'border-[var(--border)] focus:border-[var(--primary)] focus:ring-[var(--primary)]/10'
-                      )}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] p-1"
-                      tabIndex={-1}
-                    >
-                      {showConfirmPassword ? <EyeSlash size={14} weight="bold" /> : <Eye size={14} weight="bold" />}
-                    </button>
-                  </div>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    autoComplete="new-password"
+                    placeholder="Kamida 6 belgi"
+                    value={signupForm.password}
+                    onChange={(e) => setSignupForm(prev => ({ ...prev, password: e.target.value }))}
+                    className="w-full h-11 pl-9 pr-10 rounded-xl border border-[var(--border)] bg-[var(--background)] text-sm text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/10 transition-all"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] p-0.5"
+                    tabIndex={-1}
+                  >
+                    {showPassword ? <EyeSlash size={16} weight="bold" /> : <Eye size={16} weight="bold" />}
+                  </button>
                 </div>
               </div>
 
-              {/* Strength bar */}
+              {/* Password strength bar */}
               {signupForm.password && (
                 <div className="space-y-1">
                   <div className="flex items-center justify-between text-[10px]">
@@ -667,6 +601,51 @@ export default function Auth({ initialMode }) {
                 </div>
               )}
 
+              {/* Parolni tasdiqlash (alohida qatorda) */}
+              <div className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-semibold text-[var(--text-primary)]">
+                    Parolni tasdiqlash
+                  </label>
+                  {signupForm.confirmPassword && signupForm.password === signupForm.confirmPassword && (
+                    <span className="text-[10px] text-emerald-500 font-bold flex items-center gap-0.5">
+                      <Check size={11} weight="bold" /> Mos
+                    </span>
+                  )}
+                  {signupForm.confirmPassword && signupForm.password !== signupForm.confirmPassword && (
+                    <span className="text-[10px] text-red-500 font-bold">
+                      Mos emas
+                    </span>
+                  )}
+                </div>
+                <div className="relative">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] pointer-events-none">
+                    <Lock size={16} weight="bold" />
+                  </div>
+                  <input
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    autoComplete="new-password"
+                    placeholder="Parolni qayta kiriting"
+                    value={signupForm.confirmPassword}
+                    onChange={(e) => setSignupForm(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                    className={cn(
+                      'w-full h-11 pl-9 pr-10 rounded-xl border bg-[var(--background)] text-sm text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:ring-2 transition-all',
+                      signupForm.confirmPassword && signupForm.password !== signupForm.confirmPassword
+                        ? 'border-red-400 focus:border-red-500 focus:ring-red-500/10'
+                        : 'border-[var(--border)] focus:border-[var(--primary)] focus:ring-[var(--primary)]/10'
+                    )}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] p-0.5"
+                    tabIndex={-1}
+                  >
+                    {showConfirmPassword ? <EyeSlash size={16} weight="bold" /> : <Eye size={16} weight="bold" />}
+                  </button>
+                </div>
+              </div>
+
               {/* Terms */}
               <label className="flex items-start gap-2 cursor-pointer pt-0.5 select-none">
                 <input
@@ -677,7 +656,7 @@ export default function Auth({ initialMode }) {
                 />
                 <span className="text-[11px] text-[var(--text-secondary)] leading-tight">
                   <Link to="/oferta" target="_blank" className="text-[var(--primary)] hover:underline font-semibold">
-                    Foydalaniş şartlariga
+                    Foydalanish shartlariga
                   </Link>{' '}
                   roziman
                 </span>
@@ -692,7 +671,7 @@ export default function Auth({ initialMode }) {
                   <span>Kutilmoqda...</span>
                 ) : (
                   <>
-                    <span>Röyxatdan ötiş</span>
+                    <span>Roʻyxatdan oʻtish</span>
                     <ArrowRight size={15} weight="bold" />
                   </>
                 )}
@@ -704,13 +683,13 @@ export default function Auth({ initialMode }) {
           <div className="mt-5 text-center text-xs text-[var(--text-secondary)]">
             {mode === 'signin' ? (
               <>
-                Hisobingiz yöqmi?{' '}
+                Hisobingiz yoʻqmi?{' '}
                 <button
                   type="button"
                   onClick={() => setMode('signup')}
                   className="font-bold text-[var(--primary)] hover:underline"
                 >
-                  Röyxatdan ötiş
+                  Roʻyxatdan oʻtish
                 </button>
               </>
             ) : (
@@ -721,7 +700,7 @@ export default function Auth({ initialMode }) {
                   onClick={() => setMode('signin')}
                   className="font-bold text-[var(--primary)] hover:underline"
                 >
-                  Kiriş
+                  Kirish
                 </button>
               </>
             )}
@@ -731,7 +710,7 @@ export default function Auth({ initialMode }) {
 
       {/* Minimal Footer */}
       <div className="w-full max-w-md mx-auto text-center text-[11px] text-[var(--text-tertiary)] py-2">
-        <p>© 2026 GeoBek.uz</p>
+        <p>© 2026 GEOBEK.uz</p>
       </div>
 
       {/* Forgot Password Modal */}
@@ -750,13 +729,13 @@ export default function Auth({ initialMode }) {
                   <Question size={18} weight="bold" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-[var(--text-primary)]">Parolni tiklaş</h3>
-                  <p className="text-[11px] text-[var(--text-secondary)]">Qöllab-quvvatlaş xizmati</p>
+                  <h3 className="text-sm font-bold text-[var(--text-primary)]">Parolni tiklash</h3>
+                  <p className="text-[11px] text-[var(--text-secondary)]">Qoʻllab-quvvatlash xizmati</p>
                 </div>
               </div>
 
               <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                Parolni tiklaş uçun maʼmuriyat bilan boğlaning va profilingiz username yoki telefon raqamini körsating.
+                Parolni tiklash uchun maʼmuriyat bilan bogʻlaning va profilingiz foydalanuvchi nomi yoki telefon raqamini koʻrsating.
               </p>
 
               <a
@@ -765,7 +744,7 @@ export default function Auth({ initialMode }) {
                 rel="noreferrer"
                 className="block text-center py-2 px-3 rounded-xl bg-[var(--primary)] text-white text-xs font-bold hover:bg-[var(--primary-hover)] transition-colors"
               >
-                Telegram orqali boğlaniş (@geobek_admin)
+                Telegram orqali bogʻlanish (@geobek_admin)
               </a>
 
               <button
@@ -773,7 +752,7 @@ export default function Auth({ initialMode }) {
                 onClick={() => setForgotModalOpen(false)}
                 className="w-full h-9 rounded-xl border border-[var(--border)] text-xs font-semibold text-[var(--text-secondary)] hover:bg-[var(--background)] transition-all"
               >
-                Yopiş
+                Yopish
               </button>
             </div>
           </div>

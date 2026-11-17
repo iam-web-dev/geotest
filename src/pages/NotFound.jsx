@@ -19,12 +19,12 @@ export default function NotFound() {
         <h1 className="text-6xl font-bold text-[var(--text-primary)] mb-2">404</h1>
         <p className="text-lg text-[var(--text-secondary)] mb-2">Sahifa topilmadi</p>
         <p className="text-sm text-[var(--text-secondary)] mb-8">
-          Qidirgan sahifangiz mavjud emas yoki köçirilgan bölişi mumkin.
+          Qidirgan sahifangiz mavjud emas yoki koʻchirilgan boʻlishi mumkin.
         </p>
         <div className="flex items-center justify-center gap-3">
           <Link to="/">
             <Button>
-              <Home size={16} /> Boş sahifa
+              <Home size={16} /> Bosh sahifa
             </Button>
           </Link>
           <Link to="/tests">

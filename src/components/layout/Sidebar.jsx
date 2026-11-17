@@ -2,17 +2,19 @@ import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   House, BookOpen, Books, GameController, User, Trophy, Newspaper, Compass, Sun, Moon,
-  GraduationCap, Student, ChalkboardTeacher, SignOut, SignIn, Terminal
+  GraduationCap, Student, ChalkboardTeacher, SignOut, SignIn, Megaphone, Target
 } from '@phosphor-icons/react';
 import { cn } from '../../lib/utils';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { user as defaultMockUser } from '../../data/mockData';
+import Logo from '../Logo';
 
 const ROLE_META = {
-  school_student: { Icon: GraduationCap, color: '#2563EB' },
+  school_student: { Icon: GraduationCap, color: '#1E5BF8' },
+  applicant:      { Icon: Target,        color: '#D97706' },
   student:        { Icon: Student,        color: '#7C3AED' },
-  teacher:        { Icon: ChalkboardTeacher, color: '#16A34A' },
+  teacher:        { Icon: ChalkboardTeacher, color: '#059669' },
 };
 
 function loadSettings() {
@@ -21,17 +23,18 @@ function loadSettings() {
 
 // 5 Main Core Sections requested by client
 const mainNavItems = [
-  { to: '/', icon: House, label: 'Boş Sahifa' },
+  { to: '/', icon: House, label: 'Bosh Sahifa' },
   { to: '/tests', icon: BookOpen, label: 'Testlar' },
   { to: '/school', icon: GraduationCap, label: "Maktab Ta'limi" },
   { to: '/library', icon: Books, label: 'Kutubxona' },
-  { to: '/profile', icon: User, label: 'Şaxsiy Profil' },
+  { to: '/profile', icon: User, label: 'Shaxsiy Profil' },
 ];
 
 // Secondary interactive modules
 const secondaryNavItems = [
+  { to: '/announcements', icon: Megaphone, label: 'Eʼlonlar' },
   { to: '/quiz', icon: GameController, label: 'Viktorina' },
-  { to: '/games', icon: Compass, label: "Öyinlar" },
+  { to: '/games', icon: Compass, label: "Oʻyinlar" },
   { to: '/rankings', icon: Trophy, label: 'Reyting' },
   { to: '/articles', icon: Newspaper, label: 'Maqolalar' },
 ];
@@ -55,16 +58,12 @@ export default function Sidebar() {
 
   return (
     <aside className="hidden lg:flex flex-col w-64 h-screen sticky top-0 bg-[var(--surface)] border-r border-[var(--border)] p-4 overflow-y-auto">
-      <div className="flex items-center gap-3 px-3 py-4 mb-4">
-        <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-sky-500 p-[1.5px] shadow-sm flex items-center justify-center shrink-0">
-          <div className="w-full h-full rounded-[14px] bg-[var(--surface)] flex items-center justify-center overflow-hidden">
-            <img src={`${import.meta.env.BASE_URL}main_logo.png`} alt="GeoBek" className="w-7 h-7 object-contain" />
-          </div>
-        </div>
+      <NavLink to="/" className="flex items-center gap-3 px-3 py-3 mb-4 rounded-2xl hover:bg-[var(--surface-raised)] transition-colors group">
+        <Logo className="w-8 h-8 shrink-0 transition-transform group-hover:scale-105" />
         <div className="min-w-0">
           <div className="flex items-center gap-1.5">
             <h1 className="text-lg font-black text-[var(--text-primary)] leading-none tracking-tight">
-              Geo<span className="text-[var(--primary)]">Bek</span>
+              GEO<span className="text-[var(--primary)]">BEK</span>
             </h1>
             <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[var(--primary-soft)] text-[var(--primary)] uppercase tracking-wider">
               UZ
@@ -72,13 +71,13 @@ export default function Sidebar() {
           </div>
           <p className="text-[11px] text-[var(--text-secondary)] font-medium mt-0.5 truncate">Taʼlim Portali</p>
         </div>
-      </div>
+      </NavLink>
 
       <nav className="flex-1 space-y-4">
         {/* Main 5 Sections */}
         <div className="space-y-1">
           <p className="px-3 text-[10px] font-bold uppercase tracking-wider text-[var(--text-tertiary)] mb-1">
-            Asosiy Bölimlar
+            Asosiy Boʻlimlar
           </p>
           {mainNavItems.map((item) => (
             <NavLink
@@ -152,7 +151,7 @@ export default function Sidebar() {
 
             <button
               onClick={() => setShowLogoutModal(true)}
-              title="Tizimdan çiqiş"
+              title="Tizimdan chiqish"
               className="w-8 h-8 rounded-lg flex items-center justify-center text-[var(--text-secondary)] hover:text-red-500 hover:bg-red-500/10 transition-colors shrink-0"
             >
               <SignOut size={16} weight="bold" />
@@ -167,8 +166,8 @@ export default function Sidebar() {
               <SignIn size={18} weight="bold" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold truncate leading-tight">Tizimga kiriş</p>
-              <p className="text-[11px] opacity-80 truncate">Röyxatdan ötiş</p>
+              <p className="text-sm font-semibold truncate leading-tight">Tizimga kirish</p>
+              <p className="text-[11px] opacity-80 truncate">Roʻyxatdan oʻtish</p>
             </div>
           </NavLink>
         )}
@@ -190,10 +189,10 @@ export default function Sidebar() {
 
         <button
           onClick={toggleTheme}
-          className="flex items-center gap-3 w-full px-3 py-2.5 rounded-[var(--radius-sm)] text-sm text-[var(--text-secondary)] hover:bg-[var(--background)] hover:text-[var(--text-primary)] transition-all duration-200"
+          className="flex items-center gap-3 w-full px-3 py-2.5 rounded-[var(--radius-sm)] text-sm text-[var(--text-secondary)] hover:bg-[var(--background)] hover:text-[var(--text-primary)] active:scale-[0.98] transition-all duration-150"
         >
-          {darkMode ? <Sun size={18} /> : <Moon size={18} />}
-          <span>{darkMode ? 'Yorqin rejim' : "Qoronği rejim"}</span>
+          {darkMode ? <Sun size={18} weight="bold" className="text-amber-400" /> : <Moon size={18} />}
+          <span>{darkMode ? 'Yorqin rejim' : "Qorongʻi rejim"}</span>
         </button>
       </div>
 
@@ -206,8 +205,8 @@ export default function Sidebar() {
                 <SignOut size={22} weight="fill" />
               </div>
               <div>
-                <p className="font-bold text-[var(--text-primary)]">Çiqişni tasdiqlang</p>
-                <p className="text-xs text-[var(--text-secondary)] mt-1">GeoBek hisobingizdan çiqişni xohlaysizmi?</p>
+                <p className="font-bold text-[var(--text-primary)]">Chiqishni tasdiqlang</p>
+                <p className="text-xs text-[var(--text-secondary)] mt-1">GEOBEK hisobingizdan chiqishni xohlaysizmi?</p>
               </div>
             </div>
             <div className="flex gap-2">
@@ -215,14 +214,14 @@ export default function Sidebar() {
                 onClick={() => setShowLogoutModal(false)}
                 className="flex-1 h-10 rounded-xl border border-[var(--border)] text-xs font-semibold text-[var(--text-secondary)] hover:bg-[var(--background)] transition-all"
               >
-                Bekor qiliş
+                Bekor qilish
               </button>
               <button
                 onClick={handleLogout}
                 className="flex-1 h-10 rounded-xl bg-red-500 text-xs font-semibold text-white hover:bg-red-600 transition-all flex items-center justify-center gap-1.5"
               >
                 <SignOut size={15} weight="bold" />
-                <span>Çiqiş</span>
+                <span>Chiqish</span>
               </button>
             </div>
           </div>

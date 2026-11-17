@@ -13,7 +13,7 @@ function buildQuestions() {
       options: shuffle([target.name, ...distractors]),
       prompt: (
         <div className="flex flex-col items-center gap-3">
-          <p className="text-sm text-[var(--text-secondary)] font-medium">Bu qaysi davlat bayroği?</p>
+          <p className="text-sm text-[var(--text-secondary)] font-medium">Bu qaysi davlat bayrogʻi?</p>
           <div className="w-40 h-40 rounded-[28px] bg-[var(--background)] flex items-center justify-center text-[88px] shadow-inner">
             {target.flag}
           </div>
@@ -25,5 +25,5 @@ function buildQuestions() {
 
 export default function FlagGame() {
   const questions = useMemo(buildQuestions, []);
-  return <QuizEngine title="Bayroqni Bil" color="#2563EB" questions={questions} xpPerCorrect={10} timePerQuestion={12} />;
+  return <QuizEngine title="Bayroqni Bil" color="#1E5BF8" questions={questions} xpPerCorrect={10} timePerQuestion={12} />;
 }

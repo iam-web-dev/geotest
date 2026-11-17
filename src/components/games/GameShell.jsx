@@ -19,7 +19,7 @@ function fireConfetti() {
 
 export function ResultScreen({ color, result, onPlayAgain, onExit }) {
   const { xp, accuracy, time, mistakes, correct, total } = result;
-  const tier = accuracy >= 80 ? 'Ajoyib!' : accuracy >= 50 ? 'Yaxşi natija!' : 'Davom eting!';
+  const tier = accuracy >= 80 ? 'Ajoyib!' : accuracy >= 50 ? 'Yaxshi natija!' : 'Davom eting!';
   const fired = useRef(false);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export function ResultScreen({ color, result, onPlayAgain, onExit }) {
             <Target size={30} weight="fill" style={{ color }} />
           </motion.div>
           <h2 className="text-xl font-bold text-[var(--text-primary)]">{tier}</h2>
-          <p className="text-sm text-[var(--text-secondary)] mt-1">{correct}/{total} töğri javob</p>
+          <p className="text-sm text-[var(--text-secondary)] mt-1">{correct}/{total} toʻgʻri javob</p>
         </div>
 
         <div className="p-6 space-y-4">
@@ -78,13 +78,13 @@ export function ResultScreen({ color, result, onPlayAgain, onExit }) {
               className="w-full flex items-center justify-center gap-2 py-3 rounded-[var(--radius-sm)] text-sm font-semibold text-white transition-all active:scale-[0.98]"
               style={{ background: color }}
             >
-              <ArrowsClockwise size={16} /> Qayta öynaş
+              <ArrowsClockwise size={16} /> Qayta oʻynash
             </button>
             <button
               onClick={onExit}
               className="w-full flex items-center justify-center gap-2 py-3 rounded-[var(--radius-sm)] text-sm font-semibold border border-[var(--border)] bg-transparent text-[var(--text-primary)] transition-all active:scale-[0.98] hover:bg-[var(--background)]"
             >
-              <House size={16} /> Öyinlar
+              <House size={16} /> Oʻyinlar
             </button>
           </div>
         </div>
@@ -94,7 +94,7 @@ export function ResultScreen({ color, result, onPlayAgain, onExit }) {
 }
 
 export default function GameShell({
-  title, color = '#2563EB', score = 0, progress, timeLeft, timeTotal, lives,
+  title, color = '#1E5BF8', score = 0, progress, timeLeft, timeTotal, lives,
   paused, onPauseToggle, onExit, result, onPlayAgain, hint, children,
 }) {
   const pct = progress ? (progress.current / progress.total) * 100 : 0;
@@ -170,10 +170,10 @@ export default function GameShell({
                 transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
                 className="bg-[var(--surface)] rounded-2xl p-8 flex flex-col items-center gap-4 shadow-2xl min-w-[260px]"
               >
-                <p className="text-lg font-bold text-[var(--text-primary)]">Töxtatildi</p>
+                <p className="text-lg font-bold text-[var(--text-primary)]">Toʻxtatildi</p>
                 <div className="flex gap-3">
-                  <Button onClick={onPauseToggle}><Play size={16} weight="fill" /> Davom etiş</Button>
-                  <Button variant="outline" onClick={onExit}><House size={16} /> Çiqiş</Button>
+                  <Button onClick={onPauseToggle}><Play size={16} weight="fill" /> Davom etish</Button>
+                  <Button variant="outline" onClick={onExit}><House size={16} /> Chiqish</Button>
                 </div>
               </motion.div>
             </motion.div>,

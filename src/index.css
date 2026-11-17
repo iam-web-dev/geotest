@@ -32,11 +32,11 @@
   --sticker-bg: #EEF4FF;
   --sticker-border: #1E5BF8;
   /* Category palette bg (preserved for test logos) */
-  --pal-milliy: #D6ECEA;
-  --pal-dtm: #E0E0F8;
-  --pal-olympiad: #fff1bea4;
-  --pal-attestation: #DCFCE7;
-  --pal-orange: #FFF7ED;
+  --pal-milliy: #EEF4FF;
+  --pal-dtm: #EEF4FF;
+  --pal-olympiad: #EEF4FF;
+  --pal-attestation: #EEF4FF;
+  --pal-orange: #EEF4FF;
   /* Utility card bg */
   --fact-bg: #EEF4FF;
   --fact-border: #BFDBFE;
@@ -67,11 +67,11 @@
   --sticker-bg: #142034;
   --sticker-border: #3B82F6;
   /* Category palette bg (dark) */
-  --pal-milliy: rgba(50, 109, 98, 0.18);
-  --pal-dtm: rgba(23, 23, 150, 0.18);
-  --pal-olympiad: rgba(212, 168, 32, 0.18);
-  --pal-attestation: rgba(34, 197, 94, 0.18);
-  --pal-orange: rgba(249, 115, 22, 0.14);
+  --pal-milliy: rgba(59, 130, 246, 0.14);
+  --pal-dtm: rgba(59, 130, 246, 0.14);
+  --pal-olympiad: rgba(59, 130, 246, 0.14);
+  --pal-attestation: rgba(59, 130, 246, 0.14);
+  --pal-orange: rgba(59, 130, 246, 0.14);
   /* Utility card bg (dark) */
   --fact-bg: rgba(30, 91, 248, 0.08);
   --fact-border: rgba(30, 91, 248, 0.2);
@@ -198,4 +198,27 @@ body {
     --radius-sm: 8px;
     --radius-lg: 18px;
   }
+}
+
+/* ── View Transitions API: Circular Theme Reveal ── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+/* Temporarily disable transitions during theme snapshotting to capture clean static frames */
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition: none !important;
 }

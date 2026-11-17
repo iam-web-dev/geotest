@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import EarthDetailedGlobe from './EarthDetailedGlobe';
+import PoweredByNSD from './PoweredByNSD';
 
 const PHRASES = [
   "Dunyo xaritasi va materiklar yuklanmoqda...",
   "Geografik koordinatalar va darsliklar...",
-  "GeoBek platformasiga xuş kelibsiz!",
+  "GEOBEK platformasiga xush kelibsiz!",
 ];
 
 function CyclingText({ dark }) {
@@ -57,7 +58,7 @@ export default function GlobeLoader({ onDone, fadeIn = false }) {
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center p-4 transition-opacity duration-500"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-between py-6 sm:py-8 px-4 transition-opacity duration-500 overflow-hidden"
       style={{
         backgroundColor: darkMode ? '#0B1120' : '#F8FAFC',
         opacity: out ? 0 : 1,
@@ -74,8 +75,11 @@ export default function GlobeLoader({ onDone, fadeIn = false }) {
         }}
       />
 
+      {/* Top spacer to balance the bottom badge so globe stays vertically centered */}
+      <div className="w-full h-16 shrink-0 pointer-events-none" />
+
       {/* Detailed Rotating Real World Globe */}
-      <div className="relative z-10 flex flex-col items-center">
+      <div className="relative z-10 flex flex-col items-center my-auto">
         <EarthDetailedGlobe size={220} interactive={true} />
 
         {/* Brand and Status */}
@@ -88,6 +92,16 @@ export default function GlobeLoader({ onDone, fadeIn = false }) {
             <CyclingText dark={darkMode} />
           </div>
         </div>
+      </div>
+
+      {/* NSD Corporation Bottom Center */}
+      <div className="relative z-10 shrink-0 pb-2">
+        <PoweredByNSD
+          layout="stacked"
+          size="md"
+          showPoweredBy={false}
+          color={darkMode ? "text-white" : "text-[#025df0]"}
+        />
       </div>
     </div>
   );

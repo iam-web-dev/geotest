@@ -58,7 +58,7 @@ export function getDifficultyColor(difficulty) {
 export function getDifficultyLabel(difficulty) {
   switch (difficulty) {
     case 'easy': return 'Oson';
-    case 'medium': return "Örtaça";
+    case 'medium': return "Oʻrtacha";
     case 'hard': return 'Qiyin';
     case 'expert': return 'Ekspert';
     default: return difficulty;

@@ -1,4 +1,4 @@
-// GeoBek Custom Illustration System
+// GEOBEK Custom Illustration System
 // Handcrafted SVG illustrations for the geography education platform
 // Style: 2px stroke, rounded caps/joins, flat design, 2-3 colors, no gradients/shadows
 // Dark mode: uses currentColor / CSS variables via className
@@ -6,7 +6,6 @@
 import { useTheme } from '../../context/ThemeContext';
 import bbaSvg from '../images/bba.svg';
 import dtmSvg from '../images/dtm.svg';
-import fomSvg from '../images/fom.svg';
 
 // ==================== STICKER PACK ====================
 
@@ -124,13 +123,8 @@ export function StickerMedal({ size = 48, className = '', color = '#8B5CF6' }) {
   );
 }
 
-export function StickerCertificate({ size = 48, className = '' }) {
-  const d = Math.round(size * 0.96);
-  return (
-    <div className={`inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
-      <img src={bbaSvg} alt="BBA" style={{ width: d, height: d, objectFit: 'contain' }} />
-    </div>
-  );
+export function StickerCertificate({ size = 48, className = '', color = '#1E5BF8' }) {
+  return <StickerMilliyBadge size={size} className={className} color={color} />;
 }
 
 export function StickerStar({ size = 48, className = '', color = '#F59E0B' }) {
@@ -175,7 +169,7 @@ export function StickerDocumentCheck({ size = 48, className = '', color = '#22C5
   );
 }
 
-export function StickerDTMImage({ size = 48, className = '', color = '#171796' }) {
+export function StickerDTMImage({ size = 48, className = '', color = '#1E5BF8' }) {
   return (
     <div className={`relative inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
       <svg width={size} height={size} viewBox="0 0 48 48" fill="none" className="absolute inset-0">
@@ -193,16 +187,27 @@ export function StickerDTMImage({ size = 48, className = '', color = '#171796' }
 
 // ==================== HOME PAGE STICKERS ====================
 
-export function StickerMilliyBadge({ size = 48, className = '' }) {
-  const d = Math.round(size * 0.96);
+export function StickerMilliyBadge({ size = 48, className = '', color = '#1E5BF8' }) {
   return (
-    <div className={`inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
-      <img src={bbaSvg} alt="BBA" style={{ width: d, height: d, objectFit: 'contain' }} />
+    <div className={`relative inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
+      <svg width={size} height={size} viewBox="0 0 60 60" fill="none" className="absolute inset-0">
+        <circle cx="30" cy="30" r="26" fill={color} stroke="white" strokeWidth="2" paintOrder="stroke" />
+      </svg>
+      <img
+        src={bbaSvg}
+        alt="Milliy Sertifikat"
+        style={{
+          width: size * 0.90,
+          height: size * 0.90,
+          filter: 'brightness(0) invert(1)',
+        }}
+        className="object-contain relative z-10"
+      />
     </div>
   );
 }
 
-export function StickerDTMRocket({ size = 48, className = '', color = '#171796' }) {
+export function StickerDTMRocket({ size = 48, className = '', color = '#1E5BF8' }) {
   return (
     <div className={`relative inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
       <svg width={size} height={size} viewBox="0 0 60 60" fill="none" className="absolute inset-0">
@@ -219,20 +224,36 @@ export function StickerDTMRocket({ size = 48, className = '', color = '#171796' 
   );
 }
 
-export function StickerOlympiadTrophy({ size = 48, className = '', color = '#D4A820' }) {
-  const d = Math.round(size * 0.85);
+export function StickerOlympiadTrophy({ size = 48, className = '', color = '#1E5BF8' }) {
   return (
-    <div className={`relative inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
-      <svg width={size} height={size} viewBox="0 0 60 60" fill="none" className="absolute inset-0">
-        <circle cx="30" cy="30" r="26" fill={hexToRgba(color, 0.15)} stroke={color} strokeWidth="2" />
-        <circle cx="30" cy="30" r="22" fill="none" stroke={color} strokeWidth="1" strokeOpacity="0.3" />
-      </svg>
-      <img src={fomSvg} alt="FOM" style={{ width: d, height: d, objectFit: 'contain' }} className="relative z-10" />
-    </div>
+    <svg width={size} height={size} viewBox="0 0 60 60" fill="none" className={className}>
+      <circle cx="30" cy="30" r="26" fill={color} stroke="white" strokeWidth="4" paintOrder="stroke" />
+      <circle cx="30" cy="30" r="22" fill="none" stroke="white" strokeWidth="1.5" strokeOpacity="0.35" />
+      {/* Trophy Body */}
+      <path
+        d="M23 19 H37 V27 C37 30.9 33.9 34 30 34 C26.1 34 23 30.9 23 27 V19 Z"
+        fill="white"
+      />
+      {/* Handles */}
+      <path
+        d="M23 21 C18.5 21 16.5 24 16.5 27 C16.5 30 18.5 32 23 32 M37 21 C41.5 21 43.5 24 43.5 27 C43.5 30 41.5 32 37 32"
+        stroke="white"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+      />
+      {/* Stem & Pedestal */}
+      <path d="M30 34 V39 M23 42 H37" stroke="white" strokeWidth="3" strokeLinecap="round" />
+      <path d="M26 39 H34" stroke="white" strokeWidth="2" strokeLinecap="round" />
+      {/* Primary Blue Star inside Cup */}
+      <path
+        d="M30 22.5 L30.9 24.5 L33.2 24.7 L31.5 26 L32 28.2 L30 27 L28 28.2 L28.5 26 L26.8 24.7 L29.1 24.5 Z"
+        fill={color}
+      />
+    </svg>
   );
 }
 
-export function StickerAttestationShield({ size = 48, className = '', color = '#22C55E' }) {
+export function StickerAttestationShield({ size = 48, className = '', color = '#1E5BF8' }) {
   return (
     <svg width={size} height={size} viewBox="0 0 60 60" fill="none" className={className}>
       <path
@@ -293,7 +314,7 @@ export function StatIconTests({ size = 48, className = '', color = '#22C55E' }) 
 
 export function BadgeSticker({ name, unlocked = true, size = 56, className = '' }) {
   const stickerMap = {
-    'Birinçi Test': StickerTarget,
+    'Birinchi Test': StickerTarget,
     '7 kunlik Streak': StickerFlame,
     'Geografiya Fanatigi': StickerGlobe,
     '100 ta Test': StickerCheckCircle,
@@ -314,11 +335,11 @@ export function BadgeSticker({ name, unlocked = true, size = 56, className = '' 
 // ── Unique SVG badge icons (per badge name) ───────────────────────────────────
 
 const BADGE_SVGS = {
-  'Birinçi Qadam': (c) => (
+  'Birinchi Qadam': (c) => (
     <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
     <path d="M20 10 L22.5 17.5 H30 L24 22 L26.5 29.5 L20 25 L13.5 29.5 L16 22 L10 17.5 H17.5 Z" fill={c} fillOpacity=".85"/></>
   ),
-  'Qiziquvçan': (c) => (
+  'Qiziquvchan': (c) => (
     <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
     <circle cx="20" cy="20" r="8" stroke={c} strokeWidth="2"/>
     <line x1="20" y1="4" x2="20" y2="9" stroke={c} strokeWidth="2" strokeLinecap="round"/>
@@ -327,7 +348,7 @@ const BADGE_SVGS = {
     <line x1="31" y1="20" x2="36" y2="20" stroke={c} strokeWidth="2" strokeLinecap="round"/>
     <circle cx="20" cy="20" r="2.5" fill={c}/></>
   ),
-  'Izlanuvçan': (c) => (
+  'Izlanuvchan': (c) => (
     <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
     <circle cx="18" cy="18" r="7" stroke={c} strokeWidth="2.5"/>
     <line x1="23.5" y1="23.5" x2="30" y2="30" stroke={c} strokeWidth="3" strokeLinecap="round"/></>
@@ -337,7 +358,7 @@ const BADGE_SVGS = {
     <path d="M12 19 L17 24 L28 13" stroke={c} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
     <text x="20" y="33" textAnchor="middle" fontSize="6.5" fill={c} fontWeight="bold">100</text></>
   ),
-  "A'loçi": (c) => (
+  "A'lochi": (c) => (
     <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
     <text x="19" y="26" textAnchor="middle" fontSize="17" fill={c} fontWeight="900">A</text>
     <circle cx="29" cy="12" r="5.5" fill={c}/>
@@ -351,7 +372,7 @@ const BADGE_SVGS = {
     <line x1="13" y1="14.5" x2="27" y2="14.5" stroke={c} strokeWidth="1" strokeOpacity=".6"/>
     <line x1="13" y1="25.5" x2="27" y2="25.5" stroke={c} strokeWidth="1" strokeOpacity=".6"/></>
   ),
-  "Barça Öyinlar": (c) => (
+  "Barcha Oʻyinlar": (c) => (
     <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
     <rect x="11" y="15" width="18" height="12" rx="3" stroke={c} strokeWidth="1.5"/>
     <line x1="15" y1="21" x2="18" y2="21" stroke={c} strokeWidth="1.5" strokeLinecap="round"/>
@@ -391,7 +412,7 @@ const BADGE_SVGS = {
     <circle cx="27" cy="29" r="5.5" fill={c}/>
     <path d="M24.3 29 L26.5 31.2 L30.2 27" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></>
   ),
-  "Töliq Kurs": (c) => (
+  "Toʻliq Kurs": (c) => (
     <><circle cx="20" cy="20" r="18" fill={c} fillOpacity=".15" stroke={c} strokeWidth="1.5"/>
     <polygon points="20,10 31,17 20,24 9,17" fill={c} fillOpacity=".3" stroke={c} strokeWidth="1.5"/>
     <path d="M9 17 L9 24 Q9 30 20 30 Q31 30 31 24 L31 17" stroke={c} strokeWidth="1.5" strokeLinecap="round" fill="none"/>

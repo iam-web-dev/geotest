@@ -1,25 +1,22 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
-  BookOpen, Clock, CaretLeft, CaretRight, Flag, CheckCircle,
-  CaretDown, CaretUp, Warning, FileText, Image, MapTrifold,
-  TextAlignLeft, GridFour, Timer, ChartBar, Star, Users, Shield,
-  GraduationCap, Medal, Target, Lightning, Check, X, Scroll,
+  Clock, CaretLeft, CaretRight, Flag, CheckCircle,
+  CaretDown, CaretUp, FileText, Timer, ChartBar,
+  Users, Shield, Medal, Target, Lightning,
 } from '@phosphor-icons/react';
-import { cn, formatTime, getExamTypeColor, getExamTypeLabel, canHover } from '../lib/utils';
+import { cn, formatTime, canHover } from '../lib/utils';
 import Button from '../components/ui/Button';
 import { Card, CardContent } from '../components/ui/Card';
-import { ProgressBar, CircularProgress } from '../components/ui/Progress';
+import { ProgressBar } from '../components/ui/Progress';
 import {
   testCategories, popularTests, milliySertifikatQuestions,
   dtmSections, dtmQuestions, olympiadQuestions, attestationQuestions
 } from '../data/mockData';
 import {
-  GlobeCertificate, UZMapTarget, MountainFlagMedal, ShieldCheckDocument,
-  StickerTarget, StickerTrophy, StickerCertificate, StickerBook,
-  StickerDTMImage, StickerShieldCheck,
+  StickerCertificate,
   StickerMilliyBadge, StickerDTMRocket, StickerOlympiadTrophy, StickerAttestationShield
 } from '../components/illustrations/GeoIllustrations';
 
@@ -31,17 +28,17 @@ const categoryStickerMap = {
 };
 
 const categoryPalette = {
-  milliy:      { color: '#326D62', bg: 'var(--pal-milliy)' },
-  dtm:         { color: '#171796', bg: 'var(--pal-dtm)' },
-  olympiad:    { color: '#D4A820', bg: 'var(--pal-olympiad)' },
-  attestation: { color: '#22C55E', bg: 'var(--pal-attestation)' },
+  milliy:      { color: '#1E5BF8', bg: 'var(--primary-soft)' },
+  dtm:         { color: '#1E5BF8', bg: 'var(--primary-soft)' },
+  olympiad:    { color: '#1E5BF8', bg: 'var(--primary-soft)' },
+  attestation: { color: '#1E5BF8', bg: 'var(--primary-soft)' },
 };
 
 const testStickers = {
-  milliy:      { Sticker: StickerMilliyBadge,      color: '#326D62', bg: 'var(--pal-milliy)',      label: 'Milliy Sertifikat' },
-  dtm:         { Sticker: StickerDTMRocket,         color: '#171796', bg: 'var(--pal-dtm)',         label: 'DTM' },
-  olympiad:    { Sticker: StickerOlympiadTrophy,    color: '#D4A820', bg: 'var(--pal-olympiad)',    label: 'Olimpiada' },
-  attestation: { Sticker: StickerAttestationShield, color: '#22C55E', bg: 'var(--pal-attestation)', label: 'Attestatsiya' },
+  milliy:      { Sticker: StickerMilliyBadge,      color: '#1E5BF8', bg: 'var(--primary-soft)', label: 'Milliy Sertifikat' },
+  dtm:         { Sticker: StickerDTMRocket,         color: '#1E5BF8', bg: 'var(--primary-soft)', label: 'DTM' },
+  olympiad:    { Sticker: StickerOlympiadTrophy,    color: '#1E5BF8', bg: 'var(--primary-soft)', label: 'Olimpiada' },
+  attestation: { Sticker: StickerAttestationShield, color: '#1E5BF8', bg: 'var(--primary-soft)', label: 'Attestatsiya' },
 };
 
 function TestCategoryCard({ category }) {
@@ -100,12 +97,12 @@ function CategoryTestsPage({ type }) {
   const tests = popularTests.filter(t => t.type === type);
 
   const pageSeoMap = {
-    milliy:      { title: "Milliy Sertifikat Geografiya Mock Testlari", desc: "Milliy Sertifikat geografiya imtihoniga real mock testlar, oçiq savollar va rasmiy format bilan tayyorlaning." },
-    dtm:         { title: "DTM Geografiya Testlari", desc: "Özbekiston DTM kiriş imtihoniga 90 savollik töliq geografiya amaliy testlari bilan tayyorlaning." },
-    olympiad:    { title: "Geografiya Olimpiada Testlari", desc: "Musobaqa öquvçilari uçun möljallangan murakkab geografiya olimpiada savollarini işlang." },
-    attestation: { title: "Attestatsiya Geografiya Testlari", desc: "Maktab attestatsiyasi uçun geografiya testlari — tezkor baholaş va batafsil natijalar bilan." },
+    milliy:      { title: "Milliy Sertifikat Geografiya Mock Testlari", desc: "Milliy Sertifikat geografiya imtihoniga real mock testlar, ochiq savollar va rasmiy format bilan tayyorlaning." },
+    dtm:         { title: "DTM Geografiya Testlari", desc: "Oʻzbekiston DTM kirish imtihoniga 90 savollik toʻliq geografiya amaliy testlari bilan tayyorlaning." },
+    olympiad:    { title: "Geografiya Olimpiada Testlari", desc: "Musobaqa oʻquvchilari uchun moʻljallangan murakkab geografiya olimpiada savollarini ishlang." },
+    attestation: { title: "Attestatsiya Geografiya Testlari", desc: "Maktab attestatsiyasi uchun geografiya testlari — tezkor baholash va batafsil natijalar bilan." },
   };
-  const seo = pageSeoMap[type] || { title: "Geografiya Testlari", desc: "Geografiya testlarini işlang." };
+  const seo = pageSeoMap[type] || { title: "Geografiya Testlari", desc: "Geografiya testlarini ishlang." };
 
   return (
     <div className="space-y-6">
@@ -128,7 +125,7 @@ function CategoryTestsPage({ type }) {
 
       {/* Test cards */}
       <div className="grid sm:grid-cols-2 gap-4">
-        {tests.map((test, i) => (
+        {tests.map((test) => (
           <div key={test.id}>
             <Card className="overflow-hidden h-full">
               {/* Sticker header */}
@@ -160,7 +157,7 @@ function CategoryTestsPage({ type }) {
                     <p className="text-sm font-bold" style={{ color: meta.color }}>
                       {test.participants.toLocaleString()}
                     </p>
-                    <p className="text-[10px] text-[var(--text-tertiary)] mt-0.5">Iştirok</p>
+                    <p className="text-[10px] text-[var(--text-tertiary)] mt-0.5">Ishtirok</p>
                   </div>
                 </div>
 
@@ -170,7 +167,7 @@ function CategoryTestsPage({ type }) {
                   className="w-full py-2.5 rounded-[var(--radius-xs)] text-sm font-bold text-white transition-opacity active:opacity-80"
                   style={{ background: meta.color }}
                 >
-                  Boşlaş
+                  Boshlash
                 </button>
               </CardContent>
             </Card>
@@ -181,12 +178,12 @@ function CategoryTestsPage({ type }) {
   );
 }
 
-function TestExamCard({ test, index }) {
+export function TestExamCard({ test }) {
   const colors = {
-    milliy: { bg: 'var(--pal-milliy)', color: '#326D62', label: 'Milliy Sertifikat' },
-    dtm: { bg: 'var(--pal-dtm)', color: '#171796', label: 'DTM' },
-    olympiad: { bg: 'var(--pal-olympiad)', color: '#D4A820', label: 'Olimpiada' },
-    attestation: { bg: 'var(--pal-attestation)', color: '#22C55E', label: 'Attestatsiya' },
+    milliy: { bg: 'var(--primary-soft)', color: '#1E5BF8', label: 'Milliy Sertifikat' },
+    dtm: { bg: 'var(--primary-soft)', color: '#1E5BF8', label: 'DTM' },
+    olympiad: { bg: 'var(--primary-soft)', color: '#1E5BF8', label: 'Olimpiada' },
+    attestation: { bg: 'var(--primary-soft)', color: '#1E5BF8', label: 'Attestatsiya' },
   };
   const c = colors[test.type] || colors.milliy;
 
@@ -227,20 +224,20 @@ function TestExamCard({ test, index }) {
               {test.participants.toLocaleString()}
             </div>
             <div className="flex items-center gap-1.5 text-xs" style={{
-              color: test.difficulty === 'easy' ? '#22C55E' : test.difficulty === 'medium' ? '#F59E0B' : test.difficulty === 'hard' ? '#EF4444' : '#171796'
+              color: test.difficulty === 'easy' ? '#22C55E' : test.difficulty === 'medium' ? '#F59E0B' : test.difficulty === 'hard' ? '#EF4444' : '#1E5BF8'
             }}>
               <ChartBar size={13} />
-              {test.difficulty === 'easy' ? 'Oson' : test.difficulty === 'medium' ? "Örtaça" : test.difficulty === 'hard' ? 'Qiyin' : 'Ekspert'}
+              {test.difficulty === 'easy' ? 'Oson' : test.difficulty === 'medium' ? "Oʻrtacha" : test.difficulty === 'hard' ? 'Qiyin' : 'Ekspert'}
             </div>
           </div>
 
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs text-[var(--text-secondary)]">Örtaça natija</p>
+              <p className="text-xs text-[var(--text-secondary)]">Oʻrtacha natija</p>
               <p className="text-lg font-bold" style={{ color: c.color }}>{test.averageScore}%</p>
             </div>
             <Button>
-              Boşlaş <CaretRight size={16} />
+              Boshlash <CaretRight size={16} />
             </Button>
           </div>
         </CardContent>
@@ -254,7 +251,7 @@ function MilliyTestView() {
   const [questions, setQuestions] = useState(milliySertifikatQuestions);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [timeLeft, setTimeLeft] = useState(150 * 60);
-  const [isTimerRunning, setIsTimerRunning] = useState(true);
+  const [isTimerRunning] = useState(true);
   const answeredCount = questions.filter(q => q.userAnswer !== null).length;
   const flaggedCount = questions.filter(q => q.isFlagged).length;
   const progress = (answeredCount / questions.length) * 100;
@@ -332,7 +329,7 @@ function MilliyTestView() {
               <div className="flex items-center gap-3 mt-4 pt-3 border-t border-[var(--border)] text-xs text-[var(--text-secondary)]">
                 <div className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-[var(--success)]/20" /> Javob</div>
                 <div className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-[var(--warning)]/20" /> Bayroq</div>
-                <div className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-[var(--border)]" /> Böş</div>
+                <div className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-[var(--border)]" /> Boʻsh</div>
               </div>
             </CardContent>
           </Card>
@@ -347,18 +344,11 @@ function MilliyTestView() {
                   <span className="text-xs font-medium text-[var(--text-secondary)]">
                     Savol {currentQuestion + 1} / {questions.length}
                   </span>
-                  <span className={cn(
-                    'text-xs font-medium px-2 py-0.5 rounded-full',
-                    questions[currentQuestion].type === 'closed' ? 'bg-[var(--pal-milliy)] text-[#326D62]' :
-                    questions[currentQuestion].type === 'open' ? 'bg-[var(--pal-dtm)] text-[#171796]' :
-                    questions[currentQuestion].type === 'image' ? 'bg-[var(--pal-olympiad)] text-[#D4A820]' :
-                    questions[currentQuestion].type === 'map' ? 'bg-[var(--pal-attestation)] text-[#22C55E]' :
-                    'bg-[#FCE7F3] text-[#EC4899]'
-                  )}>
+                  <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[var(--primary-soft)] text-[var(--primary)]">
                     {questions[currentQuestion].type === 'closed' ? 'Yopiq' :
-                     questions[currentQuestion].type === 'open' ? 'Oçiq' :
+                     questions[currentQuestion].type === 'open' ? 'Ochiq' :
                      questions[currentQuestion].type === 'image' ? 'Rasm' :
-                     questions[currentQuestion].type === 'map' ? 'Xarita' : 'Moslaştiriş'}
+                     questions[currentQuestion].type === 'map' ? 'Xarita' : 'Moslashtirish'}
                   </span>
                 </div>
                 <button
@@ -371,7 +361,7 @@ function MilliyTestView() {
                   )}
                 >
                   <Flag size={13} />
-                  {questions[currentQuestion].isFlagged ? 'Bayroqlangan' : 'Bayroqlaş'}
+                  {questions[currentQuestion].isFlagged ? 'Bayroqlangan' : 'Bayroqlash'}
                 </button>
               </div>
 
@@ -428,7 +418,7 @@ function MilliyTestView() {
                 {answeredCount} / {questions.length} ta javob berildi
               </p>
               <Button variant="gradient" disabled={answeredCount < questions.length}>
-                Testni Yakunlaş <Lightning size={16} />
+                Testni Yakunlash <Lightning size={16} />
               </Button>
             </CardContent>
           </Card>
@@ -469,27 +459,27 @@ function DTMTestView() {
       <div className="sticky top-0 z-30 bg-[var(--background)] pt-2 pb-3 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[var(--pal-dtm)] flex items-center justify-center">
-              <Target size={18} className="text-[#171796]" />
+            <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[var(--primary-soft)] flex items-center justify-center">
+              <Target size={18} className="text-[var(--primary)]" />
             </div>
             <div>
               <p className="text-sm font-bold text-[var(--text-primary)]">DTM Blok Test</p>
               <p className="text-xs text-[var(--text-secondary)]">{answeredCount}/{questions.length} ta javob</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--pal-dtm)] text-[#171796] font-bold text-sm">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--primary-soft)] text-[var(--primary)] font-bold text-sm">
             <Clock size={16} />
             {formatTime(timeLeft)}
           </div>
         </div>
-        <ProgressBar value={progress} size="sm" color="#171796" />
+        <ProgressBar value={progress} size="sm" color="#1E5BF8" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="order-2 lg:order-1 lg:col-span-1">
           <Card className="sticky top-28">
             <CardContent className="p-4">
-              <p className="text-sm font-semibold text-[var(--text-primary)] mb-3">Bölimlar</p>
+              <p className="text-sm font-semibold text-[var(--text-primary)] mb-3">Boʻlimlar</p>
               <div className="space-y-2">
                 {dtmSections.map((section) => {
                   const answeredInSection = questions.filter(
@@ -521,7 +511,7 @@ function DTMTestView() {
                                 onClick={() => setCurrentQuestion(qNum - 1)}
                                 className={cn(
                                   'aspect-square rounded-[var(--radius-xs)] text-[10px] font-semibold transition-all',
-                                  currentQuestion === qNum - 1 && 'ring-2 ring-[#171796] ring-offset-1 ring-offset-[var(--surface)]',
+                                  currentQuestion === qNum - 1 && 'ring-2 ring-[var(--primary)] ring-offset-1 ring-offset-[var(--surface)]',
                                   q.userAnswer !== null && currentQuestion !== qNum - 1 && 'bg-[var(--success)]/20 text-[var(--success)]',
                                   currentQuestion !== qNum - 1 && !q.userAnswer && 'bg-[var(--border)] text-[var(--text-secondary)]'
                                 )}
@@ -555,8 +545,7 @@ function DTMTestView() {
                   <span className="text-xs font-medium text-[var(--text-secondary)]">
                     Savol {currentQuestion + 1} / {questions.length}
                   </span>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--pal-dtm)] text-[#171796] font-medium"
-                    style={{ background: `${currentSection?.color}22`, color: currentSection?.color }}>
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--primary-soft)] text-[var(--primary)] font-medium">
                     {currentSection?.subject}
                   </span>
                 </div>
@@ -574,8 +563,8 @@ function DTMTestView() {
                     className={cn(
                       'w-full text-left p-3.5 rounded-[var(--radius-sm)] border-2 transition-all text-sm',
                       questions[currentQuestion].userAnswer === option.charAt(0)
-                        ? 'border-[#171796] bg-[var(--pal-dtm)] text-[#171796]'
-                        : 'border-[var(--border)] hover:border-[#171796]/50 hover:bg-[var(--background)] text-[var(--text-primary)]'
+                        ? 'border-[var(--primary)] bg-[var(--primary-soft)] text-[var(--primary)]'
+                        : 'border-[var(--border)] hover:border-[var(--primary)]/50 hover:bg-[var(--background)] text-[var(--text-primary)]'
                     )}
                   >
                     <span className="font-semibold">{option.charAt(0)})</span> {option.slice(3)}
@@ -602,7 +591,7 @@ function DTMTestView() {
                 {answeredCount} / {questions.length} ta javob berildi
               </p>
               <Button variant="gradient" disabled={answeredCount < questions.length}>
-                Testni Yakunlaş <Lightning size={16} />
+                Testni Yakunlash <Lightning size={16} />
               </Button>
             </CardContent>
           </Card>
@@ -635,19 +624,19 @@ function OlympiadTestView() {
       <div className="sticky top-0 z-30 bg-[var(--background)] pt-2 pb-3 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[var(--pal-olympiad)] flex items-center justify-center">
-              <Medal size={18} className="text-[#D4A820]" />
+            <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[var(--primary-soft)] flex items-center justify-center">
+              <Medal size={18} className="text-[var(--primary)]" />
             </div>
             <div>
               <p className="text-sm font-bold text-[var(--text-primary)]">Olimpiada</p>
               <p className="text-xs text-[var(--text-secondary)]">{answeredCount}/{questions.length}</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--pal-olympiad)] text-[#D4A820] font-bold text-sm">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--primary-soft)] text-[var(--primary)] font-bold text-sm">
             <Clock size={16} /> {formatTime(timeLeft)}
           </div>
         </div>
-        <ProgressBar value={(answeredCount / questions.length) * 100} size="sm" color="#D4A820" />
+        <ProgressBar value={(answeredCount / questions.length) * 100} size="sm" color="#1E5BF8" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -662,14 +651,14 @@ function OlympiadTestView() {
                     onClick={() => setCurrentQuestion(i)}
                     className={cn(
                       'w-full aspect-square rounded-[var(--radius-xs)] text-xs font-semibold relative',
-                      i === currentQuestion && 'ring-2 ring-[#D4A820] ring-offset-2 ring-offset-[var(--surface)]',
+                      i === currentQuestion && 'ring-2 ring-[var(--primary)] ring-offset-2 ring-offset-[var(--surface)]',
                       q.userAnswer !== null && i !== currentQuestion && 'bg-[var(--success)]/20 text-[var(--success)]',
                       i !== currentQuestion && !q.userAnswer && 'bg-[var(--border)] text-[var(--text-secondary)]'
                     )}
                   >
                     {q.number}
                     {q.points > 1 && (
-                      <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-[#D4A820] text-white text-[7px] flex items-center justify-center font-bold">
+                      <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-[var(--primary)] text-white text-[7px] flex items-center justify-center font-bold">
                         {q.points}
                       </span>
                     )}
@@ -678,8 +667,8 @@ function OlympiadTestView() {
               </div>
               <div className="mt-3 flex items-center gap-2 text-[10px] text-[var(--text-secondary)]">
                 <span className="px-1.5 py-0.5 rounded bg-[var(--border)]">1 bal</span>
-                <span className="px-1.5 py-0.5 rounded bg-[var(--pal-olympiad)] text-[#D4A820]">2 bal</span>
-                <span className="px-1.5 py-0.5 rounded bg-[#FEE2E2] text-[#EF4444]">3+ bal</span>
+                <span className="px-1.5 py-0.5 rounded bg-[var(--primary-soft)] text-[var(--primary)] font-medium">2 bal</span>
+                <span className="px-1.5 py-0.5 rounded bg-[var(--primary)] text-white font-medium">3+ bal</span>
               </div>
             </CardContent>
           </Card>
@@ -693,12 +682,12 @@ function OlympiadTestView() {
                 <div className="flex items-center gap-2">
                   <span className={cn(
                     'text-xs px-2 py-0.5 rounded-full font-medium',
-                    currentQ.difficulty === 'easy' ? 'bg-[var(--pal-attestation)] text-[#22C55E]' :
-                    currentQ.difficulty === 'medium' ? 'bg-[var(--pal-olympiad)] text-[#D4A820]' :
-                    currentQ.difficulty === 'hard' ? 'bg-[#FEE2E2] text-[#EF4444]' :
-                    'bg-[var(--pal-dtm)] text-[#171796]'
-                  )}>{currentQ.difficulty === 'easy' ? 'Oson' : currentQ.difficulty === 'medium' ? "Örtaça" : currentQ.difficulty === 'hard' ? 'Qiyin' : 'Ekspert'}</span>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--pal-olympiad)] text-[#D4A820] font-medium">{currentQ.points} bal</span>
+                    currentQ.difficulty === 'easy' ? 'bg-[var(--success)]/10 text-[var(--success)]' :
+                    currentQ.difficulty === 'medium' ? 'bg-[var(--warning)]/10 text-[var(--warning)]' :
+                    currentQ.difficulty === 'hard' ? 'bg-[var(--danger)]/10 text-[var(--danger)]' :
+                    'bg-[var(--primary-soft)] text-[var(--primary)]'
+                  )}>{currentQ.difficulty === 'easy' ? 'Oson' : currentQ.difficulty === 'medium' ? "Oʻrtacha" : currentQ.difficulty === 'hard' ? 'Qiyin' : 'Ekspert'}</span>
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--primary-soft)] text-[var(--primary)] font-medium">{currentQ.points} bal</span>
                 </div>
               </div>
 
@@ -715,8 +704,8 @@ function OlympiadTestView() {
                       className={cn(
                         'w-full text-left p-3.5 rounded-[var(--radius-sm)] border-2 transition-all text-sm',
                         currentQ.userAnswer === option.charAt(0)
-                          ? 'border-[#D4A820] bg-[var(--pal-olympiad)] text-[#D4A820]'
-                          : 'border-[var(--border)] hover:border-[#D4A820]/50 hover:bg-[var(--background)] text-[var(--text-primary)]'
+                          ? 'border-[var(--primary)] bg-[var(--primary-soft)] text-[var(--primary)]'
+                          : 'border-[var(--border)] hover:border-[var(--primary)]/50 hover:bg-[var(--background)] text-[var(--text-primary)]'
                       )}
                     >
                       <span className="font-semibold">{option.charAt(0)})</span> {option.slice(3)}
@@ -726,7 +715,7 @@ function OlympiadTestView() {
               ) : (
                 <div className="space-y-3">
                   <textarea
-                    className="w-full min-h-[200px] p-4 rounded-[var(--radius-sm)] border-2 border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)] text-sm resize-none focus:border-[#D4A820] focus:outline-none transition-all"
+                    className="w-full min-h-[200px] p-4 rounded-[var(--radius-sm)] border-2 border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)] text-sm resize-none focus:border-[var(--primary)] focus:outline-none transition-all"
                     placeholder="Javobingizni yozing..."
                     value={currentQ.userAnswer || ''}
                     onChange={(e) => handleAnswer(e.target.value)}
@@ -775,19 +764,19 @@ function AttestationTestView() {
       <div className="sticky top-0 z-30 bg-[var(--background)] pt-2 pb-3 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[var(--pal-attestation)] flex items-center justify-center">
-              <Shield size={18} className="text-[#22C55E]" />
+            <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[var(--primary-soft)] flex items-center justify-center">
+              <Shield size={18} className="text-[var(--primary)]" />
             </div>
             <div>
               <p className="text-sm font-bold text-[var(--text-primary)]">Attestatsiya</p>
               <p className="text-xs text-[var(--text-secondary)]">{answeredCount}/{questions.length}</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--pal-attestation)] text-[#22C55E] font-bold text-sm">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--primary-soft)] text-[var(--primary)] font-bold text-sm">
             <Clock size={16} /> {formatTime(timeLeft)}
           </div>
         </div>
-        <ProgressBar value={(answeredCount / questions.length) * 100} size="sm" color="#22C55E" />
+        <ProgressBar value={(answeredCount / questions.length) * 100} size="sm" color="#1E5BF8" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -802,7 +791,7 @@ function AttestationTestView() {
                     onClick={() => setCurrentQuestion(i)}
                     className={cn(
                       'w-full aspect-square rounded-[var(--radius-xs)] text-xs font-semibold',
-                      i === currentQuestion && 'ring-2 ring-[#22C55E] ring-offset-2',
+                      i === currentQuestion && 'ring-2 ring-[var(--primary)] ring-offset-2',
                       q.userAnswer !== null && i !== currentQuestion && 'bg-[var(--success)]/20 text-[var(--success)]',
                       i !== currentQuestion && !q.userAnswer && 'bg-[var(--border)] text-[var(--text-secondary)]'
                     )}
@@ -830,8 +819,8 @@ function AttestationTestView() {
                     className={cn(
                       'w-full text-left p-3.5 rounded-[var(--radius-sm)] border-2 transition-all text-sm',
                       questions[currentQuestion].userAnswer === option.charAt(0)
-                        ? 'border-[#22C55E] bg-[var(--pal-attestation)] text-[#22C55E]'
-                        : 'border-[var(--border)] hover:border-[#22C55E]/50 hover:bg-[var(--background)] text-[var(--text-primary)]'
+                        ? 'border-[var(--primary)] bg-[var(--primary-soft)] text-[var(--primary)]'
+                        : 'border-[var(--border)] hover:border-[var(--primary)]/50 hover:bg-[var(--background)] text-[var(--text-primary)]'
                     )}
                   >
                     <span className="font-semibold">{option.charAt(0)})</span> {option.slice(3)}
@@ -858,7 +847,6 @@ function AttestationTestView() {
 // Main Tests Page
 export default function Tests() {
   const { type } = useParams();
-  const navigate = useNavigate();
 
   if (type) return <CategoryTestsPage type={type} />;
 
@@ -866,57 +854,18 @@ export default function Tests() {
     <div className="space-y-6">
       <SEO
         title="Geografiya Testlari"
-        description="DTM, Milliy Sertifikat, Olimpiada va maktab imtihonlari uçun geografiya testlarini işlang — natijalar va batafsil tahlil bilan."
+        description="DTM, Milliy Sertifikat, Olimpiada va maktab imtihonlari uchun geografiya testlarini ishlang — natijalar va batafsil tahlil bilan."
         url="/tests"
       />
       <div>
         <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">Testlar</h1>
-        <p className="text-sm text-[var(--text-secondary)] mt-1">Imtihon turini tanlang va tayyorgarlikni boşlang</p>
+        <p className="text-sm text-[var(--text-secondary)] mt-1">Imtihon turini tanlang va tayyorgarlikni boshlang</p>
       </div>
 
       <div className="grid grid-cols-2 gap-3 w-full">
         {testCategories.map((cat) => (
           <TestCategoryCard key={cat.id} category={cat} />
         ))}
-      </div>
-
-      <div>
-        <h2 className="text-[17px] font-bold text-[var(--text-primary)] mb-3">Ommabop Testlar</h2>
-        <div className="grid sm:grid-cols-2 gap-4">
-          {popularTests.map((test, i) => {
-            const meta = testStickers[test.type] || testStickers.milliy;
-            const { Sticker } = meta;
-            return (
-              <div key={test.id}>
-                <Card className="cursor-pointer h-full overflow-hidden" onClick={() => navigate(`/tests/${test.type}`)}>
-                  <div className="flex items-center gap-3 px-4 py-3" style={{ background: meta.bg }}>
-                    <Sticker size={42} color={meta.color} />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-bold text-[var(--text-primary)] truncate leading-tight">{test.title}</p>
-                      <p className="text-xs font-semibold mt-0.5" style={{ color: meta.color }}>{meta.label}</p>
-                    </div>
-                  </div>
-                  <CardContent className="px-4 py-3">
-                    <div className="grid grid-cols-3 text-center rounded-[var(--radius-xs)] overflow-hidden border border-[var(--border)]">
-                      <div className="py-2 border-r border-[var(--border)]">
-                        <p className="text-sm font-bold text-[var(--text-primary)]">{test.questions}</p>
-                        <p className="text-[10px] text-[var(--text-tertiary)]">Savol</p>
-                      </div>
-                      <div className="py-2 border-r border-[var(--border)]">
-                        <p className="text-sm font-bold text-[var(--text-primary)]">{test.time}</p>
-                        <p className="text-[10px] text-[var(--text-tertiary)]">Daqiqa</p>
-                      </div>
-                      <div className="py-2">
-                        <p className="text-sm font-bold" style={{ color: meta.color }}>{test.participants.toLocaleString()}</p>
-                        <p className="text-[10px] text-[var(--text-tertiary)]">Iştirok</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            );
-          })}
-        </div>
       </div>
     </div>
   );

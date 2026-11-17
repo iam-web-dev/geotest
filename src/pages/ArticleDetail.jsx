@@ -19,13 +19,13 @@ function saveState(s) {
 }
 
 const categoryMeta = {
-  'Geografiya': { color: '#2563EB', bg: 'var(--pal-milliy)',      Icon: Globe },
-  'Ekologiya':  { color: '#16A34A', bg: 'var(--pal-attestation)', Icon: Tree },
-  'Iqlim':      { color: '#0891B2', bg: '#E0F2FE',                Icon: Cloud },
-  'Turizm':     { color: '#D4A820', bg: 'var(--pal-olympiad)',     Icon: Mountains },
+  'Geografiya': { color: '#1E5BF8', bg: 'var(--primary-soft)', Icon: Globe },
+  'Ekologiya':  { color: '#1E5BF8', bg: 'var(--primary-soft)', Icon: Tree },
+  'Iqlim':      { color: '#1E5BF8', bg: 'var(--primary-soft)', Icon: Cloud },
+  'Turizm':     { color: '#1E5BF8', bg: 'var(--primary-soft)', Icon: Mountains },
 };
 function getCat(cat) {
-  return categoryMeta[cat] || { color: '#2563EB', bg: 'var(--pal-milliy)', Icon: Globe };
+  return categoryMeta[cat] || { color: '#1E5BF8', bg: 'var(--primary-soft)', Icon: Globe };
 }
 function formatDate(d) {
   const dt = new Date(d);
@@ -176,7 +176,7 @@ export default function ArticleDetail() {
         <p className="text-lg font-semibold mb-3">Maqola topilmadi</p>
         <button onClick={() => navigate('/articles')}
           className="text-sm font-medium text-[var(--primary)] underline">
-          Maqolalarga qaytiş
+          Maqolalarga qaytish
         </button>
       </div>
     );
@@ -288,7 +288,7 @@ export default function ArticleDetail() {
           <button
             onClick={() => navigator.share?.({ title: article.title, text: article.excerpt, url: window.location.href })}
             className="ml-auto flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border border-[var(--border)] text-[var(--text-secondary)] transition-all hover:bg-[var(--background)]">
-            <Share size={15} /> Ulaşiş
+            <Share size={15} /> Ulashish
           </button>
         </div>
       </div>

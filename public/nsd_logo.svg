@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="181 175 660 660" width="660" height="660">
+  <style>
+    polygon { fill: #025df0; }
+    @media (prefers-color-scheme: dark) {
+      polygon { fill: #ffffff; }
+    }
+  </style>
+  <g fill="currentColor">
+    <!-- Yuqori qism -->
+    <polygon points="361,230 661,230 719,307 303,307" />
+    <!-- Markaziy asosiy shakl -->
+    <polygon points="281,341 371,340 274,506 369,663 565,340 740,340 840,508 739,671 531,672 577,595 693,595 748,508 653,346 457,670 283,670 182,506" />
+    <!-- Pastki qism -->
+    <polygon points="305,702 716,703 651,780 371,780" />
+  </g>
+</svg>

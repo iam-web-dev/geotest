@@ -228,7 +228,7 @@ export default function RiverMap({
   const getRiverColor = (id) => {
     if (flash?.id === id) return flash.kind === 'correct' ? '#22C55E' : '#EF4444';
     if (revealId === id) return '#22C55E';
-    if (highlightId === id) return '#2563EB';
+    if (highlightId === id) return '#1E5BF8';
     return '#5FA8D3';
   };
   const getRiverWidth = (id) => (highlightId === id || flash?.id === id || revealId === id) ? 2.8 : 0.9;

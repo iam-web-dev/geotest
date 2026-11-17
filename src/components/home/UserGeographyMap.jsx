@@ -2,30 +2,30 @@ import { useState, useMemo } from 'react';
 import uzbekistanMap from '@svg-maps/uzbekistan';
 import {
   Globe, Users, TrendUp, Pulse, MagnifyingGlass,
-  CaretDown, CaretUp, Info, MapPin, X
+  CaretDown, CaretUp, MapPin, X
 } from '@phosphor-icons/react';
 import { cn } from '../../lib/utils';
 
 // Exact regional data from robocontest.uz provided by user
 const BASE_REGIONS = [
   { id: 'andijan', name: 'Andijon viloyati', total: 23905, newUsers: 566, active: 353 },
-  { id: 'tashkent-city', name: 'Toşkent şahar', total: 18524, newUsers: 526, active: 700 },
-  { id: 'fergana', name: "Farğona viloyati", total: 17998, newUsers: 481, active: 595 },
+  { id: 'tashkent-city', name: 'Toshkent shahar', total: 18524, newUsers: 526, active: 700 },
+  { id: 'fergana', name: "Fargʻona viloyati", total: 17998, newUsers: 481, active: 595 },
   { id: 'samarqand', name: 'Samarqand viloyati', total: 17868, newUsers: 311, active: 419 },
   { id: 'bukhara', name: 'Buxoro viloyati', total: 17865, newUsers: 494, active: 730 },
   { id: 'namangan', name: 'Namangan viloyati', total: 14883, newUsers: 224, active: 404 },
-  { id: 'qashqadaryo', name: 'Qaşqadaryo viloyati', total: 14879, newUsers: 336, active: 440 },
+  { id: 'qashqadaryo', name: 'Qashqadaryo viloyati', total: 14879, newUsers: 336, active: 440 },
   { id: 'jizzakh', name: 'Jizzax viloyati', total: 14825, newUsers: 356, active: 568 },
-  { id: 'karakalpakstan', name: "Qoraqalpoğiston Resp.", total: 14661, newUsers: 360, active: 485 },
+  { id: 'karakalpakstan', name: "Qoraqalpogʻiston Resp.", total: 14661, newUsers: 360, active: 485 },
   { id: 'xorazm', name: 'Xorazm viloyati', total: 13609, newUsers: 355, active: 492 },
   { id: 'sirdaryo', name: 'Sirdaryo viloyati', total: 11271, newUsers: 216, active: 333 },
-  { id: 'tashkent', name: 'Toşkent viloyati', total: 8059, newUsers: 319, active: 472 },
+  { id: 'tashkent', name: 'Toshkent viloyati', total: 8059, newUsers: 319, active: 472 },
   { id: 'navoiy', name: 'Navoiy viloyati', total: 8050, newUsers: 182, active: 215 },
   { id: 'surxondaryo', name: 'Surxondaryo viloyati', total: 6993, newUsers: 153, active: 221 },
 ];
 
 const UNASSIGNED_REGION = {
-  name: "Hududi körsatilmagan",
+  name: "Hududi koʻrsatilmagan",
   total: 4844,
   newUsers: 114,
   active: 168,
@@ -39,9 +39,9 @@ const TIME_RANGES = [
 ];
 
 const METRICS = [
-  { id: 'total', label: 'Jami', icon: Users, desc: 'Jami foydalanuvçilar' },
-  { id: 'newUsers', label: 'Yangi', icon: TrendUp, desc: 'Yangi röyxatdan ötganlar' },
-  { id: 'active', label: 'Faol', icon: Pulse, desc: 'Faol foydalanuvçilar' },
+  { id: 'total', label: 'Jami', icon: Users, desc: 'Jami foydalanuvchilar' },
+  { id: 'newUsers', label: 'Yangi', icon: TrendUp, desc: 'Yangi roʻyxatdan oʻtganlar' },
+  { id: 'active', label: 'Faol', icon: Pulse, desc: 'Faol foydalanuvchilar' },
 ];
 
 export default function UserGeographyMap() {
@@ -83,7 +83,7 @@ export default function UserGeographyMap() {
   const getRegionFillColor = (locIndex, locId) => {
     let regionDataId = locId;
     if (locId === 'tashkent') {
-      regionDataId = locIndex === 11 ? 'taşkent-city' : 'taşkent';
+      regionDataId = locIndex === 11 ? 'tashkent-city' : 'tashkent';
     }
 
     const item = calculatedRegions.find(r => r.id === regionDataId);
@@ -130,30 +130,19 @@ export default function UserGeographyMap() {
       
       {/* ── Section Header ── */}
       <div className="space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border)] pb-4">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse" />
-              <h2 className="text-xl sm:text-2xl font-extrabold text-[var(--text-primary)] tracking-tight">
-                Hududlar böyiça foydalanuvçilar geografiyasi
-              </h2>
-            </div>
-            <p className="text-xs sm:text-sm text-[var(--text-secondary)]">
-              Özbekiston Respublikasi viloyat va şaharlarida GeoBek foydalanuvçilari statistikasi
-            </p>
-          </div>
-
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-semibold self-start sm:self-auto shrink-0">
-            <Globe size={14} weight="bold" />
-            <span>Respublika qamrovi</span>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border)] pb-3">
+          <div className="space-y-0.5">
+            <h2 className="text-lg sm:text-xl font-bold text-[var(--text-primary)] tracking-tight">
+              Hududlar boʻyicha foydalanuvchilar geografiyasi
+            </h2>
           </div>
         </div>
 
-        {/* ── Filter Controls Bar (Spacious & Clean) ── */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[var(--surface)] p-3 rounded-2xl border border-[var(--border)] shadow-sm">
+        {/* ── Filter Controls Bar (Clean & Minimalist) ── */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[var(--surface)] p-2.5 rounded-xl border border-[var(--border)]">
           {/* Time Filter Tabs */}
           <div className="flex items-center gap-1 overflow-x-auto pb-0.5 sm:pb-0 scrollbar-none">
-            <span className="text-xs font-bold text-[var(--text-tertiary)] mr-1 hidden md:inline">Davr:</span>
+            <span className="text-xs font-medium text-[var(--text-tertiary)] mr-1 hidden md:inline">Davr:</span>
             {TIME_RANGES.map(range => {
               const isSelected = selectedTime === range.id;
               return (
@@ -161,9 +150,9 @@ export default function UserGeographyMap() {
                   key={range.id}
                   onClick={() => setSelectedTime(range.id)}
                   className={cn(
-                    'px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all shrink-0',
+                    'px-3 py-1.5 text-xs font-semibold rounded-lg transition-all shrink-0',
                     isSelected
-                      ? 'bg-[var(--primary)] text-white şadow-sm'
+                      ? 'bg-[var(--primary)] text-white shadow-2xs'
                       : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--background)]'
                   )}
                 >
@@ -175,7 +164,7 @@ export default function UserGeographyMap() {
 
           {/* Metric Selector Tabs */}
           <div className="flex items-center gap-1 overflow-x-auto pb-0.5 sm:pb-0 scrollbar-none">
-            <span className="text-xs font-bold text-[var(--text-tertiary)] mr-1 hidden md:inline">Metrika:</span>
+            <span className="text-xs font-medium text-[var(--text-tertiary)] mr-1 hidden md:inline">Metrika:</span>
             {METRICS.map(metric => {
               const Icon = metric.icon;
               const isSelected = selectedMetric === metric.id;
@@ -184,9 +173,9 @@ export default function UserGeographyMap() {
                   key={metric.id}
                   onClick={() => setSelectedMetric(metric.id)}
                   className={cn(
-                    'flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all shrink-0',
+                    'flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all shrink-0',
                     isSelected
-                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-sm'
+                      ? 'bg-[var(--primary)] text-white shadow-2xs'
                       : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--background)]'
                   )}
                 >
@@ -200,78 +189,68 @@ export default function UserGeographyMap() {
       </div>
 
       {/* ── Summary Counters Strip ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-4 sm:p-5 rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm space-y-1.5 hover:border-blue-400/40 transition-all">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] space-y-1.5 hover:border-[var(--primary)]/40 transition-colors">
           <div className="flex items-center justify-between text-xs text-[var(--text-secondary)] font-medium">
-            <span>Jami foydalanuvçilar</span>
-            <div className="w-7 h-7 rounded-lg bg-blue-500/10 text-blue-600 flex items-center justify-center">
+            <span>Jami foydalanuvchilar</span>
+            <div className="size-7 rounded-lg bg-[var(--primary-soft)] text-[var(--primary)] flex items-center justify-center">
               <Users size={16} weight="bold" />
             </div>
           </div>
-          <p className="text-2xl sm:text-3xl font-black text-[var(--text-primary)] tracking-tight">
+          <p className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tabular-nums tracking-tight">
             {totalStats.sumTotal.toLocaleString('en-US')}
-          </p>
-          <p className="text-[11px] text-[var(--text-tertiary)] leading-snug">
-            Özbekiston böyiça jami öquvçi va ustozlar
           </p>
         </div>
 
-        <div className="p-4 sm:p-5 rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm space-y-1.5 hover:border-emerald-400/40 transition-all">
+        <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] space-y-1.5 hover:border-[var(--primary)]/40 transition-colors">
           <div className="flex items-center justify-between text-xs text-[var(--text-secondary)] font-medium">
-            <span>Yangi qöşilganlar ({activeRange.label})</span>
-            <div className="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-600 flex items-center justify-center">
+            <span>Yangi qoʻshilganlar ({activeRange.label})</span>
+            <div className="size-7 rounded-lg bg-[var(--primary-soft)] text-[var(--primary)] flex items-center justify-center">
               <TrendUp size={16} weight="bold" />
             </div>
           </div>
-          <p className="text-2xl sm:text-3xl font-black text-emerald-600 tracking-tight">
+          <p className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tabular-nums tracking-tight">
             +{totalStats.sumNew.toLocaleString('en-US')}
-          </p>
-          <p className="text-[11px] text-[var(--text-tertiary)] leading-snug">
-            Tanlangan davrdagi yangi röyxatdan ötişlar
           </p>
         </div>
 
-        <div className="p-4 sm:p-5 rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm space-y-1.5 hover:border-indigo-400/40 transition-all">
+        <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] space-y-1.5 hover:border-[var(--primary)]/40 transition-colors">
           <div className="flex items-center justify-between text-xs text-[var(--text-secondary)] font-medium">
-            <span>Faol iştirokçilar</span>
-            <div className="w-7 h-7 rounded-lg bg-indigo-500/10 text-indigo-600 flex items-center justify-center">
+            <span>Faol ishtirokchilar</span>
+            <div className="size-7 rounded-lg bg-[var(--primary-soft)] text-[var(--primary)] flex items-center justify-center">
               <Pulse size={16} weight="bold" />
             </div>
           </div>
-          <p className="text-2xl sm:text-3xl font-black text-indigo-600 tracking-tight">
+          <p className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tabular-nums tracking-tight">
             {totalStats.sumActive.toLocaleString('en-US')}
-          </p>
-          <p className="text-[11px] text-[var(--text-tertiary)] leading-snug">
-            Sinov testlari va taqdimotlardan foydalanuvçilar
           </p>
         </div>
       </div>
 
-      {/* ── Interactive Map Box (Full-width, Spacious & Grand) ── */}
-      <div className="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 sm:p-8 shadow-sm space-y-6">
+      {/* ── Interactive Map Box (Clean & Balanced) ── */}
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 sm:p-6 space-y-5">
         
         {/* Map Top Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="space-y-0.5">
-            <h3 className="text-base sm:text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-              <MapPin size={18} className="text-blue-600" weight="fill" />
-              <span>Özbekiston Respublikasi interaktiv xaritasi</span>
+            <h3 className="text-sm sm:text-base font-bold text-[var(--text-primary)] flex items-center gap-2">
+              <span>Oʻzbekiston Respublikasi interaktiv xaritasi</span>
             </h3>
             <p className="text-xs text-[var(--text-secondary)]">
-              Viloyat ustiga bosib yoki siçqonçani olib borib, körsatkiçlarni tekşiring
+              Viloyat ustiga bosib, koʻrsatkichlarni tekshiring
             </p>
           </div>
 
           {/* Heatmap Legend */}
-          <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[var(--background)] border border-[var(--border)] text-xs text-[var(--text-secondary)] font-medium self-start sm:self-auto shrink-0">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[var(--background)] border border-[var(--border)] text-xs text-[var(--text-secondary)] font-medium self-start sm:self-auto shrink-0">
             <span className="text-[11px]">Kam</span>
-            <div className="w-28 sm:w-36 h-2.5 rounded-full bg-gradient-to-r from-blue-200 via-blue-500 to-indigo-900 shadow-inner" />
-            <span className="text-[11px]">Köp</span>
+            <div className="w-24 sm:w-32 h-2 rounded-full bg-gradient-to-r from-blue-100 to-[#1E5BF8]" />
+            <span className="text-[11px]">Koʻp</span>
           </div>
         </div>
 
         {/* SVG Map Canvas */}
-        <div className="relative rounded-2xl bg-[var(--background)] border border-[var(--border-subtle)] p-4 sm:p-6 flex items-center justify-center overflow-hidden">
+        <div className="relative rounded-xl bg-[var(--background)] border border-[var(--border)] p-4 sm:p-6 flex items-center justify-center overflow-hidden">
           <div className="w-full max-w-2xl py-2">
             <svg
               viewBox={uzbekistanMap.viewBox}
@@ -282,7 +261,7 @@ export default function UserGeographyMap() {
                 const isAral = loc.id === 'aral-sea';
                 let regionDataId = loc.id;
                 if (loc.id === 'tashkent') {
-                  regionDataId = index === 11 ? 'taşkent-city' : 'taşkent';
+                  regionDataId = index === 11 ? 'tashkent-city' : 'tashkent';
                 }
 
                 const isSelected = selectedRegionId === regionDataId;
@@ -292,7 +271,7 @@ export default function UserGeographyMap() {
                     key={`${loc.id}-${index}`}
                     d={loc.path}
                     fill={isAral ? '#0284C7' : getRegionFillColor(index, loc.id)}
-                    stroke={isSelected ? '#1D4ED8' : '#FFFFFF'}
+                    stroke={isSelected ? '#1E5BF8' : '#FFFFFF'}
                     strokeWidth={isSelected ? 1.8 : 0.8}
                     strokeLinejoin="round"
                     className={cn(
@@ -310,49 +289,48 @@ export default function UserGeographyMap() {
 
           {/* Selected Region Quick Info Floating Card */}
           {activeRegionData && (
-            <div className="absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-xs bg-[var(--surface)]/95 backdrop-blur-md border border-[var(--border)] rounded-2xl p-4 shadow-xl text-xs space-y-2.5">
+            <div className="absolute bottom-3 left-3 right-3 sm:right-auto sm:max-w-xs bg-[var(--surface)]/95 backdrop-blur-md border border-[var(--border)] rounded-xl p-3.5 shadow-sm text-xs space-y-2">
               <div className="flex items-center justify-between gap-2 border-b border-[var(--border)] pb-2">
                 <div className="flex items-center gap-1.5 font-bold text-sm text-[var(--text-primary)]">
-                  <span className="w-2 h-2 rounded-full bg-blue-600 shrink-0" />
                   <span>{activeRegionData.name}</span>
                 </div>
-                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600">
-                  #{activeRegionRank} örinda
+                <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[var(--primary-soft)] text-[var(--primary)] border border-[var(--primary-border)]">
+                  #{activeRegionRank} oʻrinda
                 </span>
               </div>
 
               <div className="grid grid-cols-3 gap-2 text-center">
                 <div className="p-1.5 rounded-lg bg-[var(--background)]">
                   <div className="text-[10px] text-[var(--text-tertiary)]">Jami</div>
-                  <div className="font-bold text-[var(--text-primary)] font-mono text-xs mt-0.5">
+                  <div className="font-bold text-[var(--text-primary)] tabular-nums text-xs mt-0.5">
                     {activeRegionData.calcTotal.toLocaleString('en-US')}
                   </div>
                 </div>
                 <div className="p-1.5 rounded-lg bg-[var(--background)]">
                   <div className="text-[10px] text-[var(--text-tertiary)]">Yangi</div>
-                  <div className="font-bold text-emerald-600 font-mono text-xs mt-0.5">
+                  <div className="font-bold text-[var(--text-primary)] tabular-nums text-xs mt-0.5">
                     +{activeRegionData.calcNew}
                   </div>
                 </div>
                 <div className="p-1.5 rounded-lg bg-[var(--background)]">
                   <div className="text-[10px] text-[var(--text-tertiary)]">Faol</div>
-                  <div className="font-bold text-indigo-600 font-mono text-xs mt-0.5">
+                  <div className="font-bold text-[var(--text-primary)] tabular-nums text-xs mt-0.5">
                     {activeRegionData.calcActive}
                   </div>
                 </div>
               </div>
 
               {/* Share of Republic Progress Bar */}
-              <div className="space-y-1 pt-1">
+              <div className="space-y-1 pt-0.5">
                 <div className="flex items-center justify-between text-[10px] text-[var(--text-tertiary)]">
-                  <span>Respublika uluşi:</span>
-                  <span className="font-bold text-[var(--text-primary)] font-mono">
+                  <span>Respublika ulushi:</span>
+                  <span className="font-semibold text-[var(--text-primary)] tabular-nums">
                     {((activeRegionData.calcTotal / totalStats.sumTotal) * 100).toFixed(1)}%
                   </span>
                 </div>
                 <div className="w-full h-1.5 rounded-full bg-[var(--background)] overflow-hidden">
                   <div
-                    className="h-full rounded-full bg-blue-600 transition-all duration-300"
+                    className="h-full rounded-full bg-[var(--primary)] transition-all duration-300"
                     style={{
                       width: `${((activeRegionData.calcTotal / totalStats.sumTotal) * 100).toFixed(1)}%`
                     }}
@@ -366,33 +344,29 @@ export default function UserGeographyMap() {
         {/* Map Attribution and Unassigned Notice */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 text-xs text-[var(--text-tertiary)] border-t border-[var(--border)]">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
-            <span className="font-semibold text-[var(--text-secondary)]">
-              Hududi körsatilmagan foydalanuvçilar: <span className="font-mono text-[var(--text-primary)]">{UNASSIGNED_REGION.total.toLocaleString('en-US')} nafar</span>
+            <span className="font-medium text-[var(--text-secondary)]">
+              Hududi koʻrsatilmagan foydalanuvchilar: <span className="tabular-nums font-semibold text-[var(--text-primary)]">{UNASSIGNED_REGION.total.toLocaleString('en-US')} nafar</span>
             </span>
           </div>
-          <span className="text-[11px]">
-            Çegaralar: geoBoundaries.org (CC BY 3.0 IGO)
-          </span>
         </div>
       </div>
 
-      {/* ── Detailed Region Data Table (Spacious, Roomy & Ranked) ── */}
-      <div className="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 sm:p-7 shadow-sm space-y-4">
+      {/* ── Detailed Region Data Table ── */}
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 sm:p-6 space-y-4">
         
         {/* Table Controls */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="space-y-0.5">
             <div className="flex items-center gap-2">
-              <h3 className="text-base sm:text-lg font-bold text-[var(--text-primary)]">
-                Hududlar reytingi va körsatkiçlari
+              <h3 className="text-sm sm:text-base font-bold text-[var(--text-primary)]">
+                Hududlar reytingi va koʻrsatkichlari
               </h3>
-              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[var(--background)] border border-[var(--border)] text-[var(--text-secondary)]">
+              <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[var(--background)] border border-[var(--border)] text-[var(--text-secondary)]">
                 14 ta hudud
               </span>
             </div>
             <p className="text-xs text-[var(--text-secondary)]">
-              Körsatkiçlar ustiga bosib saralaşingiz mumkin
+              Koʻrsatkichlar ustiga bosib saralashingiz mumkin
             </p>
           </div>
 
@@ -401,10 +375,10 @@ export default function UserGeographyMap() {
             <MagnifyingGlass size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)]" />
             <input
               type="text"
-              placeholder="Hudud nomini qidiriş..."
+              placeholder="Hudud nomini qidirish..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-9 pl-9 pr-8 rounded-xl text-xs bg-[var(--background)] border border-[var(--border)] focus:outline-none focus:border-[var(--primary)] text-[var(--text-primary)] transition-all"
+              className="w-full h-8 pl-8 pr-8 rounded-lg text-xs bg-[var(--background)] border border-[var(--border)] focus:outline-none focus:border-[var(--primary)] text-[var(--text-primary)] transition-colors"
             />
             {searchQuery && (
               <button
@@ -418,14 +392,14 @@ export default function UserGeographyMap() {
         </div>
 
         {/* Table Container with Roomy Spacing */}
-        <div className="overflow-x-auto rounded-2xl border border-[var(--border)]">
+        <div className="overflow-x-auto rounded-lg border border-[var(--border)]">
           <table className="w-full text-left text-xs sm:text-sm">
             <thead className="bg-[var(--surface-raised)] border-b border-[var(--border)] text-[var(--text-secondary)]">
               <tr>
-                <th className="py-3.5 px-4 font-semibold w-12 text-center">#</th>
-                <th className="py-3.5 px-4 font-semibold">Hudud</th>
+                <th className="py-3 px-3.5 font-semibold w-12 text-center">#</th>
+                <th className="py-3 px-3.5 font-semibold">Hudud</th>
                 <th
-                  className="py-3.5 px-4 font-semibold text-right cursor-pointer hover:text-[var(--text-primary)] transition-colors select-none"
+                  className="py-3 px-3.5 font-semibold text-right cursor-pointer hover:text-[var(--text-primary)] transition-colors select-none"
                   onClick={() => {
                     if (sortField === 'total') setSortAsc(!sortAsc);
                     else { setSortField('total'); setSortAsc(false); }
@@ -437,7 +411,7 @@ export default function UserGeographyMap() {
                   </div>
                 </th>
                 <th
-                  className="py-3.5 px-4 font-semibold text-right cursor-pointer hover:text-[var(--text-primary)] transition-colors select-none"
+                  className="py-3 px-3.5 font-semibold text-right cursor-pointer hover:text-[var(--text-primary)] transition-colors select-none"
                   onClick={() => {
                     if (sortField === 'newUsers') setSortAsc(!sortAsc);
                     else { setSortField('newUsers'); setSortAsc(false); }
@@ -449,7 +423,7 @@ export default function UserGeographyMap() {
                   </div>
                 </th>
                 <th
-                  className="py-3.5 px-4 font-semibold text-right cursor-pointer hover:text-[var(--text-primary)] transition-colors select-none"
+                  className="py-3 px-3.5 font-semibold text-right cursor-pointer hover:text-[var(--text-primary)] transition-colors select-none"
                   onClick={() => {
                     if (sortField === 'active') setSortAsc(!sortAsc);
                     else { setSortField('active'); setSortAsc(false); }
@@ -460,7 +434,7 @@ export default function UserGeographyMap() {
                     {sortField === 'active' && (sortAsc ? <CaretUp size={12} weight="bold" /> : <CaretDown size={12} weight="bold" />)}
                   </div>
                 </th>
-                <th className="py-3.5 px-4 font-semibold text-right hidden md:table-cell">Uluş</th>
+                <th className="py-3 px-3.5 font-semibold text-right hidden md:table-cell">Ulush</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--border)]">
@@ -477,39 +451,39 @@ export default function UserGeographyMap() {
                     className={cn(
                       'transition-colors cursor-pointer',
                       isSelected
-                        ? 'bg-blue-500/10 font-bold'
+                        ? 'bg-[var(--primary-soft)] font-semibold'
                         : 'hover:bg-[var(--background)]'
                     )}
                   >
-                    <td className="py-3.5 px-4 text-center font-mono text-xs text-[var(--text-tertiary)]">
+                    <td className="py-3 px-3.5 text-center font-mono text-xs text-[var(--text-tertiary)]">
                       {idx + 1}
                     </td>
-                    <td className="py-3.5 px-4 text-[var(--text-primary)]">
-                      <div className="flex items-center gap-2.5">
+                    <td className="py-3 px-3.5 text-[var(--text-primary)]">
+                      <div className="flex items-center gap-2">
                         <span
-                          className="w-2.5 h-2.5 rounded-full shrink-0"
+                          className="size-2 rounded-full shrink-0"
                           style={{
-                            backgroundColor: isSelected ? '#2563EB' : '#94A3B8'
+                            backgroundColor: isSelected ? 'var(--primary)' : 'var(--border)'
                           }}
                         />
                         <span className="font-medium text-[var(--text-primary)]">{region.name}</span>
                       </div>
                     </td>
-                    <td className="py-3.5 px-4 text-right text-[var(--text-primary)] font-mono font-bold">
+                    <td className="py-3 px-3.5 text-right text-[var(--text-primary)] tabular-nums font-semibold">
                       {region.calcTotal.toLocaleString('en-US')}
                     </td>
-                    <td className="py-3.5 px-4 text-right text-emerald-600 font-mono font-bold">
+                    <td className="py-3 px-3.5 text-right text-[var(--text-secondary)] tabular-nums font-medium">
                       +{region.calcNew.toLocaleString('en-US')}
                     </td>
-                    <td className="py-3.5 px-4 text-right text-indigo-600 font-mono font-bold">
+                    <td className="py-3 px-3.5 text-right text-[var(--text-secondary)] tabular-nums font-medium">
                       {region.calcActive.toLocaleString('en-US')}
                     </td>
-                    <td className="py-3.5 px-4 text-right font-mono text-xs text-[var(--text-secondary)] hidden md:table-cell">
+                    <td className="py-3 px-3.5 text-right tabular-nums text-xs text-[var(--text-secondary)] hidden md:table-cell">
                       <div className="flex items-center justify-end gap-2">
                         <span>{percentOfTotal}%</span>
                         <div className="w-12 h-1.5 rounded-full bg-[var(--background)] overflow-hidden">
                           <div
-                            className="h-full rounded-full bg-blue-500"
+                            className="h-full rounded-full bg-[var(--primary)]"
                             style={{ width: `${Math.min(100, Math.round((region.calcTotal / 24000) * 100))}%` }}
                           />
                         </div>
@@ -521,40 +495,40 @@ export default function UserGeographyMap() {
 
               {/* Special Unassigned row */}
               <tr className="bg-[var(--surface-raised)]/60 text-[var(--text-secondary)] font-medium">
-                <td className="py-3.5 px-4 text-center text-xs text-[var(--text-tertiary)] italic">—</td>
-                <td className="py-3.5 px-4 italic text-[var(--text-secondary)]">
+                <td className="py-3 px-3.5 text-center text-xs text-[var(--text-tertiary)] italic">—</td>
+                <td className="py-3 px-3.5 italic text-[var(--text-secondary)]">
                   {UNASSIGNED_REGION.name}
                 </td>
-                <td className="py-3.5 px-4 text-right font-mono font-bold text-[var(--text-secondary)]">
+                <td className="py-3 px-3.5 text-right tabular-nums font-semibold text-[var(--text-secondary)]">
                   {UNASSIGNED_REGION.total.toLocaleString('en-US')}
                 </td>
-                <td className="py-3.5 px-4 text-right text-emerald-600 font-mono font-bold">
+                <td className="py-3 px-3.5 text-right text-[var(--text-secondary)] tabular-nums font-medium">
                   +{Math.round(UNASSIGNED_REGION.newUsers * activeRange.factorNew)}
                 </td>
-                <td className="py-3.5 px-4 text-right text-indigo-600 font-mono font-bold">
+                <td className="py-3 px-3.5 text-right text-[var(--text-secondary)] tabular-nums font-medium">
                   {Math.round(UNASSIGNED_REGION.active * activeRange.factorActive)}
                 </td>
-                <td className="py-3.5 px-4 text-right font-mono text-xs text-[var(--text-tertiary)] hidden md:table-cell">
+                <td className="py-3 px-3.5 text-right tabular-nums text-xs text-[var(--text-tertiary)] hidden md:table-cell">
                   {((UNASSIGNED_REGION.total / totalStats.sumTotal) * 100).toFixed(1)}%
                 </td>
               </tr>
             </tbody>
 
             {/* Total Footer Row */}
-            <tfoot className="bg-[var(--surface-raised)] font-bold border-t-2 border-[var(--border)] text-[var(--text-primary)]">
+            <tfoot className="bg-[var(--surface-raised)] font-bold border-t border-[var(--border)] text-[var(--text-primary)]">
               <tr>
-                <td className="py-3.5 px-4 text-center text-xs">∑</td>
-                <td className="py-3.5 px-4">Respublika böyiça jami</td>
-                <td className="py-3.5 px-4 text-right font-mono">
+                <td className="py-3 px-3.5 text-center text-xs">∑</td>
+                <td className="py-3 px-3.5">Respublika boʻyicha jami</td>
+                <td className="py-3 px-3.5 text-right tabular-nums font-bold">
                   {totalStats.sumTotal.toLocaleString('en-US')}
                 </td>
-                <td className="py-3.5 px-4 text-right font-mono text-emerald-600">
+                <td className="py-3 px-3.5 text-right tabular-nums text-[var(--text-secondary)] font-semibold">
                   +{totalStats.sumNew.toLocaleString('en-US')}
                 </td>
-                <td className="py-3.5 px-4 text-right font-mono text-indigo-600">
+                <td className="py-3 px-3.5 text-right tabular-nums text-[var(--text-secondary)] font-semibold">
                   {totalStats.sumActive.toLocaleString('en-US')}
                 </td>
-                <td className="py-3.5 px-4 text-right font-mono text-xs hidden md:table-cell">100%</td>
+                <td className="py-3 px-3.5 text-right tabular-nums text-xs hidden md:table-cell">100%</td>
               </tr>
             </tfoot>
           </table>

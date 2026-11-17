@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Sun, Moon } from '@phosphor-icons/react';
 import Sidebar from './Sidebar';
 import BottomNav from './BottomNav';
+import Logo from '../Logo';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 
@@ -55,16 +56,12 @@ export default function Layout() {
       <main className="flex-1 min-w-0 pb-20 lg:pb-0">
         {/* Mobile Top Header */}
         <header className="lg:hidden sticky top-0 z-40 bg-[var(--surface)]/90 backdrop-blur-md border-b border-[var(--border)] px-4 py-2.5 flex items-center justify-between">
-          <NavLink to="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-600 to-sky-500 p-[1.2px] flex items-center justify-center shrink-0">
-              <div className="w-full h-full rounded-[10px] bg-[var(--surface)] flex items-center justify-center overflow-hidden">
-                <img src={`${import.meta.env.BASE_URL}main_logo.png`} alt="GeoBek" className="w-5 h-5 object-contain" />
-              </div>
-            </div>
+          <NavLink to="/" className="flex items-center gap-2.5 group">
+            <Logo className="w-7 h-7 shrink-0 transition-transform group-hover:scale-105" />
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="text-base font-black tracking-tight text-[var(--text-primary)]">
-                  Geo<span className="text-[var(--primary)]">Bek</span>
+                  GEO<span className="text-[var(--primary)]">BEK</span>
                 </span>
                 <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-[var(--primary-soft)] text-[var(--primary)] uppercase tracking-wider">
                   UZ
@@ -76,10 +73,13 @@ export default function Layout() {
           <div className="flex items-center gap-2">
             <button
               onClick={toggleTheme}
-              className="w-8 h-8 rounded-xl bg-[var(--background)] flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all"
-              aria-label="Mavzuni özgartiriş"
+              className="w-8 h-8 rounded-xl bg-[var(--background)] flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--text-primary)] active:scale-90 transition-transform duration-150"
+              aria-label="Mavzuni oʻzgartirish"
+              title={darkMode ? 'Yorqin rejimga oʻtish' : 'Qorongʻi rejimga oʻtish'}
             >
-              {darkMode ? <Sun size={17} weight="bold" /> : <Moon size={17} weight="bold" />}
+              <span className="inline-flex transition-transform duration-300">
+                {darkMode ? <Sun size={17} weight="bold" className="text-amber-400" /> : <Moon size={17} weight="bold" />}
+              </span>
             </button>
             {user ? (
               <NavLink to="/profile" className="flex items-center">
@@ -96,7 +96,7 @@ export default function Layout() {
                 to="/auth"
                 className="px-3 py-1.5 rounded-xl bg-[var(--primary)] text-white text-xs font-bold hover:bg-[var(--primary-hover)] transition-all"
               >
-                Kiriş
+                Kirish
               </NavLink>
             )}
           </div>

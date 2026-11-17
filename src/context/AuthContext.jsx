@@ -156,10 +156,17 @@ export function AuthProvider({ children }) {
       name: u.user_metadata?.name || 'Foydalanuvchi',
       username: u.user_metadata?.username || 'user',
       phone: u.phone || u.user_metadata?.phone || null,
-      grade: u.user_metadata?.grade || 9,
-      school: u.user_metadata?.school || "Özbekiston maktabi",
-      region: u.user_metadata?.region || 'Toşkent şahri',
+      grade: u.user_metadata?.grade || null,
+      school: u.user_metadata?.school || null,
+      region: u.user_metadata?.region || 'Toshkent shahri',
       role: u.user_metadata?.role || 'school_student',
+      course: u.user_metadata?.course || null,
+      applicantType: u.user_metadata?.applicantType || null,
+      targetUniversity: u.user_metadata?.targetUniversity || null,
+      targetField: u.user_metadata?.targetField || null,
+      faculty: u.user_metadata?.faculty || null,
+      teachingCategory: u.user_metadata?.teachingCategory || null,
+      experience: u.user_metadata?.experience || null,
       favoriteSubject: 'Geografiya',
     };
   }
@@ -171,11 +178,11 @@ export function AuthProvider({ children }) {
     const cleanUsername = (formData.username || '').trim().replace(/^@/, '').toLowerCase();
     const cleanName = (formData.name || '').trim();
 
-    if (!cleanName) throw new Error('Iltimos, töliq ismingizni kiriting');
-    if (!cleanUsername) throw new Error('Iltimos, username kiriting');
-    if (cleanUsername.length < 3) throw new Error('Username kamida 3 ta belgidan iborat bölişi kerak');
-    if (phone.replace(/\D/g, '').length < 12) throw new Error('Iltimos, töliq telefon raqamini kiriting (+998...)');
-    if (!formData.password || formData.password.length < 6) throw new Error('Parol kamida 6 ta belgidan iborat bölişi kerak');
+    if (!cleanName) throw new Error('Iltimos, toʻliq ismingizni kiriting');
+    if (!cleanUsername) throw new Error('Iltimos, foydalanuvchi nomini kiriting');
+    if (cleanUsername.length < 3) throw new Error('Foydalanuvchi nomi kamida 3 ta belgidan iborat boʻlishi kerak');
+    if (phone.replace(/\D/g, '').length < 12) throw new Error('Iltimos, toʻliq telefon raqamini kiriting (+998...)');
+    if (!formData.password || formData.password.length < 6) throw new Error('Parol kamida 6 ta belgidan iborat boʻlishi kerak');
 
     // Check local accounts for duplicates
     const accounts = getStoredAccounts();
@@ -184,9 +191,9 @@ export function AuthProvider({ children }) {
     );
     if (existing) {
       if (existing.username.toLowerCase() === cleanUsername) {
-        throw new Error(`"@${cleanUsername}" username allaqaçon band. Boşqa username tanlang.`);
+        throw new Error(`"@${cleanUsername}" foydalanuvchi nomi allaqachon band. Boshqa nom tanlang.`);
       }
-      throw new Error('Bu telefon raqami allaqaçon röyxatdan ötgan');
+      throw new Error('Bu telefon raqami allaqachon roʻyxatdan oʻtgan');
     }
 
     let newUser = null;
@@ -203,9 +210,13 @@ export function AuthProvider({ children }) {
               username: cleanUsername,
               phone,
               role: formData.role || 'school_student',
-              grade: formData.grade || 9,
-              school: formData.school || "Özbekiston maktabi",
-              region: formData.region || 'Toşkent şahri',
+              grade: formData.grade || null,
+              school: formData.school || null,
+              region: formData.region || 'Toshkent shahri',
+              course: formData.course || null,
+              applicantType: formData.applicantType || null,
+              targetUniversity: formData.targetUniversity || null,
+              targetField: formData.targetField || null,
             },
           },
         });
@@ -227,9 +238,16 @@ export function AuthProvider({ children }) {
         username: cleanUsername,
         phone,
         role: formData.role || 'school_student',
-        grade: formData.grade || 9,
-        school: formData.school || "Özbekiston maktabi",
-        region: formData.region || 'Toşkent şahri',
+        grade: formData.grade || null,
+        school: formData.school || null,
+        course: formData.course || null,
+        applicantType: formData.applicantType || null,
+        targetUniversity: formData.targetUniversity || null,
+        targetField: formData.targetField || null,
+        faculty: formData.faculty || null,
+        teachingCategory: formData.teachingCategory || null,
+        experience: formData.experience || null,
+        region: formData.region || 'Toshkent shahri',
         email: `${cleanUsername}@geobek.uz`,
         password: formData.password,
         avatar: null,
@@ -245,11 +263,11 @@ export function AuthProvider({ children }) {
         badges: [
           {
             id: 1,
-            name: 'Birinçi Qadam',
+            name: 'Birinchi Qadam',
             icon: 'star',
             unlocked: true,
             date: new Date().toISOString().split('T')[0],
-            desc: 'GeoBek safiga qöşildi',
+            desc: 'GEOBEK safiga qoʻshildi',
             tier: 'bronze',
           },
         ],
@@ -280,7 +298,7 @@ export function AuthProvider({ children }) {
     const password = formData.password;
 
     if (!cleanIdentifier) {
-      throw new Error('Iltimos, username yoki telefon raqamingizni kiriting');
+      throw new Error('Iltimos, foydalanuvchi nomi yoki telefon raqamingizni kiriting');
     }
     if (!password) {
       throw new Error('Iltimos, parolingizni kiriting');
@@ -340,12 +358,12 @@ export function AuthProvider({ children }) {
             phone: '+998901234567',
           };
         } else {
-          throw new Error('Bunday username yoki telefon raqamiga ega foydalanuvçi topilmadi');
+          throw new Error('Bunday foydalanuvchi nomi yoki telefon raqamiga ega foydalanuvchi topilmadi');
         }
       } else {
         // Validate password
         if (match.password && match.password !== password) {
-          throw new Error('Kiritilgan parol notöğri. Iltimos, qayta tekşirib köring.');
+          throw new Error('Kiritilgan parol notoʻgʻri. Iltimos, qayta tekshirib koʻring.');
         }
         foundUser = match;
       }

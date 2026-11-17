@@ -12,20 +12,20 @@ export default function PlusProPromo() {
   const features = [
     {
       icon: BookOpen,
-      title: 'Öquv rejalardagi premium materiallar',
-      desc: '5–11-sinf barça darslik taqdimotlari (PPTX), metodik konspektlar va yopiq test savollari',
+      title: 'Oʻquv rejalardagi premium materiallar',
+      desc: '5–11-sinf barcha darslik taqdimotlari (PPTX), metodik konspektlar va yopiq test savollari',
       color: '#8B5CF6',
     },
     {
       icon: VideoCamera,
       title: 'Video kurslar',
-      desc: 'Tajribali ustozlar tomonidan tayyorlangan interaktiv video darslar va xaritalar şarhi',
+      desc: 'Tajribali ustozlar tomonidan tayyorlangan interaktiv video darslar va xaritalar sharhi',
       color: '#EC4899',
     },
     {
       icon: Compass,
-      title: 'Xalqaro musobaqalarga tayyorlaniş uçun yöl xaritasi',
-      desc: 'Bosqiçma-bosqiç rejalaştirilgan öquv yönalişi va şaxsiy rivojlaniş grafigi',
+      title: 'Xalqaro musobaqalarga tayyorlanish uchun yoʻl xaritasi',
+      desc: 'Bosqichma-bosqich rejalashtirilgan oʻquv yoʻnalishi va shaxsiy rivojlanish grafigi',
       color: '#06B6D4',
     },
   ];
@@ -45,7 +45,7 @@ export default function PlusProPromo() {
               <span>Plus & Pro</span>
             </span>
             <span className="text-xs font-semibold text-[var(--text-secondary)]">
-              GeoBek Obunasi Imkoniyatlari
+              GEOBEK Obunasi Imkoniyatlari
             </span>
           </div>
 
@@ -54,8 +54,8 @@ export default function PlusProPromo() {
           </h2>
 
           <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-            Olimpiada ğolibligi, DTM maksimal balli yoki geografiyani professional örganiş uçun
-            zarur bölgan barça imkoniyatlar yagona paketda.
+            Olimpiada gʻolibligi, DTM maksimal balli yoki geografiyani professional oʻrganish uchun
+            zarur boʻlgan barcha imkoniyatlar yagona paketda.
           </p>
         </div>
 
@@ -65,7 +65,7 @@ export default function PlusProPromo() {
             onClick={() => navigate('/oferta')}
             className="px-5 py-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-xs sm:text-sm hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg flex items-center gap-2 active:scale-95"
           >
-            <span>Tariflarni köriş</span>
+            <span>Tariflarni koʻrish</span>
             <ArrowRight size={15} weight="bold" />
           </button>
         </div>

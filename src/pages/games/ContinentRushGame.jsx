@@ -84,7 +84,7 @@ export default function ContinentRushGame() {
     // restart animation
     bar.style.transition = 'none';
     bar.style.width = '100%';
-    bar.style.background = '#7C3AED';
+    bar.style.background = '#1E5BF8';
     // force reflow
     void bar.offsetWidth;
     bar.style.transition = `width ${ROUND_MS}ms linear`;
@@ -121,7 +121,7 @@ export default function ContinentRushGame() {
   return (
     <GameShell
       title="Qit'ani Toping"
-      color="#7C3AED"
+      color="#1E5BF8"
       score={score}
       progress={{ current: index + 1, total: TOTAL }}
       paused={paused}
@@ -133,7 +133,7 @@ export default function ContinentRushGame() {
       {current && (
         <div className="flex flex-col items-center gap-5 w-full">
           <div className="w-full max-w-xs h-3 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
-            <div ref={timerBarRef} className="h-full rounded-full" style={{ width: '100%', background: '#7C3AED' }} />
+            <div ref={timerBarRef} className="h-full rounded-full" style={{ width: '100%', background: '#1E5BF8' }} />
           </div>
 
           <AnimatePresence mode="wait">
@@ -148,7 +148,7 @@ export default function ContinentRushGame() {
               <span className="text-7xl">{current.flag}</span>
               <p className="text-lg font-bold text-[var(--text-primary)]">{current.name}</p>
               {combo >= 3 && status === 'idle' && (
-                <p className="text-xs font-bold text-[#7C3AED]">⚡ Combo x{Math.min(3, 1 + Math.floor(combo / 3))}</p>
+                <p className="text-xs font-bold text-[var(--primary)]">⚡ Combo x{Math.min(3, 1 + Math.floor(combo / 3))}</p>
               )}
             </motion.div>
           </AnimatePresence>
@@ -163,7 +163,7 @@ export default function ContinentRushGame() {
                   onClick={() => handleAnswer(c)}
                   className={cn(
                     'py-3 rounded-[var(--radius-sm)] border-2 text-xs font-bold transition-colors',
-                    st === 'idle' && 'border-[var(--border)] text-[var(--text-primary)] hover:border-[#7C3AED]/50',
+                    st === 'idle' && 'border-[var(--border)] text-[var(--text-primary)] hover:border-[var(--primary)]/50',
                     st === 'correct' && 'border-[var(--success)] bg-[var(--success)]/10 text-[var(--success)]',
                     st === 'wrong' && 'border-[var(--danger)] bg-[var(--danger)]/10 text-[var(--danger)]'
                   )}

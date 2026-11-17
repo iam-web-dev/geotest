@@ -92,11 +92,11 @@ export default function Quiz() {
           {[
             {
               key: 'daily', data: quizData.daily, Icon: Lightning,
-              color: '#2563EB', soft: '#EFF6FF', variant: undefined,
+              color: '#1E5BF8', soft: 'var(--primary-soft)', variant: undefined,
             },
             {
               key: 'weekly', data: quizData.weekly, Icon: Trophy,
-              color: '#8B5CF6', soft: '#F5F3FF', variant: 'secondary',
+              color: '#1E5BF8', soft: 'var(--primary-soft)', variant: undefined,
             },
           ].map(({ key, data, Icon, color, soft, variant }, idx) => (
             <motion.div
@@ -138,7 +138,7 @@ export default function Quiz() {
                   </div>
 
                   <Button className="w-full group" variant={variant} onClick={startQuiz}>
-                    Boşlaş <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+                    Boshlash <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
                   </Button>
                 </CardContent>
               </Card>
@@ -152,10 +152,10 @@ export default function Quiz() {
   if (gameState === 'finished') {
     const percentage = Math.round((score / quizQuestions.length) * 100);
     const tier = percentage >= 80
-      ? { label: 'Ajoyib!', sub: 'Siz haqiqiy geografiya ustasisiz', color: '#F59E0B', bg: 'linear-gradient(135deg,#FEF3C7 0%,#FDE68A 100%)', Icon: Trophy }
+      ? { label: 'Ajoyib!', sub: 'Siz haqiqiy geografiya ustasisiz', color: '#1E5BF8', bg: 'var(--primary-soft)', Icon: Trophy }
       : percentage >= 50
-      ? { label: 'Yaxşi natija!', sub: 'Yana bir oz mashq qilsangiz mukammal bo\'ladi', color: '#2563EB', bg: 'linear-gradient(135deg,#DBEAFE 0%,#BFDBFE 100%)', Icon: Medal }
-      : { label: 'Davom eting!', sub: 'Har bir urinish sizni yaxshilaydi', color: '#64748B', bg: 'linear-gradient(135deg,#F1F5F9 0%,#E2E8F0 100%)', Icon: SmileySad };
+      ? { label: 'Yaxshi natija!', sub: 'Yana bir oz mashq qilsangiz mukammal boʻladi', color: '#1E5BF8', bg: 'var(--primary-soft)', Icon: Medal }
+      : { label: 'Davom eting!', sub: 'Har bir urinish sizni yaxshilaydi', color: '#64748B', bg: 'var(--background)', Icon: SmileySad };
     const { Icon } = tier;
 
     return (
@@ -204,26 +204,24 @@ export default function Quiz() {
               <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-[var(--radius-sm)] bg-[var(--background)] py-3 flex flex-col items-center gap-1">
                   <div className="flex items-center gap-1 text-[var(--success)]"><Check size={16} weight="bold" /><span className="text-lg font-bold">{score}</span></div>
-                  <p className="text-[11px] text-[var(--text-secondary)]">Töğri javob</p>
+                  <p className="text-[11px] text-[var(--text-secondary)]">Toʻgʻri javob</p>
                 </div>
                 <div className="rounded-[var(--radius-sm)] bg-[var(--background)] py-3 flex flex-col items-center gap-1">
                   <div className="flex items-center gap-1 text-[var(--danger)]"><X size={16} weight="bold" /><span className="text-lg font-bold">{quizQuestions.length - score}</span></div>
-                  <p className="text-[11px] text-[var(--text-secondary)]">Notöğri javob</p>
+                  <p className="text-[11px] text-[var(--text-secondary)]">Notoʻgʻri javob</p>
                 </div>
               </div>
 
-              <div className="flex items-center justify-center gap-2 text-sm font-semibold rounded-full py-2 px-4 mx-auto w-fit"
-                style={{ color: '#F59E0B', background: '#FEF3C7' }}>
+              <div className="flex items-center justify-center gap-2 text-sm font-semibold rounded-full py-2 px-4 mx-auto w-fit text-[var(--primary)] bg-[var(--primary-soft)]">
                 <Lightning size={16} weight="fill" />+{Math.round(score * 10)} XP
               </div>
 
               <div className="flex flex-col gap-2">
                 <button
                   onClick={startQuiz}
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-[var(--radius-sm)] text-sm font-semibold text-white transition-all active:scale-[0.98]"
-                  style={{ background: tier.color }}
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-[var(--radius-sm)] text-sm font-semibold text-white bg-[var(--primary)] hover:bg-[var(--primary-hover)] transition-all active:scale-[0.98]"
                 >
-                  <ArrowsClockwise size={16} /> Qayta boşlaş
+                  <ArrowsClockwise size={16} /> Qayta boshlash
                 </button>
                 <button
                   onClick={() => setGameState('menu')}
@@ -245,12 +243,12 @@ export default function Quiz() {
     <div className="max-w-2xl mx-auto space-y-4">
       <SEO
         title="Geografiya Viktorinasi"
-        description="Davlatlar, poytaxtlar, bayroqlar, daryolar, toğlar va qit'alar böyiça interaktiv geografiya viktorinalarini işlang."
+        description="Davlatlar, poytaxtlar, bayroqlar, daryolar, togʻlar va qit'alar boʻyicha interaktiv geografiya viktorinalarini ishlang."
         url="/quiz"
       />
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[#FEF3C7] flex items-center justify-center"><Lightning size={18} className="text-[#F59E0B]" /></div>
+          <div className="w-9 h-9 rounded-[var(--radius-sm)] bg-[var(--primary-soft)] flex items-center justify-center"><Lightning size={18} className="text-[var(--primary)]" /></div>
           <div>
             <p className="text-sm font-bold text-[var(--text-primary)]">Tezkor Viktorina</p>
             <p className="text-xs text-[var(--text-secondary)]">{currentQuestion + 1}/{quizQuestions.length}</p>
@@ -264,7 +262,7 @@ export default function Quiz() {
         </div>
       </div>
 
-      <ProgressBar value={((currentQuestion + 1) / quizQuestions.length) * 100} size="sm" color="#F59E0B" />
+      <ProgressBar value={((currentQuestion + 1) / quizQuestions.length) * 100} size="sm" color="#1E5BF8" />
 
       <AnimatePresence mode="wait">
         <motion.div key={currentQuestion} initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -50 }} transition={{ duration: 0.2 }}>
@@ -281,7 +279,7 @@ export default function Quiz() {
                         'w-full text-left p-4 rounded-[var(--radius-sm)] border-2 transition-all text-sm font-medium',
                         showResult && isCorrectAnswer && 'border-[var(--success)] bg-[var(--success)]/10 text-[var(--success)]',
                         showResult && isSelected && !isCorrectAnswer && 'border-[var(--danger)] bg-[var(--danger)]/10 text-[var(--danger)]',
-                        !showResult && 'border-[var(--border)] hover:border-[#F59E0B]/50 hover:bg-[var(--background)] text-[var(--text-primary)]',
+                        !showResult && 'border-[var(--border)] hover:border-[var(--primary)]/50 hover:bg-[var(--background)] text-[var(--text-primary)]',
                         showResult && !isSelected && !isCorrectAnswer && 'border-[var(--border)] text-[var(--text-secondary)] opacity-60'
                       )}
                     >

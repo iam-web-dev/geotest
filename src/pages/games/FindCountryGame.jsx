@@ -10,7 +10,7 @@ import { playCorrect, playWrong, playFinish, vibrate } from '../../lib/gameSound
 
 const TOTAL = 8;
 const ROUND_TIME = 20;
-const COLOR = '#16A34A';
+const COLOR = '#1E5BF8';
 
 const continentView = {
   europe:       { center: [15, 54],   zoom: 3.2 },
@@ -52,9 +52,9 @@ function getView(countryName) {
 }
 
 const difficultyMeta = {
-  easy: { label: 'Oson', desc: 'Yirik va maşhur davlatlar', dotColor: '#22C55E' },
-  medium: { label: "Örtaça", desc: "Yevropa va örta hajmdagi davlatlar", dotColor: '#F59E0B' },
-  hard: { label: 'Qiyin', desc: 'Kiçik davlatlar va orollar', dotColor: '#EF4444' },
+  easy: { label: 'Oson', desc: 'Yirik va mashhur davlatlar', dotColor: '#22C55E' },
+  medium: { label: "Oʻrtacha", desc: "Yevropa va oʻrta hajmdagi davlatlar", dotColor: '#F59E0B' },
+  hard: { label: 'Qiyin', desc: 'Kichik davlatlar va orollar', dotColor: '#EF4444' },
 };
 
 function DifficultyPicker({ onSelect, onExit }) {

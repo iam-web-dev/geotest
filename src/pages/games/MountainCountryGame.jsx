@@ -7,7 +7,7 @@ import { shuffle, sampleN } from '../../lib/utils';
 import GameShell from '../../components/games/GameShell';
 import { playCorrect, playWrong, playFinish, vibrate } from '../../lib/gameSound';
 
-const COLOR = '#D97706';
+const COLOR = '#1E5BF8';
 
 const ALL_COUNTRIES = [...new Set(mountains.flatMap(m => m.countries))];
 
@@ -33,10 +33,10 @@ function buildQuestions(region) {
 function SetupPicker({ onStart }) {
   const [region, setRegion] = useState('all');
   const regions = [
-    { id: 'all', label: 'Barçasi' },
+    { id: 'all', label: 'Barchasi' },
     { id: 'world', label: 'Dunyo' },
     { id: 'centralAsia', label: 'Markaziy Osiyo' },
-    { id: 'uzbekistan', label: "Özbekiston" },
+    { id: 'uzbekistan', label: "Oʻzbekiston" },
   ];
 
   return (
@@ -45,8 +45,8 @@ function SetupPicker({ onStart }) {
         <div className="mb-3 flex justify-center">
           <Mountains size={56} weight="duotone" color={COLOR} />
         </div>
-        <h1 className="text-2xl font-bold">Toğ va Davlat</h1>
-        <p className="text-sm text-[var(--muted)] mt-1">Toğ rasmini körib, qaysi davlatda ekanini toping</p>
+        <h1 className="text-2xl font-bold">Togʻ va Davlat</h1>
+        <p className="text-sm text-[var(--muted)] mt-1">Togʻ rasmini koʻrib, qaysi davlatda ekanini toping</p>
       </div>
 
       <div className="w-full max-w-xs space-y-3">
@@ -74,7 +74,7 @@ function SetupPicker({ onStart }) {
         className="px-10 py-3 rounded-2xl font-bold text-white text-lg shadow-lg active:scale-95 transition-transform"
         style={{ background: COLOR }}
       >
-        Boşlaş
+        Boshlash
       </button>
     </div>
   );
@@ -165,7 +165,7 @@ function GameRound({ region, onFinish }) {
           <CaretLeft size={20} />
         </button>
         <div className="flex-1">
-          <div className="text-sm font-semibold">Toğ — Davlat</div>
+          <div className="text-sm font-semibold">Togʻ — Davlat</div>
           <div className="text-xs text-[var(--muted)]">{idx + 1}/{questions.length} · Ball: {score}</div>
         </div>
         {/* progress bar */}
@@ -206,7 +206,7 @@ function GameRound({ region, onFinish }) {
 
           {/* Question */}
           <p className="text-center text-sm font-semibold text-[var(--muted)]">
-            Bu toğ tizmasi qaysi davlatda joylaşgan?
+            Bu togʻ tizmasi qaysi davlatda joylashgan?
           </p>
 
           {/* Options */}
@@ -241,7 +241,7 @@ export default function MountainCountryGame() {
   if (result) {
     return (
       <GameShell
-        title="Toğ va Davlat"
+        title="Togʻ va Davlat"
         result={result}
         onRestart={() => { setRegion(null); setResult(null); }}
         color={COLOR}

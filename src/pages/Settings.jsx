@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CaretLeft, Check, Camera, GraduationCap, Student, ChalkboardTeacher, SignOut } from '@phosphor-icons/react';
+import { CaretLeft, Check, Camera, GraduationCap, Student, ChalkboardTeacher, SignOut, Target } from '@phosphor-icons/react';
 import { cn } from '../lib/utils';
 import { useAuth } from '../context/AuthContext';
 import { user as initialUser } from '../data/mockData';
@@ -15,18 +15,25 @@ function saveSettings(s) {
 }
 
 const REGIONS = [
-  'Toşkent şahri', 'Toşkent viloyati', 'Andijon', 'Farğona', 'Namangan',
-  'Samarqand', 'Buxoro', 'Navoiy', 'Qaşqadaryo', 'Surxondaryo',
-  'Jizzax', 'Sirdaryo', 'Xorazm', 'Qoraqalpoğiston',
+  'Toshkent shahri', 'Toshkent viloyati', 'Andijon', 'Fargʻona', 'Namangan',
+  'Samarqand', 'Buxoro', 'Navoiy', 'Qashqadaryo', 'Surxondaryo',
+  'Jizzax', 'Sirdaryo', 'Xorazm', 'Qoraqalpogʻiston',
 ];
 
 const ROLES = [
   {
     key: 'school_student',
-    label: 'Maktab öquvçisi',
+    label: 'Maktab oʻquvchisi',
     desc: '1–11 sinf',
     Icon: GraduationCap,
     color: '#2563EB',
+  },
+  {
+    key: 'applicant',
+    label: 'Abituriyent',
+    desc: 'OTMga tayyorgarlik',
+    Icon: Target,
+    color: '#D97706',
   },
   {
     key: 'student',
@@ -37,8 +44,8 @@ const ROLES = [
   },
   {
     key: 'teacher',
-    label: 'Öqituvçi',
-    desc: 'Pedagoglar uçun',
+    label: 'Oʻqituvchi',
+    desc: 'Pedagoglar uchun',
     Icon: ChalkboardTeacher,
     color: '#16A34A',
   },
@@ -87,14 +94,18 @@ export default function Settings() {
   const merged = { ...initialUser, ...(authUser || {}), ...saved };
 
   const [form, setForm] = useState({
-    name:       merged.name       || '',
-    school:     merged.school     || '',
-    region:     merged.region     || '',
-    role:       merged.role       || 'school_student',
-    grade:      merged.grade      || '',
-    course:     merged.course     || '',
-    experience: merged.experience || '',
-    avatar:     merged.avatar     || '',
+    name:             merged.name             || '',
+    school:           merged.school           || '',
+    region:           merged.region           || '',
+    role:             merged.role             || 'school_student',
+    grade:            merged.grade            || '',
+    course:           merged.course           || '',
+    applicantType:    merged.applicantType    || '',
+    targetUniversity: merged.targetUniversity || '',
+    faculty:          merged.faculty          || '',
+    teachingCategory: merged.teachingCategory || '',
+    experience:       merged.experience       || '',
+    avatar:           merged.avatar           || '',
   });
   const fileInputRef = useRef(null);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -153,10 +164,10 @@ export default function Settings() {
         </div>
       </div>
 
-      {/* Role selector */}
+      {/* Role / Daraja selector */}
       <div className="space-y-2">
-        <label className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wide">Kim siz?</label>
-        <div className="grid grid-cols-3 gap-2">
+        <label className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wide">Ta'lim darajangiz</label>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {ROLES.map(({ key, label, desc, Icon, color }) => (
             <button key={key} onClick={() => set('role', key)}
               className={cn('flex flex-col items-center gap-2 p-3 rounded-xl border-2 transition-all',
@@ -169,10 +180,10 @@ export default function Settings() {
                 <Icon size={22} style={{ color: form.role === key ? color : 'var(--text-tertiary)' }} />
               </div>
               <div className="text-center">
-                <p className={cn('text-[10px] font-bold leading-tight', form.role === key ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]')}>
+                <p className={cn('text-[11px] font-bold leading-tight', form.role === key ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]')}>
                   {label}
                 </p>
-                <p className="text-[9px] text-[var(--text-tertiary)]">{desc}</p>
+                <p className="text-[10px] text-[var(--text-tertiary)] mt-0.5">{desc}</p>
               </div>
             </button>
           ))}
@@ -182,15 +193,10 @@ export default function Settings() {
       {/* Basic fields */}
       <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 space-y-4">
         <Field label="Ism Familiya">
-          <Input value={form.name} onChange={v => set('name', v)} placeholder="Töliq ismingiz" />
+          <Input value={form.name} onChange={v => set('name', v)} placeholder="Toʻliq ismingiz" />
         </Field>
 
-        <Field label="Ta'lim muassasasi">
-          <Input value={form.school} onChange={v => set('school', v)}
-            placeholder={form.role === 'teacher' ? 'Maktab yoki muassasa nomi' : 'Maktab / Universitet nomi'} />
-        </Field>
-
-        <Field label="Viloyat / Şahar">
+        <Field label="Viloyat / Shahar">
           <Select value={form.region} onChange={v => set('region', v)}
             options={REGIONS} placeholder="Tanlang..." />
         </Field>
@@ -198,44 +204,137 @@ export default function Settings() {
 
       {/* Role-specific fields */}
       <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 space-y-4">
+        <div className="border-b border-[var(--border)] pb-2">
+          <p className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider">
+            {ROLES.find(r => r.key === form.role)?.label} ma'lumotlari
+          </p>
+        </div>
+
         {form.role === 'school_student' && (
-          <Field label="Sinf">
-            <Select
-              value={form.grade}
-              onChange={v => set('grade', v)}
-              placeholder="Sinfni tanlang"
-              options={Array.from({ length: 11 }, (_, i) => ({ value: i + 1, label: `${i + 1}-sinf` }))}
-            />
-          </Field>
+          <>
+            <Field label="Sinf">
+              <Select
+                value={form.grade}
+                onChange={v => set('grade', Number(v) || v)}
+                placeholder="Sinfni tanlang"
+                options={Array.from({ length: 11 }, (_, i) => ({ value: i + 1, label: `${i + 1}-sinf` }))}
+              />
+            </Field>
+            <Field label="Maktabingiz nomi / raqami">
+              <Input
+                value={form.school}
+                onChange={v => set('school', v)}
+                placeholder="Masalan: 37-IDUM yoki 14-umumta'lim maktabi"
+              />
+            </Field>
+          </>
+        )}
+
+        {form.role === 'applicant' && (
+          <>
+            <Field label="Qanday abituriyentsiz? (Asosiy maqsad)">
+              <Select
+                value={form.applicantType}
+                onChange={v => set('applicantType', v)}
+                placeholder="Tayyorgarlik maqsadini tanlang"
+                options={[
+                  { value: 'OTMga kirish (DTM)', label: 'OTMga kirish (DTM / Davlat imtihonlari)' },
+                  { value: 'Milliy sertifikat', label: 'Milliy sertifikat (Geografiya fani)' },
+                  { value: 'Akademik litsey / Prezident maktabi', label: 'Akademik litsey / Prezident maktabi' },
+                  { value: 'Olimpiada / Xalqaro', label: 'Olimpiada va xalqaro tanlovlar' },
+                  { value: 'Boshqa', label: 'Boshqa' },
+                ]}
+              />
+            </Field>
+            <Field label="Maqsad qilingan OTM yoki yo'nalish">
+              <Input
+                value={form.targetUniversity}
+                onChange={v => set('targetUniversity', v)}
+                placeholder="Masalan: O'zMU, Nizomiy nomidagi TDPU, SamDU"
+              />
+            </Field>
+            <Field label="Tayyorlanayotgan joy / Muassasa">
+              <Input
+                value={form.school}
+                onChange={v => set('school', v)}
+                placeholder="Masalan: Mustaqil, 'Registon' o'quv markazi"
+              />
+            </Field>
+          </>
         )}
 
         {form.role === 'student' && (
-          <Field label="Kurs">
-            <Select
-              value={form.course}
-              onChange={v => set('course', v)}
-              placeholder="Kursni tanlang"
-              options={[1, 2, 3, 4].map(n => ({ value: n, label: `${n}-kurs` }))}
-            />
-          </Field>
+          <>
+            <Field label="Kurs">
+              <Select
+                value={form.course}
+                onChange={v => set('course', Number(v) || v)}
+                placeholder="Kursni tanlang"
+                options={[
+                  { value: 1, label: '1-kurs (Bakalavr)' },
+                  { value: 2, label: '2-kurs (Bakalavr)' },
+                  { value: 3, label: '3-kurs (Bakalavr)' },
+                  { value: 4, label: '4-kurs (Bakalavr)' },
+                  { value: 'magistr', label: 'Magistratura' },
+                ]}
+              />
+            </Field>
+            <Field label="OTM (Universitet / Institut) nomi">
+              <Input
+                value={form.school}
+                onChange={v => set('school', v)}
+                placeholder="Masalan: O'zbekiston Milliy Universiteti"
+              />
+            </Field>
+            <Field label="Fakultet / Yo'nalish">
+              <Input
+                value={form.faculty}
+                onChange={v => set('faculty', v)}
+                placeholder="Masalan: Geografiya va tabiiy resurslar"
+              />
+            </Field>
+          </>
         )}
 
         {form.role === 'teacher' && (
-          <Field label="Pedagogik tajriba">
-            <Select
-              value={form.experience}
-              onChange={v => set('experience', v)}
-              placeholder="Tajribani tanlang"
-              options={[
-                { value: '0-1',   label: '1 yildan kam' },
-                { value: '1-3',   label: '1–3 yil' },
-                { value: '3-5',   label: '3–5 yil' },
-                { value: '5-10',  label: '5–10 yil' },
-                { value: '10-20', label: '10–20 yil' },
-                { value: '20+',   label: '20 yildan ortiq' },
-              ]}
-            />
-          </Field>
+          <>
+            <Field label="Pedagogik toifa">
+              <Select
+                value={form.teachingCategory}
+                onChange={v => set('teachingCategory', v)}
+                placeholder="Toifangizni tanlang"
+                options={[
+                  { value: 'Oliy toifa', label: 'Oliy toifali oʻqituvchi' },
+                  { value: '1-toifa', label: '1-toifali oʻqituvchi' },
+                  { value: '2-toifa', label: '2-toifali oʻqituvchi' },
+                  { value: 'Mutaxassis', label: 'Mutaxassis oʻqituvchi' },
+                  { value: 'Pedagog', label: 'Boshlangʻich pedagog' },
+                ]}
+              />
+            </Field>
+            <Field label="Pedagogik ish staji">
+              <Select
+                value={form.experience}
+                onChange={v => set('experience', v)}
+                placeholder="Tajribani tanlang"
+                options={[
+                  { value: '0-1',   label: '1 yildan kam' },
+                  { value: '1-3',   label: '1–3 yil' },
+                  { value: '3-5',   label: '3–5 yil' },
+                  { value: '5-10',  label: '5–10 yil' },
+                  { value: '10-20', label: '10–20 yil' },
+                  { value: '20+',   label: '20 yildan ortiq' },
+                ]}
+              />
+            </Field>
+            <Field label="Ta'lim muassasasi nomi">
+              <Input
+                value={form.school}
+                onChange={v => set('school', v)}
+                placeholder="Masalan: 37-IDUM yoki Toshkent shahar litseyi"
+              />
+            </Field>
+          </>
         )}
       </div>
 
@@ -243,7 +342,7 @@ export default function Settings() {
       <button onClick={handleSave}
         className="w-full h-12 rounded-2xl text-sm font-bold text-white transition-all flex items-center justify-center gap-2 shadow-md shadow-blue-500/20"
         style={{ background: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%)' }}>
-        <Check size={16} weight="bold" /> Saqlaş
+        <Check size={16} weight="bold" /> Saqlash
       </button>
 
       {/* Logout button */}
@@ -253,7 +352,7 @@ export default function Settings() {
         className="w-full h-12 rounded-2xl border border-red-500/30 text-red-500 hover:bg-red-500/10 text-sm font-semibold transition-all flex items-center justify-center gap-2"
       >
         <SignOut size={16} weight="bold" />
-        <span>Hisobdan çiqiş</span>
+        <span>Hisobdan chiqish</span>
       </button>
 
       {/* Logout confirmation modal */}
@@ -265,8 +364,8 @@ export default function Settings() {
                 <SignOut size={22} weight="fill" />
               </div>
               <div>
-                <p className="font-bold text-[var(--text-primary)]">Çiqişni tasdiqlang</p>
-                <p className="text-xs text-[var(--text-secondary)] mt-1">GeoBek hisobingizdan çiqişni xohlaysizmi?</p>
+                <p className="font-bold text-[var(--text-primary)]">Chiqishni tasdiqlang</p>
+                <p className="text-xs text-[var(--text-secondary)] mt-1">GEOBEK hisobingizdan chiqishni xohlaysizmi?</p>
               </div>
             </div>
             <div className="flex gap-2">
@@ -274,14 +373,14 @@ export default function Settings() {
                 onClick={() => setShowLogoutModal(false)}
                 className="flex-1 h-10 rounded-xl border border-[var(--border)] text-xs font-semibold text-[var(--text-secondary)] hover:bg-[var(--background)] transition-all"
               >
-                Bekor qiliş
+                Bekor qilish
               </button>
               <button
                 onClick={handleLogout}
                 className="flex-1 h-10 rounded-xl bg-red-500 text-xs font-semibold text-white hover:bg-red-600 transition-all flex items-center justify-center gap-1.5"
               >
                 <SignOut size={15} weight="bold" />
-                <span>Çiqiş</span>
+                <span>Chiqish</span>
               </button>
             </div>
           </div>

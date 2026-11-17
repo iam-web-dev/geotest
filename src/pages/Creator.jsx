@@ -10,62 +10,62 @@ import SEO from '../components/SEO';
 const LIFE_CHAPTERS = [
   {
     period: "Ilk qadamlar va tabiatga muhabbat",
-    title: "Xaritalar siri va geografiyaga oşnolik",
-    content: `Bolaligimdan tabiatning har bir hodisasiga, toğlar bağrida oqadigan jilğalardan tortib, bahorda qirlarni qoplagan lolalargaça qiziqiş bilan qarardim. Qölimga tuşgan birinçi geografik atlas esa dunyomni butunlay özgartirib yuborgan. 
+    title: "Xaritalar siri va geografiyaga oshnolik",
+    content: `Bolaligimdan tabiatning har bir hodisasiga, togʻlar bagʻrida oqadigan jilgʻalardan tortib, bahorda qirlarni qoplagan lolalargacha qiziqish bilan qarardim. Qoʻlimga tushgan birinchi geografik atlas esa dunyomni butunlay oʻzgartirib yuborgan. 
 
-Öşanda xarita şunçaki rang-barang çizmalar emas, balki butun boşli insoniyat tarixi, zaminning tirik nafasini ifodalovçi möjiza ekanini his qilganman. Geografiya men uçun bir umrlik kasb emas, hayotimning mazmuniga, Vatanimni yanada çuqurroq anglaş vositasiga aylandi.`
+Oʻshanda xarita shunchaki rang-barang chizmalar emas, balki butun boshli insoniyat tarixi, zaminning tirik nafasini ifodalovchi moʻjiza ekanini his qilganman. Geografiya men uchun bir umrlik kasb emas, hayotimning mazmuniga, Vatanimni yanada chuqurroq anglash vositasiga aylandi.`
   },
   {
     period: "Ustozlik va maktabdagi yillar",
-    title: "Sinfxona, öquvçilar nigohi va metodika izlanişlari",
-    content: `Köp yillar davomida maktab öquvçilariga geografiya fanidan saboq berib kelmoqdaman. Sinfxonaga kirganimda doskaga oddiy maʼruza yozib beriş men uçun heç qaçon yetarli bölmagan. Öquvçining közida qiziqiş öti yonişi uçun u xaritani his qilişi, Amudaryoning qayerdan boşlanib qayerga quyilişini, Qizilqum sarhadlarini öz közi bilan körgandek tasavvur qilişi kerak.
+    title: "Sinfxona, oʻquvchilar nigohi va metodika izlanishlari",
+    content: `Koʻp yillar davomida maktab oʻquvchilariga geografiya fanidan saboq berib kelmoqdaman. Sinfxonaga kirganimda doskaga oddiy maʼruza yozib berish men uchun hech qachon yetarli boʻlmagan. Oʻquvchining koʻzida qiziqish oʻti yonishi uchun u xaritani his qilishi, Amudaryoning qayerdan boshlanib qayerga quyilishini, Qizilqum sarhadlarini oʻz koʻzi bilan koʻrgandek tasavvur qilishi kerak.
 
-Şu yillar davomida yuzlab iqtidorli öquvçilarni tuman, viloyat va respublika fan olimpiadalariga tayyorladim. Ularning har bir muvaffaqiyati, geografiya orqali dunyoqaraşining kengayişi men uçun eng katta mukofot böldi.`
+Shu yillar davomida yuzlab iqtidorli oʻquvchilarni tuman, viloyat va respublika fan olimpiadalariga tayyorladim. Ularning har bir muvaffaqiyati, geografiya orqali dunyoqarashining kengayishi men uchun eng katta mukofot boʻldi.`
   },
   {
-    period: "GeoBek ğoyasi va yaratilişi",
-    title: "Nega taʼlimni raqamlaştirişga qaror qildim?",
-    content: `Afsuski, uzoq yillar davomida maktablarimizda geografiya öqituvçilari uçun zamonaviy, sifatli körgazmali qurollar, yaxşi işlangan taqdimotlar va rasmiy testlar yetişmay keldi. Köplab öqituvçilar darsga tayyorlaniş uçun soatlab vaqt sarflar, ammo internetdan sifatli material topa olmas edi.
+    period: "GEOBEK gʻoyasi va yaratilishi",
+    title: "Nega taʼlimni raqamlashtirishga qaror qildim?",
+    content: `Afsuski, uzoq yillar davomida maktablarimizda geografiya oʻqituvchilari uchun zamonaviy, sifatli koʻrgazmali qurollar, yaxshi ishlangan taqdimotlar va rasmiy testlar yetishmay keldi. Koʻplab oʻqituvchilar darsga tayyorlanish uchun soatlab vaqt sarflar, ammo internetdan sifatli material topa olmas edi.
 
-Aynan şu böşliqni töldiriş maqsadida men «GeoBek» metodik loyihasini yölga qöydim. 5-sinfdan 11-sinfgaça bölgan barça darslik mavzularini tahlil qilib, sifatli taqdimotlar (PPTX), dars işlanmalari va DTM standartidagi savollarni tayyorladim. 
+Aynan shu boʻshliqni toʻldirish maqsadida men «GEOBEK» metodik loyihasini yoʻlga qoʻydim. 5-sinfdan 11-sinfgacha boʻlgan barcha darslik mavzularini tahlil qilib, sifatli taqdimotlar (PPTX), dars ishlanmalari va DTM standartidagi savollarni tayyorladim. 
 
-GeoBek platformasi esa ana şu köp yillik mehnatimizni respublikadagi barça ustozlar va öquvçilar uçun bir joyga jamlagan zamonaviy, oçiq va qulay xazinaga aylandi.`
+GEOBEK platformasi esa ana shu koʻp yillik mehnatimizni respublikadagi barcha ustozlar va oʻquvchilar uchun bir joyga jamlagan zamonaviy, ochiq va qulay xazinaga aylandi.`
   },
   {
     period: "Hayotiy va pedagogik falsafa",
-    title: "«Geografiya — Vatanparvarlikning eng gözal ifodasi»",
+    title: "«Geografiya — Vatanparvarlikning eng goʻzal ifodasi»",
     content: `Mening pedagogik aqidam juda sodda:
-Öz yurtining har bir toğini, daryosini, iqlimini va tabiiy boyligini bilmagan inson öz vatanini çin dildan seva olmaydi. Geografiya — bu quruq faktlar yiğindisi emas, bu tabiatga mehr, resurslarni asraş madaniyati va dunyo bilan munosabatni örganiş ilmidir.
+Oʻz yurtining har bir togʻini, daryosini, iqlimini va tabiiy boyligini bilmagan inson oʻz vatanini chin dildan seva olmaydi. Geografiya — bu quruq faktlar yigʻindisi emas, bu tabiatga mehr, resurslarni asrash madaniyati va dunyo bilan munosabatni oʻrganish ilmidir.
 
-Biz yaratayotgan har bir darslik, taqdimot va test savoli yurtimiz yoşlarining tafakkurini kengaytirişga xizmat qilişi kerak. Bugungi öquvçi ertangi kunning davlat arbobi, geologi, ekologi yoki muhandisidir. Ularga berayotgan bilimimiz halol, aniq va mehr bilan yetkazilişi şart.`
+Biz yaratayotgan har bir darslik, taqdimot va test savoli yurtimiz yoshlarining tafakkurini kengaytirishga xizmat qilishi kerak. Bugungi oʻquvchi ertangi kunning davlat arbobi, geologi, ekologi yoki muhandisidir. Ularga berayotgan bilimimiz halol, aniq va mehr bilan yetkazilishi shart.`
   }
 ];
 
 const MEDIA_GALLERY = [
   {
     type: 'image',
-    title: 'Dars jarayoni va öquvçilar bilan maşğulot',
+    title: 'Dars jarayoni va oʻquvchilar bilan mashgʻulot',
     category: 'Pedagogika',
-    description: 'Sinfxonada xaritalar tahlili va yoş geograf olimpiadaçilar bilan amaliy dars.',
+    description: 'Sinfxonada xaritalar tahlili va yosh geograf olimpiadachilar bilan amaliy dars.',
     image: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=1000&q=80',
   },
   {
     type: 'image',
-    title: 'Özbekistonning tabiiy landşaftlari va dala amaliyoti',
+    title: 'Oʻzbekistonning tabiiy landshaftlari va dala amaliyoti',
     category: 'Ekspeditsiya',
-    description: 'Toğ tizmalari, daryo havzalari va relyef şakllarini joyida örganiş jarayoni.',
+    description: 'Togʻ tizmalari, daryo havzalari va relyef shakllarini joyida oʻrganish jarayoni.',
     image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80',
   },
   {
     type: 'image',
-    title: 'Darsliklar, atlaslar va metodik qöllanmalar',
-    category: 'GeoBek',
-    description: '5–11-sinf maktab öquv dasturlari uçun tayyorlangan körgazmali taqdimotlar töplami.',
+    title: 'Darsliklar, atlaslar va metodik qoʻllanmalar',
+    category: 'GEOBEK',
+    description: '5–11-sinf maktab oʻquv dasturlari uchun tayyorlangan koʻrgazmali taqdimotlar toʻplami.',
     image: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1000&q=80',
   },
   {
     type: 'video',
-    title: 'GeoBek 3D Xaritalar va Darsliklar Tahlili',
+    title: 'GEOBEK 3D Xaritalar va Darsliklar Tahlili',
     category: 'Video Dars',
     description: 'Interaktiv 3D Yer globusi va umumtaʼlim maktab dasturlari integratsiyasi.',
     videoSrc: 'https://assets.mixkit.co/videos/preview/mixkit-earth-rotating-in-space-41618-large.mp4',
@@ -84,9 +84,9 @@ const CONTACTS = [
   },
   {
     name: 'YouTube',
-    handle: 'GeoBek Taʼlim',
+    handle: 'GEOBEK Taʼlim',
     url: 'https://youtube.com',
-    desc: 'Video darslar, xaritalar şarhi va olimpiada masalalari tahlili',
+    desc: 'Video darslar, xaritalar sharhi va olimpiada masalalari tahlili',
     icon: YoutubeLogo,
     color: '#DC2626'
   },
@@ -94,15 +94,15 @@ const CONTACTS = [
     name: 'Aloqa & Savollar',
     handle: 'Qambarov O.X. (Shaxsiy)',
     url: 'https://t.me/iam_web_dev',
-    desc: 'Öqituvçilar va abituriyentlar uçun metodik yordam',
+    desc: 'Oʻqituvchilar va abituriyentlar uchun metodik yordam',
     icon: TelegramLogo,
     color: '#0D9488'
   },
   {
-    name: 'Elektron Poçta',
+    name: 'Elektron Pochta',
     handle: 'geobek.uz@gmail.com',
     url: 'mailto:geobek.uz@gmail.com',
-    desc: 'Rasmiy takliflar va hamkorlik uçun',
+    desc: 'Rasmiy takliflar va hamkorlik uchun',
     icon: EnvelopeSimple,
     color: '#4F46E5'
   }
@@ -121,8 +121,8 @@ export default function Creator() {
   return (
     <div className="min-h-screen bg-[#FAF9F5] text-[#1C1917] selection:bg-amber-100 selection:text-amber-900 font-sans">
       <SEO
-        title="Qambarov O.X. – Geografiya ustozi, GeoBek ilmiy rahbari va muallifi"
-        description="Geograf ustoz Qambarov O.X.ning hayot yöli, pedagogik tajribasi, geografiya metodikasi va GeoBek ta'lim portali haqida."
+        title="Qambarov O.X. – Geografiya ustozi, GEOBEK ilmiy rahbari va muallifi"
+        description="Geograf ustoz Qambarov O.X.ning hayot yoʻli, pedagogik tajribasi, geografiya metodikasi va GEOBEK ta'lim portali haqida."
       />
 
       {/* ── Top Bar: Radically Clean - ONLY Back Button ── */}
@@ -133,11 +133,11 @@ export default function Creator() {
             className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#57534E] hover:text-[#0C0A09] transition-colors group"
           >
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform text-[#0D9488]" />
-            <span>GeoBek platformasiga qaytiş</span>
+            <span>GEOBEK platformasiga qaytish</span>
           </Link>
 
           <span className="text-xs font-serif font-bold text-[#78716C]">
-            Qambarov O.X. | GeoBek
+            Qambarov O.X. | GEOBEK
           </span>
         </div>
       </header>
@@ -157,7 +157,7 @@ export default function Creator() {
               Qambarov O.X.
             </h1>
             <p className="text-lg sm:text-2xl text-[#44403C] leading-relaxed max-w-3xl font-serif italic">
-              «Geografiya — bu şunçaki toğ va daryo nomlarini yodlaş emas. Bu öz zaminini seviş, uning har bir zarrasini eʼzozlaş va dunyo bilan munosabatni tuşuniş kalitidir.»
+              «Geografiya — bu shunchaki togʻ va daryo nomlarini yodlash emas. Bu oʻz zaminini sevish, uning har bir zarrasini eʼzozlash va dunyo bilan munosabatni tushunish kalitidir.»
             </p>
           </div>
 
@@ -172,24 +172,24 @@ export default function Creator() {
 
             <div className="flex items-center gap-2">
               <BookOpen size={18} className="text-[#B45309]" weight="bold" />
-              <span className="font-semibold text-[#1C1917]">GeoBek asosçisi</span>
+              <span className="font-semibold text-[#1C1917]">GEOBEK asoschisi</span>
               <span>•</span>
               <span>5–11-sinf taqdimotlar muallifi</span>
             </div>
           </div>
         </section>
 
-        {/* ── Life Story (Ustozning hayot yöli va keçinmalari) ── */}
+        {/* ── Life Story (Ustozning hayot yoʻli va kechinmalari) ── */}
         <section className="space-y-10">
           <div className="border-b border-[#E7E5E4] pb-4">
             <div className="text-xs font-semibold uppercase tracking-wider text-[#0D9488]">
               PEDAGOGIK FAOLIYAT VA HIKOYALAR
             </div>
             <h2 className="text-2xl sm:text-4xl font-bold font-serif text-[#0C0A09] mt-1">
-              Ustozlik yöli va hayotiy saboqlar
+              Ustozlik yoʻli va hayotiy saboqlar
             </h2>
             <p className="text-sm text-[#78716C] mt-1">
-              Maktab sinfxonalaridan tortib zamonaviy raqamli taʼlim platformasigaça bölgan yöl.
+              Maktab sinfxonalaridan tortib zamonaviy raqamli taʼlim platformasigacha boʻlgan yoʻl.
             </p>
           </div>
 
@@ -215,13 +215,13 @@ export default function Creator() {
           <div className="border-b border-[#E7E5E4] pb-4">
             <div className="flex items-center gap-2 text-xs font-semibold text-[#0D9488]">
               <Camera size={15} />
-              <span>KÖRGAZMALI QUROLLAR VA LAVHALAR</span>
+              <span>KOʻRGAZMALI QUROLLAR VA LAVHALAR</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold font-serif text-[#0C0A09] mt-1">
               Foto va videolavhalar
             </h2>
             <p className="text-sm text-[#78716C] mt-1">
-              Dars jarayonlari, GeoBek taqdimotlari va Özbekistonning betakror tabiati.
+              Dars jarayonlari, GEOBEK taqdimotlari va Oʻzbekistonning betakror tabiati.
             </p>
           </div>
 
@@ -253,7 +253,7 @@ export default function Creator() {
                           <button
                             onClick={() => setPlayingVideo(true)}
                             className="absolute inset-0 m-auto w-12 h-12 rounded-full bg-[#0D9488] text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
-                            title="Videoni tomoşa qiliş"
+                            title="Videoni tomosha qilish"
                           >
                             <Play size={20} weight="fill" className="ml-0.5" />
                           </button>
@@ -287,15 +287,15 @@ export default function Creator() {
           </div>
         </section>
 
-        {/* ── Contacts & Mentorship (Ustoz bilan boğlaniş) ── */}
+        {/* ── Contacts & Mentorship (Ustoz bilan bogʻlanish) ── */}
         <section className="space-y-6 pt-6 border-t border-[#E7E5E4]">
           <div className="space-y-1.5">
             <h2 className="text-2xl sm:text-3xl font-bold font-serif text-[#0C0A09]">
-              Ustoz bilan boğlaniş va metodik muloqot
+              Ustoz bilan bogʻlanish va metodik muloqot
             </h2>
             <p className="text-sm text-[#57534E] max-w-2xl leading-relaxed">
-              Agar siz geografiya öqituvçisi, abituriyent yoki fan qiziquvçisi bölsangiz — darsliklar, 
-              olimpiada testlari yoki dars taqdimotlari böyiça bemalol murojaat qilişingiz mumkin.
+              Agar siz geografiya oʻqituvchisi, abituriyent yoki fan qiziquvchisi boʻlsangiz — darsliklar, 
+              olimpiada testlari yoki dars taqdimotlari boʻyicha bemalol murojaat qilishingiz mumkin.
             </p>
           </div>
 
@@ -334,13 +334,13 @@ export default function Creator() {
 
           {/* Quick Email Copy Card */}
           <div className="p-4 rounded-xl border border-[#E7E5E4] bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#57534E]">
-            <span className="font-medium">Rasmiy xatlar va takliflar uçun poçta:</span>
+            <span className="font-medium">Rasmiy xatlar va takliflar uchun pochta:</span>
             <button
               onClick={handleCopyEmail}
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#F5F5F4] border border-[#D6D3D1] text-[#1C1917] font-semibold hover:bg-[#E7E5E4] transition-colors"
             >
               {copiedEmail ? <Check size={14} className="text-emerald-600" /> : <Copy size={14} />}
-              <span>{copiedEmail ? "Nusxalandi!" : "geobek.uz@gmail.com nusxalaş"}</span>
+              <span>{copiedEmail ? "Nusxalandi!" : "geobek.uz@gmail.com nusxalash"}</span>
             </button>
           </div>
         </section>
@@ -348,15 +348,15 @@ export default function Creator() {
         {/* ── Footer ── */}
         <footer className="pt-8 border-t border-[#E7E5E4] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#78716C]">
           <div className="flex items-center gap-1.5 font-medium">
-            <span>© {new Date().getFullYear()} Qambarov O.X. | GeoBek.</span>
-            <span>Barça huquqlar himoyalangan.</span>
+            <span>© {new Date().getFullYear()} Qambarov O.X. | GEOBEK.</span>
+            <span>Barcha huquqlar himoyalangan.</span>
           </div>
 
           <Link
             to="/"
             className="font-bold text-[#0D9488] hover:underline transition-colors"
           >
-            ← Boş sahifaga qaytiş
+            ← Bosh sahifaga qaytish
           </Link>
         </footer>
 

@@ -25,8 +25,8 @@ export default function Certificates() {
           <h1 className="text-xl font-bold text-[var(--text-primary)]">Sertifikatlar</h1>
           <p className="text-xs text-[var(--text-secondary)]">{certList.length} ta milliy sertifikat</p>
         </div>
-        <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#2563EB18' }}>
-          <BookOpen size={18} style={{ color: '#2563EB' }} />
+        <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[var(--primary-soft)]">
+          <BookOpen size={18} className="text-[var(--primary)]" />
         </div>
       </div>
 
@@ -34,7 +34,7 @@ export default function Certificates() {
       <div className="space-y-3">
         {certList.map(cert => {
           const pct = Math.round((cert.score / cert.maxScore) * 100);
-          const gradeColor = pct >= 90 ? '#16A34A' : pct >= 75 ? '#2563EB' : '#F59E0B';
+          const gradeColor = pct >= 90 ? '#16A34A' : pct >= 75 ? '#1E5BF8' : '#F59E0B';
 
           return (
             <div key={cert.id}
@@ -81,7 +81,7 @@ export default function Certificates() {
                     style={{ background: `${gradeColor}10` }}>
                     <Trophy size={16} style={{ color: gradeColor }} />
                     <div>
-                      <p className="text-xs font-bold text-[var(--text-primary)]">{cert.rank}-örin</p>
+                      <p className="text-xs font-bold text-[var(--text-primary)]">{cert.rank}-oʻrin</p>
                       <p className="text-[10px] text-[var(--text-secondary)]">Reyting</p>
                     </div>
                   </div>
@@ -91,7 +91,7 @@ export default function Certificates() {
                       style={{ background: gradeColor }}>N</div>
                     <div>
                       <p className="text-xs font-bold text-[var(--text-primary)]">{cert.totalParticipants.toLocaleString()}</p>
-                      <p className="text-[10px] text-[var(--text-secondary)]">Iştirokçi</p>
+                      <p className="text-[10px] text-[var(--text-secondary)]">Ishtirokchi</p>
                     </div>
                   </div>
                 </div>

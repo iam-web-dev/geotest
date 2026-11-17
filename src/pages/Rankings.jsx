@@ -116,7 +116,7 @@ export default function Rankings() {
     <div className="space-y-5">
       <SEO
         title="Reyting Jadvali"
-        description="Öz natijalaringizni kuzating va boşqa öquvçilar bilan geografiya bilimlarini soliştiring."
+        description="Oʻz natijalaringizni kuzating va boshqa oʻquvchilar bilan geografiya bilimlarini solishtiring."
         url="/rankings"
       />
 
@@ -126,7 +126,7 @@ export default function Rankings() {
         style={{
           background: darkMode
             ? 'linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #1e3a8a 100%)'
-            : 'linear-gradient(135deg, #1A6ED4 0%, #2563EB 50%, #1D4ED8 100%)',
+            : 'linear-gradient(135deg, #1E5BF8 0%, #1749C7 100%)',
         }}
       >
         {/* Decorative orbs */}
@@ -160,7 +160,7 @@ export default function Rankings() {
           </motion.div>
           <div>
             <h1 className="text-xl font-bold text-white">Reyting</h1>
-            <p className="text-white/65 text-xs mt-0.5">Eng yaxşi geografiya bilimdonlari</p>
+            <p className="text-white/65 text-xs mt-0.5">Eng yaxshi geografiya bilimdonlari</p>
           </div>
         </div>
       </div>
@@ -174,7 +174,7 @@ export default function Rankings() {
             className={cn(
               'flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all border',
               activeTab === tab.id
-                ? 'bg-[var(--primary)] text-white border-[var(--primary)] şadow-sm'
+                ? 'bg-[var(--primary)] text-white border-[var(--primary)] shadow-sm'
                 : 'bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)]'
             )}
           >

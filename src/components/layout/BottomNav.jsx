@@ -1,12 +1,13 @@
 import { NavLink } from 'react-router-dom';
-import { House, BookOpen, Books, GraduationCap, Student, ChalkboardTeacher, SignIn } from '@phosphor-icons/react';
+import { House, BookOpen, Books, GraduationCap, Student, ChalkboardTeacher, SignIn, Target } from '@phosphor-icons/react';
 import { cn } from '../../lib/utils';
 import { useAuth } from '../../context/AuthContext';
 
 const ROLE_META = {
-  school_student: { Icon: GraduationCap, color: '#2563EB' },
+  school_student: { Icon: GraduationCap, color: '#1E5BF8' },
+  applicant:      { Icon: Target,        color: '#D97706' },
   student:        { Icon: Student,        color: '#7C3AED' },
-  teacher:        { Icon: ChalkboardTeacher, color: '#16A34A' },
+  teacher:        { Icon: ChalkboardTeacher, color: '#059669' },
 };
 
 function loadSettings() {
@@ -15,7 +16,7 @@ function loadSettings() {
 
 // 5 Main Core Sections requested by client
 const navItems = [
-  { to: '/', icon: House, label: 'Boş' },
+  { to: '/', icon: House, label: 'Bosh' },
   { to: '/tests', icon: BookOpen, label: 'Testlar' },
   { to: '/school', icon: GraduationCap, label: 'Maktab' },
   { to: '/library', icon: Books, label: 'Kutubxona' },
@@ -85,7 +86,7 @@ export default function BottomNav() {
                 )}
               </div>
               <span className={cn('text-[10px] font-medium transition-all duration-200', isActive ? 'text-[var(--primary)] font-bold' : 'text-[var(--text-secondary)]')}>
-                {user ? 'Profil' : 'Kiriş'}
+                {user ? 'Profil' : 'Kirish'}
               </span>
             </>
           )}

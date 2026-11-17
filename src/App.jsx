@@ -16,6 +16,8 @@ const Games = lazy(() => import('./pages/Games'));
 const GamePlay = lazy(() => import('./pages/GamePlay'));
 const Articles = lazy(() => import('./pages/Articles'));
 const ArticleDetail = lazy(() => import('./pages/ArticleDetail'));
+const Announcements = lazy(() => import('./pages/Announcements'));
+const AnnouncementDetail = lazy(() => import('./pages/AnnouncementDetail'));
 const Settings = lazy(() => import('./pages/Settings'));
 const Certificates = lazy(() => import('./pages/Certificates'));
 const Oferta = lazy(() => import('./pages/Oferta'));
@@ -23,7 +25,6 @@ const Activity = lazy(() => import('./pages/Activity'));
 const Rankings = lazy(() => import('./pages/Rankings'));
 const Profile = lazy(() => import('./pages/Profile'));
 const NotFound = lazy(() => import('./pages/NotFound'));
-const BookReader = lazy(() => import('./pages/BookReader'));
 const Creator = lazy(() => import('./pages/Creator'));
 
 const queryClient = new QueryClient();
@@ -65,6 +66,8 @@ function App() {
               <Route path="/muallif" element={<Creator />} />
               <Route path="/author" element={<Creator />} />
               <Route path="/ibrohimjon" element={<Creator />} />
+              <Route path="/oferta" element={<Oferta />} />
+              <Route path="/terms" element={<Oferta />} />
               <Route element={<Layout />}>
                 <Route path="/" element={<Home />} />
                 <Route path="/tests" element={<Tests />} />
@@ -77,13 +80,15 @@ function App() {
                 <Route path="/games/play/:slug" element={<GamePlay />} />
                 <Route path="/articles" element={<Articles />} />
                 <Route path="/articles/:id" element={<ArticleDetail />} />
+                <Route path="/announcements" element={<Announcements />} />
+                <Route path="/elonlar" element={<Announcements />} />
+                <Route path="/announcements/:id" element={<AnnouncementDetail />} />
+                <Route path="/elonlar/:id" element={<AnnouncementDetail />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/certificates" element={<Certificates />} />
-                <Route path="/oferta" element={<Oferta />} />
                 <Route path="/activity" element={<Activity />} />
                 <Route path="/rankings" element={<Rankings />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/read/:id" element={<BookReader />} />
                 <Route path="*" element={<NotFound />} />
               </Route>
             </Routes>
