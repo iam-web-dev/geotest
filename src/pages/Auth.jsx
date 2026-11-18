@@ -1,14 +1,16 @@
 import { useState, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   Eye, EyeSlash, User, Phone, Lock, CheckCircle, WarningCircle,
   ArrowRight, GraduationCap, Student, MapPin, CaretDown,
-  ChalkboardTeacher, Lightning, At, Check, X, Question, Target
+  ChalkboardTeacher, Lightning, At, Check, X, Question, Target, Globe
 } from '@phosphor-icons/react';
 import { cn, formatUzPhone } from '../lib/utils';
 import Button from '../components/ui/Button';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage, LANGUAGES } from '../context/LanguageContext';
 import SEO from '../components/SEO';
 import Logo from '../components/Logo';
 
@@ -40,6 +42,7 @@ const REGIONS = [
 
 export default function Auth({ initialMode }) {
   const { signIn, signUp, loginAsDemo, user } = useAuth();
+  const { language, setLanguage, t } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -70,6 +73,7 @@ export default function Auth({ initialMode }) {
     name: '',
     phone: '+998 ',
     username: '',
+    language: language || 'uz',
     role: 'school_student',
     region: 'Toshkent shahri',
     password: '',
@@ -165,6 +169,7 @@ export default function Auth({ initialMode }) {
         name: signupForm.name.trim(),
         phone: signupForm.phone,
         username: cleanUsername,
+        language: signupForm.language || 'uz',
         role: signupForm.role,
         region: signupForm.region,
         password: signupForm.password,
@@ -434,6 +439,32 @@ export default function Auth({ initialMode }) {
           ) : (
             /* ───────────── SIGN UP ───────────── */
             <form onSubmit={handleSignUpSubmit} className="space-y-3.5">
+              {/* Til tanlash (Language Selection: select dropdown, default uz) */}
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-[var(--text-primary)] flex items-center gap-1.5">
+                  <Globe size={15} weight="bold" className="text-[var(--primary)]" />
+                  <span>{t('auth.selectLanguage', 'Taʼlim va sayt tili')}</span>
+                </label>
+                <div className="relative">
+                  <select
+                    value={signupForm.language}
+                    onChange={(e) => {
+                      const newLang = e.target.value;
+                      setSignupForm(prev => ({ ...prev, language: newLang }));
+                      setLanguage(newLang);
+                    }}
+                    className="w-full h-11 pl-3.5 pr-9 rounded-xl border border-[var(--border)] bg-[var(--background)] text-sm font-medium text-[var(--text-primary)] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/10 transition-all appearance-none cursor-pointer"
+                  >
+                    <option value="uz">🇺🇿 Oʻzbekcha (Asosiy)</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="kaa">🇺🇿 Qaraqalpaqsha</option>
+                  </select>
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] pointer-events-none">
+                    <CaretDown size={14} weight="bold" />
+                  </div>
+                </div>
+              </div>
+
               {/* Full name */}
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-[var(--text-primary)]">
@@ -715,9 +746,9 @@ export default function Auth({ initialMode }) {
 
       {/* Forgot Password Modal */}
       <AnimatePresence>
-        {forgotModalOpen && (
+        {forgotModalOpen && createPortal(
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
             onClick={() => setForgotModalOpen(false)}
           >
             <div
@@ -742,7 +773,7 @@ export default function Auth({ initialMode }) {
                 href="https://t.me/geobek_admin"
                 target="_blank"
                 rel="noreferrer"
-                className="block text-center py-2 px-3 rounded-xl bg-[var(--primary)] text-white text-xs font-bold hover:bg-[var(--primary-hover)] transition-colors"
+                className="block text-center py-2 px-3 rounded-xl bg-[var(--primary)] text-white text-xs font-bold hover:bg-[var(--primary-hover)] transition-colors cursor-pointer"
               >
                 Telegram orqali bogʻlanish (@geobek_admin)
               </a>
@@ -750,12 +781,13 @@ export default function Auth({ initialMode }) {
               <button
                 type="button"
                 onClick={() => setForgotModalOpen(false)}
-                className="w-full h-9 rounded-xl border border-[var(--border)] text-xs font-semibold text-[var(--text-secondary)] hover:bg-[var(--background)] transition-all"
+                className="w-full h-9 rounded-xl border border-[var(--border)] text-xs font-semibold text-[var(--text-secondary)] hover:bg-[var(--background)] transition-all cursor-pointer"
               >
                 Yopish
               </button>
             </div>
-          </div>
+          </div>,
+          document.body
         )}
       </AnimatePresence>
     </div>

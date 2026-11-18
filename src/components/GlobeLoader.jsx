@@ -58,7 +58,7 @@ export default function GlobeLoader({ onDone, fadeIn = false }) {
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-between py-6 sm:py-8 px-4 transition-opacity duration-500 overflow-hidden"
+      className="fixed inset-0 z-[99999] flex flex-col items-center justify-between py-6 sm:py-8 px-4 transition-opacity duration-500 overflow-hidden"
       style={{
         backgroundColor: darkMode ? '#0B1120' : '#F8FAFC',
         opacity: out ? 0 : 1,

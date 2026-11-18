@@ -11,12 +11,14 @@ import {
   Student, ChalkboardTeacher, ShareNetwork,
   Copy, Check, Fire, Target, Timer,
   IdentificationCard, Sparkle, ArrowUp, ArrowDown,
-  CalendarBlank, CaretDown, DownloadSimple,
-  SealCheck, QrCode, CircleNotch, CheckCircle
+  CaretDown, DownloadSimple,
+  SealCheck, QrCode, CircleNotch, Globe
 } from '@phosphor-icons/react';
 import { cn } from '../lib/utils';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage, LANGUAGES } from '../context/LanguageContext';
 import { user as initialUser, recentActivities } from '../data/mockData';
+import { User } from 'lucide-react';
 
 const SETTINGS_KEY = 'geo_user_settings';
 function loadUserSettings() {
@@ -79,7 +81,6 @@ function getLevelTitle(level) {
   return "Boshlang'ich Sayyoh";
 }
 
-const UZ_MONTHS = ['Yan', 'Fev', 'Mar', 'Apr', 'May', 'Iyn', 'Iyl', 'Avg', 'Sen', 'Okt', 'Noy', 'Dek'];
 const UZ_MONTHS_FULL = [
   'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun',
   'Iyul', 'Avgust', 'Sentabr', 'Oktabr', 'Noyabr', 'Dekabr'
@@ -243,7 +244,7 @@ function ActivityModal({ activity, onClose }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.18 }}
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-0 sm:p-4"
+      className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-0 sm:p-4"
       onClick={onClose}
     >
       <motion.div
@@ -788,7 +789,7 @@ function StudentIdModal({ user, onClose, showToast = () => {} }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.18 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-md p-4 overflow-y-auto"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/75 backdrop-blur-md p-4 overflow-y-auto"
       onClick={onClose}
     >
       <motion.div
@@ -995,7 +996,7 @@ function CompleteProfileModal({ user, onClose, onSave }) {
   const [role, setRole] = useState(user.role || 'school_student');
   const [grade, setGrade] = useState(user.grade || 9);
   const [school, setSchool] = useState(user.school || '');
-  const [applicantType, setApplicantType] = useState(user.applicantType || 'OTMga kirish (DTM)');
+  const [applicantType, setApplicantType] = useState(user.applicantType || 'OTMga kirish');
   const [targetUniversity, setTargetUniversity] = useState(user.targetUniversity || '');
   const [course, setCourse] = useState(user.course || 1);
   const [faculty, setFaculty] = useState(user.faculty || '');
@@ -1029,7 +1030,7 @@ function CompleteProfileModal({ user, onClose, onSave }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.18 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto"
       onClick={onClose}
     >
       <motion.div
@@ -1167,7 +1168,7 @@ function CompleteProfileModal({ user, onClose, onSave }) {
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {[
-                      'OTMga kirish (DTM)',
+                      'OTMga kirish',
                       'Milliy sertifikat',
                       'Akademik litsey / Prezident maktabi',
                       'Xalqaro imtihonlar / Boshqa',
@@ -1386,10 +1387,17 @@ export default function Profile() {
   const navigate = useNavigate();
   const location = useLocation();
   const { user: authUser, updateProfile, signOut, loginAsDemo } = useAuth();
+  const { language, setLanguage } = useLanguage();
   const [selectedActivity, setSelectedActivity] = useState(null);
   const [showLogout, setShowLogout] = useState(false);
   const [showIdCard, setShowIdCard] = useState(false);
-  const [showCompleteModal, setShowCompleteModal] = useState(false);
+  const [showCompleteModal, setShowCompleteModal] = useState(() => {
+    try {
+      return typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('complete') === '1';
+    } catch {
+      return false;
+    }
+  });
   const [toastMessage, setToastMessage] = useState(null);
   const [hoveredDay, setHoveredDay] = useState(null);
   const [selectedYear, setSelectedYear] = useState('2026');
@@ -1399,7 +1407,8 @@ export default function Profile() {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     if (params.get('complete') === '1') {
-      setShowCompleteModal(true);
+      const timer = setTimeout(() => setShowCompleteModal(true), 0);
+      return () => clearTimeout(timer);
     }
   }, [location.search]);
 
@@ -1479,7 +1488,7 @@ export default function Profile() {
         <div className="space-y-2">
           <h1 className="text-2xl font-black text-[var(--text-primary)] tracking-tight">GEOBEK Profiliga xush kelibsiz</h1>
           <p className="text-sm text-[var(--text-secondary)] leading-relaxed max-w-sm mx-auto">
-            Test natijalaringiz, yutuqlaringiz, milliy sertifikatlar va respublika reytingingizni kuzatib borish uchun hisobingizga kiring.
+            Test natijalaringiz, yutuqlaringiz, sertifikatlar va respublika reytingingizni kuzatib borish uchun hisobingizga kiring.
           </p>
         </div>
 
@@ -1517,31 +1526,40 @@ export default function Profile() {
   const roleMeta = ROLE_META[user.role] || ROLE_META.school_student;
   const RoleIcon = roleMeta.Icon;
   const levelTitle = getLevelTitle(user.level || 1);
-  const profileStatus = useMemo(() => getProfileStatus(user), [user]);
+  const profileStatus = getProfileStatus(user);
+
+  // Yangi hisob yoki hali test topshirmagan foydalanuvchi tekshiruvi
+  const isNewAccount = authUser?.isNewUser || (!authUser?.totalTests && (authUser?.xp === 0 || !authUser?.xp));
+  const userRank = user.rank && user.rank > 0 && !isNewAccount ? user.rank : null;
+  const userTotalTests = typeof user.totalTests === 'number' && !isNewAccount ? user.totalTests : 0;
+  const userAverageScore = typeof user.averageScore === 'number' && userTotalTests > 0 ? user.averageScore : null;
+  const userHours = user.achievements?.hoursSpent && userTotalTests > 0 ? user.achievements.hoursSpent : null;
+  const userXp = isNewAccount ? (authUser?.xp || 0) : (user.xp || 12580);
+  const userStreak = isNewAccount ? (authUser?.streak || 0) : (user.streak || 7);
 
   // XP calculation
-  const currentLevelXp = (user.xp || 12580) % 2500;
+  const currentLevelXp = userXp % 2500;
   const xpNeeded = 2500;
   const xpPercent = Math.min(100, Math.round((currentLevelXp / xpNeeded) * 100));
 
   // Certificates list
   const certList = (user.nationalCertificates && user.nationalCertificates.length > 0)
     ? user.nationalCertificates
-    : initialUser.nationalCertificates;
+    : isNewAccount ? [] : initialUser.nationalCertificates;
 
   // Navigation menu items
   const menuItems = [
     {
-      icon: BookOpen,
-      label: 'Milliy sertifikatlar',
-      sub: `${certList.length} ta sertifikat mavjud`,
+      icon: SealCheck,
+      label: 'Sertifikatlar',
+      sub: certList.length > 0 ? `${certList.length} ta sertifikat mavjud` : 'Hali sertifikat yoʻq',
       color: '#2563EB',
       to: '/certificates'
     },
     {
       icon: Trophy,
       label: 'Respublika reytingi',
-      sub: `#${user.rank || 42}-o'rinda turibsiz`,
+      sub: userRank ? `#${userRank}-o'rinda turibsiz` : 'Hali reyting belgilanmagan',
       color: '#F59E0B',
       to: '/rankings'
     },
@@ -1551,6 +1569,13 @@ export default function Profile() {
       sub: 'Platformadan foydalanish shartlari',
       color: '#06B6D4',
       to: '/oferta'
+    },
+    {
+      icon: Globe,
+      label: 'Tilni oʻzgartirish',
+      sub: `Tanlangan til: ${LANGUAGES.find(l => l.code === language)?.name || "O'zbekcha"}`,
+      color: '#3B82F6',
+      isLanguage: true,
     },
     {
       icon: Question,
@@ -1581,7 +1606,7 @@ export default function Profile() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="fixed top-5 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-full bg-slate-900 text-white text-xs font-semibold shadow-xl flex items-center gap-2 border border-slate-700/50"
+            className="fixed top-5 left-1/2 -translate-x-1/2 z-[10000] px-4 py-2.5 rounded-full bg-slate-900 text-white text-xs font-semibold shadow-xl flex items-center gap-2 border border-slate-700/50"
           >
             <Check size={14} className="text-emerald-400" weight="bold" />
             <span>{toastMessage}</span>
@@ -1599,7 +1624,7 @@ export default function Profile() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-xs">
-                <Sparkle size={20} weight="fill" />
+                <User size={20} weight="fill" />
               </div>
               <div className="space-y-0.5">
                 <div className="flex items-center gap-2 flex-wrap">
@@ -1611,7 +1636,7 @@ export default function Profile() {
                   </span>
                 </div>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                  Siz <strong>{roleMeta.label}</strong> sifatida roʻyxatdan oʻtgansiz. {
+                  {
                     user.role === 'school_student'
                       ? "Qaysi sinfda o'qishingiz va maktabingizni belgilang."
                       : user.role === 'applicant'
@@ -1628,8 +1653,7 @@ export default function Profile() {
               onClick={() => setShowCompleteModal(true)}
               className="shrink-0 h-9 px-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-colors shadow-xs"
             >
-              <Sparkle size={14} weight="bold" />
-              <span>Profilingizni to'ldirish</span>
+              <span>Profilingizni to'ldiring</span>
             </button>
           </div>
         </motion.div>
@@ -1652,11 +1676,11 @@ export default function Profile() {
                 )}
               </div>
               <div
-                title={`${user.streak || 7} kunlik faollik`}
+                title={`${userStreak} kunlik faollik`}
                 className="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded-full bg-amber-500 text-white text-[10px] font-black border-2 border-[var(--surface)] flex items-center gap-0.5 shadow-sm"
               >
                 <Fire size={11} weight="fill" />
-                <span>{user.streak || 7}d</span>
+                <span>{userStreak}d</span>
               </div>
             </div>
 
@@ -1680,7 +1704,7 @@ export default function Profile() {
               </div>
 
               <p className="text-xs text-[var(--text-secondary)] font-medium">
-                {user.school || (user.targetUniversity ? `${user.targetUniversity} abituriyenti` : "Taʼlim muassasasi kiritilmagan")} • {user.region || "Toshkent shahri"}
+                {user.school || (user.targetUniversity ? `${user.targetUniversity} abituriyenti` : "Taʼlim muassasasi kiritilmagan")} | {user.region || "Toshkent shahri"}
               </p>
 
               <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
@@ -1697,15 +1721,7 @@ export default function Profile() {
                     <span className="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-blue-100 dark:bg-blue-500/15 text-blue-700 dark:text-blue-300">
                       {user.grade}-sinf
                     </span>
-                  ) : (
-                    <button
-                      onClick={() => setShowCompleteModal(true)}
-                      className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-300 hover:underline flex items-center gap-1"
-                    >
-                      <Sparkle size={10} weight="fill" />
-                      <span>Sinfni kiritish</span>
-                    </button>
-                  )
+                  ) : null
                 )}
 
                 {user.role === 'applicant' && (
@@ -1713,15 +1729,7 @@ export default function Profile() {
                     <span className="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-300">
                       {user.applicantType}
                     </span>
-                  ) : (
-                    <button
-                      onClick={() => setShowCompleteModal(true)}
-                      className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-300 hover:underline flex items-center gap-1"
-                    >
-                      <Sparkle size={10} weight="fill" />
-                      <span>Maqsadni kiritish</span>
-                    </button>
-                  )
+                  ) : null
                 )}
 
                 {user.role === 'student' && (
@@ -1729,15 +1737,7 @@ export default function Profile() {
                     <span className="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-purple-100 dark:bg-purple-500/15 text-purple-700 dark:text-purple-300">
                       {user.course === 'magistr' ? 'Magistratura' : `${user.course}-kurs`}
                     </span>
-                  ) : (
-                    <button
-                      onClick={() => setShowCompleteModal(true)}
-                      className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-purple-100 dark:bg-purple-500/15 text-purple-700 dark:text-purple-300 hover:underline flex items-center gap-1"
-                    >
-                      <Sparkle size={10} weight="fill" />
-                      <span>Kursni kiritish</span>
-                    </button>
-                  )
+                  ) : null
                 )}
 
                 {user.role === 'teacher' && (
@@ -1745,15 +1745,7 @@ export default function Profile() {
                     <span className="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">
                       {user.teachingCategory}
                     </span>
-                  ) : (
-                    <button
-                      onClick={() => setShowCompleteModal(true)}
-                      className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 hover:underline flex items-center gap-1"
-                    >
-                      <Sparkle size={10} weight="fill" />
-                      <span>Toifani kiritish</span>
-                    </button>
-                  )
+                  ) : null
                 )}
               </div>
             </div>
@@ -1770,7 +1762,7 @@ export default function Profile() {
                   <div className="flex items-center gap-2">
                     <p className="text-sm font-black text-[var(--text-primary)]">{levelTitle}</p>
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
-                      {user.level || 24}-daraja
+                      {user.level || 1}-daraja
                     </span>
                   </div>
                   <p className="text-[11px] text-[var(--text-secondary)] mt-0.5">
@@ -1781,10 +1773,10 @@ export default function Profile() {
 
               <div className="flex items-center gap-2 self-start sm:self-center">
                 <span className="text-sm font-black text-[var(--primary)] tabular-nums">
-                  {(user.xp || 12580).toLocaleString()} XP
+                  {userXp.toLocaleString()} XP
                 </span>
                 <span className="text-[11px] text-[var(--text-tertiary)] font-medium">
-                  / {((Math.floor((user.xp || 12580) / 2500) + 1) * 2500).toLocaleString()} XP
+                  / {((Math.floor(userXp / 2500) + 1) * 2500).toLocaleString()} XP
                 </span>
               </div>
             </div>
@@ -1806,15 +1798,7 @@ export default function Profile() {
                 <IdentificationCard size={16} weight="bold" className="text-[var(--primary)]" />
                 <span>ID Kartasi</span>
               </button>
-              {!profileStatus.isComplete && (
-                <button
-                  onClick={() => setShowCompleteModal(true)}
-                  className="flex-1 min-w-[150px] h-10 px-3 rounded-xl border border-amber-300 dark:border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors shadow-xs"
-                >
-                  <Sparkle size={15} weight="bold" />
-                  <span>Profilingizni to'ldiring</span>
-                </button>
-              )}
+              
               <button
                 onClick={() => navigate('/settings')}
                 className={cn(
@@ -1852,13 +1836,18 @@ export default function Profile() {
             </div>
           </div>
           <div>
-            <p className="text-2xl font-black text-[var(--text-primary)] tabular-nums tracking-tight">
-              #{user.rank || 42}
+            <p className={cn(
+              "text-2xl font-black tracking-tight",
+              userRank ? "text-[var(--text-primary)] tabular-nums" : "text-[var(--text-tertiary)] text-xl"
+            )}>
+              {userRank ? `#${userRank}` : "Hali yoʻq"}
             </p>
-            <p className="text-[11px] text-[var(--text-secondary)] mt-0.5">Top 1% o'quvchi</p>
+            <p className="text-[11px] text-[var(--text-secondary)] mt-0.5">
+              {userRank ? "Top o'quvchilar safida" : "Reytingga kirish uchun"}
+            </p>
           </div>
-          <div className="pt-2 border-t border-[var(--border-subtle)] flex items-center gap-1 text-[10px] font-bold text-emerald-500">
-            <span>↑3 pog'ona</span>
+          <div className="pt-2 border-t border-[var(--border-subtle)] flex items-center gap-1 text-[10px] font-bold text-amber-600 dark:text-amber-400">
+            {userRank ? <span>↑3 pog'ona</span> : <span>Test topshiring</span>}
           </div>
         </div>
 
@@ -1871,13 +1860,18 @@ export default function Profile() {
             </div>
           </div>
           <div>
-            <p className="text-2xl font-black text-[var(--text-primary)] tabular-nums tracking-tight">
-              {user.averageScore || 78}%
+            <p className={cn(
+              "text-2xl font-black tracking-tight",
+              userAverageScore !== null ? "text-[var(--text-primary)] tabular-nums" : "text-[var(--text-tertiary)] text-xl"
+            )}>
+              {userAverageScore !== null ? `${userAverageScore}%` : "Hali yoʻq"}
             </p>
-            <p className="text-[11px] text-[var(--text-secondary)] mt-0.5">Testlar natijasi</p>
+            <p className="text-[11px] text-[var(--text-secondary)] mt-0.5">
+              {userAverageScore !== null ? "Testlar natijasi" : "Aniqlik darajasi"}
+            </p>
           </div>
           <div className="pt-2 border-t border-[var(--border-subtle)] flex items-center gap-1 text-[10px] font-bold text-emerald-500">
-            <span>A'lo daraja</span>
+            {userAverageScore !== null ? <span>A'lo daraja</span> : <span>0% xato</span>}
           </div>
         </div>
 
@@ -1890,13 +1884,21 @@ export default function Profile() {
             </div>
           </div>
           <div>
-            <p className="text-2xl font-black text-[var(--text-primary)] tabular-nums tracking-tight">
-              {user.totalTests || 186}
+            {userTotalTests > 0 ? (
+              <p className="text-2xl font-black text-[var(--text-primary)] tabular-nums tracking-tight">
+                {userTotalTests} ta
+              </p>
+            ) : (
+              <Link to="/tests" className="text-xl font-bold text-[var(--primary)] hover:underline inline-flex items-center gap-1">
+                Boshlash <CaretRight size={16} weight="bold" />
+              </Link>
+            )}
+            <p className="text-[11px] text-[var(--text-secondary)] mt-0.5">
+              {userTotalTests > 0 ? `${user.totalQuizzes || 0} ta viktorina` : "Hali test topshirilmagan"}
             </p>
-            <p className="text-[11px] text-[var(--text-secondary)] mt-0.5">93 ta viktorina</p>
           </div>
           <div className="pt-2 border-t border-[var(--border-subtle)] flex items-center gap-1 text-[10px] font-bold text-blue-500">
-            <span>+12 bu hafta</span>
+            {userTotalTests > 0 ? <span>+12 bu hafta</span> : <Link to="/tests" className="hover:underline">Testlar roʻyxati</Link>}
           </div>
         </div>
 
@@ -1909,13 +1911,18 @@ export default function Profile() {
             </div>
           </div>
           <div>
-            <p className="text-2xl font-black text-[var(--text-primary)] tabular-nums tracking-tight">
-              {user.achievements?.hoursSpent || 128}h
+            <p className={cn(
+              "text-2xl font-black tracking-tight",
+              userHours !== null ? "text-[var(--text-primary)] tabular-nums" : "text-[var(--text-tertiary)] text-xl"
+            )}>
+              {userHours !== null ? `${userHours}h` : "Hali yoʻq"}
             </p>
-            <p className="text-[11px] text-[var(--text-secondary)] mt-0.5">Umumiy sarflangan</p>
+            <p className="text-[11px] text-[var(--text-secondary)] mt-0.5">
+              {userHours !== null ? "Umumiy sarflangan" : "Darslarni boshlang"}
+            </p>
           </div>
           <div className="pt-2 border-t border-[var(--border-subtle)] flex items-center gap-1 text-[10px] font-bold text-purple-500">
-            <span>45 kun faol</span>
+            {userHours !== null ? <span>Faol o'rganuvchi</span> : <span>Platformada o'qish</span>}
           </div>
         </div>
       </div>
@@ -1959,7 +1966,27 @@ export default function Profile() {
 
         {/* Horizontal Heatmap Grid */}
         <div ref={heatmapScrollRef} className="overflow-x-auto pb-2 scrollbar-thin scroll-smooth">
-          <div className="flex items-start gap-3 sm:gap-4 min-w-max">
+          <div className="flex items-start gap-2.5 sm:gap-3.5 min-w-max">
+            {/* Chap tomondagi Hafta kunlari ustuni (Du, Se, Ch, Pa, Ju, Sh, Ya) */}
+            <div className="flex flex-col gap-2 shrink-0 sticky left-0 z-10 bg-white dark:bg-[#0b111e] pr-1.5">
+              <span className="text-[11px] font-medium text-transparent select-none">
+                Kun
+              </span>
+              <div
+                className="grid gap-[3px] select-none"
+                style={{ gridTemplateRows: 'repeat(7, minmax(0, 1fr))' }}
+              >
+                {WEEKDAYS.map((day) => (
+                  <div
+                    key={day}
+                    className="h-3.5 sm:h-4 flex items-center text-[10px] sm:text-[11px] font-semibold text-slate-400 dark:text-slate-500 pr-1 select-none leading-none"
+                  >
+                    {day}
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {heatmapMonths.map((month) => (
               <div key={month.name} className="flex flex-col gap-2">
                 <span className="text-[11px] font-medium text-slate-400 dark:text-slate-400 pl-0.5 select-none">
@@ -2031,75 +2058,7 @@ export default function Profile() {
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────
-          4. MILLIY SERTIFIKATLAR (W-FULL)
-      ───────────────────────────────────────────────────────────────── */}
-      <div className="w-full rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 space-y-4 shadow-sm">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-base font-bold text-[var(--text-primary)]">Milliy Sertifikatlarim</h2>
-            <p className="text-xs text-[var(--text-secondary)]">Rasmiy topshirilgan imtihonlar va natijalar</p>
-          </div>
-          <Link
-            to="/certificates"
-            className="text-xs font-bold text-[var(--primary)] hover:underline flex items-center gap-1"
-          >
-            <span>Barchasi ({certList.length})</span>
-            <CaretRight size={13} weight="bold" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          {certList.slice(0, 3).map(cert => {
-            const pct = Math.round((cert.score / cert.maxScore) * 100);
-            const gradeColor = pct >= 90 ? '#10B981' : pct >= 75 ? '#2563EB' : '#F59E0B';
-
-            return (
-              <div
-                key={cert.id}
-                onClick={() => navigate('/certificates')}
-                className="p-4 rounded-2xl border border-[var(--border)] bg-[var(--background)] hover:border-blue-500/40 cursor-pointer transition-all space-y-3 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-[10px] font-mono text-[var(--text-tertiary)]">{cert.series}</span>
-                    <span
-                      className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                      style={{ background: `${gradeColor}18`, color: gradeColor }}
-                    >
-                      {cert.grade}
-                    </span>
-                  </div>
-                  <h4 className="text-xs font-bold text-[var(--text-primary)] mt-1.5 line-clamp-1">
-                    {cert.title}
-                  </h4>
-                </div>
-
-                <div className="space-y-1">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[var(--text-secondary)]">Ball</span>
-                    <span className="font-extrabold tabular-nums" style={{ color: gradeColor }}>
-                      {cert.score} / {cert.maxScore}
-                    </span>
-                  </div>
-                  <div className="h-1.5 rounded-full bg-[var(--border)] overflow-hidden">
-                    <div
-                      className="h-full rounded-full transition-all"
-                      style={{ width: `${pct}%`, background: gradeColor }}
-                    />
-                  </div>
-                  <div className="flex justify-between items-center text-[10px] text-[var(--text-tertiary)] pt-0.5">
-                    <span>{cert.date}</span>
-                    <span>#{cert.rank}-o'rin</span>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* ─────────────────────────────────────────────────────────────────
-          5. OXIRGI MASHG'ULOTLAR (W-FULL)
+          4. OXIRGI MASHG'ULOTLAR (W-FULL)
       ───────────────────────────────────────────────────────────────── */}
       <div className="w-full rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 space-y-4 shadow-sm">
         <div className="flex items-center justify-between">
@@ -2171,37 +2130,89 @@ export default function Profile() {
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────
-          6. SOZLAMALAR VA TIZIM MENYUSI (W-FULL MINIMALIST)
+          5. SOZLAMALAR VA TIZIM MENYUSI (W-FULL MINIMALIST)
       ───────────────────────────────────────────────────────────────── */}
       <div className="w-full rounded-3xl border border-[var(--border)] bg-[var(--surface)] overflow-hidden shadow-sm divide-y divide-[var(--border)]">
-        {menuItems.map((item, idx) => (
-          <div
-            key={idx}
-            onClick={() => {
-              if (item.action) item.action();
-              else if (item.href) window.open(item.href, '_blank', 'noopener,noreferrer');
-              else if (item.to) navigate(item.to);
-            }}
-            className={cn(
-              'flex items-center gap-3.5 px-5 py-3.5 cursor-pointer transition-colors hover:bg-[var(--background)]',
-              item.isDanger && 'hover:bg-red-500/10 text-red-500'
-            )}
-          >
+        {menuItems.map((item, idx) => {
+          if (item.isLanguage) {
+            return (
+              <div
+                key={idx}
+                className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 py-3.5 transition-colors hover:bg-[var(--background)]"
+              >
+                <div className="flex items-center gap-3.5">
+                  <div
+                    className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ background: `${item.color}15` }}
+                  >
+                    <item.icon size={19} style={{ color: item.color }} weight="duotone" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-[var(--text-primary)]">
+                      {item.label}
+                    </p>
+                    <p className="text-[11px] text-[var(--text-secondary)]">{item.sub}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[var(--background)] border border-[var(--border)] self-start sm:self-auto">
+                  {LANGUAGES.map((l) => {
+                    const isSelected = language === l.code;
+                    return (
+                      <button
+                        key={l.code}
+                        type="button"
+                        onClick={() => {
+                          setLanguage(l.code);
+                          setToastMessage(`Til oʻzgartirildi: ${l.name}`);
+                          setTimeout(() => setToastMessage(''), 2000);
+                        }}
+                        className={cn(
+                          "px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer",
+                          isSelected
+                            ? "bg-[var(--surface)] text-[var(--primary)] shadow-xs border border-[var(--border)] font-extrabold"
+                            : "text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"
+                        )}
+                      >
+                        <span className="text-sm">{l.flag}</span>
+                        <span>{l.name}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          }
+
+          return (
             <div
-              className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-              style={{ background: item.isDanger ? 'rgba(239, 68, 68, 0.12)' : `${item.color}15` }}
+              key={idx}
+              onClick={() => {
+                if (item.action) item.action();
+                else if (item.href) window.open(item.href, '_blank', 'noopener,noreferrer');
+                else if (item.to) navigate(item.to);
+              }}
+              className={cn(
+                'flex items-center gap-3.5 px-5 py-3.5 cursor-pointer transition-colors hover:bg-[var(--background)]',
+                item.isDanger && 'hover:bg-red-500/10 text-red-500'
+              )}
             >
-              <item.icon size={19} style={{ color: item.color }} weight={item.isDanger ? 'bold' : 'duotone'} />
+              <div
+                className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                style={{ background: item.isDanger ? 'rgba(239, 68, 68, 0.12)' : `${item.color}15` }}
+              >
+                <item.icon size={19} style={{ color: item.color }} weight={item.isDanger ? 'bold' : 'duotone'} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className={cn('text-sm font-semibold truncate', item.isDanger ? 'text-red-500' : 'text-[var(--text-primary)]')}>
+                  {item.label}
+                </p>
+                <p className="text-[11px] text-[var(--text-secondary)] truncate">{item.sub}</p>
+              </div>
+              <CaretRight size={15} className={item.isDanger ? 'text-red-400' : 'text-[var(--text-tertiary)]'} />
             </div>
-            <div className="flex-1 min-w-0">
-              <p className={cn('text-sm font-semibold truncate', item.isDanger ? 'text-red-500' : 'text-[var(--text-primary)]')}>
-                {item.label}
-              </p>
-              <p className="text-[11px] text-[var(--text-secondary)] truncate">{item.sub}</p>
-            </div>
-            <CaretRight size={15} className={item.isDanger ? 'text-red-400' : 'text-[var(--text-tertiary)]'} />
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Activity Details Modal */}
@@ -2237,7 +2248,7 @@ export default function Profile() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.18 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
             onClick={() => setShowLogout(false)}
           >
             <motion.div

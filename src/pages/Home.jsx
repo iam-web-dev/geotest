@@ -21,9 +21,15 @@ import {
 } from '../data/mockData';
 import { getDifficultyLabel, cn } from '../lib/utils';
 
-function StatCard({ icon: Icon, label, value, iconColor, iconBg }) {
-  return (
-    <div className="group bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-3.5 sm:p-4.5 transition-all duration-200 hover:border-[var(--primary)]/40 hover:shadow-xs flex flex-col justify-between">
+function StatCard({ icon: Icon, label, value, iconColor, iconBg, to }) {
+  const isAction = value === 'Boshlash';
+  const isNone = value === 'Hali yoʻq';
+
+  const cardContent = (
+    <div className={cn(
+      "group bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-3.5 sm:p-4.5 transition-all duration-200 hover:border-[var(--primary)]/40 hover:shadow-xs flex flex-col justify-between h-full",
+      to && "cursor-pointer"
+    )}>
       <div className="flex items-center justify-between gap-2 mb-2 sm:mb-2.5">
         <span className="text-xs sm:text-[13px] font-semibold text-[var(--text-secondary)] tracking-tight leading-tight">
           {label}
@@ -39,12 +45,25 @@ function StatCard({ icon: Icon, label, value, iconColor, iconBg }) {
         </div>
       </div>
       <div>
-        <p className="text-xl sm:text-2xl font-black text-[var(--text-primary)] tabular-nums tracking-tight">
+        <p className={cn(
+          "text-xl sm:text-2xl font-black tracking-tight",
+          isAction
+            ? "text-[var(--primary)] text-lg sm:text-xl flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
+            : isNone
+            ? "text-[var(--text-tertiary)] text-base sm:text-lg font-bold"
+            : "text-[var(--text-primary)] tabular-nums"
+        )}>
           {value}
+          {isAction && <CaretRight size={16} weight="bold" />}
         </p>
       </div>
     </div>
   );
+
+  if (to) {
+    return <Link to={to} className="block h-full">{cardContent}</Link>;
+  }
+  return cardContent;
 }
 
 const testStickers = {
@@ -59,19 +78,24 @@ export default function Home() {
   const { user: authUser } = useAuth();
   const activeUser = authUser || user;
 
-  const [globeSize, setGlobeSize] = useState(() => {
+  // Yangi foydalanuvchilar yoki hali test ishlamagan hisoblar uchun tekshiruv
+  const isNewOrNoStats = !authUser || authUser.isNewUser || (!authUser.totalTests && (!authUser.xp || authUser.xp === 0));
+
+  const getResponsiveGlobeSize = () => {
     if (typeof window === 'undefined') return 600;
-    if (window.innerWidth >= 1024) return 680;
-    if (window.innerWidth >= 640) return 520;
-    return 380;
-  });
+    if (window.innerWidth >= 1024) return 720;
+    if (window.innerWidth >= 640) return 560;
+    // Mobil versiyada ekranning o'ng tomonida ancha kattaroq va ko'rinarli qilish
+    return Math.min(Math.max(Math.round(window.innerWidth * 1.45), 520), 620);
+  };
+
+  const [globeSize, setGlobeSize] = useState(getResponsiveGlobeSize);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1024) setGlobeSize(680);
-      else if (window.innerWidth >= 640) setGlobeSize(520);
-      else setGlobeSize(380);
+      setGlobeSize(getResponsiveGlobeSize());
     };
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -86,10 +110,14 @@ export default function Home() {
 
       {/* ── Fixed Ambient Background Globe ── */}
       <div
-        className="fixed -right-20 -bottom-20 sm:-right-28 sm:-bottom-28 lg:-right-36 lg:-bottom-36 pointer-events-none select-none opacity-30 dark:opacity-25 z-0 transition-opacity duration-500"
+        className="fixed inset-0 pointer-events-none select-none z-0 overflow-hidden"
         aria-hidden="true"
       >
-        <EarthDetailedGlobe size={globeSize} interactive={false} />
+        <div
+          className="absolute top-1/2 -translate-y-1/2 right-0 translate-x-1/2 sm:top-auto sm:translate-y-0 sm:translate-x-0 sm:-right-28 sm:-bottom-28 lg:-right-36 lg:-bottom-36 opacity-40 dark:opacity-35 transition-all duration-500"
+        >
+          <EarthDetailedGlobe size={globeSize} interactive={false} />
+        </div>
       </div>
 
       {/* 1. Welcome Greeting */}
@@ -118,28 +146,29 @@ export default function Home() {
           <StatCard
             icon={Lightning}
             label="Bugungi ball"
-            value={`+${dailyStats.xpGained} XP`}
+            value={isNewOrNoStats ? "Hali yoʻq" : `+${dailyStats.xpGained} XP`}
             iconColor="text-amber-500 dark:text-amber-400"
             iconBg="bg-amber-500/10 dark:bg-amber-400/15"
           />
           <StatCard
             icon={Target}
             label="Aniqlik darajasi"
-            value={`${dailyStats.accuracy}%`}
+            value={isNewOrNoStats ? "Hali yoʻq" : `${dailyStats.accuracy}%`}
             iconColor="text-emerald-500 dark:text-emerald-400"
             iconBg="bg-emerald-500/10 dark:bg-emerald-400/15"
           />
           <StatCard
             icon={Clock}
             label="Oʻqish vaqti"
-            value={dailyStats.studyTime}
+            value={isNewOrNoStats ? "Hali yoʻq" : dailyStats.studyTime}
             iconColor="text-sky-500 dark:text-sky-400"
             iconBg="bg-sky-500/10 dark:bg-sky-400/15"
           />
           <StatCard
             icon={Exam}
             label="Bajarilgan testlar"
-            value={`${dailyStats.testsDone} ta`}
+            value={isNewOrNoStats ? "Boshlash" : `${dailyStats.testsDone} ta`}
+            to={isNewOrNoStats ? "/tests" : undefined}
             iconColor="text-violet-500 dark:text-violet-400"
             iconBg="bg-violet-500/10 dark:bg-violet-400/15"
           />

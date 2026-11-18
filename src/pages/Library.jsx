@@ -1,11 +1,12 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import SEO from '../components/SEO';
 import {
   MagnifyingGlass, BookOpen, Bookmark, Star,
-  SortAscending, X, Users, ArrowSquareOut, DownloadSimple
+  SortAscending, X, Users, ArrowSquareOut, DownloadSimple, Globe
 } from '@phosphor-icons/react';
 import { cn } from '../lib/utils';
 import { libraryCategories, books as initialBooks } from '../data/mockData';
+import { useLanguage } from '../context/LanguageContext';
 
 const TABS = [
   { id: 'all',      label: 'Barchasi' },
@@ -154,12 +155,21 @@ function BookCard({ book, onBookmark, onRead }) {
 
 // ── Main ───────────────────────────────────────────────────
 export default function Library() {
+  const { language, t } = useLanguage();
   const [bookList, setBookList]       = useState(initialBooks);
   const [search, setSearch]           = useState('');
   const [activeTab, setActiveTab]     = useState('all');
   const [activeCat, setActiveCat]     = useState('all');
+  const [selectedLang, setSelectedLang] = useState(language || 'uz');
   const [sortBy, setSortBy]           = useState('readers');
   const [showSort, setShowSort]       = useState(false);
+
+  // Sync default language when app language changes
+  useEffect(() => {
+    if (language) {
+      setSelectedLang(language);
+    }
+  }, [language]);
 
   const handleBookmark = (id) => {
     setBookList(prev => prev.map(b => b.id === id ? { ...b, isBookmarked: !b.isBookmarked } : b));
@@ -175,6 +185,7 @@ export default function Library() {
     if (activeTab === 'popular') list = [...list].sort((a, b) => (b.readers || 0) - (a.readers || 0));
     if (activeTab === 'saved')   list = list.filter(b => b.isBookmarked);
     if (activeCat !== 'all')     list = list.filter(b => b.category === activeCat);
+    if (selectedLang !== 'all')  list = list.filter(b => (b.language || 'uz') === selectedLang);
     if (search.trim())           list = list.filter(b =>
       b.title.toLowerCase().includes(search.toLowerCase()) ||
       b.author.toLowerCase().includes(search.toLowerCase())
@@ -184,7 +195,7 @@ export default function Library() {
       return [...list].sort((a, b) => (b[sortBy] || 0) - (a[sortBy] || 0));
     }
     return list;
-  }, [bookList, activeTab, activeCat, search, sortBy]);
+  }, [bookList, activeTab, activeCat, selectedLang, search, sortBy]);
 
   // Unified stats
   const totalBooks     = bookList.length;
@@ -292,6 +303,37 @@ export default function Library() {
             {t.label}
           </button>
         ))}
+      </div>
+
+      {/* ── Language Filter (Default is preselected to current language) ── */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+        <span className="text-xs font-bold text-[var(--text-tertiary)] flex items-center gap-1.5 shrink-0 uppercase tracking-wider mr-1">
+          <Globe size={15} weight="bold" className="text-[var(--primary)]" />
+          <span>{t('common.language', 'Til')}:</span>
+        </span>
+        {[
+          { id: 'all', label: 'Barcha tillar', flag: '🌐' },
+          { id: 'uz',  label: 'Oʻzbekcha',   flag: '🇺🇿' },
+          { id: 'ru',  label: 'Русский',     flag: '🇷🇺' },
+          { id: 'kaa', label: 'Qaraqalpaqsha', flag: '🇺🇿' },
+        ].map((item) => {
+          const isSelected = selectedLang === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => setSelectedLang(item.id)}
+              className={cn(
+                'px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 flex items-center gap-1.5 border',
+                isSelected
+                  ? 'bg-[var(--primary)] text-white border-[var(--primary)] shadow-sm'
+                  : 'bg-[var(--surface)] border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--primary)]/40 hover:text-[var(--text-primary)]'
+              )}
+            >
+              <span>{item.flag}</span>
+              <span>{item.label}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* ── Category chips (Static uniform colors) ── */}

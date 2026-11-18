@@ -3,6 +3,7 @@ import { useEffect, useState, Suspense, lazy } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
+import { LanguageProvider } from './context/LanguageContext';
 import Layout from './components/layout/Layout';
 import GlobeLoader from './components/GlobeLoader';
 import Home from './pages/Home';
@@ -29,13 +30,7 @@ const Creator = lazy(() => import('./pages/Creator'));
 
 const queryClient = new QueryClient();
 
-function RouteFallback() {
-  return (
-    <div className="flex items-center justify-center min-h-[50vh]">
-      <div className="w-8 h-8 rounded-full border-2 border-[var(--primary-soft)] border-t-[var(--primary)] animate-spin" />
-    </div>
-  );
-}
+import RouteFallback from './components/RouteFallback';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -53,9 +48,10 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <ThemeProvider>
-          {loading && <GlobeLoader onDone={() => setLoading(false)} />}
-        <BrowserRouter basename={import.meta.env.BASE_URL}>
+        <LanguageProvider>
+          <ThemeProvider>
+            {loading && <GlobeLoader onDone={() => setLoading(false)} />}
+          <BrowserRouter basename={import.meta.env.BASE_URL}>
           <ScrollToTop />
           <Suspense fallback={<RouteFallback />}>
             <Routes>
@@ -94,7 +90,8 @@ function App() {
             </Routes>
           </Suspense>
         </BrowserRouter>
-      </ThemeProvider>
+        </ThemeProvider>
+      </LanguageProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -39,12 +40,12 @@ function formatDate(d) {
 
 function GalleryViewer({ images, startIdx = 0, onClose }) {
   const [idx, setIdx] = useState(startIdx);
-  return (
+  return createPortal(
     <motion.div
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[60] bg-black/95 flex flex-col"
+      className="fixed inset-0 z-[9999] bg-black/95 flex flex-col"
       onClick={onClose}>
-      <button className="absolute top-4 right-4 text-white/70 hover:text-white z-10" onClick={onClose}>
+      <button className="absolute top-4 right-4 text-white/70 hover:text-white z-10 cursor-pointer" onClick={onClose}>
         <X size={24} />
       </button>
       <div className="flex-1 flex items-center justify-center p-4" onClick={e => e.stopPropagation()}>
@@ -58,11 +59,12 @@ function GalleryViewer({ images, startIdx = 0, onClose }) {
         <div className="flex items-center justify-center gap-2 pb-6" onClick={e => e.stopPropagation()}>
           {images.map((_, i) => (
             <button key={i} onClick={() => setIdx(i)}
-              className={cn('w-2 h-2 rounded-full transition-all', i === idx ? 'bg-white scale-125' : 'bg-white/40')} />
+              className={cn('w-2 h-2 rounded-full transition-all cursor-pointer', i === idx ? 'bg-white scale-125' : 'bg-white/40')} />
           ))}
         </div>
       )}
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 }
 

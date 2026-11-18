@@ -1,115 +1,88 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowLeft, TelegramLogo, YoutubeLogo, EnvelopeSimple,
-  MapPin, Sparkle, Copy, Check, Camera, BookOpen,
-  GraduationCap, Play, PhoneCall, Compass, ChalkboardTeacher
+  ArrowLeft, ArrowUpRight, Play, X, InstagramLogo,
+  YoutubeLogo, TelegramLogo, Image, VideoCamera, Check, Copy
 } from '@phosphor-icons/react';
 import SEO from '../components/SEO';
 
-const LIFE_CHAPTERS = [
+const SOCIAL_MEDIA_GALLERY = [
   {
-    period: "Ilk qadamlar va tabiatga muhabbat",
-    title: "Xaritalar siri va geografiyaga oshnolik",
-    content: `Bolaligimdan tabiatning har bir hodisasiga, togʻlar bagʻrida oqadigan jilgʻalardan tortib, bahorda qirlarni qoplagan lolalargacha qiziqish bilan qarardim. Qoʻlimga tushgan birinchi geografik atlas esa dunyomni butunlay oʻzgartirib yuborgan. 
-
-Oʻshanda xarita shunchaki rang-barang chizmalar emas, balki butun boshli insoniyat tarixi, zaminning tirik nafasini ifodalovchi moʻjiza ekanini his qilganman. Geografiya men uchun bir umrlik kasb emas, hayotimning mazmuniga, Vatanimni yanada chuqurroq anglash vositasiga aylandi.`
-  },
-  {
-    period: "Ustozlik va maktabdagi yillar",
-    title: "Sinfxona, oʻquvchilar nigohi va metodika izlanishlari",
-    content: `Koʻp yillar davomida maktab oʻquvchilariga geografiya fanidan saboq berib kelmoqdaman. Sinfxonaga kirganimda doskaga oddiy maʼruza yozib berish men uchun hech qachon yetarli boʻlmagan. Oʻquvchining koʻzida qiziqish oʻti yonishi uchun u xaritani his qilishi, Amudaryoning qayerdan boshlanib qayerga quyilishini, Qizilqum sarhadlarini oʻz koʻzi bilan koʻrgandek tasavvur qilishi kerak.
-
-Shu yillar davomida yuzlab iqtidorli oʻquvchilarni tuman, viloyat va respublika fan olimpiadalariga tayyorladim. Ularning har bir muvaffaqiyati, geografiya orqali dunyoqarashining kengayishi men uchun eng katta mukofot boʻldi.`
-  },
-  {
-    period: "GEOBEK gʻoyasi va yaratilishi",
-    title: "Nega taʼlimni raqamlashtirishga qaror qildim?",
-    content: `Afsuski, uzoq yillar davomida maktablarimizda geografiya oʻqituvchilari uchun zamonaviy, sifatli koʻrgazmali qurollar, yaxshi ishlangan taqdimotlar va rasmiy testlar yetishmay keldi. Koʻplab oʻqituvchilar darsga tayyorlanish uchun soatlab vaqt sarflar, ammo internetdan sifatli material topa olmas edi.
-
-Aynan shu boʻshliqni toʻldirish maqsadida men «GEOBEK» metodik loyihasini yoʻlga qoʻydim. 5-sinfdan 11-sinfgacha boʻlgan barcha darslik mavzularini tahlil qilib, sifatli taqdimotlar (PPTX), dars ishlanmalari va DTM standartidagi savollarni tayyorladim. 
-
-GEOBEK platformasi esa ana shu koʻp yillik mehnatimizni respublikadagi barcha ustozlar va oʻquvchilar uchun bir joyga jamlagan zamonaviy, ochiq va qulay xazinaga aylandi.`
-  },
-  {
-    period: "Hayotiy va pedagogik falsafa",
-    title: "«Geografiya — Vatanparvarlikning eng goʻzal ifodasi»",
-    content: `Mening pedagogik aqidam juda sodda:
-Oʻz yurtining har bir togʻini, daryosini, iqlimini va tabiiy boyligini bilmagan inson oʻz vatanini chin dildan seva olmaydi. Geografiya — bu quruq faktlar yigʻindisi emas, bu tabiatga mehr, resurslarni asrash madaniyati va dunyo bilan munosabatni oʻrganish ilmidir.
-
-Biz yaratayotgan har bir darslik, taqdimot va test savoli yurtimiz yoshlarining tafakkurini kengaytirishga xizmat qilishi kerak. Bugungi oʻquvchi ertangi kunning davlat arbobi, geologi, ekologi yoki muhandisidir. Ularga berayotgan bilimimiz halol, aniq va mehr bilan yetkazilishi shart.`
-  }
-];
-
-const MEDIA_GALLERY = [
-  {
-    type: 'image',
-    title: 'Dars jarayoni va oʻquvchilar bilan mashgʻulot',
-    category: 'Pedagogika',
-    description: 'Sinfxonada xaritalar tahlili va yosh geograf olimpiadachilar bilan amaliy dars.',
-    image: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=1000&q=80',
-  },
-  {
-    type: 'image',
-    title: 'Oʻzbekistonning tabiiy landshaftlari va dala amaliyoti',
-    category: 'Ekspeditsiya',
-    description: 'Togʻ tizmalari, daryo havzalari va relyef shakllarini joyida oʻrganish jarayoni.',
-    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80',
-  },
-  {
-    type: 'image',
-    title: 'Darsliklar, atlaslar va metodik qoʻllanmalar',
-    category: 'GEOBEK',
-    description: '5–11-sinf maktab oʻquv dasturlari uchun tayyorlangan koʻrgazmali taqdimotlar toʻplami.',
-    image: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1000&q=80',
-  },
-  {
+    id: 1,
     type: 'video',
-    title: 'GEOBEK 3D Xaritalar va Darsliklar Tahlili',
-    category: 'Video Dars',
-    description: 'Interaktiv 3D Yer globusi va umumtaʼlim maktab dasturlari integratsiyasi.',
+    platform: 'YouTube',
+    channel: 'GEOBEK Taʼlim',
+    channelUrl: 'https://youtube.com',
+    title: 'GEOBEK 3D Yer globusi va interaktiv xaritalardan darsda foydalanish',
+    caption: 'Maktab oʻquvchilariga geografiya fanini interaktiv 3D texnologiyalar orqali oʻrgatish metodikasi va ochiq dars tahlili.',
     videoSrc: 'https://assets.mixkit.co/videos/preview/mixkit-earth-rotating-in-space-41618-large.mp4',
-    thumbnail: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1000&q=80',
-  }
-];
-
-const CONTACTS = [
-  {
-    name: 'Telegram Kanal',
-    handle: '@geobek_uz',
-    url: 'https://t.me/iam_web_dev',
-    desc: 'Geografiya taqdimotlari, testlar va metodik yangiliklar',
-    icon: TelegramLogo,
-    color: '#0284C7'
+    thumbnail: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80',
+    duration: '14:20',
+    date: '2026-11-10',
   },
   {
-    name: 'YouTube',
-    handle: 'GEOBEK Taʼlim',
-    url: 'https://youtube.com',
-    desc: 'Video darslar, xaritalar sharhi va olimpiada masalalari tahlili',
-    icon: YoutubeLogo,
-    color: '#DC2626'
+    id: 2,
+    type: 'image',
+    platform: 'Telegram',
+    channel: '@geobek_uz',
+    channelUrl: 'https://t.me/iam_web_dev',
+    title: 'Sinfxonada xaritalar tahlili va interaktiv amaliy dars',
+    caption: 'Yosh geograf olimpiadachilar bilan darslik mavzulari boʻyicha koʻrgazmali taqdimotlar va relyef modellari tahlili.',
+    image: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=1200&q=80',
+    date: '2026-10-24',
   },
   {
-    name: 'Aloqa & Savollar',
-    handle: 'Qambarov O.X. (Shaxsiy)',
-    url: 'https://t.me/iam_web_dev',
-    desc: 'Oʻqituvchilar va abituriyentlar uchun metodik yordam',
-    icon: TelegramLogo,
-    color: '#0D9488'
+    id: 3,
+    type: 'video',
+    platform: 'Telegram',
+    channel: '@geobek_uz',
+    channelUrl: 'https://t.me/iam_web_dev',
+    title: 'Amudaryo va Sirdaryo havzasi: Orolboʻyi geoekologik tahlili',
+    caption: 'Markaziy Osiyoning asosiy daryo tarmoqlari, sugʻorish tizimlari va geoekologik muammolar yechimiga bagʻishlangan videodars.',
+    videoSrc: 'https://assets.mixkit.co/videos/preview/mixkit-top-view-of-waves-lapping-the-sand-at-the-beach-41716-large.mp4',
+    thumbnail: 'https://images.unsplash.com/photo-1507608158173-1dcec673a2e5?auto=format&fit=crop&w=1200&q=80',
+    duration: '09:45',
+    date: '2026-10-30',
   },
   {
-    name: 'Elektron Pochta',
-    handle: 'geobek.uz@gmail.com',
-    url: 'mailto:geobek.uz@gmail.com',
-    desc: 'Rasmiy takliflar va hamkorlik uchun',
-    icon: EnvelopeSimple,
-    color: '#4F46E5'
+    id: 4,
+    type: 'image',
+    platform: 'Instagram',
+    channel: '@geobek.uz',
+    channelUrl: 'https://instagram.com',
+    title: 'Togʻ tizmalari va relyef shakllarini joyida oʻrganish dala amaliyoti',
+    caption: 'Chotqol va Hisor togʻ tizmalarida oʻtkazilgan geografik ekspeditsiya va geomorfologik dala tadqiqoti lavhalari.',
+    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
+    date: '2026-11-02',
+  },
+  {
+    id: 5,
+    type: 'image',
+    platform: 'Instagram',
+    channel: '@geobek.uz',
+    channelUrl: 'https://instagram.com',
+    title: 'Respublika fan olimpiadasi gʻoliblarini taqdirlash marosimi',
+    caption: 'Ustoz Qambarov Omadbek Xayrullo o‘g‘li shogirdlari bilan birgalikda fan olimpiadasi taqdirlash tantanasida.',
+    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80',
+    date: '2026-11-15',
+  },
+  {
+    id: 6,
+    type: 'image',
+    platform: 'Telegram',
+    channel: '@geobek_uz',
+    channelUrl: 'https://t.me/iam_web_dev',
+    title: '5–11-sinf yangi geografiya taqdimotlari (PPTX) ustida ishlash',
+    caption: 'Darsliklarning har bir mavzusini rang-barang xaritalar, jadvallar va animatsiyalar bilan boyitish jarayoni.',
+    image: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1200&q=80',
+    date: '2026-11-17',
   }
 ];
 
 export default function Creator() {
-  const [playingVideo, setPlayingVideo] = useState(false);
+  const [activeTab, setActiveTab] = useState('all'); // all, photos, videos
+  const [activeVideo, setActiveVideo] = useState(null);
+  const [activePhoto, setActivePhoto] = useState(null);
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const handleCopyEmail = () => {
@@ -118,248 +91,423 @@ export default function Creator() {
     setTimeout(() => setCopiedEmail(false), 2000);
   };
 
+  const filteredMedia = SOCIAL_MEDIA_GALLERY.filter((item) => {
+    if (activeTab === 'photos') return item.type === 'image';
+    if (activeTab === 'videos') return item.type === 'video';
+    return true;
+  });
+
   return (
-    <div className="min-h-screen bg-[#FAF9F5] text-[#1C1917] selection:bg-amber-100 selection:text-amber-900 font-sans">
+    <div className="min-h-dvh bg-[var(--background)] text-[var(--text-secondary)] font-sans antialiased selection:bg-[var(--primary)]/20 selection:text-[var(--primary)]">
       <SEO
-        title="Qambarov O.X. – Geografiya ustozi, GEOBEK ilmiy rahbari va muallifi"
-        description="Geograf ustoz Qambarov O.X.ning hayot yoʻli, pedagogik tajribasi, geografiya metodikasi va GEOBEK ta'lim portali haqida."
+        title="Qambarov Omadbek Xayrullo o‘g‘li — GEOBEK asoschisi"
+        description="Geografiya fani ustozi, oliy toifali pedagog. GEOBEK taʼlim platformasi asoschisi va 5–11-sinf maktab taqdimotlari muallifi."
+        url="/creator"
       />
 
-      {/* ── Top Bar: Radically Clean - ONLY Back Button ── */}
-      <header className="sticky top-0 z-40 bg-[#FAF9F5]/90 backdrop-blur-md border-b border-[#E7E5E4]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#57534E] hover:text-[#0C0A09] transition-colors group"
-          >
-            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform text-[#0D9488]" />
-            <span>GEOBEK platformasiga qaytish</span>
-          </Link>
+      {/* Discreet Back Navigation to App */}
+      <Link
+        to="/"
+        aria-label="GEOBEK bosh sahifasiga qaytish"
+        className="fixed top-5 left-5 z-20 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--surface)] hover:bg-[var(--surface-raised)] text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border)] shadow-sm backdrop-blur-sm transition-all duration-200 group cursor-pointer"
+      >
+        <ArrowLeft size={13} weight="bold" className="group-hover:-translate-x-0.5 transition-transform" />
+        <span>GEOBEK</span>
+      </Link>
 
-          <span className="text-xs font-serif font-bold text-[#78716C]">
-            Qambarov O.X. | GEOBEK
-          </span>
+      <main className="max-w-[700px] mx-auto px-5 sm:px-6 py-16 sm:py-24">
+        {/* Avatar */}
+        <div className="flex justify-center mb-6">
+          <img
+            src={`${import.meta.env.BASE_URL}dhh-avatar.png`}
+            alt="Qambarov Omadbek Xayrullo o‘g‘li"
+            className="size-[126px] rounded-full object-cover select-none shadow-md border border-[var(--border)] ring-4 ring-[var(--surface)]"
+            loading="eager"
+          />
         </div>
-      </header>
 
-      {/* ── Main Content Container ── */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-20 space-y-20">
-        
-        {/* ── Hero / Teacher Introduction ── */}
-        <section className="space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-[#F5F5F4] border border-[#E7E5E4] text-[#0D9488]">
-            <GraduationCap size={15} weight="bold" />
-            <span>GEOGRAFIYA USTOZI & METODIST</span>
-          </div>
+        {/* Name Title */}
+        <h1 className="text-xl sm:text-2xl font-bold tracking-[0.16em] text-[var(--text-primary)] text-center uppercase mb-7 select-none">
+          <span className="text-[var(--primary)]">Q</span>AMBAROV{' '}
+          <span className="text-[var(--primary)]">O</span>MADBEK{' '}
+          <span className="text-[var(--primary)]">X</span>AYRULLO O‘G‘LI
+        </h1>
 
-          <div className="space-y-4">
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight font-serif text-[#0C0A09] leading-tight">
-              Qambarov O.X.
-            </h1>
-            <p className="text-lg sm:text-2xl text-[#44403C] leading-relaxed max-w-3xl font-serif italic">
-              «Geografiya — bu shunchaki togʻ va daryo nomlarini yodlash emas. Bu oʻz zaminini sevish, uning har bir zarrasini eʼzozlash va dunyo bilan munosabatni tushunish kalitidir.»
-            </p>
-          </div>
+        {/* Lead Bio Paragraph */}
+        <p className="text-center text-[15px] sm:text-base leading-[1.75] text-[var(--text-secondary)] text-pretty max-w-xl mx-auto mb-8 font-normal">
+          Men geografiya fani ustozi, oliy toifali pedagog,{' '}
+          <a
+            href="#geobek"
+            className="text-[var(--text-primary)] font-medium border-b border-[var(--border)] hover:text-[var(--primary)] hover:border-[var(--primary)] transition-colors cursor-pointer"
+          >
+            GEOBEK taʼlim platformasi
+          </a>{' '}
+          asoschisi, umumtaʼlim maktablari{' '}
+          <a
+            href="#presentations"
+            className="text-[var(--text-primary)] font-medium border-b border-[var(--border)] hover:text-[var(--primary)] hover:border-[var(--primary)] transition-colors cursor-pointer"
+          >
+            5–11-sinf taqdimotlari (PPTX)
+          </a>{' '}
+          muallifi, yosh geograf{' '}
+          <a
+            href="#olympiad"
+            className="text-[var(--text-primary)] font-medium border-b border-[var(--border)] hover:text-[var(--primary)] hover:border-[var(--primary)] transition-colors cursor-pointer"
+          >
+            olimpiadachilar ustozi
+          </a>
+          , zamonaviy metodist va{' '}
+          <a
+            href="#philosophy"
+            className="text-[var(--text-primary)] font-medium border-b border-[var(--border)] hover:text-[var(--primary)] hover:border-[var(--primary)] transition-colors cursor-pointer"
+          >
+            pedagogik falsafa
+          </a>{' '}
+          targʻibotchisiman.
+        </p>
 
-          {/* Teacher Credentials Strip */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#E7E5E4] shadow-sm flex flex-wrap items-center justify-between gap-4 text-xs sm:text-sm text-[#57534E]">
-            <div className="flex items-center gap-2">
-              <ChalkboardTeacher size={18} className="text-[#0D9488]" weight="bold" />
-              <span className="font-semibold text-[#1C1917]">Geografiya fani ustozi</span>
-              <span>•</span>
-              <span>Oliy toifali pedagog</span>
-            </div>
+        {/* Secondary Bio / Writing & Socials */}
+        <p className="text-center text-[15px] sm:text-base leading-[1.75] text-[var(--text-secondary)] text-pretty max-w-xl mx-auto mb-14 font-normal">
+          Mening darslarim va metodik materiallarimni{' '}
+          <a
+            href="https://t.me/iam_web_dev"
+            target="_blank"
+            rel="noreferrer"
+            className="text-[var(--primary)] hover:text-[var(--primary-hover)] underline decoration-[var(--primary)]/40 hover:decoration-[var(--primary)] font-medium transition-colors"
+          >
+            Telegram
+          </a>{' '}
+          va{' '}
+          <a
+            href="https://youtube.com"
+            target="_blank"
+            rel="noreferrer"
+            className="text-[var(--primary)] hover:text-[var(--primary-hover)] underline decoration-[var(--primary)]/40 hover:decoration-[var(--primary)] font-medium transition-colors"
+          >
+            YouTube
+          </a>
+          da kuzatishingiz mumkin. Shuningdek{' '}
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noreferrer"
+            className="text-[var(--primary)] hover:text-[var(--primary-hover)] underline decoration-[var(--primary)]/40 hover:decoration-[var(--primary)] font-medium transition-colors"
+          >
+            Instagram
+          </a>{' '}
+          orqali bogʻlanishingiz yoki toʻgʻridan-toʻgʻri{' '}
+          <button
+            onClick={handleCopyEmail}
+            className="text-[var(--primary)] hover:text-[var(--primary-hover)] underline decoration-[var(--primary)]/40 hover:decoration-[var(--primary)] font-medium transition-colors cursor-pointer"
+          >
+            geobek.uz@gmail.com
+          </button>
+          ga xat yuborishingiz mumkin.
+        </p>
 
-            <div className="flex items-center gap-2">
-              <BookOpen size={18} className="text-[#B45309]" weight="bold" />
-              <span className="font-semibold text-[#1C1917]">GEOBEK asoschisi</span>
-              <span>•</span>
-              <span>5–11-sinf taqdimotlar muallifi</span>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Life Story (Ustozning hayot yoʻli va kechinmalari) ── */}
-        <section className="space-y-10">
-          <div className="border-b border-[#E7E5E4] pb-4">
-            <div className="text-xs font-semibold uppercase tracking-wider text-[#0D9488]">
-              PEDAGOGIK FAOLIYAT VA HIKOYALAR
-            </div>
-            <h2 className="text-2xl sm:text-4xl font-bold font-serif text-[#0C0A09] mt-1">
-              Ustozlik yoʻli va hayotiy saboqlar
+        {/* Left-Aligned Detailed Sections */}
+        <div className="space-y-11 mb-20">
+          {/* Asoschi va Geografiya ustozi */}
+          <section id="geobek" className="space-y-3.5 scroll-mt-10">
+            <h2 className="text-[17px] sm:text-[18px] font-bold text-[var(--text-primary)] tracking-tight">
+              GEOBEK platformasi asoschisi
             </h2>
-            <p className="text-sm text-[#78716C] mt-1">
-              Maktab sinfxonalaridan tortib zamonaviy raqamli taʼlim platformasigacha boʻlgan yoʻl.
-            </p>
-          </div>
-
-          <div className="space-y-12">
-            {LIFE_CHAPTERS.map((chapter, idx) => (
-              <article key={idx} className="space-y-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#B45309]">
-                  {chapter.period}
-                </span>
-                <h3 className="text-xl sm:text-2xl font-bold font-serif text-[#1C1917]">
-                  {chapter.title}
-                </h3>
-                <div className="text-base sm:text-lg text-[#292524] font-serif leading-relaxed whitespace-pre-line pt-1">
-                  {chapter.content}
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* ── Photo & Video Gallery (Ustozlik lahzalari va ta'lim) ── */}
-        <section className="space-y-8">
-          <div className="border-b border-[#E7E5E4] pb-4">
-            <div className="flex items-center gap-2 text-xs font-semibold text-[#0D9488]">
-              <Camera size={15} />
-              <span>KOʻRGAZMALI QUROLLAR VA LAVHALAR</span>
+            <div className="text-[15px] sm:text-base leading-[1.75] text-[var(--text-secondary)] space-y-3.5 text-pretty font-normal">
+              <p>
+                Koʻp yillik oʻqituvchilik faoliyatim davomida maktablarimizda geografiya fani boʻyicha zamonaviy, sifatli koʻrgazmali qurollar, yaxshi ishlangan taqdimotlar va rasmiy testlar yetishmasligiga guvoh boʻldim. Aynan shu boʻshliqni toʻldirish maqsadida men «GEOBEK» taʼlim loyihasini yoʻlga qoʻydim.
+              </p>
+              <p>
+                Bugungi kunda platforma Oʻzbekistonning barcha viloyatlaridagi minglab maktab oʻqituvchilari, abituriyentlar va oʻquvchilar uchun darsliklar, testlar, interaktiv 3D Yer globusi va olimpiada materiallarini ochiq taqdim etuvchi zamonaviy xazinaga aylandi.
+              </p>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold font-serif text-[#0C0A09] mt-1">
+          </section>
+
+          {/* 5–11-sinf maktab taqdimotlari */}
+          <section id="presentations" className="space-y-3.5 scroll-mt-10">
+            <h2 className="text-[17px] sm:text-[18px] font-bold text-[var(--text-primary)] tracking-tight">
+              5–11-sinf maktab taqdimotlari (PPTX) muallifi
+            </h2>
+            <div className="text-[15px] sm:text-base leading-[1.75] text-[var(--text-secondary)] space-y-3.5 text-pretty font-normal">
+              <p>
+                Umumtaʼlim maktablarining 5-sinfidan 11-sinfigacha boʻlgan barcha geografiya darslik mavzularini batafsil tahlil qilib, darsda bevosita qoʻllash uchun qulay, yuqori sifatli slaydlar va xaritalar toʻplamini ishlab chiqdim.
+              </p>
+              <p>
+                Har bir taqdimot dars maqsadi, geografik xaritalar, statistik raqamlar, jadval va mustahkamlovchi savollar bilan toʻliq taʼminlangan boʻlib, oʻqituvchilarning darsga tayyorgarlik vaqtini bir necha barobarga tejaydi.
+              </p>
+            </div>
+          </section>
+
+          {/* Fan olimpiadalari va mentorlik */}
+          <section id="olympiad" className="space-y-3.5 scroll-mt-10">
+            <h2 className="text-[17px] sm:text-[18px] font-bold text-[var(--text-primary)] tracking-tight">
+              Fan olimpiadalari va mentorlik
+            </h2>
+            <div className="text-[15px] sm:text-base leading-[1.75] text-[var(--text-secondary)] space-y-3.5 text-pretty font-normal">
+              <p>
+                Oʻnlab iqtidorli oʻquvchilarim tuman, viloyat va respublika fan olimpiadalarida oliy oʻrinlarni egallab, davlat grantlari va nufuzli oliy oʻquv yurtlariga muddatidan oldin qabul qilindi.
+              </p>
+              <p>
+                Shogirdlarim bilan birga nafaqat nazariy bilimlarni, balki xaritalar bilan ishlash, kartografik masalalarni matematik hisoblash va tabiiy geografik hodisalarni tahlil qilish koʻnikmalarini chuqur oʻrganamiz.
+              </p>
+            </div>
+          </section>
+
+          {/* Pedagogik falsafa */}
+          <section id="philosophy" className="space-y-3.5 scroll-mt-10">
+            <h2 className="text-[17px] sm:text-[18px] font-bold text-[var(--text-primary)] tracking-tight">
+              «Geografiya — Vatanparvarlikning eng goʻzal ifodasi»
+            </h2>
+            <div className="text-[15px] sm:text-base leading-[1.75] text-[var(--text-secondary)] space-y-3.5 text-pretty font-normal">
+              <p>
+                Mening pedagogik aqidam: Oʻz yurtining har bir togʻini, daryosini, iqlimini va tabiiy boyligini bilmagan inson oʻz vatanini chin dildan seva olmaydi. Geografiya shunchaki faktlar yigʻindisi emas, bu ona zaminni asrash madaniyatidir.
+              </p>
+            </div>
+          </section>
+        </div>
+
+        {/* ── Social Media Photos & Videos Section (Rasm va videolar bo'limi) ── */}
+        <section id="media-gallery" className="pt-10 border-t border-[var(--border)] space-y-6">
+          <div className="space-y-2 text-center sm:text-left">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--primary-soft)] border border-[var(--primary-border)] text-[var(--primary)] text-xs font-mono font-semibold">
+              <Image size={13} weight="bold" />
+              <span>Ijtimoiy tarmoqlar arxivi</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] tracking-tight">
               Foto va videolavhalar
             </h2>
-            <p className="text-sm text-[#78716C] mt-1">
-              Dars jarayonlari, GEOBEK taqdimotlari va Oʻzbekistonning betakror tabiati.
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed max-w-xl">
+              Telegram, YouTube va Instagram kanallaridagi eng soʻnggi ochiq darslar, dala ekspeditsiyalari, olimpiada jarayonlari va video qoʻllanmalar.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {MEDIA_GALLERY.map((item, idx) => (
+          {/* Media Filter Tabs */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+            {[
+              { id: 'all', label: 'Barchasi' },
+              { id: 'photos', label: 'Fotolavhalar' },
+              { id: 'videos', label: 'Videolavhalar' },
+            ].map((tab) => {
+              const isSelected = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 border cursor-pointer ${
+                    isSelected
+                      ? 'bg-[var(--primary)] text-white border-[var(--primary)] shadow-sm'
+                      : 'bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:text-[var(--text-primary)] hover:border-[var(--primary)]/40'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Media Grid Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            {filteredMedia.map((item) => (
               <div
-                key={idx}
-                className="group rounded-2xl border border-[#E7E5E4] bg-white overflow-hidden flex flex-col shadow-sm hover:shadow-md transition-all"
+                key={item.id}
+                className="group rounded-2xl bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--primary)]/50 transition-all overflow-hidden flex flex-col justify-between shadow-sm hover:shadow-md"
               >
-                {/* Media Container */}
-                <div className="relative aspect-[16/10] bg-[#F5F5F4] overflow-hidden">
+                {/* Media Preview Area */}
+                <div className="relative aspect-[16/10] overflow-hidden bg-black/40">
+                  <img
+                    src={item.type === 'video' ? item.thumbnail : item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
+
+                  {/* Platform Badge */}
+                  <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-white text-[11px] font-medium border border-white/10">
+                    {item.platform === 'Telegram' && <TelegramLogo size={13} weight="fill" className="text-sky-400" />}
+                    {item.platform === 'YouTube' && <YoutubeLogo size={13} weight="fill" className="text-red-500" />}
+                    {item.platform === 'Instagram' && <InstagramLogo size={13} weight="fill" className="text-pink-400" />}
+                    <span>{item.channel}</span>
+                  </div>
+
+                  {/* Play Button for Video */}
                   {item.type === 'video' ? (
-                    <div className="relative w-full h-full">
-                      {playingVideo ? (
-                        <video
-                          src={item.videoSrc}
-                          autoPlay
-                          controls
-                          loop
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <>
-                          <img
-                            src={item.thumbnail}
-                            alt={item.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          />
-                          <button
-                            onClick={() => setPlayingVideo(true)}
-                            className="absolute inset-0 m-auto w-12 h-12 rounded-full bg-[#0D9488] text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
-                            title="Videoni tomosha qilish"
-                          >
-                            <Play size={20} weight="fill" className="ml-0.5" />
-                          </button>
-                        </>
-                      )}
-                    </div>
+                    <button
+                      onClick={() => setActiveVideo(item)}
+                      className="absolute inset-0 m-auto size-12 rounded-full bg-[var(--primary)] text-white flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-lg cursor-pointer"
+                      title="Videoni tomosha qilish"
+                      aria-label="Videoni tomosha qilish"
+                    >
+                      <Play size={18} weight="fill" className="ml-0.5" />
+                    </button>
                   ) : (
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                    <button
+                      onClick={() => setActivePhoto(item)}
+                      className="absolute bottom-2.5 right-2.5 size-8 rounded-lg bg-black/60 hover:bg-[var(--primary)] text-white flex items-center justify-center transition-all cursor-pointer"
+                      title="Rasmni toʻliq koʻrish"
+                      aria-label="Rasmni toʻliq koʻrish"
+                    >
+                      <Image size={15} weight="bold" />
+                    </button>
                   )}
-                  <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded text-[11px] font-semibold bg-white/90 backdrop-blur-md text-[#1C1917] border border-[#E7E5E4]">
-                    {item.category}
-                  </span>
+
+                  {/* Duration tag */}
+                  {item.duration && (
+                    <span className="absolute bottom-2.5 right-2.5 px-1.5 py-0.5 rounded bg-black/70 text-white font-mono text-[10px] font-semibold">
+                      {item.duration}
+                    </span>
+                  )}
                 </div>
 
-                {/* Media Info */}
-                <div className="p-4 space-y-1.5 flex-1 flex flex-col justify-between">
-                  <h4 className="font-bold text-base font-serif text-[#1C1917]">
-                    {item.title}
-                  </h4>
-                  <p className="text-xs text-[#57534E] leading-relaxed">
-                    {item.description}
-                  </p>
+                {/* Card Meta Content */}
+                <div className="p-3.5 space-y-1.5 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xs sm:text-sm font-bold text-[var(--text-primary)] line-clamp-2 group-hover:text-[var(--primary)] transition-colors leading-snug">
+                      {item.title}
+                    </h3>
+                    <p className="text-[11px] text-[var(--text-secondary)] line-clamp-2 mt-1 leading-relaxed">
+                      {item.caption}
+                    </p>
+                  </div>
+
+                  <div className="pt-2 border-t border-[var(--border)] flex items-center justify-between text-[10px] text-[var(--text-tertiary)] font-mono">
+                    <span>{item.date}</span>
+                    <a
+                      href={item.channelUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-[var(--primary)] hover:underline flex items-center gap-0.5 font-sans font-semibold"
+                    >
+                      <span>Kanalda koʻrish</span>
+                      <ArrowUpRight size={10} />
+                    </a>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* ── Contacts & Mentorship (Ustoz bilan bogʻlanish) ── */}
-        <section className="space-y-6 pt-6 border-t border-[#E7E5E4]">
-          <div className="space-y-1.5">
-            <h2 className="text-2xl sm:text-3xl font-bold font-serif text-[#0C0A09]">
-              Ustoz bilan bogʻlanish va metodik muloqot
-            </h2>
-            <p className="text-sm text-[#57534E] max-w-2xl leading-relaxed">
-              Agar siz geografiya oʻqituvchisi, abituriyent yoki fan qiziquvchisi boʻlsangiz — darsliklar, 
-              olimpiada testlari yoki dars taqdimotlari boʻyicha bemalol murojaat qilishingiz mumkin.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {CONTACTS.map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <a
-                  key={idx}
-                  href={item.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-start gap-3.5 p-4 rounded-xl border border-[#E7E5E4] bg-white hover:border-[#0D9488] hover:shadow-sm transition-all group"
-                >
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-[#F5F5F4] border border-[#E7E5E4]"
-                    style={{ color: item.color }}
-                  >
-                    <Icon size={20} weight="bold" />
-                  </div>
-                  <div className="min-w-0 flex-1 space-y-0.5">
-                    <p className="text-sm font-bold text-[#1C1917] group-hover:text-[#0D9488] transition-colors">
-                      {item.name}
-                    </p>
-                    <p className="text-xs font-semibold text-[#0D9488]">
-                      {item.handle}
-                    </p>
-                    <p className="text-[11px] text-[#78716C] leading-snug">
-                      {item.desc}
-                    </p>
-                  </div>
-                </a>
-              );
-            })}
-          </div>
-
-          {/* Quick Email Copy Card */}
-          <div className="p-4 rounded-xl border border-[#E7E5E4] bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#57534E]">
-            <span className="font-medium">Rasmiy xatlar va takliflar uchun pochta:</span>
-            <button
-              onClick={handleCopyEmail}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#F5F5F4] border border-[#D6D3D1] text-[#1C1917] font-semibold hover:bg-[#E7E5E4] transition-colors"
+        {/* Video Player Modal */}
+        {activeVideo && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+            onClick={() => setActiveVideo(null)}
+          >
+            <div
+              className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl overflow-hidden max-w-2xl w-full space-y-3 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
             >
-              {copiedEmail ? <Check size={14} className="text-emerald-600" /> : <Copy size={14} />}
-              <span>{copiedEmail ? "Nusxalandi!" : "geobek.uz@gmail.com nusxalash"}</span>
-            </button>
-          </div>
-        </section>
+              <div className="p-4 pb-0 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-red-500/20 text-red-500 flex items-center gap-1">
+                    <YoutubeLogo size={13} weight="fill" />
+                    <span>{activeVideo.platform}</span>
+                  </span>
+                  <h3 className="text-xs sm:text-sm font-bold text-[var(--text-primary)] truncate max-w-md">
+                    {activeVideo.title}
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setActiveVideo(null)}
+                  className="p-1.5 rounded-lg text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-raised)] transition-colors cursor-pointer"
+                  aria-label="Yopish"
+                >
+                  <X size={16} weight="bold" />
+                </button>
+              </div>
 
-        {/* ── Footer ── */}
-        <footer className="pt-8 border-t border-[#E7E5E4] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#78716C]">
-          <div className="flex items-center gap-1.5 font-medium">
-            <span>© {new Date().getFullYear()} Qambarov O.X. | GEOBEK.</span>
-            <span>Barcha huquqlar himoyalangan.</span>
-          </div>
+              <div className="relative aspect-video bg-black">
+                <video
+                  src={activeVideo.videoSrc}
+                  controls
+                  autoPlay
+                  className="w-full h-full object-contain"
+                />
+              </div>
 
+              <div className="p-4 pt-0 space-y-2">
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                  {activeVideo.caption}
+                </p>
+                <div className="flex items-center justify-between text-xs text-[var(--text-tertiary)] font-mono">
+                  <span>Muallif: Qambarov Omadbek | {activeVideo.channel}</span>
+                  <a
+                    href={activeVideo.channelUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-[var(--primary)] hover:underline inline-flex items-center gap-1 font-sans font-semibold"
+                  >
+                    <span>Kanalga aʼzo boʻlish</span>
+                    <ArrowUpRight size={11} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Photo Lightbox Modal */}
+        {activePhoto && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+            onClick={() => setActivePhoto(null)}
+          >
+            <div
+              className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl overflow-hidden max-w-2xl w-full space-y-3 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-4 pb-0 flex items-center justify-between">
+                <span className="text-xs font-bold text-[var(--text-primary)] truncate max-w-md">
+                  {activePhoto.title}
+                </span>
+                <button
+                  onClick={() => setActivePhoto(null)}
+                  className="p-1.5 rounded-lg text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-raised)] transition-colors cursor-pointer"
+                  aria-label="Yopish"
+                >
+                  <X size={16} weight="bold" />
+                </button>
+              </div>
+
+              <div className="relative max-h-[60vh] bg-black flex items-center justify-center overflow-hidden">
+                <img
+                  src={activePhoto.image}
+                  alt={activePhoto.title}
+                  className="max-h-[60vh] w-auto object-contain"
+                />
+              </div>
+
+              <div className="p-4 pt-0 space-y-2">
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                  {activePhoto.caption}
+                </p>
+                <div className="flex items-center justify-between text-xs text-[var(--text-tertiary)] font-mono">
+                  <span>{activePhoto.platform} • {activePhoto.channel}</span>
+                  <a
+                    href={activePhoto.channelUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-[var(--primary)] hover:underline inline-flex items-center gap-1 font-sans font-semibold"
+                  >
+                    <span>Postni koʻrish</span>
+                    <ArrowUpRight size={11} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Minimal Bottom Colophon */}
+        <footer className="mt-20 pt-8 border-t border-[var(--border)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[var(--text-tertiary)]">
+          <span>© {new Date().getFullYear()} Qambarov Omadbek Xayrullo o‘g‘li | GEOBEK</span>
           <Link
             to="/"
-            className="font-bold text-[#0D9488] hover:underline transition-colors"
+            className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors"
           >
-            ← Bosh sahifaga qaytish
+            ← GEOBEK bosh sahifasi
           </Link>
         </footer>
-
       </main>
     </div>
   );

@@ -113,17 +113,17 @@ export default function AnnouncementsCarousel() {
             initial="enter"
             animate="center"
             exit="exit"
-            className="p-5 sm:p-6 cursor-pointer flex flex-col justify-between gap-4 group"
+            className="flex flex-col justify-between gap-4 p-5 cursor-pointer sm:p-6 group"
             onClick={handleOpenDetail}
           >
             <div className="space-y-3">
               {/* Category, Date & Counter */}
-              <div className="flex items-center justify-between gap-3 flex-wrap">
+              <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-2 text-xs">
                   <span className="font-bold text-[var(--primary)]">
                     {currentItem.categoryLabel}
                   </span>
-                  <span className="text-[var(--text-tertiary)]">•</span>
+                  <span className="text-[var(--text-tertiary)]">|</span>
                   <span className="text-[var(--text-tertiary)] font-medium flex items-center gap-1">
                     <Clock size={13} weight="regular" />
                     <span>{currentItem.date}</span>

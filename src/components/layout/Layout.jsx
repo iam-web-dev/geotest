@@ -1,10 +1,11 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, Suspense } from 'react';
 import { Outlet, useLocation, NavLink } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Sun, Moon } from '@phosphor-icons/react';
 import Sidebar from './Sidebar';
 import BottomNav from './BottomNav';
 import Logo from '../Logo';
+import RouteFallback from '../RouteFallback';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 
@@ -70,7 +71,7 @@ export default function Layout() {
             </div>
           </NavLink>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <button
               onClick={toggleTheme}
               className="w-8 h-8 rounded-xl bg-[var(--background)] flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--text-primary)] active:scale-90 transition-transform duration-150"
@@ -103,7 +104,9 @@ export default function Layout() {
         </header>
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
-          <Outlet />
+          <Suspense fallback={<RouteFallback />}>
+            <Outlet />
+          </Suspense>
         </div>
       </main>
       <BottomNav />

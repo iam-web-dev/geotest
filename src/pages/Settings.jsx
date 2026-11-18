@@ -1,8 +1,10 @@
 import { useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
-import { CaretLeft, Check, Camera, GraduationCap, Student, ChalkboardTeacher, SignOut, Target } from '@phosphor-icons/react';
+import { CaretLeft, Check, Camera, GraduationCap, Student, ChalkboardTeacher, SignOut, Target, Globe } from '@phosphor-icons/react';
 import { cn } from '../lib/utils';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage, LANGUAGES } from '../context/LanguageContext';
 import { user as initialUser } from '../data/mockData';
 
 const STORAGE_KEY = 'geo_user_settings';
@@ -90,6 +92,7 @@ function Select({ value, onChange, options, placeholder }) {
 export default function Settings() {
   const navigate = useNavigate();
   const { user: authUser, updateProfile, signOut } = useAuth();
+  const { language: currentLang, setLanguage } = useLanguage();
   const saved = loadSettings();
   const merged = { ...initialUser, ...(authUser || {}), ...saved };
 
@@ -97,6 +100,7 @@ export default function Settings() {
     name:             merged.name             || '',
     school:           merged.school           || '',
     region:           merged.region           || '',
+    language:         merged.language         || currentLang || 'uz',
     role:             merged.role             || 'school_student',
     grade:            merged.grade            || '',
     course:           merged.course           || '',
@@ -122,6 +126,7 @@ export default function Settings() {
 
   const handleSave = () => {
     saveSettings(form);
+    if (form.language) setLanguage(form.language);
     if (updateProfile) updateProfile(form);
     navigate('/profile');
   };
@@ -192,6 +197,31 @@ export default function Settings() {
 
       {/* Basic fields */}
       <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 space-y-4">
+        {/* Language Selection */}
+        <Field label="Asosiy til (Oʻzbekcha / Русский / Qaraqalpaqsha)">
+          <div className="grid grid-cols-3 gap-2 pt-1">
+            {LANGUAGES.map((l) => {
+              const isSelected = form.language === l.code;
+              return (
+                <button
+                  key={l.code}
+                  type="button"
+                  onClick={() => set('language', l.code)}
+                  className={cn(
+                    'h-10 px-2 rounded-xl text-xs font-bold border transition-all flex items-center justify-center gap-1.5 cursor-pointer',
+                    isSelected
+                      ? 'bg-[var(--primary)] text-white border-[var(--primary)] shadow-sm'
+                      : 'bg-[var(--background)] text-[var(--text-secondary)] border-[var(--border)] hover:border-[var(--primary)]/40 hover:text-[var(--text-primary)]'
+                  )}
+                >
+                  <span>{l.flag}</span>
+                  <span className="truncate">{l.name}</span>
+                </button>
+              );
+            })}
+          </div>
+        </Field>
+
         <Field label="Ism Familiya">
           <Input value={form.name} onChange={v => set('name', v)} placeholder="Toʻliq ismingiz" />
         </Field>
@@ -238,7 +268,7 @@ export default function Settings() {
                 onChange={v => set('applicantType', v)}
                 placeholder="Tayyorgarlik maqsadini tanlang"
                 options={[
-                  { value: 'OTMga kirish (DTM)', label: 'OTMga kirish (DTM / Davlat imtihonlari)' },
+                  { value: 'OTMga kirish', label: 'OTMga kirish (DTM / Davlat imtihonlari)' },
                   { value: 'Milliy sertifikat', label: 'Milliy sertifikat (Geografiya fani)' },
                   { value: 'Akademik litsey / Prezident maktabi', label: 'Akademik litsey / Prezident maktabi' },
                   { value: 'Olimpiada / Xalqaro', label: 'Olimpiada va xalqaro tanlovlar' },
@@ -356,9 +386,9 @@ export default function Settings() {
       </button>
 
       {/* Logout confirmation modal */}
-      {showLogoutModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 w-full max-w-sm space-y-4 shadow-2xl">
+      {showLogoutModal && createPortal(
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={() => setShowLogoutModal(false)}>
+          <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 w-full max-w-sm space-y-4 shadow-2xl" onClick={e => e.stopPropagation()}>
             <div className="flex flex-col items-center gap-3 text-center">
               <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
                 <SignOut size={22} weight="fill" />
@@ -371,20 +401,21 @@ export default function Settings() {
             <div className="flex gap-2">
               <button
                 onClick={() => setShowLogoutModal(false)}
-                className="flex-1 h-10 rounded-xl border border-[var(--border)] text-xs font-semibold text-[var(--text-secondary)] hover:bg-[var(--background)] transition-all"
+                className="flex-1 h-10 rounded-xl border border-[var(--border)] text-xs font-semibold text-[var(--text-secondary)] hover:bg-[var(--background)] transition-all cursor-pointer"
               >
                 Bekor qilish
               </button>
               <button
                 onClick={handleLogout}
-                className="flex-1 h-10 rounded-xl bg-red-500 text-xs font-semibold text-white hover:bg-red-600 transition-all flex items-center justify-center gap-1.5"
+                className="flex-1 h-10 rounded-xl bg-red-500 text-xs font-semibold text-white hover:bg-red-600 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <SignOut size={15} weight="bold" />
                 <span>Chiqish</span>
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

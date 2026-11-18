@@ -1,12 +1,15 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
-  House, BookOpen, Books, GameController, User, Trophy, Newspaper, Compass, Sun, Moon,
-  GraduationCap, Student, ChalkboardTeacher, SignOut, SignIn, Megaphone, Target
+  House, BookOpen, Books, GameController, Trophy, Newspaper, Compass, Sun, Moon,
+  GraduationCap, Student, ChalkboardTeacher, SignOut, SignIn, Megaphone, Target,
+  ArrowUpRight, Globe
 } from '@phosphor-icons/react';
 import { cn } from '../../lib/utils';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
+import { useLanguage, LANGUAGES } from '../../context/LanguageContext';
 import { user as defaultMockUser } from '../../data/mockData';
 import Logo from '../Logo';
 
@@ -21,13 +24,12 @@ function loadSettings() {
   try { return JSON.parse(localStorage.getItem('geo_user_settings')) || {}; } catch { return {}; }
 }
 
-// 5 Main Core Sections requested by client
+// Main Core Sections
 const mainNavItems = [
   { to: '/', icon: House, label: 'Bosh Sahifa' },
   { to: '/tests', icon: BookOpen, label: 'Testlar' },
   { to: '/school', icon: GraduationCap, label: "Maktab Ta'limi" },
   { to: '/library', icon: Books, label: 'Kutubxona' },
-  { to: '/profile', icon: User, label: 'Shaxsiy Profil' },
 ];
 
 // Secondary interactive modules
@@ -43,6 +45,7 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const { darkMode, toggleTheme } = useTheme();
   const { user, signOut } = useAuth();
+  const { language, setLanguage, t } = useLanguage();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const settings = loadSettings();
@@ -184,7 +187,7 @@ export default function Sidebar() {
           }
         >
           <ChalkboardTeacher size={16} weight="bold" />
-          <span>Ustoz Qambarov O.X.</span>
+          <span>{t('nav.creator', 'Ustoz Qambarov O.X.')}</span>
         </NavLink>
 
         <button
@@ -197,9 +200,9 @@ export default function Sidebar() {
       </div>
 
       {/* Logout confirmation modal */}
-      {showLogoutModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 w-full max-w-sm space-y-4 shadow-2xl">
+      {showLogoutModal && createPortal(
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={() => setShowLogoutModal(false)}>
+          <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 w-full max-w-sm space-y-4 shadow-2xl" onClick={e => e.stopPropagation()}>
             <div className="flex flex-col items-center gap-3 text-center">
               <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
                 <SignOut size={22} weight="fill" />
@@ -212,20 +215,21 @@ export default function Sidebar() {
             <div className="flex gap-2">
               <button
                 onClick={() => setShowLogoutModal(false)}
-                className="flex-1 h-10 rounded-xl border border-[var(--border)] text-xs font-semibold text-[var(--text-secondary)] hover:bg-[var(--background)] transition-all"
+                className="flex-1 h-10 rounded-xl border border-[var(--border)] text-xs font-semibold text-[var(--text-secondary)] hover:bg-[var(--background)] transition-all cursor-pointer"
               >
                 Bekor qilish
               </button>
               <button
                 onClick={handleLogout}
-                className="flex-1 h-10 rounded-xl bg-red-500 text-xs font-semibold text-white hover:bg-red-600 transition-all flex items-center justify-center gap-1.5"
+                className="flex-1 h-10 rounded-xl bg-red-500 text-xs font-semibold text-white hover:bg-red-600 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <SignOut size={15} weight="bold" />
                 <span>Chiqish</span>
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </aside>
   );
