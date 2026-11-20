@@ -24,7 +24,7 @@ function RouteProgressBar() {
         height: '2.5px',
         background: 'linear-gradient(90deg, #2563EB 0%, #38BDF8 60%, #60A5FA 100%)',
         transformOrigin: 'left center',
-        zIndex: 200,
+        zIndex: 10000,
         boxShadow: '0 0 8px rgba(37,99,235,0.55)',
       }}
     />
@@ -56,7 +56,7 @@ export default function Layout() {
       <Sidebar />
       <main className="flex-1 min-w-0 pb-20 lg:pb-0">
         {/* Mobile Top Header */}
-        <header className="lg:hidden sticky top-0 z-40 bg-[var(--surface)]/90 backdrop-blur-md border-b border-[var(--border)] px-4 py-2.5 flex items-center justify-between">
+        <header className="lg:hidden sticky top-0 z-[9990] bg-[var(--surface)]/95 backdrop-blur-md border-b border-[var(--border)] px-4 py-2.5 flex items-center justify-between">
           <NavLink to="/" className="flex items-center gap-2.5 group">
             <Logo className="w-7 h-7 shrink-0 transition-transform group-hover:scale-105" />
             <div>

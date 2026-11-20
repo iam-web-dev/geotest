@@ -9,6 +9,68 @@
   to   { opacity: 1; }
 }
 
+@keyframes geo-pulse-ring {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.45);
+    opacity: 0.35;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+.geo-pulse-active {
+  animation: geo-pulse-ring 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+/* ── Leaflet Clean Overrides (No focus rectangles, bounding boxes, or tap highlights) ── */
+.leaflet-container,
+.leaflet-container *,
+.leaflet-pane,
+.leaflet-pane * {
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none !important;
+}
+
+.leaflet-container :focus,
+.leaflet-container :focus-visible,
+.leaflet-container *:focus,
+.leaflet-container *:focus-visible,
+.leaflet-interactive,
+.leaflet-interactive:focus,
+.leaflet-interactive:focus-visible,
+.leaflet-marker-icon,
+.leaflet-marker-icon:focus,
+.leaflet-marker-icon:focus-visible,
+.leaflet-pane svg,
+.leaflet-pane svg:focus,
+.leaflet-pane svg:focus-visible,
+.leaflet-pane svg path,
+.leaflet-pane svg path:focus,
+.leaflet-pane svg path:focus-visible,
+path.leaflet-interactive,
+path.leaflet-interactive:focus,
+path.leaflet-interactive:focus-visible,
+.geo-feature-marker,
+.geo-feature-marker:focus,
+.geo-feature-marker:focus-visible,
+.geo-feature-marker *,
+.geo-feature-marker *:focus,
+.geo-feature-marker *:focus-visible {
+  outline: none !important;
+}
+
+/* Ensure Leaflet divIcon has no default grey/white box or border */
+.leaflet-div-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
 :root {
   --primary: #1E5BF8;
   --primary-hover: #1447D0;

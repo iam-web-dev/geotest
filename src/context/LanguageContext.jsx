@@ -12,6 +12,7 @@ export const TRANSLATIONS = {
   uz: {
     nav: {
       home: 'Bosh sahifa',
+      map: 'Geografik xarita',
       tests: 'Online Testlar',
       school: 'Maktab taʼlimi',
       library: "Universitet Ta'limi",
@@ -104,6 +105,7 @@ export const TRANSLATIONS = {
   ru: {
     nav: {
       home: 'Главная',
+      map: 'Географическая карта',
       tests: 'Онлайн Тесты',
       school: 'Школьное образование',
       library: 'Университетское Образование',
@@ -196,6 +198,7 @@ export const TRANSLATIONS = {
   kaa: {
     nav: {
       home: 'Bas bet',
+      map: 'Geografiyalıq karta',
       tests: 'Online Testler',
       school: 'Mektep tálimi',
       library: "Universitet Tálimi",

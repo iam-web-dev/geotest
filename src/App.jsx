@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Auth from './pages/Auth';
 
 const Tests = lazy(() => import('./pages/Tests'));
+const GeographicMap = lazy(() => import('./pages/GeographicMap'));
 const School = lazy(() => import('./pages/School'));
 const Library = lazy(() => import('./pages/Library'));
 const Quiz = lazy(() => import('./pages/Quiz'));
@@ -66,6 +67,9 @@ function App() {
               <Route path="/terms" element={<Oferta />} />
               <Route element={<Layout />}>
                 <Route path="/" element={<Home />} />
+                <Route path="/map" element={<GeographicMap />} />
+                <Route path="/xarita" element={<GeographicMap />} />
+                <Route path="/geografik-xarita" element={<GeographicMap />} />
                 <Route path="/tests" element={<Tests />} />
                 <Route path="/tests/:type" element={<Tests />} />
                 <Route path="/school" element={<School />} />

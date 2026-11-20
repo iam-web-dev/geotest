@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { House, BookOpen, Books, GraduationCap, Student, ChalkboardTeacher, SignIn, Target } from '@phosphor-icons/react';
+import { House, BookOpen, Books, GraduationCap, Student, ChalkboardTeacher, SignIn, Target, MapTrifold } from '@phosphor-icons/react';
 import { cn } from '../../lib/utils';
 import { useAuth } from '../../context/AuthContext';
 
@@ -14,10 +14,11 @@ function loadSettings() {
   try { return JSON.parse(localStorage.getItem('geo_user_settings')) || {}; } catch { return {}; }
 }
 
-// 5 Main Core Sections requested by client
+// Main Core Sections
 const navItems = [
   { to: '/', icon: House, label: 'Bosh' },
-  { to: '/tests', icon: BookOpen, label: 'Online Testlar' },
+  { to: '/map', icon: MapTrifold, label: 'Xarita' },
+  { to: '/tests', icon: BookOpen, label: 'Testlar' },
   { to: '/school', icon: GraduationCap, label: 'Maktab' },
   { to: '/library', icon: Books, label: 'Universitet' },
 ];
@@ -31,7 +32,7 @@ export default function BottomNav() {
   const avatar = user?.avatar || settings.avatar;
 
   return (
-    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[var(--surface)] border-t border-[var(--border)] safe-area-bottom">
+    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-[9999] bg-[var(--surface)] border-t border-[var(--border)] safe-area-bottom shadow-lg">
       <div className="flex items-center justify-around px-1 py-1">
         {navItems.map((item) => (
           <NavLink

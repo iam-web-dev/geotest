@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
-  House, BookOpen, Books, GameController, Trophy, Newspaper, Compass, Sun, Moon,
-  GraduationCap, Student, ChalkboardTeacher, SignOut, SignIn, Megaphone, Target
+  House, BookOpen, Books, Trophy, Newspaper, Sun, Moon,
+  GraduationCap, Student, ChalkboardTeacher, SignOut, SignIn, Megaphone, Target, MapTrifold
 } from '@phosphor-icons/react';
 import { cn } from '../../lib/utils';
 import { useTheme } from '../../context/ThemeContext';
@@ -23,7 +23,7 @@ function loadSettings() {
   try { return JSON.parse(localStorage.getItem('geo_user_settings')) || {}; } catch { return {}; }
 }
 
-// Main Core Sections
+// Asosiy boʻlimlar
 const mainNavItems = [
   { to: '/', icon: House, label: 'Bosh Sahifa' },
   { to: '/tests', icon: BookOpen, label: 'Online Testlar' },
@@ -31,11 +31,10 @@ const mainNavItems = [
   { to: '/library', icon: Books, label: "Universitet Ta'limi" },
 ];
 
-// Secondary interactive modules
+// Qoʻshimcha interaktiv boʻlimlar (Viktorina va Oʻyinlar hozircha navbardan olib tashlandi, Geografik xarita ularning oʻrnida)
 const secondaryNavItems = [
   { to: '/announcements', icon: Megaphone, label: 'Eʼlonlar' },
-  { to: '/quiz', icon: GameController, label: 'Viktorina' },
-  { to: '/games', icon: Compass, label: "Oʻyinlar" },
+  { to: '/map', icon: MapTrifold, label: 'Geografik xarita' },
   { to: '/rankings', icon: Trophy, label: 'Reyting' },
   { to: '/articles', icon: Newspaper, label: 'Maqolalar' },
 ];
@@ -59,7 +58,7 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="hidden lg:flex flex-col w-64 h-screen sticky top-0 bg-[var(--surface)] border-r border-[var(--border)] p-4 overflow-y-auto">
+    <aside className="hidden lg:flex flex-col w-64 h-screen sticky top-0 z-30 bg-[var(--surface)] border-r border-[var(--border)] p-4 overflow-y-auto">
       <NavLink to="/" className="flex items-center gap-3 px-3 py-3 mb-4 rounded-2xl hover:bg-[var(--surface-raised)] transition-colors group">
         <Logo className="w-8 h-8 transition-transform shrink-0 group-hover:scale-105" />
         <div className="min-w-0">

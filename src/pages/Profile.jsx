@@ -808,7 +808,7 @@ function StudentIdModal({ user, onClose, showToast = () => {} }) {
             </div>
             <div>
               <h3 className="text-sm font-extrabold text-[var(--text-primary)] tracking-tight">GEOBEK Rasmiy ID Kartasi</h3>
-              <p className="text-[11px] text-[var(--text-tertiary)]">Raqamli taʼlim guvohnomasi</p>
+              <p className="text-[11px] text-[var(--text-tertiary)]">Ta'lim platformasi a'zosi</p>
             </div>
           </div>
           <button
@@ -821,7 +821,7 @@ function StudentIdModal({ user, onClose, showToast = () => {} }) {
         </div>
 
         {/* Visual ID Card Preview - Har doim oq fonda */}
-        <div className="relative rounded-2xl sm:rounded-3xl p-5 overflow-hidden border border-slate-200 bg-white text-slate-900 shadow-xl space-y-4">
+        <div className="relative p-5 space-y-4 overflow-hidden bg-white border shadow-xl rounded-2xl sm:rounded-3xl border-slate-200 text-slate-900">
           {/* Ambient Glows */}
           <div
             className="absolute rounded-full pointer-events-none -top-16 -right-16 w-52 h-52 blur-3xl opacity-15"
@@ -869,11 +869,11 @@ function StudentIdModal({ user, onClose, showToast = () => {} }) {
                   </span>
                 )}
               </div>
-              <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white" />
+              <span className="absolute w-4 h-4 border-2 border-white rounded-full -bottom-1 -right-1 bg-emerald-500" />
             </div>
 
             <div className="flex-1 min-w-0">
-              <h4 className="text-base font-black leading-tight tracking-tight text-slate-900 truncate sm:text-lg">
+              <h4 className="text-base font-black leading-tight tracking-tight truncate text-slate-900 sm:text-lg">
                 {user.name}
               </h4>
               <div className="flex flex-wrap items-center gap-2 mt-1">
@@ -931,7 +931,7 @@ function StudentIdModal({ user, onClose, showToast = () => {} }) {
           {/* Card Footer */}
           <div className="relative z-10 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
             <div className="flex items-center gap-2">
-              <div className="flex items-center justify-center w-8 h-8 p-1 bg-white border border-slate-200 rounded-lg text-slate-900 shrink-0 shadow-2xs">
+              <div className="flex items-center justify-center w-8 h-8 p-1 bg-white border rounded-lg border-slate-200 text-slate-900 shrink-0 shadow-2xs">
                 <QrCode size={22} weight="bold" />
               </div>
               <div className="leading-tight">
