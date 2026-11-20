@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import {
   Globe, ArrowRight,
   Lightning, Target, Clock, Exam,
-  CaretRight
+  CaretRight, TelegramLogo, YoutubeLogo, InstagramLogo, ArrowUpRight
 } from '@phosphor-icons/react';
 import {
   StickerMilliyBadge, StickerDTMRocket, StickerOlympiadTrophy, StickerAttestationShield,
@@ -73,6 +73,45 @@ const testStickers = {
   attestation: { Sticker: StickerAttestationShield, label: 'Attestatsiya' },
 };
 
+const socialChannels = [
+  {
+    name: 'Telegram Kanal',
+    handle: '@geobek_uz',
+    desc: 'Eng soʻnggi testlar, darslik taqdimotlari va yangiliklar',
+    url: 'https://t.me/iam_web_dev',
+    icon: TelegramLogo,
+    iconColor: 'text-[#229ED9]',
+    iconBg: 'bg-[#229ED9]/10',
+  },
+  {
+    name: 'YouTube Kanal',
+    handle: 'GEOBEK Taʼlim',
+    desc: 'Video darslar, tahlillar va amaliy geografik ekspeditsiyalar',
+    url: 'https://youtube.com',
+    icon: YoutubeLogo,
+    iconColor: 'text-red-500',
+    iconBg: 'bg-red-500/10',
+  },
+  {
+    name: 'Instagram Sahifa',
+    handle: '@geobek.uz',
+    desc: 'Kundalik fotolavhalar, savol-javoblar va geografik faktlar',
+    url: 'https://instagram.com',
+    icon: InstagramLogo,
+    iconColor: 'text-pink-500',
+    iconBg: 'bg-pink-500/10',
+  },
+  {
+    name: 'Telegram Bogʻlanish',
+    handle: '@geobek_admin',
+    desc: 'Savollar, takliflar va rasmiy hamkorlik uchun admin bilan aloqa',
+    url: 'https://t.me/geobek_admin',
+    icon: TelegramLogo,
+    iconColor: 'text-[var(--primary)]',
+    iconBg: 'bg-[var(--primary-soft)]',
+  },
+];
+
 export default function Home() {
   const navigate = useNavigate();
   const { user: authUser } = useAuth();
@@ -103,7 +142,7 @@ export default function Home() {
   return (
     <div className="space-y-6 sm:space-y-8 relative">
       <SEO
-        title="Bosh Sahifa — GEOBEK Rasmiy Geografiya Ta'lim Portali"
+        title="Bosh Sahifa — GEOBEK Rasmiy Geografiya Ta'lim platformasi"
         description="GEOBEK platformasining maktab darslik taqdimotlari, DTM va Milliy sertifikat sinov testlari hamda hududlar statistikasi."
         url="/"
       />
@@ -129,7 +168,7 @@ export default function Home() {
           </span>
           <br />
           <span className="text-[var(--primary)] font-bold text-xl sm:text-2xl lg:text-3xl">
-            GEOBEK <span className='text-[var(--text-primary)]'>ga xush kelibsiz!</span>
+            GEOBEK <span className="text-[var(--text-primary)]">taʼlim platformasiga xush kelibsiz!</span>
           </span>
         </h1>
       </section>
@@ -270,7 +309,59 @@ export default function Home() {
         <UserGeographyMap />
       </div>
 
-      {/* 7. Footer / Powered by NSD Corporation & Partner Logos */}
+      {/* 7. Bizning ijtimoiy tarmoqlar */}
+      <section className="space-y-3 relative z-10 pt-2">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+          <div>
+            <h2 className="text-sm sm:text-base font-bold text-[var(--text-primary)] tracking-tight">
+              Bizning ijtimoiy tarmoqlar
+            </h2>
+            <p className="text-xs text-[var(--text-tertiary)] mt-0.5 text-pretty">
+              GEOBEK rasmiy sahifalari va taʼlim hamjamiyatiga aʼzo boʻling
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {socialChannels.map((item) => (
+            <a
+              key={item.name}
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-4 transition-all duration-200 hover:border-[var(--primary)]/40 hover:shadow-xs flex flex-col justify-between cursor-pointer"
+            >
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <div className={cn("size-10 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105", item.iconBg)}>
+                    <item.icon size={22} weight="fill" className={item.iconColor} />
+                  </div>
+                  <span className="size-7 rounded-lg flex items-center justify-center text-[var(--text-tertiary)] group-hover:text-[var(--primary)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all">
+                    <ArrowUpRight size={15} weight="bold" />
+                  </span>
+                </div>
+
+                <h3 className="text-sm font-bold text-[var(--text-primary)] group-hover:text-[var(--primary)] transition-colors leading-snug">
+                  {item.name}
+                </h3>
+                <p className="text-xs font-semibold text-[var(--primary)] mt-0.5">
+                  {item.handle}
+                </p>
+                <p className="text-xs text-[var(--text-tertiary)] mt-2 leading-relaxed text-pretty">
+                  {item.desc}
+                </p>
+              </div>
+
+              <div className="pt-3 mt-3 border-t border-[var(--border)] flex items-center justify-between text-xs font-semibold text-[var(--text-secondary)] group-hover:text-[var(--primary)] transition-colors">
+                <span>Obuna boʻlish</span>
+                <CaretRight size={13} weight="bold" className="group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* 8. Footer / Powered by NSD Corporation & Partner Logos */}
       <footer className="relative z-10 pt-8 pb-6 mt-12 border-t border-[var(--border)]">
         <PoweredByNSD />
       </footer>

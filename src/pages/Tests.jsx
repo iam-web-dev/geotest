@@ -132,9 +132,9 @@ function CategoryTestsPage({ type }) {
       <div>
         <button
           onClick={() => navigate('/tests')}
-          className="flex items-center gap-1 text-[var(--primary)] text-sm font-semibold mb-3"
+          className="flex items-center gap-1 text-[var(--primary)] text-sm font-semibold mb-3 cursor-pointer"
         >
-          <CaretLeft size={14} weight="bold" /> Testlar
+          <CaretLeft size={14} weight="bold" /> Online Testlar
         </button>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div>
@@ -1024,12 +1024,12 @@ export default function Tests() {
   return (
     <div className="space-y-6">
       <SEO
-        title="Geografiya Testlari"
-        description="DTM, Milliy Sertifikat, Olimpiada va maktab imtihonlari uchun geografiya testlarini ishlang — natijalar va batafsil tahlil bilan."
+        title="Online Testlar — Geografiya Sinovlari"
+        description="DTM, Milliy Sertifikat, Olimpiada va maktab imtihonlari uchun geografiya online testlarini ishlang — natijalar va batafsil tahlil bilan."
         url="/tests"
       />
       <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">Testlar</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">Online Testlar</h1>
         <p className="text-sm text-[var(--text-secondary)] mt-1">Imtihon turini tanlang va tayyorgarlikni boshlang</p>
       </div>
 

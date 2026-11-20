@@ -206,15 +206,15 @@ export default function Library() {
   return (
     <div className="space-y-6">
       <SEO
-        title="Geografiya Kutubxonasi"
-        description="Geografiya darsliklari, atlaslar, oʻquv materiallari va ta'lim PDFlarini onlayn oʻqing va yuklab oling."
+        title="Universitet Ta'limi — Geografiya Kutubxonasi va Materiallar"
+        description="Universitet ta'limi, geografiya darsliklari, atlaslar, oʻquv materiallari va ta'lim PDFlarini onlayn oʻqing va yuklab oling."
         url="/library"
       />
 
       {/* ── Header ── */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">Kutubxona</h1>
-        <p className="text-sm text-[var(--text-secondary)] mt-1">Geografiya boʻyicha barcha kitob va darsliklar</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">Universitet Ta'limi</h1>
+        <p className="text-sm text-[var(--text-secondary)] mt-1">Geografiya va oliy ta'lim boʻyicha barcha kitob va darsliklar</p>
       </div>
 
       {/* ── Stats banner (Static uniform colors) ── */}

@@ -12,9 +12,9 @@ export const TRANSLATIONS = {
   uz: {
     nav: {
       home: 'Bosh sahifa',
-      tests: 'Testlar',
+      tests: 'Online Testlar',
       school: 'Maktab taʼlimi',
-      library: 'Kutubxona',
+      library: "Universitet Ta'limi",
       profile: 'Profil',
       games: 'Oʻyinlar',
       articles: 'Maqolalar',
@@ -104,9 +104,9 @@ export const TRANSLATIONS = {
   ru: {
     nav: {
       home: 'Главная',
-      tests: 'Тесты',
+      tests: 'Онлайн Тесты',
       school: 'Школьное образование',
-      library: 'Библиотека',
+      library: 'Университетское Образование',
       profile: 'Профиль',
       games: 'Игры',
       articles: 'Статьи',
@@ -196,9 +196,9 @@ export const TRANSLATIONS = {
   kaa: {
     nav: {
       home: 'Bas bet',
-      tests: 'Testler',
+      tests: 'Online Testler',
       school: 'Mektep tálimi',
-      library: 'Kitapxana',
+      library: "Universitet Tálimi",
       profile: 'Profil',
       games: 'Oyınlar',
       articles: 'Maqalalar',

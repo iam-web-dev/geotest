@@ -37,7 +37,7 @@ export default function Announcements() {
   return (
     <div className="space-y-6 max-w-4xl mx-auto pb-12">
       <SEO
-        title="Eʼlonlar va Yangiliklar — GEOBEK Rasmiy Geografiya Portali"
+        title="Eʼlonlar va Yangiliklar — GEOBEK Rasmiy Geografiya Platformasi"
         description="GEOBEK platformasining rasmiy eʼlonlari, yangilangan maktab darsliklari, taqdimotlar va test sinovlari."
         url="/announcements"
       />

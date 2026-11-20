@@ -3,13 +3,12 @@ import { createPortal } from 'react-dom';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   House, BookOpen, Books, GameController, Trophy, Newspaper, Compass, Sun, Moon,
-  GraduationCap, Student, ChalkboardTeacher, SignOut, SignIn, Megaphone, Target,
-  ArrowUpRight, Globe
+  GraduationCap, Student, ChalkboardTeacher, SignOut, SignIn, Megaphone, Target
 } from '@phosphor-icons/react';
 import { cn } from '../../lib/utils';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
-import { useLanguage, LANGUAGES } from '../../context/LanguageContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { user as defaultMockUser } from '../../data/mockData';
 import Logo from '../Logo';
 
@@ -27,9 +26,9 @@ function loadSettings() {
 // Main Core Sections
 const mainNavItems = [
   { to: '/', icon: House, label: 'Bosh Sahifa' },
-  { to: '/tests', icon: BookOpen, label: 'Testlar' },
+  { to: '/tests', icon: BookOpen, label: 'Online Testlar' },
   { to: '/school', icon: GraduationCap, label: "Maktab Ta'limi" },
-  { to: '/library', icon: Books, label: 'Kutubxona' },
+  { to: '/library', icon: Books, label: "Universitet Ta'limi" },
 ];
 
 // Secondary interactive modules
@@ -45,7 +44,7 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const { darkMode, toggleTheme } = useTheme();
   const { user, signOut } = useAuth();
-  const { language, setLanguage, t } = useLanguage();
+  const { t } = useLanguage();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const settings = loadSettings();
@@ -62,17 +61,14 @@ export default function Sidebar() {
   return (
     <aside className="hidden lg:flex flex-col w-64 h-screen sticky top-0 bg-[var(--surface)] border-r border-[var(--border)] p-4 overflow-y-auto">
       <NavLink to="/" className="flex items-center gap-3 px-3 py-3 mb-4 rounded-2xl hover:bg-[var(--surface-raised)] transition-colors group">
-        <Logo className="w-8 h-8 shrink-0 transition-transform group-hover:scale-105" />
+        <Logo className="w-8 h-8 transition-transform shrink-0 group-hover:scale-105" />
         <div className="min-w-0">
           <div className="flex items-center gap-1.5">
             <h1 className="text-lg font-black text-[var(--text-primary)] leading-none tracking-tight">
               GEO<span className="text-[var(--primary)]">BEK</span>
             </h1>
-            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[var(--primary-soft)] text-[var(--primary)] uppercase tracking-wider">
-              UZ
-            </span>
           </div>
-          <p className="text-[11px] text-[var(--text-secondary)] font-medium mt-0.5 truncate">Taʼlim Portali</p>
+          <p className="text-[11px] text-[var(--text-secondary)] font-medium mt-0.5 truncate">Taʼlim Platformasi</p>
         </div>
       </NavLink>
 
@@ -135,13 +131,13 @@ export default function Sidebar() {
       <div className="border-t border-[var(--border)] pt-4 mt-4 space-y-2">
         {merged ? (
           <div className="flex items-center gap-2 p-1.5 rounded-[var(--radius-sm)] hover:bg-[var(--background)] transition-all group">
-            <NavLink to="/profile" className="flex items-center gap-3 flex-1 min-w-0">
+            <NavLink to="/profile" className="flex items-center flex-1 min-w-0 gap-3">
               <div
-                className="w-9 h-9 rounded-full flex items-center justify-center text-white shrink-0 overflow-hidden"
+                className="flex items-center justify-center overflow-hidden text-white rounded-full w-9 h-9 shrink-0"
                 style={{ background: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%)' }}
               >
                 {merged.avatar ? (
-                  <img src={merged.avatar} alt={merged.name} className="w-full h-full object-cover" />
+                  <img src={merged.avatar} alt={merged.name} className="object-cover w-full h-full" />
                 ) : (
                   <RoleIcon size={18} weight="duotone" />
                 )}
@@ -169,7 +165,7 @@ export default function Sidebar() {
               <SignIn size={18} weight="bold" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold truncate leading-tight">Tizimga kirish</p>
+              <p className="text-sm font-semibold leading-tight truncate">Tizimga kirish</p>
               <p className="text-[11px] opacity-80 truncate">Roʻyxatdan oʻtish</p>
             </div>
           </NavLink>
@@ -204,7 +200,7 @@ export default function Sidebar() {
         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={() => setShowLogoutModal(false)}>
           <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 w-full max-w-sm space-y-4 shadow-2xl" onClick={e => e.stopPropagation()}>
             <div className="flex flex-col items-center gap-3 text-center">
-              <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
+              <div className="flex items-center justify-center w-12 h-12 text-red-500 rounded-full bg-red-500/10">
                 <SignOut size={22} weight="fill" />
               </div>
               <div>

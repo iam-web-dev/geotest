@@ -4,7 +4,7 @@ const SITE_NAME = 'GEOBEK';
 const BASE_URL = 'https://geobek.uz';
 const DEFAULT_IMAGE = `${BASE_URL}/logo.svg`;
 const DEFAULT_DESCRIPTION =
-  "GEOBEK — Oʻzbekiston va jahon geografiyasini oʻrganish uchun zamonaviy taʼlim portali. Maktab darslik taqdimotlari (7–11-sinf), DTM, Milliy Sertifikat, Olimpiada testlari, interaktiv viktorinalar va raqamli kutubxona.";
+  "GEOBEK — Oʻzbekiston va jahon geografiyasini oʻrganish uchun zamonaviy taʼlim platformasi. Maktab darslik taqdimotlari (7–11-sinf), DTM, Milliy Sertifikat, Olimpiada testlari, interaktiv viktorinalar va raqamli kutubxona.";
 
 export default function SEO({
   title,
@@ -15,7 +15,7 @@ export default function SEO({
   noindex = false,
   jsonLd,
 }) {
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} – Geografiya Taʼlim Portali`;
+  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} – Geografiya Taʼlim Platformasi`;
   const canonicalUrl = url ? `${BASE_URL}${url}` : BASE_URL;
 
   return (

@@ -267,7 +267,7 @@ function ActivityModal({ activity, onClose }) {
         </div>
 
         <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0" style={{ background: `${color}18` }}>
+          <div className="flex items-center justify-center w-12 h-12 rounded-2xl shrink-0" style={{ background: `${color}18` }}>
             <Icon size={24} style={{ color }} weight="duotone" />
           </div>
           <div className="flex-1 min-w-0">
@@ -282,7 +282,7 @@ function ActivityModal({ activity, onClose }) {
             <span className="text-sm font-bold tabular-nums" style={{ color }}>{a.score} / {a.total} ball</span>
           </div>
           <div className="h-2 rounded-full bg-[var(--border)] overflow-hidden">
-            <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: color }} />
+            <div className="h-full transition-all rounded-full" style={{ width: `${pct}%`, background: color }} />
           </div>
           <div className="flex justify-between items-center text-xs text-[var(--text-tertiary)]">
             <span>Aniqlik ko'rsatkichi</span>
@@ -401,17 +401,17 @@ async function renderCardCanvas(user, roleMeta, levelTitle) {
   drawRoundedRect(ctx, 0, 0, W, H, 36);
   ctx.clip();
 
-  // 2. Background gradient
+  // 2. Background gradient - Har doim toza oq fon
   const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, '#070C18');
-  bg.addColorStop(0.5, '#0E172B');
-  bg.addColorStop(1, '#060A14');
+  bg.addColorStop(0, '#FFFFFF');
+  bg.addColorStop(0.5, '#F8FAFC');
+  bg.addColorStop(1, '#FFFFFF');
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
   // 3. Topographic elevation contours
   ctx.save();
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+  ctx.strokeStyle = 'rgba(15, 23, 42, 0.04)';
   ctx.lineWidth = 2;
   for (let i = 0; i < 9; i++) {
     ctx.beginPath();
@@ -423,20 +423,20 @@ async function renderCardCanvas(user, roleMeta, levelTitle) {
 
   // 4. Ambient radial glows
   const glowRole = ctx.createRadialGradient(W - 140, 140, 20, W - 140, 140, 480);
-  glowRole.addColorStop(0, `${roleMeta.color}3A`);
+  glowRole.addColorStop(0, `${roleMeta.color}14`);
   glowRole.addColorStop(1, 'transparent');
   ctx.fillStyle = glowRole;
   ctx.fillRect(0, 0, W, H);
 
   const glowBlue = ctx.createRadialGradient(160, H - 140, 20, 160, H - 140, 420);
-  glowBlue.addColorStop(0, 'rgba(30, 91, 248, 0.22)');
+  glowBlue.addColorStop(0, 'rgba(30, 91, 248, 0.08)');
   glowBlue.addColorStop(1, 'transparent');
   ctx.fillStyle = glowBlue;
   ctx.fillRect(0, 0, W, H);
 
   // 5. Outer border
   drawRoundedRect(ctx, 16, 16, W - 32, H - 32, 28);
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+  ctx.strokeStyle = '#E2E8F0';
   ctx.lineWidth = 2;
   ctx.stroke();
 
@@ -448,7 +448,7 @@ async function renderCardCanvas(user, roleMeta, levelTitle) {
   logoGrad.addColorStop(1, '#2563EB');
   ctx.fillStyle = logoGrad;
   ctx.fill();
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
   ctx.lineWidth = 1.5;
   ctx.stroke();
 
@@ -474,12 +474,12 @@ async function renderCardCanvas(user, roleMeta, levelTitle) {
   // Platform title
   ctx.textAlign = 'left';
   ctx.font = '900 28px system-ui, -apple-system, sans-serif';
-  ctx.fillStyle = '#FFFFFF';
+  ctx.fillStyle = '#0F172A';
   ctx.fillText('GEOBEK', 134, 72);
 
   ctx.font = '700 11px system-ui, -apple-system, sans-serif';
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
-  ctx.fillText("RESPUBLIKA RAQAMLI TA'LIM PLATFORMASI", 135, 96);
+  ctx.fillStyle = '#64748B';
+  ctx.fillText('RAQAMLI TAʼLIM PLATFORMASI', 134, 94);
 
   // Smart chip / Digital ID badge
   const chipW = 165;
@@ -487,13 +487,13 @@ async function renderCardCanvas(user, roleMeta, levelTitle) {
   const chipX = W - 60 - chipW;
   const chipY = 58;
   drawRoundedRect(ctx, chipX, chipY, chipW, chipH, 12);
-  ctx.fillStyle = 'rgba(251, 191, 36, 0.1)';
+  ctx.fillStyle = 'rgba(245, 158, 11, 0.08)';
   ctx.fill();
-  ctx.strokeStyle = 'rgba(251, 191, 36, 0.4)';
+  ctx.strokeStyle = 'rgba(245, 158, 11, 0.45)';
   ctx.lineWidth = 1.5;
   ctx.stroke();
 
-  ctx.fillStyle = '#FBBF24';
+  ctx.fillStyle = '#D97706';
   ctx.font = '800 12px monospace';
   ctx.textAlign = 'center';
   ctx.fillText('ELEKTRON GUVAHNOMA', chipX + chipW / 2, chipY + chipH / 2);
@@ -539,11 +539,11 @@ async function renderCardCanvas(user, roleMeta, levelTitle) {
     ctx.beginPath();
     ctx.arc(avX, avY, avR, 0, Math.PI * 2);
     const avGrad = ctx.createLinearGradient(avX - avR, avY - avR, avX + avR, avY + avR);
-    avGrad.addColorStop(0, '#1E293B');
-    avGrad.addColorStop(1, '#0F172A');
+    avGrad.addColorStop(0, '#F1F5F9');
+    avGrad.addColorStop(1, '#E2E8F0');
     ctx.fillStyle = avGrad;
     ctx.fill();
-    ctx.fillStyle = '#FFFFFF';
+    ctx.fillStyle = '#1E293B';
     ctx.font = '800 46px system-ui, -apple-system, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -556,7 +556,7 @@ async function renderCardCanvas(user, roleMeta, levelTitle) {
   ctx.arc(avX + 44, avY + 44, 11, 0, Math.PI * 2);
   ctx.fillStyle = '#10B981';
   ctx.fill();
-  ctx.strokeStyle = '#070C18';
+  ctx.strokeStyle = '#FFFFFF';
   ctx.lineWidth = 3;
   ctx.stroke();
 
@@ -567,7 +567,7 @@ async function renderCardCanvas(user, roleMeta, levelTitle) {
 
   // Full Name
   ctx.font = '900 36px system-ui, -apple-system, sans-serif';
-  ctx.fillStyle = '#FFFFFF';
+  ctx.fillStyle = '#0F172A';
   ctx.fillText(user.name || 'Foydalanuvchi', textX, 226);
 
   // Username
@@ -590,18 +590,18 @@ async function renderCardCanvas(user, roleMeta, levelTitle) {
   ctx.fillText(roleMeta.label, textX + pillW / 2, pillY + pillH / 2);
 
   // 9. Details Grid (4 boxes)
-  const drawCell = (x, y, w, h, label, val, valColor = '#FFFFFF') => {
+  const drawCell = (x, y, w, h, label, val, valColor = '#0F172A') => {
     drawRoundedRect(ctx, x, y, w, h, 14);
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+    ctx.fillStyle = '#F8FAFC';
     ctx.fill();
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+    ctx.strokeStyle = '#E2E8F0';
     ctx.lineWidth = 1;
     ctx.stroke();
 
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
     ctx.font = '700 11px system-ui, -apple-system, sans-serif';
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+    ctx.fillStyle = '#64748B';
     ctx.fillText(label.toUpperCase(), x + 18, y + 26);
 
     ctx.font = '700 18px system-ui, -apple-system, sans-serif';
@@ -635,17 +635,17 @@ async function renderCardCanvas(user, roleMeta, levelTitle) {
     : (user.teachingCategory || user.experience || "O'qituvchi");
   drawCell(615, row1Y, cellW, cellH, gradeLabel, gradeVal);
 
-  // Game Level
-  drawCell(60, row2Y, cellW, cellH, "O'yin darajasi", `${levelTitle} (${user.level || 1}-daraja)`, '#38BDF8');
+  // Foydalanuvchi darajasi (avval O'yin darajasi)
+  drawCell(60, row2Y, cellW, cellH, "Foydalanuvchi darajasi", `${levelTitle} (${user.level || 1}-daraja)`, '#0284C7');
 
   // National rank & XP
-  drawCell(615, row2Y, cellW, cellH, 'Reyting va ball', `#${user.rank || 42}-o'rin • ${(user.xp || 12580).toLocaleString()} XP`, '#34D399');
+  drawCell(615, row2Y, cellW, cellH, 'Reyting va ball', `#${user.rank || 42}-o'rin • ${(user.xp || 12580).toLocaleString()} XP`, '#059669');
 
   // 10. Footer separator
   ctx.beginPath();
   ctx.moveTo(60, 535);
   ctx.lineTo(W - 60, 535);
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+  ctx.strokeStyle = '#E2E8F0';
   ctx.lineWidth = 1;
   ctx.stroke();
 
@@ -658,11 +658,11 @@ async function renderCardCanvas(user, roleMeta, levelTitle) {
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
   ctx.font = '700 11px system-ui, -apple-system, sans-serif';
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+  ctx.fillStyle = '#64748B';
   ctx.fillText('PROFILNI TEKSHIRISH:', qrX + qrSize + 18, qrY + 38);
 
   ctx.font = '800 20px monospace';
-  ctx.fillStyle = '#FFFFFF';
+  ctx.fillStyle = '#0F172A';
   ctx.fillText(`geobek.uz/@${cleanUsername}`, qrX + qrSize + 18, qrY + 68);
 
   // Verified Seal
@@ -688,12 +688,12 @@ async function renderCardCanvas(user, roleMeta, levelTitle) {
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
   ctx.font = '800 14px system-ui, -apple-system, sans-serif';
-  ctx.fillStyle = '#10B981';
+  ctx.fillStyle = '#059669';
   ctx.fillText('TASDIQLANGAN PROFIL', sealX + 64, sealY + 32);
 
   ctx.font = '600 11px system-ui, -apple-system, sans-serif';
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-  ctx.fillText('GEOBEK Raqamli Taʼlim Tizimi', sealX + 64, sealY + 52);
+  ctx.fillStyle = '#64748B';
+  ctx.fillText('GEOBEK Raqamli Taʼlim Platformasi', sealX + 64, sealY + 52);
 
   return canvas;
 }
@@ -820,17 +820,17 @@ function StudentIdModal({ user, onClose, showToast = () => {} }) {
           </button>
         </div>
 
-        {/* Visual ID Card Preview */}
-        <div className="relative rounded-2xl sm:rounded-3xl p-5 overflow-hidden border border-white/10 bg-gradient-to-br from-[#070C18] via-[#0E172B] to-[#060A14] text-white shadow-xl space-y-4">
+        {/* Visual ID Card Preview - Har doim oq fonda */}
+        <div className="relative rounded-2xl sm:rounded-3xl p-5 overflow-hidden border border-slate-200 bg-white text-slate-900 shadow-xl space-y-4">
           {/* Ambient Glows */}
           <div
-            className="absolute -top-16 -right-16 w-52 h-52 rounded-full blur-3xl opacity-30 pointer-events-none"
+            className="absolute rounded-full pointer-events-none -top-16 -right-16 w-52 h-52 blur-3xl opacity-15"
             style={{ background: roleMeta.color }}
           />
-          <div className="absolute -bottom-16 -left-16 w-52 h-52 rounded-full bg-blue-600/20 blur-3xl pointer-events-none" />
+          <div className="absolute rounded-full pointer-events-none -bottom-16 -left-16 w-52 h-52 bg-blue-500/10 blur-3xl" />
 
           {/* Topographic Lines Background Simulation */}
-          <svg className="absolute inset-0 w-full h-full opacity-5 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+          <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.04] text-slate-900" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="card-topo" width="120" height="120" patternUnits="userSpaceOnUse">
                 <path d="M0 20 Q 30 10, 60 20 T 120 20 M0 60 Q 30 40, 60 60 T 120 60 M0 100 Q 30 80, 60 100 T 120 100" fill="none" stroke="currentColor" strokeWidth="1" />
@@ -840,17 +840,16 @@ function StudentIdModal({ user, onClose, showToast = () => {} }) {
           </svg>
 
           {/* Card Header */}
-          <div className="relative z-10 flex items-center justify-between pb-2 border-b border-white/10">
+          <div className="relative z-10 flex items-center justify-between pb-2 border-b border-slate-100">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--primary)] to-blue-600 flex items-center justify-center shadow-xs">
-              <Logo className="w-full h-full" pathClassName="fill-white" />
+                <Logo className="w-full h-full" pathClassName="fill-white" />
               </div>
               <div>
-                <p className="text-xs font-black tracking-widest text-white leading-none">GEOBEK</p>
-                <p className="text-[9px] font-semibold text-white/50 tracking-wider mt-0.5">RESPUBLIKA RAQAMLI TA'LIM</p>
+                <p className="text-xs font-black leading-none tracking-widest text-slate-900">GEOBEK</p>
               </div>
             </div>
-            <div className="px-2.5 py-1 rounded-lg border border-amber-400/40 bg-amber-400/10 text-amber-300 text-[10px] font-mono font-bold tracking-wider">
+            <div className="px-2.5 py-1 rounded-lg border border-amber-400/40 bg-amber-50 text-amber-700 text-[10px] font-mono font-bold tracking-wider">
               ELEKTRON ID
             </div>
           </div>
@@ -859,26 +858,26 @@ function StudentIdModal({ user, onClose, showToast = () => {} }) {
           <div className="relative z-10 flex items-center gap-3.5">
             <div className="relative shrink-0">
               <div
-                className="w-16 h-16 rounded-2xl border-2 p-0.5 overflow-hidden flex items-center justify-center bg-slate-900 shadow-md"
+                className="w-16 h-16 rounded-2xl border-2 p-0.5 overflow-hidden flex items-center justify-center bg-slate-100 shadow-md"
                 style={{ borderColor: roleMeta.color }}
               >
                 {user.avatar ? (
-                  <img src={user.avatar} alt={user.name} className="w-full h-full object-cover rounded-xl" />
+                  <img src={user.avatar} alt={user.name} className="object-cover w-full h-full rounded-xl" />
                 ) : (
-                  <span className="text-xl font-black text-white">
+                  <span className="text-xl font-black text-slate-700">
                     {(user.name?.charAt(0) || 'U').toUpperCase()}
                   </span>
                 )}
               </div>
-              <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[#070C18]" />
+              <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white" />
             </div>
 
-            <div className="min-w-0 flex-1">
-              <h4 className="font-black text-base sm:text-lg leading-tight tracking-tight text-white truncate">
+            <div className="flex-1 min-w-0">
+              <h4 className="text-base font-black leading-tight tracking-tight text-slate-900 truncate sm:text-lg">
                 {user.name}
               </h4>
-              <div className="flex items-center gap-2 mt-1 flex-wrap">
-                <span className="text-xs font-mono font-bold" style={{ color: roleMeta.color }}>
+              <div className="flex flex-wrap items-center gap-2 mt-1">
+                <span className="font-mono text-xs font-bold" style={{ color: roleMeta.color }}>
                   @{cleanUsername}
                 </span>
                 <span
@@ -894,20 +893,20 @@ function StudentIdModal({ user, onClose, showToast = () => {} }) {
 
           {/* Details 4-Grid */}
           <div className="relative z-10 grid grid-cols-2 gap-2 pt-1 text-xs">
-            <div className="p-2.5 rounded-xl border border-white/10 bg-white/[0.04]">
-              <p className="text-[10px] text-white/50 uppercase font-bold tracking-wide">
+            <div className="p-2.5 rounded-xl border border-slate-200/80 bg-slate-50">
+              <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wide">
                 {user.role === 'teacher' ? 'Muassasa' : user.role === 'student' ? 'Universitet' : user.role === 'applicant' ? 'Maqsad OTM' : 'Maktab'}
               </p>
-              <p className="font-bold text-white truncate mt-0.5 text-[12px]">
+              <p className="font-bold text-slate-900 truncate mt-0.5 text-[12px]">
                 {user.targetUniversity || user.school || user.region || 'GEOBEK Platformasi'}
               </p>
             </div>
 
-            <div className="p-2.5 rounded-xl border border-white/10 bg-white/[0.04]">
-              <p className="text-[10px] text-white/50 uppercase font-bold tracking-wide">
+            <div className="p-2.5 rounded-xl border border-slate-200/80 bg-slate-50">
+              <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wide">
                 {user.role === 'school_student' ? 'Sinf' : user.role === 'student' ? 'Kurs' : user.role === 'applicant' ? 'Abituriyent' : 'Toifa'}
               </p>
-              <p className="font-bold text-white truncate mt-0.5 text-[12px]">
+              <p className="font-bold text-slate-900 truncate mt-0.5 text-[12px]">
                 {user.role === 'school_student'
                   ? (user.grade ? `${user.grade}-sinf oʻquvchisi` : 'Belgilanmagan')
                   : user.role === 'student'
@@ -918,39 +917,39 @@ function StudentIdModal({ user, onClose, showToast = () => {} }) {
               </p>
             </div>
 
-            <div className="p-2.5 rounded-xl border border-white/10 bg-white/[0.04]">
-              <p className="text-[10px] text-white/50 uppercase font-bold tracking-wide">O'yin Darajasi</p>
-              <p className="font-bold text-sky-400 mt-0.5 text-[12px] truncate">{levelTitle} ({user.level || 1})</p>
+            <div className="p-2.5 rounded-xl border border-slate-200/80 bg-slate-50">
+              <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wide">Foydalanuvchi Darajasi</p>
+              <p className="font-bold text-sky-600 mt-0.5 text-[12px] truncate">{levelTitle} ({user.level || 1})</p>
             </div>
 
-            <div className="p-2.5 rounded-xl border border-white/10 bg-white/[0.04]">
-              <p className="text-[10px] text-white/50 uppercase font-bold tracking-wide">Reyting va Ball</p>
-              <p className="font-bold text-emerald-400 mt-0.5 text-[12px] truncate">#{user.rank || 42}-o'rin • {(user.xp || 12580).toLocaleString()} XP</p>
+            <div className="p-2.5 rounded-xl border border-slate-200/80 bg-slate-50">
+              <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wide">Reyting va Ball</p>
+              <p className="font-bold text-emerald-600 mt-0.5 text-[12px] truncate">#{user.rank || 42}-o'rin • {(user.xp || 12580).toLocaleString()} XP</p>
             </div>
           </div>
 
           {/* Card Footer */}
-          <div className="relative z-10 pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
+          <div className="relative z-10 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-white p-1 flex items-center justify-center text-slate-900 shrink-0">
+              <div className="flex items-center justify-center w-8 h-8 p-1 bg-white border border-slate-200 rounded-lg text-slate-900 shrink-0 shadow-2xs">
                 <QrCode size={22} weight="bold" />
               </div>
               <div className="leading-tight">
-                <p className="text-[9px] text-white/50 uppercase font-bold">Profil manzili</p>
-                <p className="font-mono text-white/90 text-[11px]">geobek.uz/@{cleanUsername}</p>
+                <p className="text-[9px] text-slate-500 uppercase font-bold">Profil manzili</p>
+                <p className="font-mono text-slate-900 text-[11px] font-semibold">geobek.uz/@{cleanUsername}</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-bold text-[10px]">
-              <SealCheck size={14} weight="fill" />
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 font-bold text-[10px]">
+              <SealCheck size={14} weight="fill" className="text-emerald-600" />
               <span>Tasdiqlangan</span>
             </div>
           </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="space-y-2 pt-1">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <div className="pt-1 space-y-2">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             <button
               onClick={handleDownload}
               disabled={isDownloading}
@@ -1044,7 +1043,7 @@ function CompleteProfileModal({ user, onClose, onSave }) {
         {/* Header */}
         <div className="flex items-center justify-between pb-3 border-b border-[var(--border)]">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-amber-500/15 text-amber-500 flex items-center justify-center font-bold">
+            <div className="flex items-center justify-center font-bold w-9 h-9 rounded-xl bg-amber-500/15 text-amber-500">
               <Sparkle size={20} weight="fill" />
             </div>
             <div>
@@ -1071,7 +1070,7 @@ function CompleteProfileModal({ user, onClose, onSave }) {
             <label className="text-xs font-bold text-[var(--text-primary)]">
               Ta'lim darajangiz:
             </label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
               {Object.entries(ROLE_META).map(([key, meta]) => {
                 const IconComp = meta.Icon;
                 const isSelected = role === key;
@@ -1088,7 +1087,7 @@ function CompleteProfileModal({ user, onClose, onSave }) {
                     )}
                   >
                     <div
-                      className="w-8 h-8 rounded-lg flex items-center justify-center"
+                      className="flex items-center justify-center w-8 h-8 rounded-lg"
                       style={{ background: isSelected ? meta.color : 'var(--surface)' }}
                     >
                       <IconComp
@@ -1166,7 +1165,7 @@ function CompleteProfileModal({ user, onClose, onSave }) {
                   <label className="text-xs font-semibold text-[var(--text-primary)]">
                     Qanday abituriyentsiz? (Asosiy maqsadingiz):
                   </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                     {[
                       'OTMga kirish',
                       'Milliy sertifikat',
@@ -1478,7 +1477,7 @@ export default function Profile() {
   // Not logged in view
   if (!authUser) {
     return (
-      <div className="max-w-lg mx-auto py-12 px-4 text-center space-y-6">
+      <div className="max-w-lg px-4 py-12 mx-auto space-y-6 text-center">
         <SEO title="Kirish — GEOBEK" description="Shaxsiy profilingizga kiring" url="/profile" />
 
         <div className="w-20 h-20 mx-auto rounded-3xl bg-[var(--surface)] border border-[var(--border)] shadow-xl flex items-center justify-center p-3">
@@ -1492,7 +1491,7 @@ export default function Profile() {
           </p>
         </div>
 
-        <div className="space-y-3 pt-3">
+        <div className="pt-3 space-y-3">
           <button
             onClick={() => navigate('/auth?mode=signin')}
             className="w-full h-12 rounded-2xl bg-[var(--primary)] text-white font-bold text-sm hover:bg-[var(--primary-hover)] transition-all shadow-md shadow-blue-500/20 flex items-center justify-center gap-2"
@@ -1595,7 +1594,7 @@ export default function Profile() {
   ];
 
   return (
-    <div className="space-y-6 pb-12 w-full max-w-5xl mx-auto px-1 sm:px-2">
+    <div className="w-full max-w-5xl px-1 pb-12 mx-auto space-y-6 sm:px-2">
       <SEO title="Mening Profilim — GEOBEK" description="O'quvchi profili va natijalari" url="/profile" noindex />
 
       {/* Floating Toast Notification */}
@@ -1619,15 +1618,15 @@ export default function Profile() {
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-full rounded-2xl border border-amber-300/80 dark:border-amber-500/30 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent p-4 sm:p-5 shadow-xs"
+          className="w-full p-4 border shadow-xs rounded-2xl border-amber-300/80 dark:border-amber-500/30 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent sm:p-5"
         >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-xs">
+              <div className="flex items-center justify-center w-10 h-10 text-white shadow-xs rounded-xl bg-amber-500 shrink-0">
                 <User size={20} weight="fill" />
               </div>
               <div className="space-y-0.5">
-                <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex flex-wrap items-center gap-2">
                   <h3 className="text-sm font-bold text-[var(--text-primary)] tracking-tight">
                     Profilingizni to'ldiring
                   </h3>
@@ -1663,14 +1662,14 @@ export default function Profile() {
           1. ASOSIY QISM: W-FULL TOP PROFILE CARD (DESKTOP VA TABLETDA HAM FLEX-COL)
       ───────────────────────────────────────────────────────────────── */}
       <div className="w-full rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 sm:p-7 shadow-sm">
-        <div className="flex flex-col gap-5 w-full">
+        <div className="flex flex-col w-full gap-5">
           
           {/* Top: Avatar & Identity details */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
             <div className="relative w-fit shrink-0">
               <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-2 border-[var(--border)] bg-[var(--background)] flex items-center justify-center text-[var(--primary)] overflow-hidden shadow-xs">
                 {user.avatar ? (
-                  <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
+                  <img src={user.avatar} alt={user.name} className="object-cover w-full h-full" />
                 ) : (
                   <RoleIcon size={42} weight="duotone" />
                 )}
@@ -1685,7 +1684,7 @@ export default function Profile() {
             </div>
 
             <div className="space-y-1.5 min-w-0">
-              <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex flex-wrap items-center gap-2">
                 <h1 className="text-xl sm:text-2xl font-black text-[var(--text-primary)] tracking-tight">
                   {user.name}
                 </h1>
@@ -1753,9 +1752,9 @@ export default function Profile() {
 
           {/* Bottom (in flex-col under profile): Gamified Level, XP Progress & Actions */}
           <div className="w-full p-4 sm:p-5 rounded-2xl border border-[var(--border)] bg-[var(--background)] space-y-3.5">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-amber-500/15 text-amber-500 flex items-center justify-center font-black shrink-0">
+                <div className="flex items-center justify-center font-black w-9 h-9 rounded-xl bg-amber-500/15 text-amber-500 shrink-0">
                   <Sparkle size={18} weight="fill" />
                 </div>
                 <div>
@@ -1771,7 +1770,7 @@ export default function Profile() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 self-start sm:self-center">
+              <div className="flex items-center self-start gap-2 sm:self-center">
                 <span className="text-sm font-black text-[var(--primary)] tabular-nums">
                   {userXp.toLocaleString()} XP
                 </span>
@@ -1826,12 +1825,12 @@ export default function Profile() {
       {/* ─────────────────────────────────────────────────────────────────
           2. ASOSIY STATISTIKA (RESPUBLIKA REYTINGI, ANIQLIK, TESTLAR, VAQT)
       ───────────────────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 w-full">
+      <div className="grid w-full grid-cols-2 gap-3 lg:grid-cols-4">
         {/* Respublika Reytingi */}
         <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 space-y-2 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-[var(--text-secondary)]">Respublika Reytingi</span>
-            <div className="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
+            <div className="flex items-center justify-center rounded-lg w-7 h-7 bg-amber-500/10 text-amber-500 shrink-0">
               <Trophy size={16} weight="duotone" />
             </div>
           </div>
@@ -1855,7 +1854,7 @@ export default function Profile() {
         <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 space-y-2 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-[var(--text-secondary)]">O'rtacha Aniqlik</span>
-            <div className="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0">
+            <div className="flex items-center justify-center rounded-lg w-7 h-7 bg-emerald-500/10 text-emerald-500 shrink-0">
               <Target size={16} weight="duotone" />
             </div>
           </div>
@@ -1879,7 +1878,7 @@ export default function Profile() {
         <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 space-y-2 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-[var(--text-secondary)]">Ishlangan Testlar</span>
-            <div className="w-7 h-7 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
+            <div className="flex items-center justify-center text-blue-500 rounded-lg w-7 h-7 bg-blue-500/10 shrink-0">
               <BookOpen size={16} weight="duotone" />
             </div>
           </div>
@@ -1906,7 +1905,7 @@ export default function Profile() {
         <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 space-y-2 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-[var(--text-secondary)]">O'quv Vaqti</span>
-            <div className="w-7 h-7 rounded-lg bg-purple-500/10 text-purple-500 flex items-center justify-center shrink-0">
+            <div className="flex items-center justify-center text-purple-500 rounded-lg w-7 h-7 bg-purple-500/10 shrink-0">
               <Timer size={16} weight="duotone" />
             </div>
           </div>
@@ -1934,7 +1933,7 @@ export default function Profile() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight">
+            <h2 className="text-base font-bold tracking-tight sm:text-lg text-slate-900 dark:text-white">
               Faollik
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
@@ -1965,7 +1964,7 @@ export default function Profile() {
         <div className="border-b border-slate-200 dark:border-slate-800/80" />
 
         {/* Horizontal Heatmap Grid */}
-        <div ref={heatmapScrollRef} className="overflow-x-auto pb-2 scrollbar-thin scroll-smooth">
+        <div ref={heatmapScrollRef} className="pb-2 overflow-x-auto scrollbar-thin scroll-smooth">
           <div className="flex items-start gap-2.5 sm:gap-3.5 min-w-max">
             {/* Chap tomondagi Hafta kunlari ustuni (Du, Se, Ch, Pa, Ju, Sh, Ya) */}
             <div className="flex flex-col gap-2 shrink-0 sticky left-0 z-10 bg-white dark:bg-[#0b111e] pr-1.5">
@@ -2029,7 +2028,7 @@ export default function Profile() {
         </div>
 
         {/* Footer / Legend */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1">
+        <div className="flex flex-col justify-between gap-2 pt-1 sm:flex-row sm:items-center">
           <div className="text-xs text-slate-500 dark:text-slate-400 min-h-[1.25rem] flex items-center">
             {hoveredDay ? (
               <span className="font-medium text-slate-900 dark:text-slate-200">
@@ -2088,7 +2087,7 @@ export default function Profile() {
                 className="flex items-center gap-3.5 p-3 rounded-2xl border border-[var(--border)] bg-[var(--background)] hover:border-blue-500/30 cursor-pointer transition-all"
               >
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                  className="flex items-center justify-center w-10 h-10 rounded-xl shrink-0"
                   style={{ background: `${color}15` }}
                 >
                   <Icon size={19} style={{ color }} weight="duotone" />
@@ -2110,12 +2109,12 @@ export default function Profile() {
                     <span>•</span>
                     <span className="text-[var(--primary)] font-bold tabular-nums">+{activity.xpGained} XP</span>
                     {activity.rankChange > 0 && (
-                      <span className="text-emerald-500 font-semibold tabular-nums flex items-center">
+                      <span className="flex items-center font-semibold text-emerald-500 tabular-nums">
                         <ArrowUp size={11} weight="bold" /> {activity.rankChange}
                       </span>
                     )}
                     {activity.rankChange < 0 && (
-                      <span className="text-rose-500 font-semibold tabular-nums flex items-center">
+                      <span className="flex items-center font-semibold text-rose-500 tabular-nums">
                         <ArrowDown size={11} weight="bold" /> {Math.abs(activity.rankChange)}
                       </span>
                     )}
@@ -2142,7 +2141,7 @@ export default function Profile() {
               >
                 <div className="flex items-center gap-3.5">
                   <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                    className="flex items-center justify-center w-9 h-9 rounded-xl shrink-0"
                     style={{ background: `${item.color}15` }}
                   >
                     <item.icon size={19} style={{ color: item.color }} weight="duotone" />
@@ -2198,7 +2197,7 @@ export default function Profile() {
               )}
             >
               <div
-                className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                className="flex items-center justify-center w-9 h-9 rounded-xl shrink-0"
                 style={{ background: item.isDanger ? 'rgba(239, 68, 68, 0.12)' : `${item.color}15` }}
               >
                 <item.icon size={19} style={{ color: item.color }} weight={item.isDanger ? 'bold' : 'duotone'} />
@@ -2260,7 +2259,7 @@ export default function Profile() {
               onClick={e => e.stopPropagation()}
             >
               <div className="flex flex-col items-center gap-3 text-center">
-                <div className="w-14 h-14 rounded-2xl bg-red-100 dark:bg-red-500/15 flex items-center justify-center text-red-500">
+                <div className="flex items-center justify-center text-red-500 bg-red-100 w-14 h-14 rounded-2xl dark:bg-red-500/15">
                   <SignOut size={28} weight="duotone" />
                 </div>
                 <div>

@@ -17,9 +17,9 @@ function loadSettings() {
 // 5 Main Core Sections requested by client
 const navItems = [
   { to: '/', icon: House, label: 'Bosh' },
-  { to: '/tests', icon: BookOpen, label: 'Testlar' },
+  { to: '/tests', icon: BookOpen, label: 'Online Testlar' },
   { to: '/school', icon: GraduationCap, label: 'Maktab' },
-  { to: '/library', icon: Books, label: 'Kutubxona' },
+  { to: '/library', icon: Books, label: 'Universitet' },
 ];
 
 export default function BottomNav() {
